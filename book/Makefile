@@ -1,21 +1,5 @@
-LATEX = latex
-
-DVIPS = dvips
-
-PDFFLAGS = -dCompatibilityLevel=1.4 -dPDFSETTINGS=/prepress \
-           -dCompressPages=true -dUseFlateCompression=true  \
-           -dEmbedAllFonts=true -dSubsetFonts=true -dMaxSubsetPct=100
-
-%.dvi: %.tex
-	$(LATEX) $<
-
-%.ps: %.dvi
-	$(DVIPS) -o $@ $<
-
-%.pdf: %.ps
-	ps2pdf $(PDFFLAGS) $<
-
 all:	book.tex
+	pdflatex book
 	makeindex book.idx
 	pdflatex book
 	mv book.pdf thinkcomplexity.pdf

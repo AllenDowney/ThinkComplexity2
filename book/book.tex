@@ -1,42 +1,19 @@
-% LaTeX source for ``Complexity and Computation''
-% Copyright (c)  2011  Allen B. Downey.
+% LaTeX source for ``Think Complexity, 2nd edition''
+% Copyright (c)  2016  Allen B. Downey.
 
 % Permission is granted to copy, distribute, transmit and adapt
 % this work under a Creative Commons
-% Attribution-NonCommercial-ShareAlike 3.0 Unported License:
-% http://creativecommons.org/licenses/by-nc-sa/3.0/
+% Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)
+% https://creativecommons.org/licenses/by-nc-sa/4.0/
 
 % If you are interested in distributing a commercial version of this
-% work, please contact Allen B. Downey.
+% work, please contact Allen Downey.
 
 % The LaTeX source for this book is available from
 % http://greenteapress.com/complexity
-% http://code.google.com/p/complexity
 
-% This book was typeset using LaTeX .  The illustrations were
-% drawn in xfig.  All of these are free, open-source programs.
 
-%%----------------------------------------------------------------
-
-% How to compile this document:
-% If your environment provides latex, makeindex, and dvips,
-% the following commands should produce a Postscript version
-% of the book.
-
-%        latex book
-%        makeindex book
-%        latex book
-%        dvips -o book.ps book
-
-% You will also need the following (fairly standard) latex
-% packages: url, epsfig, makeidx, fancyhdr
-
-% This distribution also includes a Makefile that should
-% compile both the Postscript and PDF versions of the book.
-
-%%-----------------------------------------------------------------
-
-\documentclass[10pt]{book}
+\documentclass{book}
 %\pdfminorversion=5
 %\pdfobjcompresslevel=2
 
@@ -59,7 +36,7 @@
 \usepackage{upquote}
 
 \newcommand{\thetitle}{Think Complexity}
-\newcommand{\theversion}{1.2.3}
+\newcommand{\theversion}{2.0.0}
 
 \title{\thetitle}
 \author{Allen B. Downey}
@@ -186,18 +163,9 @@ Allen B. Downey\\
 \thispagestyle{empty}
 
 {\small
-Copyright \copyright ~2012 Allen B. Downey.
+Copyright \copyright ~2016 Allen B. Downey.
 
 
-Printing history:
-
-\begin{description}
-
-\item[Fall 2008:] First edition.
-
-\item[Fall 2011:] Second edition.
-
-\end{description}
 
 \vspace{0.2in}
 
@@ -209,32 +177,17 @@ Needham MA 02492
 
 Permission is granted to copy, distribute, transmit and adapt
 this work under a Creative Commons
-Attribution-NonCommercial-ShareAlike 3.0 Unported License:
-\url{http://creativecommons.org/licenses/by-nc-sa/3.0/}.
+Attribution-NonCommercial-ShareAlike 4.0 Unported International License:
+\url{http://creativecommons.org/licenses/by-nc-sa/4.0/}.
 
 If you are interested in distributing a commercial version of this
 work, please contact Allen B. Downey.
-
-The original form of this book is \LaTeX\ source code.  Compiling this
-\LaTeX\ source has the effect of generating a device-independent
-representation of the book, which can be converted to other formats
-and printed.
 
 The \LaTeX\ source for this book is available from
 
 \begin{verbatim}
       http://greenteapress.com/complexity
-      http://code.google.com/p/complexity
 \end{verbatim}
-
-This book was typeset using \LaTeX .  The illustrations were
-drawn in xfig.
-
-The cover photo is courtesy of {\tt blmurch}, and is available
-under a free license from
-\url{http://www.flickr.com/photos/blmurch/2034678924/sizes/l/in/photostream/}.
-
-\vspace{0.2in}
 
 } % end small
 
@@ -272,7 +225,7 @@ problem with complexity science is that it is usually not taught at
 all.
 
 In 2005 I developed a new class at Olin College where students read
-about topics in complexity, implement experiments in Python, and learn
+about topics in complexity, implemented experiments in Python, and learned
 about algorithms and data structures.  I wrote the first draft of this
 book when I taught the class again in 2008.
 
@@ -318,6 +271,7 @@ structure:
 
 An outline of the course and my notes are available at
 \url{https://sites.google.com/site/compmodolin}.
+
 
 \section{Suggestions for autodidacts}
 
@@ -369,8 +323,13 @@ Some features of this book intended for autodidacts are:
 
 \end{description}
 
-This book will continue to be a work in progress.  You can read
-about ongoing developments at \url{http://www.facebook.com/thinkcomplexity}.
+
+\section{Prerequisites}
+
+
+\section{Using the code}
+
+
 
 \begin{flushleft}
 Allen B. Downey \newline
@@ -594,12 +553,12 @@ Is this explanation satisfying in the same way as the explanation of
 planetary motion?  Most people would say not, but why?
 
 Most obviously, the Schelling model is highly abstract, which is to
-say not realistic.  It is tempting to say that people are more complex
-than planets, but when you think about it, planets are just as complex
+say not realistic.  It is tempting to say that people are more complicated
+than planets, but when you think about it, planets are just as complicated
 as people (especially the ones that {\em have} people).
 \index{abstract model}
 
-Both systems are complex, and both models are based on
+Both systems are complicated, and both models are based on
 simplifications; for example, in the model of planetary motion we
 include forces between the planet and its sun, and ignore interactions
 between planets.
@@ -620,6 +579,7 @@ But as I will try to demonstrate, these models do useful work,
 including prediction, explanation, and design.  One of the goals of
 this book is to explain how.
 \index{modeling}
+
 
 \section{Paradigm shift?}
 
@@ -795,9 +755,9 @@ universally) accepted.
 Conversely, a substantial body of economic analysis is based on a
 model of human behavior called ``Economic man,'' or, with tongue in
 cheek, {\it Homo economicus}.  Research based on this model was
-highly-regarded for several decades, especially if it involved
+highly regarded for several decades, especially if it involved
 mathematical virtuosity.  More recently, this model is treated with
-more skepticism, and models that include imperfect information and
+skepticism, and models that include imperfect information and
 bounded rationality are hot topics.
 \index{economic man}
 \index{Homo economicus}
@@ -984,13 +944,13 @@ developments in logic and epistemology.
   Some concepts that are called ``physical laws'' are really
   definitions; others are, in effect, the assertion that a model
   predicts or explains the behavior of a system particularly well.
-  We come back to the nature of physical models 
+  We come back to the nature of physical laws 
   in Sections~\ref{model1}, ~\ref{model3} and \ref{model2}.
 
 \item[Determinism $\rightarrow$ indeterminism] Determinism is the view
   that all events are caused, inevitably, by prior events.  Forms of
   indeterminism include randomness, probabilistic causation, and
-  fundamental uncertainty, and indeterminacy.  We come back to this
+  fundamental uncertainty.  We come back to this
   topic in Section~\ref{determinism} and \ref{free.will}
 \index{determinism}
 \index{indeterminism}
@@ -1020,7 +980,14 @@ chapter again.
 
 \chapter{Graphs}
 
-\section{What's a graph?}
+% TODO: Overview
+
+The code for this chapter is in {\tt chap02.ipynb} in the respository
+for this book.  More information about working with the code is
+in Section~\ref{???}.
+
+
+\section{What is a graph?}
 
 To most people a graph is a visual representation of a data set, like
 a bar chart or an EKG.  That's not what this chapter is about.
@@ -1051,14 +1018,17 @@ business associates, etc.
 \index{edge weight}
 \index{weight}
 
-Edges may be {\bf undirected}, if they represent a relationship
-that is symmetric, or {\bf directed}.  In a social network,
-friendship is usually symmetric: if $A$ is friends with $B$ then
-$B$ is friends with $A$.  So you would probably represent friendship
-with an undirected edge.  In a road map, you would probably represent
-a one-way street with a directed edge.
-\index{directed graph}
-\index{undirected graph}
+Edges may be {\bf directed} or {\bf undirected}, depending on whether
+the relationship the represent is asymmetric or symmetric.  In a road
+map, you might represent a one-way street with a directed edge and a
+two-way street with an undirected edge.  In some social networks,
+like Facebook, friendship is symmetric: if $A$ is friends with $B$ then $B$
+is friends with $A$.
+But in Twitter, for example, the ``follows''
+relationship is not symmetric; if $A$ follows $B$, that doesn't imply
+that $B$ follows $A$.  So you might use undirected edges to represent
+a Facebook network and directed edges for Twitter.
+\index{directed graph} \index{undirected graph}
 
 Graphs have interesting mathematical properties, and
 there is a branch of mathematics called {\bf graph theory}
@@ -1084,379 +1054,168 @@ or cost).
 In other cases it takes more effort to represent a problem in a form
 that can be solved with a graph algorithm, and then interpret the
 solution.
-\index{problem formulation}
-
-For example, a complex system of radioactive decay
-can be represented by a
-graph with one node for each nuclide (type of atom) and an edge
-between two nuclides if one can decay into the other.  A path in this
-graph represents a decay chain.
-See \url{http://en.wikipedia.org/wiki/Radioactive_decay}.
-\index{radioactive decay}
-\index{decay chain}
-
-The rate of decay between two nuclides is characterized by a decay
-constant, $\lambda$, measured in becquerels (Bq) or decay events per
-second.  You might be more familiar with half-life, $t_{1/2}$, which
-is the expected time until half of a sample decays.  You can convert
-from one characterization to the other using the relation $t_{1/2} =
-\ln 2 / \lambda$.
-\index{half life}
-\index{becquerel}
-
-In our best current model of physics, nuclear decay is a fundamentally
-random process, so it is impossible to predict when an atom will
-decay.  However, given $\lambda$, the probability that an atom
-decays during a short time interval $dt$ is $\lambda dt$.
-\index{random process}
-
-In a graph with multiple decay chains, the probability of a
-given path is the product of the probabilities of each decay
-process in the path.
-
-Now suppose you want to find the decay chain with the highest
-probability.  You could do it by assigning each edge a ``length'' of
-$-\log \lambda$ and using a shortest path algorithm.  Why?  Because the
-shortest path algorithm adds up the lengths of the edges, and adding
-up log-probabilities is the same as multiplying probabilities.  Also,
-because the logarithms are negated, the smallest sum corresponds to
-the largest probability.  So the shortest path corresponds to the most
-likely decay chain.
-
-This is an example of a common and useful process in applying
-graph algorithms:
-\index{applying graph algorithm}
-
-\begin{description}
-
-\item[Reduce] a real-world problem to an instance of a graph
-problem.
-
-\item[Apply] a graph algorithm to compute the result efficiently.
-
-\item[Interpret] the result of the computation in terms of a
-solution to the original problem.
-
-\end{description}
-
-We will see other examples of this process soon.
-
-\begin{exercise}
-
-Read the Wikipedia page about graphs at
-\url{http://en.wikipedia.org/wiki/Graph_(mathematics)}
-and answer the following questions:
-
-\begin{enumerate}
-
-\item What is a simple graph?  In the rest of this section,
-we will be assuming that all graphs are simple graphs.  This
-is a common assumption for many graph algorithms---so
-common it is often unstated.
-\index{simple graph}
-
-\item What is a regular graph?  What is a complete graph?  Prove
-that a complete graph is regular.
-\index{regular graph}
-\index{complete graph}
-
-\item What is a path?  What is a cycle?
-\index{path}
-\index{cycle}
-
-\item What is a forest?  What is a tree?  Note: a graph
-is {\bf connected} if there is a path from every node to
-every other node.
-\index{forest}
-\index{connected graph}
-
-\end{enumerate}
-
-\end{exercise}
-
 
 
 \section{Representing graphs}
 \label{graph.py}
 
 Graphs are usually drawn with squares or circles for nodes and lines
-for edges.  In Figure~\ref{fig.graphs}, the graph on the left represents
-a social network with three people.
+for edges.  For example, the directed graph in Figure~\ref{chap02-1}
+might represent three people who ``follow'' each other on Twitter.
+The thick part of the line indicates edge direction.
+In this example, Alice and Bob follow each other and both follow
+Chuck, but Chuck follows no one.
 \index{representing graphs}
 
-%A set of nodes like this,
-%where each node is connected to all of the others, is called
-%a {\bf clique} (pronounced ``cleek'').
-
 \begin{figure}
-\centerline{\includegraphics[width=5.5in]{figs/graph_examples.pdf}}
-\caption{Examples of graphs.\label{fig.graphs}}
+\centerline{\includegraphics[width=3.5in]{figs/chap02-1.pdf}}
+\caption{A directed graph that represents a social network.}
+\label{chap02-1}
 \end{figure}
 
-In the graph on the right, the weights of the edges are the
-approximate travel times, in hours, between cities in the northeast
-United States.  In this case the placement of the nodes corresponds
+The undirected graph in Figure~\ref{chap02-2} shows four cities
+in the northeast United States with labels on the edges that
+indicate driving time in hours.
+In this example the placement of the nodes corresponds
 roughly to the geography of the cities, but in general the layout
 of a graph is arbitrary.
 \index{graph layout}
 
-To implement graph algorithms, you have to figure
-out how to represent a graph in the form of a data structure.
-But to choose the best data structure, you have to know which
-operations the graph should support.
-\index{data structure}
+To represent graphs, we'll use a package called NetworkX,
+which is the most commonly used network library in Python.
+You can read more about it at \url{https://networkx.github.io/},
+but I'll explain it as we go along.
 
-To get out of this chicken-and-egg problem, I will present
-a data structure that is a good choice for many graph algorithms.
-Later we come back and evaluate its pros and cons.
+We can create a directed graph by importing NetworkX and instantiating
+{\tt nx.DiGraph}:
 
-Here is an implementation of a graph as a dictionary of dictionaries:
-\index{dictionary}
-\index{nested dictionary}
-\index{Graph@{\tt Graph}}
-%
 \begin{verbatim}
-class Graph(dict):
-    def __init__(self, vs=[], es=[]):
-        """create a new graph.  (vs) is a list of vertices;
-        (es) is a list of edges."""
-        for v in vs:
-            self.add_vertex(v)
-
-        for e in es:
-            self.add_edge(e)
-
-    def add_vertex(self, v):
-        """add (v) to the graph"""
-        self[v] = {}
-
-    def add_edge(self, e):
-        """add (e) to the graph by adding an entry in both directions.
-
-        If there is already an edge connecting these Vertices, the
-        new edge replaces it.
-        """
-        v, w = e
-        self[v][w] = e
-        self[w][v] = e
+import networkx as nx
+G = nx.DiGraph()
 \end{verbatim}
-%
-The first line declares that {\tt Graph} inherits from the built-in
-type {\tt dict}, so a Graph object has all the methods and operators
-of a dictionary.
-\index{inheritance}
 
-More specifically, a Graph is a dictionary that maps from
-a Vertex $v$ to an inner dictionary that maps from a Vertex $w$
-to an Edge that connects $v$ and $w$.  So if {\tt g} is a graph,
-{\tt g[v][w]} maps to an Edge if there is one and raises
-a {\tt KeyError} otherwise.
-\index{vertex}
-\index{edge}
+It is conventional to import NetworkX as {\tt nx}.  At this
+point, {\tt G} is a {\tt DiGraph} object that contains no nodes
+and no edges.  We can add nodes using the \verb"add_node" method:
 
-\verb"__init__" takes a list of vertices and a list of
-edges as optional parameters.  If they are provided, it calls
-\verb"add_vertex" and \verb"add_edge" to add the vertices and edges to
-the graph.
-\index{optional parameter}
-
-Adding a vertex to a graph means making an entry for it in the
-outer dictionary.  Adding an edge makes two entries, both pointing
-to the same Edge.  So this implementation represents an undirected
-graph.
-\index{directed edge}
-\index{undirected edge}
-
-Here is the definition for {\tt Vertex}:
-\index{Vertex@{\tt Vertex}}
-%
 \begin{verbatim}
-class Vertex(object):
-    def __init__(self, label=''):
-        self.label = label
-
-    def __repr__(self):
-        return 'Vertex(%s)' % repr(self.label)
-
-    __str__ = __repr__
+G.add_node('Alice')
+G.add_node('Bob')
+G.add_node('Chuck')
 \end{verbatim}
-%
-A Vertex is just an object that has a label attribute.  We can
-add attributes later, as needed.
-\index{label}
 
-\verb"__repr__" is a special function that returns a string
-representation of an object.  It is similar to \verb"__str__" except
-that the return value from \verb"__str__" is intended to be readable
-for people, and the return value from \verb"__repr__" is supposed to
-be a legal Python expression.
-\index{repr@{\tt \_\_repr\_\_}}
-\index{str@{\tt \_\_str\_\_}}
-\index{str@{\tt str}}
-\index{repr@{\tt repr}}
+Now we can use the {\tt nodes} method to get the list of nodes:
 
-The built-in function {\tt str} invokes \verb"__str__" on
-an object; similarly the built-in function {\tt repr} invokes
-\verb"__repr__".
-
-In this case \verb"Vertex.__str__" and \verb"Vertex.__repr__" refer to
-the same function, so we get the same string either way.
-
-Here is the definition for {\tt Edge}:
-\index{Edge@{\tt Edge}}
-%
 \begin{verbatim}
-class Edge(tuple):
-    def __new__(cls, e1, e2):
-        return tuple.__new__(cls, (e1, e2))
-
-    def __repr__(self):
-        return 'Edge(%s, %s)' % (repr(self[0]), repr(self[1]))
-
-    __str__ = __repr__
+>>> G.nodes()
+['Alice', 'Bob', 'Chuck']
 \end{verbatim}
-%
-{\tt Edge} inherits from the built-in type {\tt tuple}
-and overrides the \verb"__new__" method.  When you invoke
-an object constructor, Python invokes \verb"__new__" to create
-the object and then \verb"__init__" to initialize the attributes.
-\index{tuple}
-\index{new@{\tt \_\_new\_\_}}
-\index{init@{\tt \_\_init\_\_}}
 
-For mutable objects it is most common to override
-\verb"__init__" and use the default implementation of
-\verb"__new__", but because Edges inherit from {\tt tuple}, they
-are immutable, which means that you can't modify the elements
-of the tuple in \verb"__init__".
-By overriding \verb"__new__", we can use the parameters to initialize
-the elements of the tuple.
-\index{mutable objects}
-\index{immutable objects}
-\index{override}
+Adding edges works pretty much the same way:
 
-Here is an example that creates two vertices and an edge:
-%
 \begin{verbatim}
-    v = Vertex('v')
-    w = Vertex('w')
-    e = Edge(v, w)
-    print e
+G.add_edge('Alice', 'Bob')
+G.add_edge('Alice', 'Chuck')
+G.add_edge('Bob', 'Alice')
+G.add_edge('Bob', 'Chuck')
 \end{verbatim}
-%
-Inside \verb"Edge.__str__" the term {\tt self[0]} refers
-to {\tt v} and {\tt self[1]} refers to {\tt w}.  So the output
-when you print {\tt e} is:
-%
+
+And we can use {\tt edges} to get a list of edges:
+
 \begin{verbatim}
-Edge(Vertex('v'), Vertex('w'))
+>>> G.edges()
+[('Alice', 'Bob'), ('Alice', 'Chuck'), ('Bob', 'Alice'), ('Bob', 'Chuck')]
 \end{verbatim}
-%
-Now we can assemble the edge and vertices into a graph:
-%
+
+NetworkX provides several functions to represent graphs visually;
+\verb"draw_circular" arranges the nodes in a circle and connects them
+with edges:
+
 \begin{verbatim}
-    g = Graph([v, w], [e])
-    print g
+nx.draw_circular(G, 
+                 node_color=COLORS[0], 
+                 node_size=2000, 
+                 with_labels=True)
 \end{verbatim}
-%
-The output looks like this (with a little formatting):
-%
+
+And that's the code I used to generate Figure~\ref{chap02-1}.
+{\tt COLORS} is a list of colors I like better than the defaults.
+The option \verb"with_labels" causes the nodes to be labeled;
+in the next example we'll see how to label the edges.
+
+\begin{figure}
+\centerline{\includegraphics[width=3.5in]{figs/chap02-2.pdf}}
+\caption{An undirected graph that represents cities and highways.}
+\label{chap02-2}
+\end{figure}
+
+To generate Figure~\ref{chap02-2}, I started with a dictionary
+that maps from each city name to its approximate longitude
+and latitude:
+
 \begin{verbatim}
-{Vertex('w'): {Vertex('v'): Edge(Vertex('v'), Vertex('w'))},
- Vertex('v'): {Vertex('w'): Edge(Vertex('v'), Vertex('w'))}}
+pos = dict(Albany=(-74, 43),
+           Boston=(-71, 42),
+           NYC=(-74, 41),
+           Philly=(-75, 40))
 \end{verbatim}
-%
-We didn't have to write \verb"Graph.__str__"; it is inherited
-from {\tt dict}.
-\index{inheritance}
 
+Since this is an undirected graph, I instantiate {\tt nx.Graph}:
 
-\begin{exercise}
-
-In this exercise you write methods that will be
-useful for many of the Graph algorithms that are coming up.
-\index{graph methods}
-
-\begin{enumerate}
-
-\item Download \url{thinkcomplex.com/GraphCode.py}, which
-  contains the code in this chapter.  Run it as a script and make sure
-  the test code in {\tt main} does what you expect.
-
-\item Make a copy of {\tt GraphCode.py} called {\tt Graph.py}.  Add
-  the following methods to {\tt Graph}, adding test code as you go.
-
-\item Write a method named \verb"get_edge" that takes two vertices and
-  returns the edge between them if it exists and {\tt None} otherwise.
-  Hint: use a {\tt try} statement.
-
-\item Write a method named \verb"remove_edge" that takes an edge and
-  removes all references to it from the graph.
-
-\item Write a method named {\tt vertices} that returns a list of the
-  vertices in a graph.
-
-\item Write a method named {\tt edges} that returns a list of edges in
-  a graph.  Note that in our representation of an undirected graph
-  there are two references to each edge.
-
-\item Write a method named \verb"out_vertices" that takes a Vertex and
-  returns a list of the adjacent vertices (the ones connected to the
-  given node by an edge).
-
-\item Write a method named \verb"out_edges" that takes a Vertex and
-  returns a list of edges connected to the given Vertex.
-
-\item Write a method named \verb"add_all_edges" that starts with an
-  edgeless Graph and makes a complete graph by adding edges between
-  all pairs of vertices.
-
-\end{enumerate}
-
-Test your methods by writing test code and checking the output.  Then
-download \url{thinkcomplex.com/GraphWorld.py}.  GraphWorld is
-a simple tool for generating visual representations of graphs.  It is
-based on the World class in Swampy, so you might have to install
-Swampy first: see \url{thinkpython.com/swampy}.
-\index{GraphWorld@{\tt GraphWorld}}
-\index{Swampy}
-
-Read through {\tt GraphWorld.py} to get a sense of how it works.  Then
-run it.  It should import your {\tt Graph.py} and then display a
-complete graph with 10 vertices.
-
-\end{exercise}
-
-
-\begin{exercise}
-
-Write a method named \verb"add_regular_edges" that starts with an
-edgeless graph and adds edges so that every vertex has the same
-degree.  The {\bf degree} of a node is the number of edges it is
-connected to.
-\index{regular graph}
-\index{degree}
-
-To create a regular graph with degree 2 you would do something
-like this:
-%
 \begin{verbatim}
-vertices = [ ... list of Vertices ... ]
-g = Graph(vertices, [])
-g.add_regular_edges(2)
+G = nx.Graph()
 \end{verbatim}
-%
-It is not always possible to create a regular graph
-with a given degree, so you should figure out and document the
-preconditions for this method.
 
-To test your code, you might want to create a file named
-{\tt GraphTest.py} that imports {\tt Graph.py} and
-{\tt GraphWorld.py}, then generates and displays the graphs
-you want to test.
+Then I can use \verb"add_nodes_from" to iterate the keys of
+{\tt pos} and add them as nodes:
 
-\end{exercise}
+\begin{verbatim}
+G.add_nodes_from(pos)
+\end{verbatim}
 
+Next I'll make a dictionary that maps from each edge to the corresponding
+driving time:
+
+\begin{verbatim}
+drive_times = {('Albany', 'Boston'): 3,
+               ('Albany', 'NYC'): 4,
+               ('Boston', 'NYC'): 4,
+               ('NYC', 'Philly'): 2}
+\end{verbatim}
+
+Now I can use \verb"add_edges_from", which iterates the keys of
+\verb"drive_times" and add them as edges:
+
+\begin{verbatim}
+G.add_edges_from(drive_times)
+\end{verbatim}
+
+Now instead of \verb"draw_circular", which arranges the nodes in 
+circle, I'll use \verb"draw", which takes {\tt pos} as the second
+parameter:
+
+\begin{verbatim}
+nx.draw(G, pos, 
+        node_color=COLORS[1], 
+        node_shape='s', 
+        node_size=2500, 
+        with_labels=True)
+\end{verbatim}
+
+To add the edge labels, we use \verb"draw_networkx_edge_labels":
+
+\begin{verbatim}
+nx.draw_networkx_edge_labels(G, pos, 
+                             edge_labels=drive_times)
+\end{verbatim}
+
+And that's how I generated Figure~\ref{chap02-2}.
+
+In both of these examples, the nodes are strings, but in general they
+can be any hashable type.
+
+
+\section{Random graphs}
 
 \newcommand{\Erdos}{Erd\H{o}s}
 \newcommand{\Renyi}{R\'{e}nyi}
@@ -1465,26 +1224,95 @@ you want to test.
 
 A random graph is just what it sounds like: a graph with edges
 generated at random.  Of course, there are many random processes that
-can generate graphs, so there are many kinds of random graphs.  One
-interesting kind is the \Erdos-\Renyi~model, denoted $G(n,p)$, which
-generates graphs with $n$ nodes, where the probability is $p$ that
-there is an edge between any two nodes.  See
-\url{http://en.wikipedia.org/wiki/Erdos-Renyi_model}.
-\index{Erdos-Renyi model@\Erdos-\Renyi~model}
+can generate graphs, so there are many kinds of random graphs.
 \index{random graph}
 
-\begin{exercise}
-\label{ex.randomgraph}
+One of the more
+interesting kinds is the \Erdos-\Renyi~model, studied by
+Paul \Erdos 
+and Afr\'{e}d \Renyi~in the 1960s.
+\index{Renyi, Afred@\Renyi, Afr\'{e}d}
+\index{Erdos, Paul@\Erdos, Paul}
 
-Create a file named {\tt RandomGraph.py} and define a class named
-{\tt RandomGraph} that inherits from {\tt Graph} and provides a method
-named \verb"add_random_edges" that takes a probability {\tt p} as a
-parameter and, starting with an edgeless graph, adds edges at random
-so that the probability is $p$ that there is an edge between any two
-nodes.
-\index{RandomGraph@{\tt RandomGraph}}
+An \Erdos-\Renyi~graph (ER graph) is characterized by two parameters:
+$n$ is the number of nodes and $p$ is the probability that there
+is an edge between any two nodes.
+See \url{http://en.wikipedia.org/wiki/Erdos-Renyi_model}.
+\index{Erdos-Renyi model@\Erdos-\Renyi~model}
 
-\end{exercise}
+One of their surprising results is the existence of
+abrupt changes in the characteristics of random graphs as
+random edges are added.  This transition is sometimes called
+a ``phase change'' by analogy with physical systems that
+change state at some critical value of temperature.
+\index{phase chance}
+\index{threshold value}
+
+One of the properties that displays this kind of transition is
+connectedness.  An undirected graph is {\bf connected} if there is a
+path from every node to every other node.
+
+In an ER graph, the critical value is
+$p^* = \ln n / n$, where $n$ is the number of nodes.
+A random graph, $G(n, p)$, is unlikely to be connected
+if $p < p^*$ and very likely to be connected if $p > p^*$.
+\index{critical value}
+
+To test this claim, we'll develop algorithms to generate random
+graphs and check whether they are connected.
+
+
+\section{Generating ER graphs}
+
+I'll start by generating a {\bf complete} graph, which is a graph
+where every node is connected to every other.
+
+Here's a generator function that takes a list of nodes and enumerates
+all distinct pairs.  If you are not familiar with generator functions,
+you might want to read Appendix~\ref{???} and then come back:
+
+\begin{verbatim}
+def all_pairs(nodes):
+    for i, node1 in enumerate(nodes):
+        for j, node2 in enumerate(nodes):
+            if i>j:
+                yield node1, node2
+\end{verbatim}
+
+Now we can use \verb"all_pairs" to construct a complete graph:
+
+\begin{verbatim}
+def make_complete_graph(n):
+    G = nx.Graph()
+    nodes = range(n)
+    G.add_nodes_from(nodes)
+    G.add_edges_from(all_pairs(nodes))
+    return G
+\end{verbatim}
+
+\verb"make_complete_graph" takes the number of nodes, {\tt n}, and
+returns a new {\tt Graph} with {\tt n} nodes and edges between all
+pairs of nodes.
+
+The following code makes a complete graph with 10 nodes and draws it.
+
+\begin{verbatim}
+complete = make_complete_graph(10)
+nx.draw_circular(complete, 
+                 node_color=COLORS[2], 
+                 node_size=1000, 
+                 with_labels=True)
+\end{verbatim}
+
+Figure~\ref{chap02-3} shows the result.
+
+\begin{figure}
+\centerline{\includegraphics[width=3.5in]{figs/chap02-3.pdf}}
+\caption{A complete graph with 10 nodes.}
+\label{chap02-3}
+\end{figure}
+
+
 
 
 \section{Connected graphs}
@@ -1495,1264 +1323,164 @@ other node.  See \url{http://en.wikipedia.org/wiki/Connectivity_(graph_theory)}.
 \index{connected graph}
 \index{path}
 
+% TODO: Why is this a useful thing to check?
+
 There is a simple algorithm to check whether a graph is connected.
-Start at any vertex and conduct a search
-(usually a breadth-first-search or BFS), marking all the vertices you
-can reach.  Then check to see whether all vertices are marked.
-\index{breadth-first search}
-\index{BFS}
+You can start at any node and mark it as ``reachable''.  Then
+mark its neighbors (two nodes are {\bf neighbors} if they are
+connected by an edge.  Then mark the neighbor's neighbors, and so
+on, until you can't reach any more nodes.  If all nodes are
+marked, the graph is connected.
 
-You can read about breadth-first-search at
-\url{http://en.wikipedia.org/wiki/Breadth-first_search}.
+Here's what that looks like in Python:
 
-In general, when you process
-a node, we say that you are
-{\bf visiting} it.
-\index{visting a node}
+\begin{verbatim}
+def reachable_nodes(G, start):
+    reachable = set()
+    stack = [start]
+    while stack:
+        node = stack.pop()
+        if node in reachable:
+            continue
+        reachable.add(node)
+        stack.extend(G.neighbors(node))
+    return reachable
+\end{verbatim}
 
-In a search, you visit a node
-by marking it (so you can tell later that it has been visited)
-then visiting any
-unmarked vertices it is connected to.
-\index{marking a node}
+\verb"reachable_nodes" takes a {\tt Graph} and a starting node, {\tt
+  start}, and returns the set of nodes that can be reached from {\tt
+  start}.
 
-In a breadth-first-search, you visit nodes in the order they are
-discovered.  You can use a queue or a ``worklist'' to keep them in
-order.  Here's how it works:
-\index{queue}
-\index{worklist}
+Initially the set, {\tt reachable}, is empty, and we create a
+list called {\tt stack} that will keep track of nodes we have
+discovered but not yet processed.  Initially the stack contains
+a single node, {\tt start}.
+
+Now, each time through the loop, we
 
 \begin{enumerate}
 
-\item Start with any vertex and add it to the queue.
+\item Remove one node from the stack.
 
-\item Remove a vertex from the queue and mark it.  If it is
-connected to any unmarked vertices, add them to the queue.
+\item If the node is already in {\tt reachable}, we can go back
+to Step 1.
 
-\item If the queue is not empty, go back to Step 2.
+\item Otherwise, we add the node to {\tt reachable} and add its
+neighbors to the stack.  The {\tt neighbors} method returns a list
+of neighbors of the given node.
 
 \end{enumerate}
 
-\begin{exercise}
+When the stack is empty, we can't reach any more nodes, so we
+break out of the loop and return {\tt reachable}.
 
-Write a Graph method named \verb"is_connected" that returns
-{\tt True} if the Graph is connected and {\tt False} otherwise.
+As an example, we can find all nodes in the complete graph that
+are reachable from node 0:
 
-\end{exercise}
-
-
-\section{Paul \Erdos: peripatetic mathematician, speed freak}
-\index{Erdos, Paul@\Erdos, Paul}
-
-Paul \Erdos~was a Hungarian mathematician who spent most
-of his career (from 1934 until his death in 1992) living out
-of a suitcase, visiting colleagues at universities all over the
-world, and authoring papers with more than 500 collaborators.
-
-He was a notorious caffeine addict and, for the last 20 years of his
-life, an enthusiastic user of amphetamines.  He attributed at least
-some of his productivity to the use of these drugs; after giving them
-up for a month to win a bet, he complained that the only result
-was that mathematics had
-been set back by a month\footnote{Much of this biography follows
-\url{http://en.wikipedia.org/wiki/Paul_Erdos}}.
-\index{caffeine}
-\index{amphetamine}
-
-In the 1960s he and Afr\'{e}d \Renyi~ wrote a series of papers
-introducing the \Erdos-\Renyi~
-model of random graphs and studying their properties.
-The second is available from \url{http://www.renyi.hu/~p_erdos/1960-10.pdf}.
-\index{Renyi, Afred@\Renyi, Afr\'{e}d}
-
-One of their most surprising results is the existence of
-abrupt changes in the characteristics of random graphs as
-random edges are added.  They showed that for a number of
-graph properties there is a threshold value of the probability
-$p$ below which the property is rare and above which it
-is almost certain.  This transition is sometimes called
-a ``phase change'' by analogy with physical systems that
-change state at some critical value of temperature.
-See \url{http://en.wikipedia.org/wiki/Phase_transition}.
-\index{phase chance}
-\index{threshold value}
-
-
-\begin{exercise}
-
-One of the properties that displays this kind of transition is
-connectedness.  For a given size $n$, there is a critical value,
-$p^*$, such that a random graph $G(n, p)$ is unlikely to be connected
-if $p < p^*$ and very likely to be connected if $p > p^*$.
-\index{critical value}
-
-Write a program that tests this result by generating random graphs for
-values of $n$ and $p$ and computes the fraction of them that
-are connected.
-
-How does the abruptness of the transition depend on $n$?
-
-You can download my solution from
-\url{thinkcomplex.com/RandomGraph.py}.
-
-\end{exercise}
-
-
-\section{Iterators}
-
-If you have read the documentation of Python dictionaries,
-you might have noticed the methods {\tt iterkeys}, {\tt itervalues}
-and {\tt iteritems}.  These methods are similar to {\tt keys},
-{\tt values} and {\tt items}, except that instead of building
-a new list, they return iterators.
-\index{iterator}
-
-An {\bf iterator} is an object that provides a method named
-{\tt next} that returns the next element in a sequence.  Here
-is an example that creates a dictionary and uses {\tt iterkeys}
-to traverse the keys.
-%
 \begin{verbatim}
->>> d = dict(a=1, b=2)
->>> iter = d.iterkeys()
->>> print iter.next()
-a
->>> print iter.next()
-b
->>> print iter.next()
-Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-StopIteration
+>>> reachable_nodes(complete, 0)
+{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
 \end{verbatim}
-%
-The first time {\tt next} is invoked, it returns the first key from
-the dictionary (the order of the keys is arbitrary).  The second
-time it is invoked, it returns the second element.  The third time,
-and every time thereafter, it raises a {\tt StopIteration}
-exception.
-\index{StopIteration@{\tt StopIteration}}
 
-An iterator can be used in a {\tt for} loop; for example, the
-following is a common idiom for traversing the key-value
-pairs in a dictionary:
-\index{for@{\tt for} loop}
-%
+Initially, the stack contains node 0 and {\tt reachable} is empty.
+The first time through the loop, node 0 is added to {\tt reachable}
+and all the other nodes are added to the stack (since they are all
+neighbors of node 0).
+
+The next time through the loop, {\tt pop} returns the last element
+in the stack, which is node 9.  So node 9 gets added to {\tt reachable}
+and its neighbors get added to the stack.  
+
+Notice that the same node can appear more than once in the stack;
+in fact, a node with $k$ neighbors will be added to the stack
+$k$ times.  But each node is only processed once, so the process
+has to terminate.
+
+We can use \verb"reachable_nodes" to write \verb"is_connected":
+
 \begin{verbatim}
-    for k, v in d.iteritems():
-        print k, v
+def is_connected(G):
+    start = next(G.nodes_iter())
+    reachable = reachable_nodes(G, start)
+    return len(reachable) == len(G)
 \end{verbatim}
-%
-In this context, {\tt iteritems} is likely to be faster than
-{\tt items} because it doesn't have to build the entire list
-of tuples; it reads them from the dictionary as it goes along.
-\index{dictionary}
 
-But it is only safe to use the iterator methods if you do not add or
-remove dictionary keys inside the loop.  Otherwise you get an
-exception:
-%
+\verb"is_connected" chooses a starting node arbitrarily by calling
+\verb"nodes_iter", which returns an iterator object, and passing the
+result to {\tt next}, which returns the first node.
+
+{\tt reachable} gets the set of nodes that can be reached from
+{\tt start}.  If the size of this set is the same as the size
+of the graph, that means we can reach all nodes, which means the
+graph is connected.
+
+A complete graph is, not surprisingly, connected:
+
 \begin{verbatim}
->>> d = dict(a=1)
->>> for k in d.iterkeys():
-...     d['b'] = 2
-...
-RuntimeError: dictionary changed size during iteration
+>>> is_connected(complete)
+True
 \end{verbatim}
-%
-Another limitation of iterators is that they do not support index
-operations.
-%
+
+In the next section we will generate ER graphs and check whether they
+are complete.
+
+
+\section{Generating ER graphs}
+
+The ER graph $G(n, p)$ contains $n$ nodes, and each pair of nodes is
+connected by an edge with probability $p$.  Generating an ER graph is
+similar to generating a complete graph.
+
+The following generator function enumerates all possible edges and uses
+a random number generator to choose which ones should be added to the graph:
+
 \begin{verbatim}
->>> iter = d.iterkeys()
->>> print iter[1]
-TypeError: 'dictionary-keyiterator' object is unsubscriptable
+def random_pairs(nodes, p):
+    for i, node1 in enumerate(nodes):
+        for j, node2 in enumerate(nodes):
+            if i>j and flip(p):
+                yield node1, node2
 \end{verbatim}
-%
-If you need indexed access, you should use {\tt keys}.
-Alternatively, the Python module {\tt itertools} provides
-many useful iterator functions.
-\index{itertools@{\tt itertools}}
 
-A user-defined object can be used as an iterator if it
-provides methods named {\tt next} and \verb"__iter__".
-The following example is an iterator that always returns {\tt True}:
-\index{iter@{\tt \_\_iter\_\_}}
-%
+The helper function {\tt flip} returns {\tt True} with the
+given probability, {\tt p}, and {\tt False} with the complementary
+probability {\tt 1-p}.
+
 \begin{verbatim}
-class AllTrue(object):
-    def next(self):
-        return True
+from numpy.random import random
 
-    def __iter__(self):
-        return self
+def flip(p):
+    return random() < p
 \end{verbatim}
-%
-The \verb"__iter__" method for iterators returns the iterator
-itself.  This protocol makes it possible to use iterators
-and sequences interchangeably in many contexts.
 
-Iterators like {\tt AllTrue} can represent an infinite sequence.
-They are useful as an argument to {\tt zip}:
-\index{infinite sequence}
-%
+Finally, \verb"make_random_graph" generates and returns the 
+ER graph $G(n, p)$.
+
 \begin{verbatim}
->>> print zip('abc', AllTrue())
-[('a', True), ('b', True), ('c', True)]
+def make_random_graph(n, p):
+    G = nx.Graph()
+    nodes = range(n)
+    G.add_nodes_from(nodes)
+    G.add_edges_from(random_pairs(nodes, p))
+    return G
+\end{verbatim}
+
+Here's an example with {\tt p=0.5}:
+
+\begin{verbatim}
+random_graph = make_random_graph(10, 0.5)
 \end{verbatim}
 
 
-\section{Generators}
-
-For many purposes the easiest way to make an iterator is to
-write a {\bf generator}, which is a function that contains a
-{\tt yield} statement.  {\tt yield} is similar to {\tt return},
-except that the state of the running function is stored and
-can be resumed.
-\index{generator}
-\index{yield@{\tt yield}}
-
-For example, here is a generator that yields successive letters
-of the alphabet:
-
-\begin{verbatim}
-def generate_letters():
-    for letter in 'abc':
-        yield letter
-\end{verbatim}
-
-When you call this function, the return value is an iterator:
-
-\begin{verbatim}
->>> iter = generate_letters()
->>> print iter
-<generator object at 0xb7d4ce4c>
->>> print iter.next()
-a
->>> print iter.next()
-b
-\end{verbatim}
-
-And you can use an iterator in a {\tt for} loop:
-
-\begin{verbatim}
->>> for letter in generate_letters():
-...     print letter
-...
-a
-b
-c
-\end{verbatim}
-
-A generator with an infinite loop returns an iterator that
-never terminates.  For example, here's a generator that
-cycles through the letters of the alphabet:
-\index{infinite loop}
-
-\begin{verbatim}
-def alphabet_cycle():
-    while True:
-        for c in string.lowercase:
-            yield c
-\end{verbatim}
-
-
-\begin{exercise}
-
-Write a generator that yields an infinite sequence of alpha-numeric
-identifiers, starting with {\tt a1} through {\tt z1}, then {\tt a2}
-through {\tt z2}, and so on.
-
-\end{exercise}
-
-
-\chapter{Analysis of algorithms}
-
-Analysis of algorithms is the branch of computer science that studies
-the performance of algorithms, especially their run time and space
-requirements.  See \url{http://en.wikipedia.org/wiki/Analysis_of_algorithms}.
-\index{algorithm}
-\index{analysis of algorithms}
-
-%\url{http://en.wikipedia.org/wiki/Run-time_analysis}
-
-The practical goal of algorithm analysis is to predict the performance
-of different algorithms in order to guide design decisions.
-
-During the 2008 United States Presidential Campaign, candidate
-Barack Obama was asked to perform an impromptu analysis when
-he visited Google.  Chief executive Eric Schmidt jokingly asked him
-for ``the most efficient way to sort a million 32-bit integers.''
-Obama had apparently been tipped off, because he quickly
-replied, ``I think the bubble sort would be the wrong way to go.''
-See \url{http://www.youtube.com/watch?v=k4RRi_ntQc8}.
-\index{Obama, Barack}
-\index{Schmidt, Eric}
-\index{bubble sort}
-
-This is true: bubble sort is conceptually simple but slow for
-large datasets.  The answer Schmidt was probably looking for is
-``radix sort'' (see \url{http://en.wikipedia.org/wiki/Radix_sort})\footnote{
-But if you get a question like this in an interview, I think
-a better answer is, ``The fastest way to sort a million integers
-is to use whatever sort function is provided by the language
-I'm using.  Its performance is good enough for the vast majority
-of applications, but if it turned out that my application was too
-slow, I would use a profiler to see where the time was being
-spent.  If it looked like a faster sort algorithm would have
-a significant effect on performance, then I would look
-around for a good implementation of radix sort.''}.
-\index{radix sort}
-
-So the goal of algorithm analysis is to make meaningful
-comparisons between algorithms, but there are some problems:
-\index{comparing algorithms}
-
-\begin{itemize}
-
-\item The relative performance of the algorithms might
-depend on characteristics of the hardware, so one algorithm
-might be faster on Machine A, another on Machine B.
-The general solution to this problem is to specify a
-{\bf machine model} and analyze the number of steps, or
-operations, an algorithm requires under a given model.
-\index{machine model}
-
-\item Relative performance might depend on the details of
-the dataset.  For example, some sorting
-algorithms run faster if the data are already partially sorted;
-other algorithms run slower in this case.
-A common way to avoid this problem is to analyze the
-{\bf worst case} scenario.  It is also sometimes useful to
-analyze average case performance, but it is usually harder,
-and sometimes it is not clear what set of cases to average over.
-\index{worst case}
-\index{average case}
-
-\item Relative performance also depends on the size of the
-problem.  A sorting algorithm that is fast for small lists
-might be slow for long lists.
-The usual solution to this problem is to express run time
-(or number of operations) as a function of problem size,
-and to compare the functions {\bf asymptotically} as the problem
-size increases.
-\index{asymptotic analysis}
-
-\end{itemize}
-
-The good thing about this kind of comparison that it lends
-itself to simple classification of algorithms.  For example,
-if I know that the run time of Algorithm A tends to be
-proportional to the size of the input, $n$, and Algorithm B
-tends to be proportional to $n^2$, then I
-expect A to be faster than B for large values of $n$.
-
-This kind of analysis comes with some caveats, but we'll get
-to that later.
-
-
-\section{Order of growth}
-
-Suppose you have analyzed two algorithms and expressed
-their run times in terms of the size of the input:
-Algorithm A takes $100 n + 1$ steps to solve a problem with
-size $n$; Algorithm B takes $n^2 + n + 1$ steps.
-\index{order of growth}
-
-The following table shows the run time of these algorithms
-for different problem sizes:
-
-\begin{tabular}{|r|r|r|}
-\hline
-Input     &   Run time of     & Run time of \\
-size      &   Algorithm A     & Algorithm B \\
-\hline
-10        &   1 001           & 111         \\
-100       &   10 001          & 10 101         \\
-1 000     &   100 001         & 1 001 001         \\
-10 000    &   1 000 001       & $> 10^{10}$         \\
-\hline
-\end{tabular}
-
-At $n=10$, Algorithm A looks pretty bad; it takes almost 10 times
-longer than Algorithm B.  But for $n=100$ they are about the same, and
-for larger values A is much better.
-
-The fundamental reason is that for large values of $n$, any function
-that contains an $n^2$ term will grow faster than a function whose
-leading term is $n$.  The {\bf leading term} is the term with the
-highest exponent.
-\index{leading term}
-\index{exponent}
-
-For Algorithm A, the leading term has a large coefficient, 100, which
-is why B does better than A for small $n$.  But regardless of the
-coefficients, there will always be some value of $n$ where $a n^2 > b
-n$.
-\index{leading coefficient}
-
-The same argument applies to the non-leading terms.  Even if the run
-time of Algorithm A were $n + 1000000$, it would still be better than
-Algorithm B for sufficiently large $n$.
-
-In general, we expect an algorithm with a smaller leading term to be a
-better algorithm for large problems, but for smaller problems, there
-may be a {\bf crossover point} where another algorithm is better.  The
-location of the crossover point depends on the details of the
-algorithms, the inputs, and the hardware, so it is usually ignored for
-purposes of algorithmic analysis.  But that doesn't mean you can forget
-about it.
-\index{crossover point}
-
-If two algorithms have the same leading order term, it is hard to say
-which is better; again, the answer depends on the details.  So for
-algorithmic analysis, functions with the same leading term
-are considered equivalent, even if they have different coefficients.
-
-An {\bf order of growth} is a set of functions whose asymptotic growth
-behavior is considered equivalent.  For example, $2n$, $100n$ and $n +
-1$ belong to the same order of growth, which is written $O(n)$ in
-{\bf Big-Oh notation} and often called {\bf linear} because every function
-in the set grows linearly with $n$.
-\index{big-oh notation}
-\index{linear growth}
-
-All functions with the leading term $n^2$ belong to $O(n^2)$; they are
-{\bf quadratic}, which is a fancy word for functions with the
-leading term $n^2$.
-\index{quadratic growth}
-
-The following table shows some of the orders of growth that
-appear most commonly in algorithmic analysis,
-in increasing order of badness.
-\index{badness}
-
-\begin{tabular}{|r|r|r|}
-\hline
-Order of     &   Name      \\
-growth       &               \\
-\hline
-$O(1)$             & constant \\
-$O(\log_b n)$      & logarithmic (for any $b$) \\
-$O(n)$             & linear \\
-$O(n \log_b n)$    & ``en log en'' \\
-$O(n^2)$           & quadratic     \\
-$O(n^3)$           & cubic     \\
-$O(c^n)$           & exponential (for any $c$)    \\
-\hline
-\end{tabular}
-
-For the logarithmic terms, the base of the logarithm doesn't matter;
-changing bases is the equivalent of multiplying by a constant, which
-doesn't change the order of growth.  Similarly, all exponential
-functions belong to the same order of growth regardless of the base of
-the exponent.
-Exponential functions grow very quickly, so exponential algorithms are
-only useful for small problems.
-\index{logarithmic growth}
-\index{exponential growth}
-
-
-\begin{exercise}
-
-Read the Wikipedia page on Big-Oh notation at
-\url{http://en.wikipedia.org/wiki/Big_O_notation} and
-answer the following questions:
-
-\begin{enumerate}
-
-\item What is the order of growth of $n^3 + n^2$?
-What about $1000000 n^3 + n^2$?
-What about $n^3 + 1000000 n^2$?
-
-\item What is the order of growth of $(n^2 + n) \cdot (n + 1)$?  Before
-  you start multiplying, remember that you only need the leading term.
-
-\item If $f$ is in $O(g)$, for some unspecified function $g$, what can
-  we say about $a f + b$?
-
-\item If $f_1$ and $f_2$ are in $O(g)$, what can we say about $f_1 + f_2$?
-
-\item If  $f_1$ is in $O(g)$
-and $f_2$ is in $O(h)$,
-what can we say about  $f_1 + f_2$?
-
-\item If  $f_1$ is in $O(g)$ and $f_2$ is $O(h)$,
-what can we say about  $f_1 * f_2$?
-
-\end{enumerate}
-
-\end{exercise}
-
-
-Programmers who care about performance often find this kind of
-analysis hard to swallow.  They have a point: sometimes the
-coefficients and the non-leading terms make a real difference.  And
-sometimes the details of the hardware, the programming language, and
-the characteristics of the input make a big difference.  And for small
-problems asymptotic behavior is irrelevant.
-\index{practical analysis of algorithms}
-
-But if you keep those caveats in mind, algorithmic analysis is a
-useful tool.  At least for large problems, the ``better'' algorithms
-is usually better, and sometimes it is {\em much} better.  The
-difference between two algorithms with the same order of growth is
-usually a constant factor, but the difference between a good algorithm
-and a bad algorithm is unbounded!
-\index{unbounded}
-
-
-\section{Analysis of basic Python operations}
-
-Most arithmetic operations are constant time; multiplication
-usually takes longer than addition and subtraction, and division
-takes even longer, but these run times don't
-depend on the magnitude of the operands.  Very large integers
-are an exception; in that case the run time increases
-with the number of digits.
-\index{analysis of primitives}
-
-Indexing operations---reading or writing elements in a sequence
-or dictionary---are also constant time, regardless of the size
-of the data structure.
-\index{indexing}
-
-A {\tt for} loop that traverses a sequence or dictionary is
-usually linear, as long as all of the operations in the body
-of the loop are constant time.  For example, adding up the
-elements of a list is linear:
-
-\begin{verbatim}
-    total = 0
-    for x in t:
-        total += x
-\end{verbatim}
-
-The built-in function {\tt sum} is also linear because it does
-the same thing, but it tends to be faster because it is a more
-efficient implementation; in the language of algorithmic analysis,
-it has a smaller leading coefficient.
-
-If you use the same loop to ``add'' a list of strings, the
-run time is quadratic
-because string concatenation is linear.
-\index{string concatenation}
-
-The string method {\tt join} is usually faster because it is
-linear in the total length of the strings.
-\index{join@{\tt join}}
-
-As a rule of thumb, if the body of a loop is in $O(n^a)$ then
-the whole loop is in $O(n^{a+1})$.  The exception is if you can
-show that the loop exits after a constant number of iterations.
-If a loop runs $k$ times regardless of $n$, then
-the loop is in $O(n^a)$, even for large $k$.
-
-Multiplying by $k$ doesn't change the order of growth, but neither
-does dividing.  So if the body of a loop is in $O(n^a)$ and it runs $n
-/ k$ times, the loop is in $O(n^{a+1})$, even for large $k$.
-
-Most string and tuple operations are linear, except indexing and {\tt
-  len}, which are constant time.  The built-in functions {\tt min} and
-{\tt max} are linear.  The run-time of a slice operation is
-proportional to the length of the output, but independent of the size
-of the input.
-\index{string methods}
-\index{tuple methods}
-
-All string methods are linear, but if the lengths of
-the strings are bounded by a constant---for example, operations on single
-characters---they are considered constant time.
-
-Most list methods are linear, but there are some exceptions:
-\index{list methods}
-
-\begin{itemize}
-
-\item Adding an element to the end of a list is constant time on
-average; when it runs out of room it occasionally gets copied
-to a bigger location, but the total time for $n$ operations
-is $O(n)$, so we say that the ``amortized'' time for one
-operation is $O(1)$.
-
-\item Removing an element from the end of a list is constant time.
-
-\item Sorting is $O(n \log n)$.
-\index{sorting}
-
-\end{itemize}
-
-Most dictionary operations and methods are constant time, but
-there are some exceptions:
-\index{dictionary methods}
-
-\begin{itemize}
-
-\item The run time of {\tt copy} is proportional to the number of
-  elements, but not the size of the elements (it copies references,
-  not the elements themselves).
-
-\item The run time of {\tt update} is
-  proportional to the size of the dictionary passed as a parameter,
-  not the dictionary being updated.
-
-\item {\tt keys}, {\tt values} and {\tt items} are linear because they
-  return new lists; {\tt iterkeys}, {\tt itervalues} and {\tt
-    iteritems} are constant time because they return iterators.  But
-  if you loop through the iterators, the loop will be linear.  Using
-  the ``iter'' functions saves some overhead, but it doesn't change
-  the order of growth unless the number of items you access is
-  bounded.
-
-\end{itemize}
-
-The performance of dictionaries is one of the minor miracles of
-computer science.  We will see how they work in
-Section~\ref{hashtable}.
-
-
-\begin{exercise}
-
-Read the Wikipedia page on sorting algorithms at
-\url{http://en.wikipedia.org/wiki/Sorting_algorithm} and answer
-the following questions:
-\index{sorting}
-
-\begin{enumerate}
-
-\item What is a ``comparison sort?'' What is the best worst-case order
-  of growth for a comparison sort?  What is the best worst-case order
-  of growth for any sort algorithm?
-\index{comparison sort}
-
-\item What is the order of growth of bubble sort, and why does Barack
-  Obama think it is ``the wrong way to go?''
-
-\item What is the order of growth of radix sort?  What preconditions
-  do we need to use it?
-
-\item What is a stable sort and why might it matter in practice?
-\index{stable sort}
-
-\item What is the worst sorting algorithm (that has a name)?
-
-\item What sort algorithm does the C library use?  What sort algorithm
-  does Python use?  Are these algorithms stable?  You might have to
-  Google around to find these answers.
-
-\item Many of the non-comparison sorts are linear, so why does does
-  Python use an $O(n \log n)$ comparison sort?
-
-\end{enumerate}
-
-\end{exercise}
-
-
-\section{Analysis of search algorithms}
-
-A {\bf search} is an algorithm that takes a collection and a target
-item and determines whether the target is in the collection, often
-returning the index of the target.
-\index{search}
-
-The simplest search algorithm is a ``linear search,'' which traverses
-the items of the collection in order, stopping if it finds the target.
-In the worst case it has to traverse the entire collection, so the run
-time is linear.
-\index{linear search}
-
-The {\tt in} operator for sequences uses a linear search; so do string
-methods like {\tt find} and {\tt count}.
-\index{in@{\tt in} operator}
-
-If the elements of the sequence are in order, you can use a {\bf
-  bisection search}, which is $O(\log n)$.  Bisection search is
-similar to the algorithm you probably use to look a word up in a
-dictionary (a real dictionary, not the data structure).  Instead of starting at
-the beginning and checking each item in order, you start with the item
-in the middle and check whether the word you are looking for comes
-before or after.  If it comes before, then you search the first half
-of the sequence.  Otherwise you search the second half.  Either way,
-you cut the number of remaining items in half.  \index{bisection
-  search}
-
-If the sequence has 1,000,000 items, it will take about 20 steps to
-find the word or conclude that it's not there.  So that's about 50,000
-times faster than a linear search.
-
-\begin{exercise}
-
-Write a function called {\tt bisection} that takes a sorted list
-and a target value and returns the index of the value
-in the list, if it's there, or {\tt None} if it's not.
-\index{bisect@{\tt bisect} module}
-
-\index{bisect module}
-\index{module!bisect}
-
-Or you could read the documentation of the {\tt bisect} module
-and use that!
-
-\end{exercise}
-
-Bisection search can be much faster than linear search, but
-it requires the sequence to be in order, which might require
-extra work.
-
-There is another data structure, called a {\bf hashtable} that
-is even faster---it can do a search in constant time---and it
-doesn't require the items to be sorted.  Python dictionaries
-are implemented using hashtables, which is why most dictionary
-operations, including the {\tt in} operator, are constant time.
-
-
-\section{Hashtables}
-\label{hashtable}
-
-To explain how hashtables work and why their performance is so
-good, I start with a simple implementation of a map and
-gradually improve it until it's a hashtable.
-\index{hashtable}
-
-I use Python to demonstrate these implementations, but in real
-life you wouldn't write code like this in Python; you would just use a
-dictionary!  So for the rest of this chapter, you have to imagine that
-dictionaries don't exist and you want to implement a data structure
-that maps from keys to values.  The operations you have to
-implement are:
-
-\begin{description}
-
-\item[{\tt add(k, v)}:] Add a new item that maps from key {\tt k}
-to value {\tt v}.  With a Python dictionary, {\tt d}, this operation
-is written {\tt d[k] = v}.
-
-\item[{\tt get(target)}:] Look up and return the value that corresponds
-to key {\tt target}.  With a Python dictionary, {\tt d}, this operation
-is written {\tt d[target]} or {\tt d.get(target)}.
-
-\end{description}
-
-For now, I assume that each key only appears once.
-The simplest implementation of this interface uses a list of
-tuples, where each tuple is a key-value pair.
-\index{LinearMap@{\tt LinearMap}}
-
-\begin{verbatim}
-class LinearMap(object):
-
-    def __init__(self):
-        self.items = []
-
-    def add(self, k, v):
-        self.items.append((k, v))
-
-    def get(self, k):
-        for key, val in self.items:
-            if key == k:
-                return val
-        raise KeyError
-\end{verbatim}
-
-{\tt add} appends a key-value tuple to the list of items, which
-takes constant time.
-
-{\tt get} uses a {\tt for} loop to search the list:
-if it finds the target key it returns the corresponding value;
-otherwise it raises a {\tt KeyError}.
-So {\tt get} is linear.
-\index{KeyError@{\tt KeyError}}
-
-An alternative is to keep the list sorted by key.  Then {\tt get}
-could use a bisection search, which is $O(\log n)$.  But inserting a
-new item in the middle of a list is linear, so this might not be the
-best option.  There are other data structures (see
-  \url{http://en.wikipedia.org/wiki/Red-black_tree})  that can implement {\tt
-  add} and {\tt get} in log time, but that's still not as good as
-constant time, so let's move on.
-\index{red-black tree}
-
-One way to improve {\tt LinearMap} is to break the list of key-value
-pairs into smaller lists.  Here's an implementation called
-{\tt BetterMap}, which is a list of 100 LinearMaps.  As we'll see
-in a second, the order of growth for {\tt get} is still linear,
-but {\tt BetterMap} is a step on the path toward hashtables:
-\index{BetterMap@{\tt BetterMap}}
-
-\begin{verbatim}
-class BetterMap(object):
-
-    def __init__(self, n=100):
-        self.maps = []
-        for i in range(n):
-            self.maps.append(LinearMap())
-
-    def find_map(self, k):
-        index = hash(k) % len(self.maps)
-        return self.maps[index]
-
-    def add(self, k, v):
-        m = self.find_map(k)
-        m.add(k, v)
-
-    def get(self, k):
-        m = self.find_map(k)
-        return m.get(k)
-\end{verbatim}
-
-\verb"__init__" makes a list of {\tt n} {\tt LinearMap}s.
-
-\verb"find_map" is used by
-{\tt add} and {\tt get}
-to figure out which map to put the
-new item in, or which map to search.
-
-\verb"find_map" uses the built-in function {\tt hash}, which takes
-almost any Python object and returns an integer.  A limitation of this
-implementation is that it only works with hashable keys.  Mutable
-types like lists and dictionaries are unhashable.
-\index{hash function}
-
-Hashable objects that are considered equal return the same hash value,
-but the converse is not necessarily true: two different objects
-can return the same hash value.
-
-\verb"find_map" uses the modulus operator to wrap the hash values
-into the range from 0 to {\tt len(self.maps)}, so the result is a legal
-index into the list.  Of course, this means that many different
-hash values will wrap onto the same index.  But if the hash function
-spreads things out pretty evenly (which is what hash functions
-are designed to do), then we expect $n/100$ items per LinearMap.
-
-Since the run time of {\tt LinearMap.get} is proportional to the
-number of items, we expect BetterMap to be about 100 times faster
-than LinearMap.  The order of growth is still linear, but the
-leading coefficient is smaller.  That's nice, but still not
-as good as a hashtable.
-
-Here (finally) is the crucial idea that makes hashtables fast: if you
-can keep the maximum length of the LinearMaps bounded, {\tt
-  LinearMap.get} is constant time.  All you have to do is keep track
-of the number of items and when the number of
-items per LinearMap exceeds a threshold, resize the hashtable by
-adding more LinearMaps.
-\index{bounded}
-
-Here is an implementation of a hashtable:
-\index{HashMap}
-
-\begin{verbatim}
-class HashMap(object):
-
-    def __init__(self):
-        self.maps = BetterMap(2)
-        self.num = 0
-
-    def get(self, k):
-        return self.maps.get(k)
-
-    def add(self, k, v):
-        if self.num == len(self.maps.maps):
-            self.resize()
-
-        self.maps.add(k, v)
-        self.num += 1
-
-    def resize(self):
-        new_maps = BetterMap(self.num * 2)
-
-        for m in self.maps.maps:
-            for k, v in m.items:
-                new_maps.add(k, v)
-
-        self.maps = new_maps
-\end{verbatim}
-
-Each {\tt HashMap} contains a {\tt BetterMap}; \verb"__init__" starts
-with just 2 LinearMaps and initializes {\tt num}, which keeps track of
-the number of items.
-
-{\tt get} just dispatches to {\tt BetterMap}.  The real work happens
-in {\tt add}, which checks the number of items and the size of the
-{\tt BetterMap}: if they are equal, the average number of items per
-LinearMap is 1, so it calls {\tt resize}.
-
-{\tt resize} make a new {\tt BetterMap}, twice as big as the previous
-one, and then ``rehashes'' the items from the old map to the new.
-
-Rehashing is necessary because changing the number of LinearMaps
-changes the denominator of the modulus operator in
-\verb"find_map".  That means that some objects that used
-to wrap into the same LinearMap will get split up (which is
-what we wanted, right?).
-\index{rehashing}
-
-Rehashing is linear, so
-{\tt resize} is linear, which might seem bad, since I promised
-that {\tt add} would be constant time.  But remember that
-we don't have to resize every time, so {\tt add} is usually
-constant time and only occasionally linear.  The total amount
-of work to run {\tt add} $n$ times is proportional to $n$,
-so the average time of each {\tt add} is constant time!
-\index{constant time}
-
-To see how this works, think about starting with an empty
-HashTable and adding a sequence of items.  We start with 2 LinearMaps,
-so the first 2 adds are fast (no resizing required).  Let's
-say that they take one unit of work each.  The next add
-requires a resize, so we have to rehash the first two
-items (let's call that 2 more units of work) and then
-add the third item (one more unit).  Adding the next item
-costs 1 unit, so the total so far is
-6 units of work for 4 items.
-
-The next {\tt add} costs 5 units, but the next three
-are only one unit each, so the total is 14 units for the
-first 8 adds.
-
-The next {\tt add} costs 9 units, but then we can add 7 more
-before the next resize, so the total is 30 units for the
-first 16 adds.
-
-After 32 adds, the total cost is 62 units, and I hope you are starting
-to see a pattern.  After $n$ adds, where $n$ is a power of two, the
-total cost is $2n - 2$ units, so the average work per add is
-a little less than 2 units.  When $n$ is a power of two, that's
-the best case; for other values of $n$ the average work is a little
-higher, but that's not important.  The important thing is that it
-is $O(1)$.
-\index{average cost}
-
-Figure~\ref{fig.hash} shows how this works graphically.  Each
-block represents a unit of work.  The columns show the total
-work for each add in order from left to right: the first two
-{\tt adds} cost 1 units, the third costs 3 units, etc.
+Figure~\ref{chap02-4} shows the result.
 
 \begin{figure}
-\centerline{\includegraphics[width=5.5in]{figs/towers.pdf}}
-\caption{The cost of a hashtable add.\label{fig.hash}}
+\centerline{\includegraphics[width=3.5in]{figs/chap02-4.pdf}}
+\caption{An ER graph with {\tt n=10} and {\tt p=0.3}.}
+\label{chap02-4}
 \end{figure}
 
-The extra work of rehashing appears as a sequence of increasingly
-tall towers with increasing space between them.  Now if you knock
-over the towers, amortizing the cost of resizing over all
-adds, you can see graphically that the total cost after $n$
-adds is $2n - 2$.
 
-An important feature of this algorithm is that when we resize the
-HashTable it grows geometrically; that is, we multiply the size by a
-constant.  If you increase the size
-arithmetically---adding a fixed number each time---the average time
-per {\tt add} is linear.
-\index{geometric resizing}
-
-You can download my implementation of HashMap from
-\url{thinkcomplex.com/Map.py}, but remember that there
-is no reason to use it; if you want a map, just use a Python dictionary.
-
-\begin{exercise}
-
-My implementation of {\tt HashMap} accesses the attributes of
-{\tt BetterMap} directly, which shows poor object-oriented design.
-\index{object-oriented design}
-
-\begin{enumerate}
-
-\item The special method \verb"__len__" is invoked by the built-in
-function {\tt len}.  Write a \verb"__len__" method for {\tt BetterMap}
-and use it in {\tt add}.
-\index{len@{\tt \_\_len\_\_}}
-
-\item Use a generator to write {\tt BetterMap.iteritems}, and use it
-in {\tt resize}.
-\index{generator}
-
-\end{enumerate}
-
-\end{exercise}
-
-
-\begin{exercise}
-
-A drawbacks of hashtables is that the elements have to be hashable,
-which usually means they have to be immutable.  That's why, in Python,
-you can use tuples but not lists as keys in a dictionary.  An
-alternative is to use a tree-based map.
-
-Write an implementation of the map interface called
-{\tt TreeMap} that uses a red-black tree to perform {\tt add}
-and {\tt get} in log time.
-\index{red-black tree}
-\index{TreeMap@{\tt TreeMap}}
-
-\end{exercise}
-
-
-
-\section{Summing lists}
-\label{growth_experiment}
-
-Suppose you have a bunch of lists and you want to join them up
-into a single list.  There are three ways you might do that
-in Python:
-\index{summing lists}
-
-\begin{itemize}
-
-\item You could use the {\tt +=} operator:
-
-\begin{verbatim}
-    total = []
-    for x in t:
-        total += x
-\end{verbatim}
-
-\item Or the {\tt extend} method:
-
-\begin{verbatim}
-    total = []
-    for x in t:
-        total.extend(x)
-\end{verbatim}
-
-\item Or the built-in function {\tt sum}:
-
-\begin{verbatim}
-    total = sum(t, [])
-\end{verbatim}
-
-The second argument to {\tt sum} is the initial value for the total.
-
-\end{itemize}
-
-Without knowing how {\tt +=} and {\tt extend} and {\tt sum} are
-implemented, it is hard to analyze their performance.  For example,
-if {\tt total += x} creates a new list every time, the loop
-is quadratic; but if it modifies {\tt total}, it's linear.
-\index{+=@{\tt +=} operator}
-\index{extend@{\tt extend}}
-\index{sum@{\tt sum}}
-
-To find out, we could read the source code, but as an exercise, let's see
-if we can figure it out by measuring run times.
-
-A simple way to measure the run time of a program is to use
-the function {\tt times} in the {\tt os} module, which returns
-a tuple of floats indicating the time your process has used
-(see the documentation for details).  I use a function, {\tt etime},
-which returns the sum of ``user time'' and ``system time'' which
-is usually what we care about for performance measurement:
-\index{os module@{\tt os} module}
-\index{user time}
-\index{system time}
-
-\begin{verbatim}
-import os
-
-def etime():
-    """See how much user and system time this process has used
-    so far and return the sum."""
-
-    user, sys, chuser, chsys, real = os.times()
-    return user+sys
-\end{verbatim}
-
-To measure the elapsed time of a function you can call
-{\tt etime} twice and compute the difference:
-
-\begin{verbatim}
-    start = etime()
-
-    # put the code you want to measure here
-
-    end = etime()
-    elapsed = end - start
-\end{verbatim}
-
-Alternatively, if you use IPython, you can use the
-{\tt timeit} command. See \url{ipython.scipy.org}.
-\index{IPython}
-\index{timeit@{\tt timeit}}
-
-If an algorithm is quadratic, we expect the run time, $t$
-as a function of input size, $n$, to look like this:
-\index{quadratic}
-
-\[ t = a n^2 + b n + c \]
-
-Where $a$, $b$ and $c$ are unknown coefficients.  If you take
-the log of both sides you get:
-
-\[ \log t \sim \log a + 2 \log n \]
-
-For large values of $n$, the non-leading terms are insignificant
-and this approximation is pretty good.  So if we plot $t$
-versus $n$ on a log-log scale, we expect a straight line
-with slope 2.
-\index{log-log scale}
-
-Similarly if the algorithm is linear, we expect a line with
-slope 1.
-\index{linear}
-
-I wrote three functions that concatenate lists: \verb"sum_plus" uses
-{\tt +=}; \verb"sum_extend" uses {\tt list.extend}; and \verb"sum_sum"
-uses {\tt sum}.  I timed them for a range of {\tt n} and plotted the
-results on a log-log scale.  Figures~\ref{listsum1} and \ref{listsum2}
-show the results.
-
-\begin{figure}
-\centerline{\includegraphics[height=2.5in]{figs/listsum1.pdf}}
-\caption{Runtime versus {\tt n}.  The dashed lines have slope 1.\label{listsum1}}
-\end{figure}
-
-\begin{figure}
-\centerline{\includegraphics[height=2.5in]{figs/listsum2.pdf}}
-\caption{Runtime versus {\tt n}.  The dashed line has slope 2.\label{listsum2}}
-\end{figure}
-
-In Figure~\ref{listsum1} I fit a line with slope 1 to the curves.
-The data fit this line well, so we conclude
-that these implementations are linear.  The implementation for {\tt +=}
-is faster by a constant factor because it takes some time
-to look up the {\tt extend} method each time through the loop.
-
-In Figure~\ref{listsum2} the data fit a line with slope 2, so the
-implementation of {\tt sum} is quadratic.
-\index{quadratic}
-
-
-\section{{\tt pyplot}}
-\index{pyplot@{\tt pyplot}}
-\label{pyplot}
-
-To make the figures in this section I used {\tt pyplot}, which is part of
-{\tt matplotlib}.  If {\tt matplotlib} is not part of your Python
-installation, you might have to install it, or you can use another
-library to make plots.
-\index{pyplot}
-\index{matplotlib}
-
-Here's an example that makes a simple plot:
-
-\begin{verbatim}
-import matplotlib.pyplot as pyplot
-
-pyplot.plot(xs, ys)
-scale = 'log'
-pyplot.xscale(scale)
-pyplot.yscale(scale)
-pyplot.title('')
-pyplot.xlabel('n')
-pyplot.ylabel('run time (s)')
-pyplot.show()
-\end{verbatim}
-
-The import statement makes {\tt matplotlib.pyplot} accessible
-with the shorter name {\tt pyplot}.
-
-{\tt plot} takes a list of $x$-values and a list of $y$-values and
-plots them.  The lists have to have the same length.
-{\tt xscale} and {\tt yscale} make the axes either linear or logarithmic.
-
-{\tt title}, {\tt xlabel} and {\tt ylabel} are self-explanatory.
-Finally, {\tt show} displays the plot on the screen.  You could also
-use {\tt savefig} to save the plot in a file.
-
-Documentation of {\tt pyplot} is at \url{http://matplotlib.sourceforge.net/}.
-
-
-\begin{exercise}
-
-Test the performance of
-{\tt LinearMap}, {\tt BetterMap} and {\tt HashMap}; see if you
-can characterize their order of growth.
-
-You can download my map implementations from
-\url{thinkcomplex.com/Map.py}, and the code I used in this section
-from \url{thinkcomplex.com/listsum.py}.
-
-You will have to find a range
-of {\tt n} that is big enough to show asymptotic behavior, but small
-enough to run quickly.
-
-\end{exercise}
-
-
-\section{List comprehensions}
-
-One of the most common programming patterns is to traverse
-a list while building a new list.
-\index{list comprehension}
-\index{traverse list}
-
-Here is an example that computes the square of each element in
-a list and accumulates the results:
-
-\begin{verbatim}
-    res = []
-    for x in t:
-        res.append(x**2)
-\end{verbatim}
-
-This pattern is so common that Python provides a more
-concise syntax for it, called a {\bf list comprehension}.
-In this context, the sense of ``comprehend'' is something
-  like ``contain'' rather than ``understand.''  See
-  \url{http://en.wikipedia.org/wiki/List_comprehension}.
-
-Here's what it looks like:
-
-\begin{verbatim}
-    res = [x**2 for x in t]
-\end{verbatim}
-
-This expression yields the same result as the previous loop.  List
-comprehensions tend to be fast because the loop is executed in C
-rather than Python.  The drawback is that they are harder to debug.
-
-List comprehensions can include an {\tt if} clause that selects a
-subset of the items.  The following example makes a
-list of the positive elements in {\tt t}:
-
-\begin{verbatim}
-    res = [x for x in t if x > 0]
-\end{verbatim}
-
-The following is a common idiom for making a list of tuples, where
-each tuple is a value and a key from a dictionary:
-\index{list of tuples}
-
-\begin{verbatim}
-    res = [(v, k) for k, v in d.iteritems()]
-\end{verbatim}
-
-In this case it is safe to use
-{\tt iteritems}, rather than {\tt items}, because
-the loop does not modify the dictionary; and it is likely to be
-faster because it doesn't have to make a list, just an iterator.
-\index{iteritems@{\tt iteritems}}
-
-It is also possible to nest {\tt for} loops inside
-a list comprehension.  The following example builds a list
-of Edges between each pair of vertices in {\tt vs}:
-
-\begin{verbatim}
-    edges = [Edge(v, w) for v in vs for w in vs if v is not w]
-\end{verbatim}
-
-That's pretty concise, but complicated comprehensions can be
-hard to read, so use them sparingly.
-
-\begin{exercise}
-
-Review the methods your wrote in {\tt Graph.py} and see if any
-can be rewritten using list comprehensions.
-\index{graph methods}
-
-\end{exercise}
-
-
-\chapter{Small world graphs}
 
 \section{Analysis of graph algorithms}
 
@@ -2810,80 +1538,23 @@ vertices in constant time turns out to be non-trivial.
 \index{queue}
 
 
-\section{FIFO implementation}
 
-A FIFO is a data structure that provides the following operations:
-\index{FIFO queue}
 
-\begin{description}
 
-\item[append:] Add a new item to the end of the queue.
 
-\item[pop:] Remove and return the item at the front of the queue.
 
-\end{description}
 
-There are several good implementations of this data structure.
-One is the {\bf doubly-linked list}, which
-you can read about at \url{http://en.wikipedia.org/wiki/Doubly-linked_list}.
-Another is a circular buffer, which you can read about at
-\url{http://en.wikipedia.org/wiki/Circular_buffer}.
-\index{doubly-linked list}
-\index{circular buffer}
+
+\section{Exercises}
+
+
 
 \begin{exercise}
 
-Write an implementation of a FIFO using either a doubly-linked
-list or a circular buffer.
+Write a Graph method named \verb"is_connected" that returns
+{\tt True} if the Graph is connected and {\tt False} otherwise.
 
 \end{exercise}
-
-Yet another possibility is to use a Python dictionary and
-two indices: {\tt nextin} keeps track of the back of the queue; {\tt
-  nextout} keeps track of the front.  The dictionary maps from
-integer indices to values.
-\index{dictionary}
-
-Here is an implementation based on Raymond Hettinger's recipe
-at \url{http://code.activestate.com/recipes/68436/}.
-\index{DictFifo@{\tt DictFifo}}
-
-\begin{verbatim}
-class DictFifo(object):
-
-    def __init__(self):
-        self.nextin = 0
-        self.nextout = 0
-        self.data = {}
-
-    def append(self, value):
-        self.data[self.nextin] = value
-        self.nextin += 1
-
-    def pop(self, n=-1):
-        value = self.data.pop(self.nextout)
-        self.nextout += 1
-        return value
-\end{verbatim}
-
-{\tt append} stores the new item and increments {\tt nextin};
-both operations are constant time.
-
-{\tt pop} removes the last item and increments {\tt nextout}.  Again,
-both operations are constant time.
-
-As yet another alternative,
-the Python {\tt collections} module provides an object called a {\tt
-  deque}, which stands for ``double-ended queue''.  It is supposed to
-be pronounced ``deck,'' but many people say ``deek.''  A Python deque
-can be adapted to implement a FIFO.
-\index{deque}
-\index{double-ended queue}
-
-You can read about deques at \url{http://en.wikipedia.org/wiki/Deque}
-and get the details of the Python implementation at
-\url{docs.python.org/lib/deque-objects.html}.
-
 
 \begin{exercise}
 
@@ -2913,6 +1584,45 @@ Then use a FIFO implementation to fix the errors and confirm
 that your algorithm is linear.
 
 \end{exercise}
+
+
+
+
+
+\begin{exercise}
+
+Write a method named \verb"add_regular_edges" that starts with an
+edgeless graph and adds edges so that every vertex has the same
+degree.  The {\bf degree} of a node is the number of edges it is
+connected to.
+\index{regular graph}
+\index{degree}
+
+To create a regular graph with degree 2 you would do something
+like this:
+%
+\begin{verbatim}
+vertices = [ ... list of Vertices ... ]
+g = Graph(vertices, [])
+g.add_regular_edges(2)
+\end{verbatim}
+%
+It is not always possible to create a regular graph
+with a given degree, so you should figure out and document the
+preconditions for this method.
+
+To test your code, you might want to create a file named
+{\tt GraphTest.py} that imports {\tt Graph.py} and
+{\tt GraphWorld.py}, then generates and displays the graphs
+you want to test.
+
+\end{exercise}
+
+
+
+
+
+\chapter{Small world graphs}
 
 
 \section{Stanley Milgram}
@@ -8119,6 +6829,921 @@ costs and benefits.  You can read more about Game Theory at
 % END OF CASE STUDIES
 
 \appendix
+
+\chapter{Analysis of algorithms}
+
+Analysis of algorithms is the branch of computer science that studies
+the performance of algorithms, especially their run time and space
+requirements.  See \url{http://en.wikipedia.org/wiki/Analysis_of_algorithms}.
+\index{algorithm}
+\index{analysis of algorithms}
+
+%\url{http://en.wikipedia.org/wiki/Run-time_analysis}
+
+The practical goal of algorithm analysis is to predict the performance
+of different algorithms in order to guide design decisions.
+
+During the 2008 United States Presidential Campaign, candidate
+Barack Obama was asked to perform an impromptu analysis when
+he visited Google.  Chief executive Eric Schmidt jokingly asked him
+for ``the most efficient way to sort a million 32-bit integers.''
+Obama had apparently been tipped off, because he quickly
+replied, ``I think the bubble sort would be the wrong way to go.''
+See \url{http://www.youtube.com/watch?v=k4RRi_ntQc8}.
+\index{Obama, Barack}
+\index{Schmidt, Eric}
+\index{bubble sort}
+
+This is true: bubble sort is conceptually simple but slow for
+large datasets.  The answer Schmidt was probably looking for is
+``radix sort'' (see \url{http://en.wikipedia.org/wiki/Radix_sort})\footnote{
+But if you get a question like this in an interview, I think
+a better answer is, ``The fastest way to sort a million integers
+is to use whatever sort function is provided by the language
+I'm using.  Its performance is good enough for the vast majority
+of applications, but if it turned out that my application was too
+slow, I would use a profiler to see where the time was being
+spent.  If it looked like a faster sort algorithm would have
+a significant effect on performance, then I would look
+around for a good implementation of radix sort.''}.
+\index{radix sort}
+
+So the goal of algorithm analysis is to make meaningful
+comparisons between algorithms, but there are some problems:
+\index{comparing algorithms}
+
+\begin{itemize}
+
+\item The relative performance of the algorithms might
+depend on characteristics of the hardware, so one algorithm
+might be faster on Machine A, another on Machine B.
+The general solution to this problem is to specify a
+{\bf machine model} and analyze the number of steps, or
+operations, an algorithm requires under a given model.
+\index{machine model}
+
+\item Relative performance might depend on the details of
+the dataset.  For example, some sorting
+algorithms run faster if the data are already partially sorted;
+other algorithms run slower in this case.
+A common way to avoid this problem is to analyze the
+{\bf worst case} scenario.  It is also sometimes useful to
+analyze average case performance, but it is usually harder,
+and sometimes it is not clear what set of cases to average over.
+\index{worst case}
+\index{average case}
+
+\item Relative performance also depends on the size of the
+problem.  A sorting algorithm that is fast for small lists
+might be slow for long lists.
+The usual solution to this problem is to express run time
+(or number of operations) as a function of problem size,
+and to compare the functions {\bf asymptotically} as the problem
+size increases.
+\index{asymptotic analysis}
+
+\end{itemize}
+
+The good thing about this kind of comparison that it lends
+itself to simple classification of algorithms.  For example,
+if I know that the run time of Algorithm A tends to be
+proportional to the size of the input, $n$, and Algorithm B
+tends to be proportional to $n^2$, then I
+expect A to be faster than B for large values of $n$.
+
+This kind of analysis comes with some caveats, but we'll get
+to that later.
+
+
+\section{Order of growth}
+
+Suppose you have analyzed two algorithms and expressed
+their run times in terms of the size of the input:
+Algorithm A takes $100 n + 1$ steps to solve a problem with
+size $n$; Algorithm B takes $n^2 + n + 1$ steps.
+\index{order of growth}
+
+The following table shows the run time of these algorithms
+for different problem sizes:
+
+\begin{tabular}{|r|r|r|}
+\hline
+Input     &   Run time of     & Run time of \\
+size      &   Algorithm A     & Algorithm B \\
+\hline
+10        &   1 001           & 111         \\
+100       &   10 001          & 10 101         \\
+1 000     &   100 001         & 1 001 001         \\
+10 000    &   1 000 001       & $> 10^{10}$         \\
+\hline
+\end{tabular}
+
+At $n=10$, Algorithm A looks pretty bad; it takes almost 10 times
+longer than Algorithm B.  But for $n=100$ they are about the same, and
+for larger values A is much better.
+
+The fundamental reason is that for large values of $n$, any function
+that contains an $n^2$ term will grow faster than a function whose
+leading term is $n$.  The {\bf leading term} is the term with the
+highest exponent.
+\index{leading term}
+\index{exponent}
+
+For Algorithm A, the leading term has a large coefficient, 100, which
+is why B does better than A for small $n$.  But regardless of the
+coefficients, there will always be some value of $n$ where $a n^2 > b
+n$.
+\index{leading coefficient}
+
+The same argument applies to the non-leading terms.  Even if the run
+time of Algorithm A were $n + 1000000$, it would still be better than
+Algorithm B for sufficiently large $n$.
+
+In general, we expect an algorithm with a smaller leading term to be a
+better algorithm for large problems, but for smaller problems, there
+may be a {\bf crossover point} where another algorithm is better.  The
+location of the crossover point depends on the details of the
+algorithms, the inputs, and the hardware, so it is usually ignored for
+purposes of algorithmic analysis.  But that doesn't mean you can forget
+about it.
+\index{crossover point}
+
+If two algorithms have the same leading order term, it is hard to say
+which is better; again, the answer depends on the details.  So for
+algorithmic analysis, functions with the same leading term
+are considered equivalent, even if they have different coefficients.
+
+An {\bf order of growth} is a set of functions whose asymptotic growth
+behavior is considered equivalent.  For example, $2n$, $100n$ and $n +
+1$ belong to the same order of growth, which is written $O(n)$ in
+{\bf Big-Oh notation} and often called {\bf linear} because every function
+in the set grows linearly with $n$.
+\index{big-oh notation}
+\index{linear growth}
+
+All functions with the leading term $n^2$ belong to $O(n^2)$; they are
+{\bf quadratic}, which is a fancy word for functions with the
+leading term $n^2$.
+\index{quadratic growth}
+
+The following table shows some of the orders of growth that
+appear most commonly in algorithmic analysis,
+in increasing order of badness.
+\index{badness}
+
+\begin{tabular}{|r|r|r|}
+\hline
+Order of     &   Name      \\
+growth       &               \\
+\hline
+$O(1)$             & constant \\
+$O(\log_b n)$      & logarithmic (for any $b$) \\
+$O(n)$             & linear \\
+$O(n \log_b n)$    & ``en log en'' \\
+$O(n^2)$           & quadratic     \\
+$O(n^3)$           & cubic     \\
+$O(c^n)$           & exponential (for any $c$)    \\
+\hline
+\end{tabular}
+
+For the logarithmic terms, the base of the logarithm doesn't matter;
+changing bases is the equivalent of multiplying by a constant, which
+doesn't change the order of growth.  Similarly, all exponential
+functions belong to the same order of growth regardless of the base of
+the exponent.
+Exponential functions grow very quickly, so exponential algorithms are
+only useful for small problems.
+\index{logarithmic growth}
+\index{exponential growth}
+
+
+\begin{exercise}
+
+Read the Wikipedia page on Big-Oh notation at
+\url{http://en.wikipedia.org/wiki/Big_O_notation} and
+answer the following questions:
+
+\begin{enumerate}
+
+\item What is the order of growth of $n^3 + n^2$?
+What about $1000000 n^3 + n^2$?
+What about $n^3 + 1000000 n^2$?
+
+\item What is the order of growth of $(n^2 + n) \cdot (n + 1)$?  Before
+  you start multiplying, remember that you only need the leading term.
+
+\item If $f$ is in $O(g)$, for some unspecified function $g$, what can
+  we say about $a f + b$?
+
+\item If $f_1$ and $f_2$ are in $O(g)$, what can we say about $f_1 + f_2$?
+
+\item If  $f_1$ is in $O(g)$
+and $f_2$ is in $O(h)$,
+what can we say about  $f_1 + f_2$?
+
+\item If  $f_1$ is in $O(g)$ and $f_2$ is $O(h)$,
+what can we say about  $f_1 * f_2$?
+
+\end{enumerate}
+
+\end{exercise}
+
+
+Programmers who care about performance often find this kind of
+analysis hard to swallow.  They have a point: sometimes the
+coefficients and the non-leading terms make a real difference.  And
+sometimes the details of the hardware, the programming language, and
+the characteristics of the input make a big difference.  And for small
+problems asymptotic behavior is irrelevant.
+\index{practical analysis of algorithms}
+
+But if you keep those caveats in mind, algorithmic analysis is a
+useful tool.  At least for large problems, the ``better'' algorithms
+is usually better, and sometimes it is {\em much} better.  The
+difference between two algorithms with the same order of growth is
+usually a constant factor, but the difference between a good algorithm
+and a bad algorithm is unbounded!
+\index{unbounded}
+
+
+\section{Analysis of basic Python operations}
+
+Most arithmetic operations are constant time; multiplication
+usually takes longer than addition and subtraction, and division
+takes even longer, but these run times don't
+depend on the magnitude of the operands.  Very large integers
+are an exception; in that case the run time increases
+with the number of digits.
+\index{analysis of primitives}
+
+Indexing operations---reading or writing elements in a sequence
+or dictionary---are also constant time, regardless of the size
+of the data structure.
+\index{indexing}
+
+A {\tt for} loop that traverses a sequence or dictionary is
+usually linear, as long as all of the operations in the body
+of the loop are constant time.  For example, adding up the
+elements of a list is linear:
+
+\begin{verbatim}
+    total = 0
+    for x in t:
+        total += x
+\end{verbatim}
+
+The built-in function {\tt sum} is also linear because it does
+the same thing, but it tends to be faster because it is a more
+efficient implementation; in the language of algorithmic analysis,
+it has a smaller leading coefficient.
+
+If you use the same loop to ``add'' a list of strings, the
+run time is quadratic
+because string concatenation is linear.
+\index{string concatenation}
+
+The string method {\tt join} is usually faster because it is
+linear in the total length of the strings.
+\index{join@{\tt join}}
+
+As a rule of thumb, if the body of a loop is in $O(n^a)$ then
+the whole loop is in $O(n^{a+1})$.  The exception is if you can
+show that the loop exits after a constant number of iterations.
+If a loop runs $k$ times regardless of $n$, then
+the loop is in $O(n^a)$, even for large $k$.
+
+Multiplying by $k$ doesn't change the order of growth, but neither
+does dividing.  So if the body of a loop is in $O(n^a)$ and it runs $n
+/ k$ times, the loop is in $O(n^{a+1})$, even for large $k$.
+
+Most string and tuple operations are linear, except indexing and {\tt
+  len}, which are constant time.  The built-in functions {\tt min} and
+{\tt max} are linear.  The run-time of a slice operation is
+proportional to the length of the output, but independent of the size
+of the input.
+\index{string methods}
+\index{tuple methods}
+
+All string methods are linear, but if the lengths of
+the strings are bounded by a constant---for example, operations on single
+characters---they are considered constant time.
+
+Most list methods are linear, but there are some exceptions:
+\index{list methods}
+
+\begin{itemize}
+
+\item Adding an element to the end of a list is constant time on
+average; when it runs out of room it occasionally gets copied
+to a bigger location, but the total time for $n$ operations
+is $O(n)$, so we say that the ``amortized'' time for one
+operation is $O(1)$.
+
+\item Removing an element from the end of a list is constant time.
+
+\item Sorting is $O(n \log n)$.
+\index{sorting}
+
+\end{itemize}
+
+Most dictionary operations and methods are constant time, but
+there are some exceptions:
+\index{dictionary methods}
+
+\begin{itemize}
+
+\item The run time of {\tt copy} is proportional to the number of
+  elements, but not the size of the elements (it copies references,
+  not the elements themselves).
+
+\item The run time of {\tt update} is
+  proportional to the size of the dictionary passed as a parameter,
+  not the dictionary being updated.
+
+\item {\tt keys}, {\tt values} and {\tt items} are linear because they
+  return new lists; {\tt iterkeys}, {\tt itervalues} and {\tt
+    iteritems} are constant time because they return iterators.  But
+  if you loop through the iterators, the loop will be linear.  Using
+  the ``iter'' functions saves some overhead, but it doesn't change
+  the order of growth unless the number of items you access is
+  bounded.
+
+\end{itemize}
+
+The performance of dictionaries is one of the minor miracles of
+computer science.  We will see how they work in
+Section~\ref{hashtable}.
+
+
+\begin{exercise}
+
+Read the Wikipedia page on sorting algorithms at
+\url{http://en.wikipedia.org/wiki/Sorting_algorithm} and answer
+the following questions:
+\index{sorting}
+
+\begin{enumerate}
+
+\item What is a ``comparison sort?'' What is the best worst-case order
+  of growth for a comparison sort?  What is the best worst-case order
+  of growth for any sort algorithm?
+\index{comparison sort}
+
+\item What is the order of growth of bubble sort, and why does Barack
+  Obama think it is ``the wrong way to go?''
+
+\item What is the order of growth of radix sort?  What preconditions
+  do we need to use it?
+
+\item What is a stable sort and why might it matter in practice?
+\index{stable sort}
+
+\item What is the worst sorting algorithm (that has a name)?
+
+\item What sort algorithm does the C library use?  What sort algorithm
+  does Python use?  Are these algorithms stable?  You might have to
+  Google around to find these answers.
+
+\item Many of the non-comparison sorts are linear, so why does does
+  Python use an $O(n \log n)$ comparison sort?
+
+\end{enumerate}
+
+\end{exercise}
+
+
+\section{Analysis of search algorithms}
+
+A {\bf search} is an algorithm that takes a collection and a target
+item and determines whether the target is in the collection, often
+returning the index of the target.
+\index{search}
+
+The simplest search algorithm is a ``linear search,'' which traverses
+the items of the collection in order, stopping if it finds the target.
+In the worst case it has to traverse the entire collection, so the run
+time is linear.
+\index{linear search}
+
+The {\tt in} operator for sequences uses a linear search; so do string
+methods like {\tt find} and {\tt count}.
+\index{in@{\tt in} operator}
+
+If the elements of the sequence are in order, you can use a {\bf
+  bisection search}, which is $O(\log n)$.  Bisection search is
+similar to the algorithm you probably use to look a word up in a
+dictionary (a real dictionary, not the data structure).  Instead of starting at
+the beginning and checking each item in order, you start with the item
+in the middle and check whether the word you are looking for comes
+before or after.  If it comes before, then you search the first half
+of the sequence.  Otherwise you search the second half.  Either way,
+you cut the number of remaining items in half.  \index{bisection
+  search}
+
+If the sequence has 1,000,000 items, it will take about 20 steps to
+find the word or conclude that it's not there.  So that's about 50,000
+times faster than a linear search.
+
+\begin{exercise}
+
+Write a function called {\tt bisection} that takes a sorted list
+and a target value and returns the index of the value
+in the list, if it's there, or {\tt None} if it's not.
+\index{bisect@{\tt bisect} module}
+
+\index{bisect module}
+\index{module!bisect}
+
+Or you could read the documentation of the {\tt bisect} module
+and use that!
+
+\end{exercise}
+
+Bisection search can be much faster than linear search, but
+it requires the sequence to be in order, which might require
+extra work.
+
+There is another data structure, called a {\bf hashtable} that
+is even faster---it can do a search in constant time---and it
+doesn't require the items to be sorted.  Python dictionaries
+are implemented using hashtables, which is why most dictionary
+operations, including the {\tt in} operator, are constant time.
+
+
+\section{Hashtables}
+\label{hashtable}
+
+To explain how hashtables work and why their performance is so
+good, I start with a simple implementation of a map and
+gradually improve it until it's a hashtable.
+\index{hashtable}
+
+I use Python to demonstrate these implementations, but in real
+life you wouldn't write code like this in Python; you would just use a
+dictionary!  So for the rest of this chapter, you have to imagine that
+dictionaries don't exist and you want to implement a data structure
+that maps from keys to values.  The operations you have to
+implement are:
+
+\begin{description}
+
+\item[{\tt add(k, v)}:] Add a new item that maps from key {\tt k}
+to value {\tt v}.  With a Python dictionary, {\tt d}, this operation
+is written {\tt d[k] = v}.
+
+\item[{\tt get(target)}:] Look up and return the value that corresponds
+to key {\tt target}.  With a Python dictionary, {\tt d}, this operation
+is written {\tt d[target]} or {\tt d.get(target)}.
+
+\end{description}
+
+For now, I assume that each key only appears once.
+The simplest implementation of this interface uses a list of
+tuples, where each tuple is a key-value pair.
+\index{LinearMap@{\tt LinearMap}}
+
+\begin{verbatim}
+class LinearMap(object):
+
+    def __init__(self):
+        self.items = []
+
+    def add(self, k, v):
+        self.items.append((k, v))
+
+    def get(self, k):
+        for key, val in self.items:
+            if key == k:
+                return val
+        raise KeyError
+\end{verbatim}
+
+{\tt add} appends a key-value tuple to the list of items, which
+takes constant time.
+
+{\tt get} uses a {\tt for} loop to search the list:
+if it finds the target key it returns the corresponding value;
+otherwise it raises a {\tt KeyError}.
+So {\tt get} is linear.
+\index{KeyError@{\tt KeyError}}
+
+An alternative is to keep the list sorted by key.  Then {\tt get}
+could use a bisection search, which is $O(\log n)$.  But inserting a
+new item in the middle of a list is linear, so this might not be the
+best option.  There are other data structures (see
+  \url{http://en.wikipedia.org/wiki/Red-black_tree})  that can implement {\tt
+  add} and {\tt get} in log time, but that's still not as good as
+constant time, so let's move on.
+\index{red-black tree}
+
+One way to improve {\tt LinearMap} is to break the list of key-value
+pairs into smaller lists.  Here's an implementation called
+{\tt BetterMap}, which is a list of 100 LinearMaps.  As we'll see
+in a second, the order of growth for {\tt get} is still linear,
+but {\tt BetterMap} is a step on the path toward hashtables:
+\index{BetterMap@{\tt BetterMap}}
+
+\begin{verbatim}
+class BetterMap(object):
+
+    def __init__(self, n=100):
+        self.maps = []
+        for i in range(n):
+            self.maps.append(LinearMap())
+
+    def find_map(self, k):
+        index = hash(k) % len(self.maps)
+        return self.maps[index]
+
+    def add(self, k, v):
+        m = self.find_map(k)
+        m.add(k, v)
+
+    def get(self, k):
+        m = self.find_map(k)
+        return m.get(k)
+\end{verbatim}
+
+\verb"__init__" makes a list of {\tt n} {\tt LinearMap}s.
+
+\verb"find_map" is used by
+{\tt add} and {\tt get}
+to figure out which map to put the
+new item in, or which map to search.
+
+\verb"find_map" uses the built-in function {\tt hash}, which takes
+almost any Python object and returns an integer.  A limitation of this
+implementation is that it only works with hashable keys.  Mutable
+types like lists and dictionaries are unhashable.
+\index{hash function}
+
+Hashable objects that are considered equal return the same hash value,
+but the converse is not necessarily true: two different objects
+can return the same hash value.
+
+\verb"find_map" uses the modulus operator to wrap the hash values
+into the range from 0 to {\tt len(self.maps)}, so the result is a legal
+index into the list.  Of course, this means that many different
+hash values will wrap onto the same index.  But if the hash function
+spreads things out pretty evenly (which is what hash functions
+are designed to do), then we expect $n/100$ items per LinearMap.
+
+Since the run time of {\tt LinearMap.get} is proportional to the
+number of items, we expect BetterMap to be about 100 times faster
+than LinearMap.  The order of growth is still linear, but the
+leading coefficient is smaller.  That's nice, but still not
+as good as a hashtable.
+
+Here (finally) is the crucial idea that makes hashtables fast: if you
+can keep the maximum length of the LinearMaps bounded, {\tt
+  LinearMap.get} is constant time.  All you have to do is keep track
+of the number of items and when the number of
+items per LinearMap exceeds a threshold, resize the hashtable by
+adding more LinearMaps.
+\index{bounded}
+
+Here is an implementation of a hashtable:
+\index{HashMap}
+
+\begin{verbatim}
+class HashMap(object):
+
+    def __init__(self):
+        self.maps = BetterMap(2)
+        self.num = 0
+
+    def get(self, k):
+        return self.maps.get(k)
+
+    def add(self, k, v):
+        if self.num == len(self.maps.maps):
+            self.resize()
+
+        self.maps.add(k, v)
+        self.num += 1
+
+    def resize(self):
+        new_maps = BetterMap(self.num * 2)
+
+        for m in self.maps.maps:
+            for k, v in m.items:
+                new_maps.add(k, v)
+
+        self.maps = new_maps
+\end{verbatim}
+
+Each {\tt HashMap} contains a {\tt BetterMap}; \verb"__init__" starts
+with just 2 LinearMaps and initializes {\tt num}, which keeps track of
+the number of items.
+
+{\tt get} just dispatches to {\tt BetterMap}.  The real work happens
+in {\tt add}, which checks the number of items and the size of the
+{\tt BetterMap}: if they are equal, the average number of items per
+LinearMap is 1, so it calls {\tt resize}.
+
+{\tt resize} make a new {\tt BetterMap}, twice as big as the previous
+one, and then ``rehashes'' the items from the old map to the new.
+
+Rehashing is necessary because changing the number of LinearMaps
+changes the denominator of the modulus operator in
+\verb"find_map".  That means that some objects that used
+to wrap into the same LinearMap will get split up (which is
+what we wanted, right?).
+\index{rehashing}
+
+Rehashing is linear, so
+{\tt resize} is linear, which might seem bad, since I promised
+that {\tt add} would be constant time.  But remember that
+we don't have to resize every time, so {\tt add} is usually
+constant time and only occasionally linear.  The total amount
+of work to run {\tt add} $n$ times is proportional to $n$,
+so the average time of each {\tt add} is constant time!
+\index{constant time}
+
+To see how this works, think about starting with an empty
+HashTable and adding a sequence of items.  We start with 2 LinearMaps,
+so the first 2 adds are fast (no resizing required).  Let's
+say that they take one unit of work each.  The next add
+requires a resize, so we have to rehash the first two
+items (let's call that 2 more units of work) and then
+add the third item (one more unit).  Adding the next item
+costs 1 unit, so the total so far is
+6 units of work for 4 items.
+
+The next {\tt add} costs 5 units, but the next three
+are only one unit each, so the total is 14 units for the
+first 8 adds.
+
+The next {\tt add} costs 9 units, but then we can add 7 more
+before the next resize, so the total is 30 units for the
+first 16 adds.
+
+After 32 adds, the total cost is 62 units, and I hope you are starting
+to see a pattern.  After $n$ adds, where $n$ is a power of two, the
+total cost is $2n - 2$ units, so the average work per add is
+a little less than 2 units.  When $n$ is a power of two, that's
+the best case; for other values of $n$ the average work is a little
+higher, but that's not important.  The important thing is that it
+is $O(1)$.
+\index{average cost}
+
+Figure~\ref{fig.hash} shows how this works graphically.  Each
+block represents a unit of work.  The columns show the total
+work for each add in order from left to right: the first two
+{\tt adds} cost 1 units, the third costs 3 units, etc.
+
+\begin{figure}
+\centerline{\includegraphics[width=5.5in]{figs/towers.pdf}}
+\caption{The cost of a hashtable add.\label{fig.hash}}
+\end{figure}
+
+The extra work of rehashing appears as a sequence of increasingly
+tall towers with increasing space between them.  Now if you knock
+over the towers, amortizing the cost of resizing over all
+adds, you can see graphically that the total cost after $n$
+adds is $2n - 2$.
+
+An important feature of this algorithm is that when we resize the
+HashTable it grows geometrically; that is, we multiply the size by a
+constant.  If you increase the size
+arithmetically---adding a fixed number each time---the average time
+per {\tt add} is linear.
+\index{geometric resizing}
+
+You can download my implementation of HashMap from
+\url{thinkcomplex.com/Map.py}, but remember that there
+is no reason to use it; if you want a map, just use a Python dictionary.
+
+\begin{exercise}
+
+My implementation of {\tt HashMap} accesses the attributes of
+{\tt BetterMap} directly, which shows poor object-oriented design.
+\index{object-oriented design}
+
+\begin{enumerate}
+
+\item The special method \verb"__len__" is invoked by the built-in
+function {\tt len}.  Write a \verb"__len__" method for {\tt BetterMap}
+and use it in {\tt add}.
+\index{len@{\tt \_\_len\_\_}}
+
+\item Use a generator to write {\tt BetterMap.iteritems}, and use it
+in {\tt resize}.
+\index{generator}
+
+\end{enumerate}
+
+\end{exercise}
+
+
+\begin{exercise}
+
+A drawbacks of hashtables is that the elements have to be hashable,
+which usually means they have to be immutable.  That's why, in Python,
+you can use tuples but not lists as keys in a dictionary.  An
+alternative is to use a tree-based map.
+
+Write an implementation of the map interface called
+{\tt TreeMap} that uses a red-black tree to perform {\tt add}
+and {\tt get} in log time.
+\index{red-black tree}
+\index{TreeMap@{\tt TreeMap}}
+
+\end{exercise}
+
+
+
+\section{Summing lists}
+\label{growth_experiment}
+
+Suppose you have a bunch of lists and you want to join them up
+into a single list.  There are three ways you might do that
+in Python:
+\index{summing lists}
+
+\begin{itemize}
+
+\item You could use the {\tt +=} operator:
+
+\begin{verbatim}
+    total = []
+    for x in t:
+        total += x
+\end{verbatim}
+
+\item Or the {\tt extend} method:
+
+\begin{verbatim}
+    total = []
+    for x in t:
+        total.extend(x)
+\end{verbatim}
+
+\item Or the built-in function {\tt sum}:
+
+\begin{verbatim}
+    total = sum(t, [])
+\end{verbatim}
+
+The second argument to {\tt sum} is the initial value for the total.
+
+\end{itemize}
+
+Without knowing how {\tt +=} and {\tt extend} and {\tt sum} are
+implemented, it is hard to analyze their performance.  For example,
+if {\tt total += x} creates a new list every time, the loop
+is quadratic; but if it modifies {\tt total}, it's linear.
+\index{+=@{\tt +=} operator}
+\index{extend@{\tt extend}}
+\index{sum@{\tt sum}}
+
+To find out, we could read the source code, but as an exercise, let's see
+if we can figure it out by measuring run times.
+
+A simple way to measure the run time of a program is to use
+the function {\tt times} in the {\tt os} module, which returns
+a tuple of floats indicating the time your process has used
+(see the documentation for details).  I use a function, {\tt etime},
+which returns the sum of ``user time'' and ``system time'' which
+is usually what we care about for performance measurement:
+\index{os module@{\tt os} module}
+\index{user time}
+\index{system time}
+
+\begin{verbatim}
+import os
+
+def etime():
+    """See how much user and system time this process has used
+    so far and return the sum."""
+
+    user, sys, chuser, chsys, real = os.times()
+    return user+sys
+\end{verbatim}
+
+To measure the elapsed time of a function you can call
+{\tt etime} twice and compute the difference:
+
+\begin{verbatim}
+    start = etime()
+
+    # put the code you want to measure here
+
+    end = etime()
+    elapsed = end - start
+\end{verbatim}
+
+Alternatively, if you use IPython, you can use the
+{\tt timeit} command. See \url{ipython.scipy.org}.
+\index{IPython}
+\index{timeit@{\tt timeit}}
+
+If an algorithm is quadratic, we expect the run time, $t$
+as a function of input size, $n$, to look like this:
+\index{quadratic}
+
+\[ t = a n^2 + b n + c \]
+
+Where $a$, $b$ and $c$ are unknown coefficients.  If you take
+the log of both sides you get:
+
+\[ \log t \sim \log a + 2 \log n \]
+
+For large values of $n$, the non-leading terms are insignificant
+and this approximation is pretty good.  So if we plot $t$
+versus $n$ on a log-log scale, we expect a straight line
+with slope 2.
+\index{log-log scale}
+
+Similarly if the algorithm is linear, we expect a line with
+slope 1.
+\index{linear}
+
+I wrote three functions that concatenate lists: \verb"sum_plus" uses
+{\tt +=}; \verb"sum_extend" uses {\tt list.extend}; and \verb"sum_sum"
+uses {\tt sum}.  I timed them for a range of {\tt n} and plotted the
+results on a log-log scale.  Figures~\ref{listsum1} and \ref{listsum2}
+show the results.
+
+\begin{figure}
+\centerline{\includegraphics[height=2.5in]{figs/listsum1.pdf}}
+\caption{Runtime versus {\tt n}.  The dashed lines have slope 1.\label{listsum1}}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[height=2.5in]{figs/listsum2.pdf}}
+\caption{Runtime versus {\tt n}.  The dashed line has slope 2.\label{listsum2}}
+\end{figure}
+
+In Figure~\ref{listsum1} I fit a line with slope 1 to the curves.
+The data fit this line well, so we conclude
+that these implementations are linear.  The implementation for {\tt +=}
+is faster by a constant factor because it takes some time
+to look up the {\tt extend} method each time through the loop.
+
+In Figure~\ref{listsum2} the data fit a line with slope 2, so the
+implementation of {\tt sum} is quadratic.
+\index{quadratic}
+
+
+\section{{\tt pyplot}}
+\index{pyplot@{\tt pyplot}}
+\label{pyplot}
+
+To make the figures in this section I used {\tt pyplot}, which is part of
+{\tt matplotlib}.  If {\tt matplotlib} is not part of your Python
+installation, you might have to install it, or you can use another
+library to make plots.
+\index{pyplot}
+\index{matplotlib}
+
+Here's an example that makes a simple plot:
+
+\begin{verbatim}
+import matplotlib.pyplot as pyplot
+
+pyplot.plot(xs, ys)
+scale = 'log'
+pyplot.xscale(scale)
+pyplot.yscale(scale)
+pyplot.title('')
+pyplot.xlabel('n')
+pyplot.ylabel('run time (s)')
+pyplot.show()
+\end{verbatim}
+
+The import statement makes {\tt matplotlib.pyplot} accessible
+with the shorter name {\tt pyplot}.
+
+{\tt plot} takes a list of $x$-values and a list of $y$-values and
+plots them.  The lists have to have the same length.
+{\tt xscale} and {\tt yscale} make the axes either linear or logarithmic.
+
+{\tt title}, {\tt xlabel} and {\tt ylabel} are self-explanatory.
+Finally, {\tt show} displays the plot on the screen.  You could also
+use {\tt savefig} to save the plot in a file.
+
+Documentation of {\tt pyplot} is at \url{http://matplotlib.sourceforge.net/}.
+
+
+\begin{exercise}
+
+Test the performance of
+{\tt LinearMap}, {\tt BetterMap} and {\tt HashMap}; see if you
+can characterize their order of growth.
+
+You can download my map implementations from
+\url{thinkcomplex.com/Map.py}, and the code I used in this section
+from \url{thinkcomplex.com/listsum.py}.
+
+You will have to find a range
+of {\tt n} that is big enough to show asymptotic behavior, but small
+enough to run quickly.
+
+\end{exercise}
+
+
+
 
 \chapter{Call for submissions}
 \label{submissions}
