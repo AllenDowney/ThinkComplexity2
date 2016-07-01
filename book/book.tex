@@ -13,88 +13,95 @@
 % http://greenteapress.com/complexity
 
 
-\documentclass{book}
-%\pdfminorversion=5
-%\pdfobjcompresslevel=2
+\documentclass[12pt]{book}
 
-\usepackage[width=5.5in,height=8.0in,
-  hmarginratio=3:2,vmarginratio=1:1]{geometry}
-
-\usepackage[T1]{fontenc}
-\usepackage{textcomp}
-\usepackage{mathpazo}
-
-\usepackage{url}
-\usepackage{fancyhdr}
-\usepackage{graphicx}
-\usepackage{amsmath, amsthm, amssymb}
-\usepackage{exercise}
-\usepackage{makeidx}
-\usepackage{setspace}
-\usepackage{hevea}
-\usepackage{verbatim}
-\usepackage{upquote}
-
-\newcommand{\thetitle}{Think Complexity}
-\newcommand{\theversion}{2.0.0}
-
-\title{\thetitle}
+\title{Think Complexity}
 \author{Allen B. Downey}
 
-% these styles get translated in CSS for the HTML version
-\newstyle{a:link}{color:purple;}
-\newstyle{p+p}{margin-top:1em;margin-bottom:1em}
-\newstyle{img}{border:0px}
+\newcommand{\thetitle}{Think Complexity}
+\newcommand{\thesubtitle}{Exploring Complexity Science in Python}
+\newcommand{\theauthors}{Allen B. Downey}
+\newcommand{\theversion}{2.0.1}
 
-% change the arrows in the HTML version
-\setlinkstext
-  {\imgsrc[ALT="Previous"]{back.png}}
-  {\imgsrc[ALT="Up"]{up.png}}
-  {\imgsrc[ALT="Next"]{next.png}}
+%%%% Both LATEX and PLASTEX
+
+\usepackage{graphicx}
+\usepackage{hevea}
+\usepackage{makeidx}
+\usepackage{setspace}
 
 \makeindex
+
+% automatically index glossary terms
+\newcommand{\term}[1]{%
+\item[#1:]\index{#1}}
+
+\usepackage{amsmath}
+\usepackage{amsthm}
+
+% format end of chapter excercises
+\newtheoremstyle{exercise}
+  {12pt}        % space above
+  {12pt}        % space below
+  {}            % body font
+  {}            % indent amount
+  {\bfseries}   % head font
+  {}            % punctuation
+  {12pt}        % head space
+  {}            % custom head
+\theoremstyle{exercise}
+\newtheorem{exercise}{Exercise}[chapter]
 
 \newif\ifplastex
 \plastexfalse
 
-\begin{document}
-
-\frontmatter
-
-% PLASTEX ONLY
+%%%% PLASTEX ONLY
 \ifplastex
-    \usepackage{localdef}
-    \maketitle
+
+\usepackage{localdef}
+
+\usepackage{url}
 
 \newcount\anchorcnt
 \newcommand*{\Anchor}[1]{%
   \@bsphack%
     \Hy@GlobalStepCount\anchorcnt%
-    \edef\@currentHref{anchor.\the\anchorcnt}% 
-    \Hy@raisedlink{\hyper@anchorstart{\@currentHref}\hyper@anchorend}% 
-    \M@gettitle{}\label{#1}% 
+    \edef\@currentHref{anchor.\the\anchorcnt}%
+    \Hy@raisedlink{\hyper@anchorstart{\@currentHref}\hyper@anchorend}%
+    \M@gettitle{}\label{#1}%
     \@esphack%
 }
 
+% code listing environments:
+% we don't need these for plastex because they get replaced
+% by preprocess.py
+%\newenvironment{code}{\begin{code}}{\end{code}}
+%\newenvironment{stdout}{\begin{code}}{\end{code}}
 
+% inline syntax formatting
+\newcommand{\py}{\verb}%}
+
+%%%% LATEX ONLY
 \else
-% skip the following for plastex
-
-\newtheorem{exercise}{Exercise}[chapter]
-
-
-% LATEXONLY
 
 \input{latexonly}
 
+\fi
+
+%%%% END OF PREAMBLE
+\begin{document}
+
+\frontmatter
+
+%%%% PLASTEX ONLY
+\ifplastex
+
+\maketitle
+
+%%%% LATEX ONLY
+\else
+
 \begin{latexonly}
-
-\renewcommand{\blankpage}{\thispagestyle{empty} \quad \newpage}
-
-%\blankpage
-%\blankpage
-
-% TITLE PAGES FOR LATEX VERSION
 
 %-half title--------------------------------------------------
 \thispagestyle{empty}
@@ -116,8 +123,8 @@ Version \theversion
 
 %--verso------------------------------------------------------
 
-\blankpage
-\blankpage
+\newpage
+\newpage
 %\clearemptydoublepage
 %\pagebreak
 %\thispagestyle{empty}
@@ -142,7 +149,7 @@ Version \theversion
 
 
 {\Large
-Allen B. Downey\\
+\theauthors \\
 }
 
 
@@ -162,8 +169,7 @@ Allen B. Downey\\
 \pagebreak
 \thispagestyle{empty}
 
-{\small
-Copyright \copyright ~2016 Allen B. Downey.
+Copyright \copyright ~2016 \theauthors.
 
 
 
@@ -181,39 +187,55 @@ Attribution-NonCommercial-ShareAlike 4.0 Unported International License:
 \url{http://creativecommons.org/licenses/by-nc-sa/4.0/}.
 
 If you are interested in distributing a commercial version of this
-work, please contact Allen B. Downey.
+work, please contact the author.
 
 The \LaTeX\ source for this book is available from
 
-\begin{verbatim}
+\begin{code}
       http://greenteapress.com/complexity
-\end{verbatim}
+\end{code}
 
-} % end small
+%--table of contents------------------------------------------
+
+\cleardoublepage
+\setcounter{tocdepth}{1}
+\tableofcontents
 
 \end{latexonly}
 
 
-% HTMLONLY
+% HTML title page------------------------------------------
 
 \begin{htmlonly}
 
-% TITLE PAGE FOR HTML VERSION
+\vspace{1em}
 
 {\Large \thetitle}
 
-{\large Allen B. Downey}
+{\large \theauthors}
 
 Version \theversion
+
+\vspace{1em}
+
+Copyright \copyright ~2016 \theauthors.
+
+Permission is granted to copy, distribute, and/or modify this work
+under the terms of the Creative Commons
+Attribution-NonCommercial-ShareAlike 4.0 International License, which is
+available at \url{http://creativecommons.org/licenses/by-nc-sa/4.0/}.
+
+\vspace{1em}
 
 \setcounter{chapter}{-1}
 
 \end{htmlonly}
 
-\fi
 % END OF THE PART WE SKIP FOR PLASTEX
+\fi
 
 \chapter{Preface}
+\label{preface}
 
 \section{Why I wrote this book}
 
@@ -397,18 +419,6 @@ Ursula Wolz.
 
 \normalsize
 
-\clearemptydoublepage
-
-% TABLE OF CONTENTS
-\begin{latexonly}
-
-\tableofcontents
-
-\clearemptydoublepage
-
-\end{latexonly}
-
-% START THE BOOK
 \mainmatter
 
 \chapter{Complexity Science}
@@ -989,45 +999,47 @@ in Section~\ref{???}.
 
 \section{What is a graph?}
 
-To most people a graph is a visual representation of a data set, like
-a bar chart or an EKG.  That's not what this chapter is about.
-\index{graph}
+\begin{figure}
+\centerline{\includegraphics[width=3.5in]{figs/chap02-1.pdf}}
+\caption{A directed graph that represents a social network.}
+\label{chap02-1}
+\end{figure}
 
-In this chapter, a {\bf graph} is an abstraction used to
-model a system that contains discrete, interconnected elements.  The
-elements are represented by {\bf nodes} (also called {\bf vertices})
+To most people a graph is a visual representation of a data set, like
+a bar chart or a plot of stock prices over time.  That's not what this
+chapter is about.  \index{graph}
+
+In this chapter, a {\bf graph} is a representation of
+a system that contains discrete, interconnected elements.  The
+elements are represented by {\bf nodes}
 and the interconnections are represented by {\bf edges}.
 \index{node}
 \index{edge}
 \index{vertex}
 
-For example, you could represent a road map with one node for each
-city and one edge for each road between cities.  Or you could
-represent a social network using one node for each person, with an
-edge between two people if they are ``friends'' and no edge otherwise.
+For example, you could represent a road map with a node for each
+city and an edge for each road between cities.  Or you could
+represent a social network using a node for each person, with an
+edge between two people if they are friends and no edge otherwise.
 \index{road network}
 \index{social network}
 
-In some graphs, edges have different lengths (sometimes
-called ``weights'' or ``costs'').  For example, in a road map, the
-length of an edge might represent the distance between
-two cities, or the travel time, or bus fare.
-In a social network there might be different kinds of
-edges to represent different kinds of relationships: friends,
-business associates, etc.
-\index{edge weight}
-\index{weight}
+In some graphs, edges have attributes like length, cost, or weight.
+For example, in a road map, the length of an edge might represent the
+distance between two cities, or the travel time.  In a
+social network there might be different kinds of edges to represent
+different kinds of relationships: friends, business associates, etc.
+\index{edge weight} \index{weight}
 
 Edges may be {\bf directed} or {\bf undirected}, depending on whether
-the relationship the represent is asymmetric or symmetric.  In a road
-map, you might represent a one-way street with a directed edge and a
-two-way street with an undirected edge.  In some social networks,
-like Facebook, friendship is symmetric: if $A$ is friends with $B$ then $B$
-is friends with $A$.
-But in Twitter, for example, the ``follows''
-relationship is not symmetric; if $A$ follows $B$, that doesn't imply
-that $B$ follows $A$.  So you might use undirected edges to represent
-a Facebook network and directed edges for Twitter.
+the relationships they represent are asymmetric or symmetric.  In a
+road map, you might represent a one-way street with a directed edge
+and a two-way street with an undirected edge.  In some social
+networks, like Facebook, friendship is symmetric: if $A$ is friends
+with $B$ then $B$ is friends with $A$.  But in Twitter, for example,
+the ``follows'' relationship is not symmetric; if $A$ follows $B$,
+that doesn't imply that $B$ follows $A$.  So you might use undirected
+edges to represent a Facebook network and directed edges for Twitter.
 \index{directed graph} \index{undirected graph}
 
 Graphs have interesting mathematical properties, and
@@ -1044,21 +1056,6 @@ with an edge between each consecutive pair.
 \index{graph algorithm}
 \index{path}
 
-Sometimes the connection between a real world problem and
-a graph algorithm is obvious.  In the road map example, it is
-not hard to imagine using a shortest path algorithm to find
-the route between two cities that minimizes distance (or time,
-or cost).
-\index{shortest distance}
-
-In other cases it takes more effort to represent a problem in a form
-that can be solved with a graph algorithm, and then interpret the
-solution.
-
-
-\section{Representing graphs}
-\label{graph.py}
-
 Graphs are usually drawn with squares or circles for nodes and lines
 for edges.  For example, the directed graph in Figure~\ref{chap02-1}
 might represent three people who ``follow'' each other on Twitter.
@@ -1067,81 +1064,16 @@ In this example, Alice and Bob follow each other and both follow
 Chuck, but Chuck follows no one.
 \index{representing graphs}
 
-\begin{figure}
-\centerline{\includegraphics[width=3.5in]{figs/chap02-1.pdf}}
-\caption{A directed graph that represents a social network.}
-\label{chap02-1}
-\end{figure}
-
 The undirected graph in Figure~\ref{chap02-2} shows four cities
-in the northeast United States with labels on the edges that
+in the northeast United States; the labels on the edges
 indicate driving time in hours.
 In this example the placement of the nodes corresponds
 roughly to the geography of the cities, but in general the layout
 of a graph is arbitrary.
 \index{graph layout}
 
-To represent graphs, we'll use a package called NetworkX,
-which is the most commonly used network library in Python.
-You can read more about it at \url{https://networkx.github.io/},
-but I'll explain it as we go along.
 
-We can create a directed graph by importing NetworkX and instantiating
-{\tt nx.DiGraph}:
-
-\begin{verbatim}
-import networkx as nx
-G = nx.DiGraph()
-\end{verbatim}
-
-It is conventional to import NetworkX as {\tt nx}.  At this
-point, {\tt G} is a {\tt DiGraph} object that contains no nodes
-and no edges.  We can add nodes using the \verb"add_node" method:
-
-\begin{verbatim}
-G.add_node('Alice')
-G.add_node('Bob')
-G.add_node('Chuck')
-\end{verbatim}
-
-Now we can use the {\tt nodes} method to get the list of nodes:
-
-\begin{verbatim}
->>> G.nodes()
-['Alice', 'Bob', 'Chuck']
-\end{verbatim}
-
-Adding edges works pretty much the same way:
-
-\begin{verbatim}
-G.add_edge('Alice', 'Bob')
-G.add_edge('Alice', 'Chuck')
-G.add_edge('Bob', 'Alice')
-G.add_edge('Bob', 'Chuck')
-\end{verbatim}
-
-And we can use {\tt edges} to get a list of edges:
-
-\begin{verbatim}
->>> G.edges()
-[('Alice', 'Bob'), ('Alice', 'Chuck'), ('Bob', 'Alice'), ('Bob', 'Chuck')]
-\end{verbatim}
-
-NetworkX provides several functions to represent graphs visually;
-\verb"draw_circular" arranges the nodes in a circle and connects them
-with edges:
-
-\begin{verbatim}
-nx.draw_circular(G, 
-                 node_color=COLORS[0], 
-                 node_size=2000, 
-                 with_labels=True)
-\end{verbatim}
-
-And that's the code I used to generate Figure~\ref{chap02-1}.
-{\tt COLORS} is a list of colors I like better than the defaults.
-The option \verb"with_labels" causes the nodes to be labeled;
-in the next example we'll see how to label the edges.
+\section{NetworkX}
 
 \begin{figure}
 \centerline{\includegraphics[width=3.5in]{figs/chap02-2.pdf}}
@@ -1149,89 +1081,152 @@ in the next example we'll see how to label the edges.
 \label{chap02-2}
 \end{figure}
 
-To generate Figure~\ref{chap02-2}, I started with a dictionary
+To represent graphs, we'll use a package called NetworkX,
+which is the most commonly used network library in Python.
+You can read more about it at \url{https://networkx.github.io/},
+but I'll explain it as we go along.
+
+We can create a directed graph by importing NetworkX and instantiating
+\py{nx.DiGraph}:
+
+\begin{code}
+import networkx as nx
+G = nx.DiGraph()
+\end{code}
+
+It is conventional to import NetworkX as \py{nx}.  At this
+point, \py{G} is a \py{DiGraph} object that contains no nodes
+and no edges.  We can add nodes using the \py{add_node}method:
+
+\begin{code}
+G.add_node('Alice')
+G.add_node('Bob')
+G.add_node('Chuck')
+\end{code}
+
+Now we can use the \py{nodes} method to get the list of nodes:
+
+\begin{code}
+>>> G.nodes()
+['Alice', 'Bob', 'Chuck']
+\end{code}
+
+Adding edges works pretty much the same way:
+
+\begin{code}
+G.add_edge('Alice', 'Bob')
+G.add_edge('Alice', 'Chuck')
+G.add_edge('Bob', 'Alice')
+G.add_edge('Bob', 'Chuck')
+\end{code}
+
+And we can use \py{edges} to get the list of edges:
+
+\begin{code}
+>>> G.edges()
+[('Alice', 'Bob'), ('Alice', 'Chuck'), 
+ ('Bob', 'Alice'), ('Bob', 'Chuck')]
+\end{code}
+
+NetworkX provides several functions for drawing graphs;
+\py{draw_circular}arranges the nodes in a circle and connects them
+with edges:
+
+\begin{code}
+nx.draw_circular(G, 
+                 node_color=COLORS[0], 
+                 node_size=2000, 
+                 with_labels=True)
+\end{code}
+
+And that's the code I use to generate Figure~\ref{chap02-1}.
+The option \py{with_labels}causes the nodes to be labeled;
+in the next example we'll see how to label the edges.
+
+To generate Figure~\ref{chap02-2}, I start with a dictionary
 that maps from each city name to its approximate longitude
 and latitude:
 
-\begin{verbatim}
+\begin{code}
 pos = dict(Albany=(-74, 43),
            Boston=(-71, 42),
            NYC=(-74, 41),
            Philly=(-75, 40))
-\end{verbatim}
+\end{code}
 
-Since this is an undirected graph, I instantiate {\tt nx.Graph}:
+Since this is an undirected graph, I instantiate \py{nx.Graph}:
 
-\begin{verbatim}
+\begin{code}
 G = nx.Graph()
-\end{verbatim}
+\end{code}
 
-Then I can use \verb"add_nodes_from" to iterate the keys of
-{\tt pos} and add them as nodes:
+Then I can use \py{add_nodes_from}to iterate the keys of
+\py{pos} and add them as nodes:
 
-\begin{verbatim}
+\begin{code}
 G.add_nodes_from(pos)
-\end{verbatim}
+\end{code}
 
 Next I'll make a dictionary that maps from each edge to the corresponding
 driving time:
 
-\begin{verbatim}
+\begin{code}
 drive_times = {('Albany', 'Boston'): 3,
                ('Albany', 'NYC'): 4,
                ('Boston', 'NYC'): 4,
                ('NYC', 'Philly'): 2}
-\end{verbatim}
+\end{code}
 
-Now I can use \verb"add_edges_from", which iterates the keys of
-\verb"drive_times" and add them as edges:
+Now I can use \py{add_edges_from}, which iterates the keys of
+\py{drive_times} and adds them as edges:
 
-\begin{verbatim}
+\begin{code}
 G.add_edges_from(drive_times)
-\end{verbatim}
+\end{code}
 
-Now instead of \verb"draw_circular", which arranges the nodes in 
-circle, I'll use \verb"draw", which takes {\tt pos} as the second
+Now instead of \py{draw_circular}, which arranges the nodes in 
+a circle, I'll use \py{draw}, which takes \py{pos} as the second
 parameter:
 
-\begin{verbatim}
+\begin{code}
 nx.draw(G, pos, 
         node_color=COLORS[1], 
         node_shape='s', 
         node_size=2500, 
         with_labels=True)
-\end{verbatim}
+\end{code}
 
-To add the edge labels, we use \verb"draw_networkx_edge_labels":
+\py{pos} is a dictionary that maps from each city to its coordinates;
+\py{draw} uses it to determine the locations of the nodes.
 
-\begin{verbatim}
+To add the edge labels, we use \py{draw_networkx_edge_labels}:
+
+\begin{code}
 nx.draw_networkx_edge_labels(G, pos, 
                              edge_labels=drive_times)
-\end{verbatim}
+\end{code}
 
+\py{drive_times} is a dictionary that maps from each edge, represented
+by a pair of city names, to the driving distance between them.
 And that's how I generated Figure~\ref{chap02-2}.
 
 In both of these examples, the nodes are strings, but in general they
 can be any hashable type.
 
 
-\section{Random graphs}
-
 \newcommand{\Erdos}{Erd\H{o}s}
 \newcommand{\Renyi}{R\'{e}nyi}
 
 \section{Random graphs}
 
-A random graph is just what it sounds like: a graph with edges
+A random graph is just what it sounds like: a graph with nodes and edges
 generated at random.  Of course, there are many random processes that
 can generate graphs, so there are many kinds of random graphs.
 \index{random graph}
 
-One of the more
-interesting kinds is the \Erdos-\Renyi~model, studied by
-Paul \Erdos 
-and Afr\'{e}d \Renyi~in the 1960s.
-\index{Renyi, Afred@\Renyi, Afr\'{e}d}
+One of the more interesting kinds is the \Erdos-\Renyi~model, studied
+by Paul \Erdos~and Alfr\'{e}d \Renyi~in the 1960s.
+\index{Renyi, Alfred@\Renyi, Afr\'{e}d}
 \index{Erdos, Paul@\Erdos, Paul}
 
 An \Erdos-\Renyi~graph (ER graph) is characterized by two parameters:
@@ -1240,19 +1235,22 @@ is an edge between any two nodes.
 See \url{http://en.wikipedia.org/wiki/Erdos-Renyi_model}.
 \index{Erdos-Renyi model@\Erdos-\Renyi~model}
 
-One of their surprising results is the existence of
-abrupt changes in the characteristics of random graphs as
-random edges are added.  This transition is sometimes called
-a ``phase change'' by analogy with physical systems that
-change state at some critical value of temperature.
-\index{phase chance}
+\Erdos~and \Renyi~studied the properties of these random graphs;
+one of their surprising results is the existence of
+abrupt changes in the properties of random graphs as
+random edges are added.
 \index{threshold value}
 
 One of the properties that displays this kind of transition is
-connectedness.  An undirected graph is {\bf connected} if there is a
+connectivity.  An undirected graph is {\bf connected} if there is a
 path from every node to every other node.
 
-In an ER graph, the critical value is
+In an ER graph, the probability that the graph is connected is very
+low when $p$ is small and nearly 1 when $p$ is large.  Between these
+two regimes, there is a rapid transition at a particular value of
+$p$, denoted $p^*$.
+
+\Erdos~and \Renyi~showed that this critical value is
 $p^* = \ln n / n$, where $n$ is the number of nodes.
 A random graph, $G(n, p)$, is unlikely to be connected
 if $p < p^*$ and very likely to be connected if $p > p^*$.
@@ -1262,49 +1260,7 @@ To test this claim, we'll develop algorithms to generate random
 graphs and check whether they are connected.
 
 
-\section{Generating ER graphs}
-
-I'll start by generating a {\bf complete} graph, which is a graph
-where every node is connected to every other.
-
-Here's a generator function that takes a list of nodes and enumerates
-all distinct pairs.  If you are not familiar with generator functions,
-you might want to read Appendix~\ref{???} and then come back:
-
-\begin{verbatim}
-def all_pairs(nodes):
-    for i, node1 in enumerate(nodes):
-        for j, node2 in enumerate(nodes):
-            if i>j:
-                yield node1, node2
-\end{verbatim}
-
-Now we can use \verb"all_pairs" to construct a complete graph:
-
-\begin{verbatim}
-def make_complete_graph(n):
-    G = nx.Graph()
-    nodes = range(n)
-    G.add_nodes_from(nodes)
-    G.add_edges_from(all_pairs(nodes))
-    return G
-\end{verbatim}
-
-\verb"make_complete_graph" takes the number of nodes, {\tt n}, and
-returns a new {\tt Graph} with {\tt n} nodes and edges between all
-pairs of nodes.
-
-The following code makes a complete graph with 10 nodes and draws it.
-
-\begin{verbatim}
-complete = make_complete_graph(10)
-nx.draw_circular(complete, 
-                 node_color=COLORS[2], 
-                 node_size=1000, 
-                 with_labels=True)
-\end{verbatim}
-
-Figure~\ref{chap02-3} shows the result.
+\section{Generating graphs}
 
 \begin{figure}
 \centerline{\includegraphics[width=3.5in]{figs/chap02-3.pdf}}
@@ -1312,29 +1268,87 @@ Figure~\ref{chap02-3} shows the result.
 \label{chap02-3}
 \end{figure}
 
+I'll start by generating a {\bf complete} graph, which is a graph
+where every node is connected to every other.
 
+Here's a generator function that takes a list of nodes and enumerates
+all distinct pairs.  If you are not familiar with generator functions,
+you might want to read Appendix~\ref{???} and then come back.
+
+\begin{code}
+def all_pairs(nodes):
+    for i, node1 in enumerate(nodes):
+        for j, node2 in enumerate(nodes):
+            if i>j:
+                yield node1, node2
+\end{code}
+
+We can use \py{all_pairs} to construct a complete graph:
+
+\begin{code}
+def make_complete_graph(n):
+    G = nx.Graph()
+    nodes = range(n)
+    G.add_nodes_from(nodes)
+    G.add_edges_from(all_pairs(nodes))
+    return G
+\end{code}
+
+\py{make_complete_graph} takes the number of nodes, \py{n}, and
+returns a new \py{Graph} with \py{n} nodes and edges between all
+pairs of nodes.
+
+The following code makes a complete graph with 10 nodes and draws it.
+
+\begin{code}
+complete = make_complete_graph(10)
+nx.draw_circular(complete, 
+                 node_color=COLORS[2], 
+                 node_size=1000, 
+                 with_labels=True)
+\end{code}
+
+Figure~\ref{chap02-3} shows the result.
+Soon we will modify this code to generate ER graphs, but first
+we'll develop functions to check whether a graph is connected.
 
 
 \section{Connected graphs}
 \label{bfs}
 
 A graph is {\bf connected} if there is a path from every node to every
-other node.  See \url{http://en.wikipedia.org/wiki/Connectivity_(graph_theory)}.
+other node.  
+See \url{http://en.wikipedia.org/wiki/Connectivity_(graph_theory)}.
 \index{connected graph}
 \index{path}
 
-% TODO: Why is this a useful thing to check?
+For many applications involving graphs, it is useful to
+check whether a graph is connected.  Fortunately, there is a
+simple algorithm that does it.
 
-There is a simple algorithm to check whether a graph is connected.
-You can start at any node and mark it as ``reachable''.  Then
-mark its neighbors (two nodes are {\bf neighbors} if they are
-connected by an edge.  Then mark the neighbor's neighbors, and so
+You can start at any node and check whether you can reach all
+other nodes.  If you can reach a node, $v$, you can reach any
+of the {\bf neighbors} of $v$, which is any node connected by
+$v$ by an edge.
+
+The \py{Graph} class provides a method called \py{neighbors}
+that returns a list of neighbors for a given node.  For
+example, in the complete graph we generated in the previous section:
+
+\begin{code}
+>>> complete.neighbors(0)
+[1, 2, 3, 4, 5, 6, 7, 8, 9]
+\end{code}
+
+Suppose we start at node $s$.  We can mark $s$ as ``reachable'',
+then we can mark its neighbors.
+Then we mark the neighbor's neighbors, and so
 on, until you can't reach any more nodes.  If all nodes are
 marked, the graph is connected.
 
 Here's what that looks like in Python:
 
-\begin{verbatim}
+\begin{code}
 def reachable_nodes(G, start):
     reachable = set()
     stack = [start]
@@ -1345,16 +1359,16 @@ def reachable_nodes(G, start):
         reachable.add(node)
         stack.extend(G.neighbors(node))
     return reachable
-\end{verbatim}
+\end{code}
 
-\verb"reachable_nodes" takes a {\tt Graph} and a starting node, {\tt
+\py{reachable_nodes} takes a \py{Graph} and a starting node, {\tt
   start}, and returns the set of nodes that can be reached from {\tt
   start}.
 
-Initially the set, {\tt reachable}, is empty, and we create a
-list called {\tt stack} that will keep track of nodes we have
+Initially the set, \py{reachable}, is empty, and we create a
+list called \py{stack} that keeps track of nodes we have
 discovered but not yet processed.  Initially the stack contains
-a single node, {\tt start}.
+a single node, \py{start}.
 
 Now, each time through the loop, we
 
@@ -1362,124 +1376,244 @@ Now, each time through the loop, we
 
 \item Remove one node from the stack.
 
-\item If the node is already in {\tt reachable}, we can go back
+\item If the node is already in \py{reachable}, we go back
 to Step 1.
 
-\item Otherwise, we add the node to {\tt reachable} and add its
-neighbors to the stack.  The {\tt neighbors} method returns a list
-of neighbors of the given node.
+\item Otherwise, we add the node to \py{reachable} and add its
+neighbors to the stack.
 
 \end{enumerate}
 
 When the stack is empty, we can't reach any more nodes, so we
-break out of the loop and return {\tt reachable}.
+break out of the loop and return \py{reachable}.
 
 As an example, we can find all nodes in the complete graph that
 are reachable from node 0:
 
-\begin{verbatim}
+\begin{code}
 >>> reachable_nodes(complete, 0)
 {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
-\end{verbatim}
+\end{code}
 
-Initially, the stack contains node 0 and {\tt reachable} is empty.
-The first time through the loop, node 0 is added to {\tt reachable}
+Initially, the stack contains node 0 and \py{reachable} is empty.
+The first time through the loop, node 0 is added to \py{reachable}
 and all the other nodes are added to the stack (since they are all
 neighbors of node 0).
 
-The next time through the loop, {\tt pop} returns the last element
-in the stack, which is node 9.  So node 9 gets added to {\tt reachable}
+The next time through the loop, \py{pop} returns the last element
+in the stack, which is node 9.  So node 9 gets added to \py{reachable}
 and its neighbors get added to the stack.  
 
 Notice that the same node can appear more than once in the stack;
 in fact, a node with $k$ neighbors will be added to the stack
-$k$ times.  But each node is only processed once, so the process
-has to terminate.
+$k$ times.  Later we will look for ways to make this algorithm
+more efficient.
 
-We can use \verb"reachable_nodes" to write \verb"is_connected":
+We can use \py{reachable_nodes} to write \py{is_connected}:
 
-\begin{verbatim}
+\begin{code}
 def is_connected(G):
     start = next(G.nodes_iter())
     reachable = reachable_nodes(G, start)
     return len(reachable) == len(G)
-\end{verbatim}
+\end{code}
 
-\verb"is_connected" chooses a starting node arbitrarily by calling
-\verb"nodes_iter", which returns an iterator object, and passing the
-result to {\tt next}, which returns the first node.
+\py{is_connected} chooses a starting node by calling
+\py{nodes_iter}, which returns an iterator object, and passing the
+result to \py{next}, which returns the first node.
 
-{\tt reachable} gets the set of nodes that can be reached from
-{\tt start}.  If the size of this set is the same as the size
+\py{reachable} gets the set of nodes that can be reached from
+\py{start}.  If the size of this set is the same as the size
 of the graph, that means we can reach all nodes, which means the
 graph is connected.
 
 A complete graph is, not surprisingly, connected:
 
-\begin{verbatim}
+\begin{code}
 >>> is_connected(complete)
 True
-\end{verbatim}
+\end{code}
 
 In the next section we will generate ER graphs and check whether they
-are complete.
+are connected.
 
 
 \section{Generating ER graphs}
+
+\begin{figure}
+\centerline{\includegraphics[width=3.5in]{figs/chap02-4.pdf}}
+\caption{An ER graph with \py{n=10} and \py{p=0.3}.}
+\label{chap02-4}
+\end{figure}
 
 The ER graph $G(n, p)$ contains $n$ nodes, and each pair of nodes is
 connected by an edge with probability $p$.  Generating an ER graph is
 similar to generating a complete graph.
 
-The following generator function enumerates all possible edges and uses
-a random number generator to choose which ones should be added to the graph:
+The following generator function enumerates all possible edges and
+uses a helper function, \py{flip}, to choose which ones should be
+added to the graph:
 
-\begin{verbatim}
+\begin{code}
 def random_pairs(nodes, p):
     for i, node1 in enumerate(nodes):
         for j, node2 in enumerate(nodes):
             if i>j and flip(p):
                 yield node1, node2
-\end{verbatim}
+\end{code}
 
-The helper function {\tt flip} returns {\tt True} with the
-given probability, {\tt p}, and {\tt False} with the complementary
-probability {\tt 1-p}.
+\py{flip} returns \py{True} with the
+given probability, \py{p}, and \py{False} with the complementary
+probability \py{1-p}:
 
-\begin{verbatim}
+\begin{code}
 from numpy.random import random
 
 def flip(p):
     return random() < p
-\end{verbatim}
+\end{code}
 
-Finally, \verb"make_random_graph" generates and returns the 
+Finally, \py{make_random_graph} generates and returns the 
 ER graph $G(n, p)$.
 
-\begin{verbatim}
+\begin{code}
 def make_random_graph(n, p):
     G = nx.Graph()
     nodes = range(n)
     G.add_nodes_from(nodes)
     G.add_edges_from(random_pairs(nodes, p))
     return G
-\end{verbatim}
+\end{code}
 
-Here's an example with {\tt p=0.5}:
+\py{make_random_graph} is almost identical to \py{make_complete_graph};
+the only difference is that it uses \py{random_pairs} instead of
+\py{all_pairs}.
 
-\begin{verbatim}
-random_graph = make_random_graph(10, 0.5)
-\end{verbatim}
+Here's an example with \py{p=0.3}:
+
+\begin{code}
+random_graph = make_random_graph(10, 0.3)
+\end{code}
+
+Figure~\ref{chap02-4} shows the result.  This graph turns out to be
+connected; in fact, most ER graphs with $n=10$ and
+$p=0.3$ are connected.  In the next section, we'll see how many.
 
 
-Figure~\ref{chap02-4} shows the result.
+
+\section{The probability of connectivity}
 
 \begin{figure}
-\centerline{\includegraphics[width=3.5in]{figs/chap02-4.pdf}}
-\caption{An ER graph with {\tt n=10} and {\tt p=0.3}.}
-\label{chap02-4}
+\centerline{\includegraphics[width=3.5in]{figs/chap02-5.pdf}}
+\caption{Probability of connectivity with $n=10$ and a range of $p$.
+The vertical line shows the predicted critical value.}
+\label{chap02-5}
 \end{figure}
 
+\begin{figure}
+\centerline{\includegraphics[width=3.5in]{figs/chap02-6.pdf}}
+\caption{Probability of connectivity for several values of $n$ and a range of $p$.}
+\label{chap02-6}
+\end{figure}
+
+For given values of $n$ and $p$, we would like to know the probability
+that $G(n, p)$ is connected.  We can estimate it by generating
+a large number of random graphs and counting how many are connected.
+Here's how:
+
+\begin{code}
+def prob_connected(n, p, iters=100):
+    count = 0
+    for i in range(iters):
+        random_graph = make_random_graph(n, p)
+        if is_connected(random_graph):
+            count += 1
+    return count/iters
+\end{code}
+
+\py{iters} is the number of random graphs we generate.  As we
+increase \py{iters}, the estimated probability gets more precise.
+
+\begin{code}
+>>> prob_connected(10, 0.3, iters=10000)
+0.6454
+\end{code}
+
+Out of 10000 ER graphs with these parameters, 6498 are connected, so
+we estimate that 65\% of them are connected.  So $0.3$ is near the
+critical value where the probability of connectivity goes from near 0
+to near 1.  According to \Erdos~and \Renyi, $p^* = \ln n / n = 0.23$.
+
+We can get a clearer view of the transition by estimating the probability
+of connectivity for a range of values of $p$:
+
+\begin{code}
+n = 10
+ps = np.logspace(-2.5, 0, 11)
+ys = [prob_connected(n, p) for p in ps]
+\end{code}
+
+Figure~\ref{chap02-5} shows the results, with
+a vertical line at $p^*$.  As expected, the transition from 0 to 1
+occurs near the predicted critical value.  With $p$ on a log scale,
+the transition is roughly symmetric.
+
+Figure~\ref{chap02-6} shows
+similar results for larger values of $n$.  As $n$ increases, the
+critical value gets smaller and the transition gets more abrupt.
+
+These experiments are consistent with the results \Erdos~and
+\Renyi~proved in their papers.
+
+
+\section{Exercises}
+
+The code for this chapter is in \py{chap02.ipynb}, which is a
+Jupyter notebook in the repository for this book.  For more information
+about working with this code, see Section~\ref{???}.
+
+\begin{exercise}
+Launch \py{chap02.ipynb} and run the code.  There are a few short
+exercises embedded in the notebook that you might want to try.
+\end{exercise}
+
+
+\begin{exercise}
+
+There are actually two kinds of ER graphs.  The one we generated in
+this chapter, $G(n, p)$, is characterized by two parameters, the number
+of nodes and the probability of an edge between nodes.
+
+An alternative definition, denoted $G(n, m)$, is also characterized by
+two parameters: the number of nodes, $n$, and the number of edges,
+$m$.  Under this definition, the number of edges is fixed, but their
+location is random.
+
+Repeat the experiments we did in this chapter using this alternative
+definition.  Here are a few suggestions for how to proceed:
+
+1. Write a function called \py{m_pairs} that takes a list of nodes
+and the number of edges, $m$, and returns a random selection of $m$
+edges.  A simple way to do that is to generate a list of all possible
+edges and use \py{random.sample}.
+
+2. Write a function called \py{make_m_graph} that takes $n$ and
+$m$ and returns a random graph with $n$ nodes and $m$ edges.
+
+3. Make a version of \py{prob_connected} that uses
+\py{make_m_graph} instead of \py{make_random_graph}.
+
+4. Compute the probability of connectivity for a range of values of $m$.
+
+How do the results of this experiment compare to the results using the
+first type of ER graph?
+
+\end{exercise}
+
+
+\chapter{Small world graphs}
+
+Overview
 
 
 \section{Analysis of graph algorithms}
@@ -1531,98 +1665,13 @@ marks---are constant time.
 
 Marking vertices is easy.  You can add an attribute to the {\tt
   Vertex} objects or put the marked ones in a set and use
-the {\tt in} operator.
+the \py{in} operator.
 
 But making a first-in-first-out (FIFO) queue that can add and remove
 vertices in constant time turns out to be non-trivial.
 \index{queue}
 
 
-
-
-
-
-
-
-
-\section{Exercises}
-
-
-
-\begin{exercise}
-
-Write a Graph method named \verb"is_connected" that returns
-{\tt True} if the Graph is connected and {\tt False} otherwise.
-
-\end{exercise}
-
-\begin{exercise}
-
-The following implementation of a BFS
-contains two performance errors.  What are
-they?  What is the actual order of growth for this algorithm?
-\index{order of growth}
-\index{performance error}
-
-\begin{verbatim}
-def bfs(top_node, visit):
-    """Breadth-first search on a graph, starting at top_node."""
-    visited = set()
-    queue = [top_node]
-    while len(queue):
-        curr_node = queue.pop(0)    # Dequeue
-        visit(curr_node)            # Visit the node
-        visited.add(curr_node)
-
-        # Enqueue non-visited and non-enqueued children
-        queue.extend(c for c in curr_node.children
-                     if c not in visited and c not in queue)
-\end{verbatim}
-
-Test this code with a range of graph sizes and check your analysis.
-Then use a FIFO implementation to fix the errors and confirm
-that your algorithm is linear.
-
-\end{exercise}
-
-
-
-
-
-\begin{exercise}
-
-Write a method named \verb"add_regular_edges" that starts with an
-edgeless graph and adds edges so that every vertex has the same
-degree.  The {\bf degree} of a node is the number of edges it is
-connected to.
-\index{regular graph}
-\index{degree}
-
-To create a regular graph with degree 2 you would do something
-like this:
-%
-\begin{verbatim}
-vertices = [ ... list of Vertices ... ]
-g = Graph(vertices, [])
-g.add_regular_edges(2)
-\end{verbatim}
-%
-It is not always possible to create a regular graph
-with a given degree, so you should figure out and document the
-preconditions for this method.
-
-To test your code, you might want to create a file named
-{\tt GraphTest.py} that imports {\tt Graph.py} and
-{\tt GraphWorld.py}, then generates and displays the graphs
-you want to test.
-
-\end{exercise}
-
-
-
-
-
-\chapter{Small world graphs}
 
 
 \section{Stanley Milgram}
@@ -1636,10 +1685,6 @@ the structure of social networks
 (\url{http://en.wikipedia.org/wiki/Small_world_phenomenon}).
 \index{Milgram, Stanley}
 \index{small world experiment}
-\index{Kansas}
-\index{Wichita, Kansas}
-\index{Massachusetts}
-\index{Sharon, Massachusetts}
 
 In the Small World Experiment, Milgram sent a package to several
 randomly-chosen people in Wichita, Kansas, with instructions asking
@@ -1650,6 +1695,10 @@ the letter directly to the target person only if they knew him
 personally; otherwise they were instructed to send it, and the same
 instructions, to a relative or friend they thought would be more
 likely to know the target person.
+\index{Kansas}
+\index{Wichita, Kansas}
+\index{Massachusetts}
+\index{Sharon, Massachusetts}
 
 Many of the letters were never delivered, but for the ones that
 were the average path length---the number of
@@ -1675,7 +1724,7 @@ links in the social network, they should have taken 32 hops, not six.
 \section{Watts and Strogatz}
 
 In 1998 Duncan Watts and Steven Strogatz published a paper in {\em
-  Nature}, ``Collective dynamics of 'small-world' networks,'' that
+  Nature}, ``Collective dynamics of 'small-world' networks'', that
 proposed an explanation for the small world phenomenon.  You can
 download it from
 \url{http://www.nature.com/nature/journal/v393/n6684/abs/393440a0.html}.
@@ -1695,7 +1744,7 @@ properties of these graphs, clustering and path length.
 \item Clustering is a measure of the ``cliquishness'' of the graph.
 In a graph, a {\bf clique} is a subset of nodes that are
 all connected to each other; in a social network, a clique is
-a set of friends who all know each other.  Watts and Strogatz
+a set of people who are all friends with each other.  Watts and Strogatz
 defined a clustering coefficient that quantifies the likelihood
 that two nodes that are connected to the same node are also
 connected to each other.
@@ -1770,20 +1819,20 @@ same structure as the graphs generated by their model?
 
 \begin{exercise}
 
-Create a file named {\tt SmallWorldGraph.py} and define a class named
-{\tt SmallWorldGraph} that inherits from {\tt RandomGraph}.
+Create a file named \py{SmallWorldGraph.py} and define a class named
+\py{SmallWorldGraph} that inherits from \py{RandomGraph}.
 
 If you did Exercise~\ref{ex.randomgraph} you can use your own
-{\tt RandomGraph.py}; otherwise you can download mine from
+\py{RandomGraph.py}; otherwise you can download mine from
 \url{thinkcomplex.com/RandomGraph.py}.
 
 \begin{enumerate}
 
-\item Write a method called {\tt rewire} that takes a probability {\tt
+\item Write a method called \py{rewire} that takes a probability {\tt
   p} as a parameter and, starting with a regular graph, rewires
 the graph using Watts and Strogatz's algorithm.
 
-\item Write a method called \verb"clustering_coefficient" that
+\item Write a method called \py{clustering_coefficient} that
 computes and returns the clustering coefficient as defined in the
 paper.
 
@@ -1875,75 +1924,6 @@ In the more general case, where the edges have different lengths,
 it is possible to discover a shorter path after you have
 discovered a longer path, so a little more work is needed.
 
-\begin{exercise}
-
-Write an implementation of Dijkstra's algorithm and use it
-to compute the average path length of a SmallWorldGraph.
-
-Make a graph that replicates the line marked $L(p)/L(0)$ in
-Figure 2 of the Watts and Strogatz paper.  Confirm that the
-average path length drops off quickly for
-small values of $p$.  What is the range of values for $p$
-that yield graphs with high clustering and low path lengths?
-
-\end{exercise}
-
-
-\begin{exercise}
-
-A natural question about the Watts and Strogatz paper is
-whether the small world phenomenon is specific to their
-generative model or whether other similar models yield
-the same qualitative result (high clustering and low path lengths).
-\index{small world phenomenon}
-
-To answer this question, choose a variation of the
-Watts and Strogatz model and replicate their Figure 2.
-There are two kinds of variation you might consider:
-
-\begin{itemize}
-
-\item Instead of starting with a regular graph, start with
-another graph with high clustering.  One option is a locally-connected
-graph where vertices are placed at random locations in the plane
-and each vertex is connected to its nearest $k$ neighbors.
-
-\item Experiment with different kinds of rewiring.
-
-\end{itemize}
-
-If a range of similar models yield similar behavior, we
-say that the results of the paper are {\bf robust}.
-\index{robust}
-
-\end{exercise}
-
-
-\begin{exercise}
-
-To compute the average path length in a SmallWorldGraph, you
-probably ran Dijkstra's single-source shortest path algorithm
-for each node in the graph.  In effect, you solved the
-``all-pairs shortest path'' problem, which finds the shortest path
-between all pairs of nodes.
-\index{shortest path}
-\index{all pairs shortest path}
-
-\begin{enumerate}
-
-\item Find an algorithm for the all-pairs shortest path problem
-and implement it.  Compare the run time with your
-``all-source Dijkstra'' algorithm.
-
-\item Which algorithm gives better order-of-growth run time
-as a function of the number of vertices and edges?  Why do you
-think Dijkstra's algorithm does better than the order-of-growth
-analysis suggests?
-
-\end{enumerate}
-
-\end{exercise}
-
 
 \section{What kind of explanation is {\em that}?}
 
@@ -2024,6 +2004,110 @@ speculative.  I encourage you to consider them skeptically
 and reach your own conclusions.
 
 
+
+\section{Exercises}
+
+\begin{exercise}
+
+The following implementation of a BFS
+contains two performance errors.  What are
+they?  What is the actual order of growth for this algorithm?
+\index{order of growth}
+\index{performance error}
+
+\begin{code}
+def bfs(top_node, visit):
+    """Breadth-first search on a graph, starting at top_node."""
+    visited = set()
+    queue = [top_node]
+    while len(queue):
+        curr_node = queue.pop(0)    # Dequeue
+        visit(curr_node)            # Visit the node
+        visited.add(curr_node)
+
+        # Enqueue non-visited and non-enqueued children
+        queue.extend(c for c in curr_node.children
+                     if c not in visited and c not in queue)
+\end{code}
+
+Test this code with a range of graph sizes and check your analysis.
+Then use a FIFO implementation to fix the errors and confirm
+that your algorithm is linear.
+
+\end{exercise}
+
+
+\begin{exercise}
+
+Write an implementation of Dijkstra's algorithm and use it
+to compute the average path length of a SmallWorldGraph.
+
+Make a graph that replicates the line marked $L(p)/L(0)$ in
+Figure 2 of the Watts and Strogatz paper.  Confirm that the
+average path length drops off quickly for
+small values of $p$.  What is the range of values for $p$
+that yield graphs with high clustering and low path lengths?
+
+\end{exercise}
+
+
+\begin{exercise}
+
+A natural question about the Watts and Strogatz paper is
+whether the small world phenomenon is specific to their
+generative model or whether other similar models yield
+the same qualitative result (high clustering and low path lengths).
+\index{small world phenomenon}
+
+To answer this question, choose a variation of the
+Watts and Strogatz model and replicate their Figure 2.
+There are two kinds of variation you might consider:
+
+\begin{itemize}
+
+\item Instead of starting with a regular graph, start with
+another graph with high clustering.  One option is a locally-connected
+graph where vertices are placed at random locations in the plane
+and each vertex is connected to its nearest $k$ neighbors.
+
+\item Experiment with different kinds of rewiring.
+
+\end{itemize}
+
+If a range of similar models yield similar behavior, we
+say that the results of the paper are {\bf robust}.
+\index{robust}
+
+\end{exercise}
+
+
+\begin{exercise}
+
+To compute the average path length in a SmallWorldGraph, you
+probably ran Dijkstra's single-source shortest path algorithm
+for each node in the graph.  In effect, you solved the
+``all-pairs shortest path'' problem, which finds the shortest path
+between all pairs of nodes.
+\index{shortest path}
+\index{all pairs shortest path}
+
+\begin{enumerate}
+
+\item Find an algorithm for the all-pairs shortest path problem
+and implement it.  Compare the run time with your
+``all-source Dijkstra'' algorithm.
+
+\item Which algorithm gives better order-of-growth run time
+as a function of the number of vertices and edges?  Why do you
+think Dijkstra's algorithm does better than the order-of-growth
+analysis suggests?
+
+\end{enumerate}
+
+\end{exercise}
+
+
+
 \chapter{Scale-free networks}
 \label{scale-free}
 
@@ -2064,13 +2148,13 @@ a straight line with slope $-s$ and intercept $\log c$.
 Write a program that reads a text from a file, counts word
 frequencies, and prints one line for each word, in descending order of
 frequency.  You can test it by downloading an out-of-copyright book in
-plain text format from {\tt gutenberg.net}.  You might want to remove
+plain text format from \py{gutenberg.net}.  You might want to remove
 punctuation from the words.
 
 If you need some help getting started, you can download
 \url{thinkcomplex.com/Pmf.py}, which provides an
-object named {\tt Hist} that maps from value to frequencies.
-\index{Hist@{\tt Hist}}
+object named \py{Hist} that maps from value to frequencies.
+\index{Hist@\py{Hist}}
 
 Plot the results and check whether they form
 a straight line.  For plotting suggestions, see Section~\ref{pyplot}.
@@ -2118,32 +2202,32 @@ For a list of $n$ values, the simplest way to compute CDF is to
 sort the values.  Then the CDF of the $i$th value (starting from 1)
 is $i/n$.
 
-I have written a class called {\tt Cdf} that provides functions
+I have written a class called \py{Cdf} that provides functions
 for creating and manipulating CDFs.  You can download it from
 \url{thinkcomplex.com/Cdf.py}.
-\index{Cdf@{\tt Cdf}}
+\index{Cdf@\py{Cdf}}
 
 As an example, we'll compute the CDF for the values \{1,2,2,4,5\}:
 
-\begin{verbatim}
+\begin{code}
 import Cdf
 cdf = Cdf.MakeCdfFromList([1,2,2,4,5])
-\end{verbatim}
+\end{code}
 
-{\tt MakeCdfFromList} can take any sequence or iterator.
-Once you have the {\tt Cdf}, you can find the probability, $CDF(x)$, for
+\py{MakeCdfFromList} can take any sequence or iterator.
+Once you have the \py{Cdf}, you can find the probability, $CDF(x)$, for
 a given value:
 
-\begin{verbatim}
+\begin{code}
 prob = cdf.Prob(2)
-\end{verbatim}
+\end{code}
 
 The result is 0.6, because 3/5 of the values are less than or equal to 2.
 You can also compute the value for a given probability:
 
-\begin{verbatim}
+\begin{code}
 value = cdf.Value(0.5)
-\end{verbatim}
+\end{code}
 
 The value with probability 0.5 is the median, which in this example is 2.
 
@@ -2152,18 +2236,18 @@ The value with probability 0.5 is the median, which in this example is 2.
 \caption{CDF of the values \{1,2,2,4,5\}.\label{fig.cdf}}
 \end{figure}
 
-To plot the {\tt Cdf}, you can use {\tt Render}, which returns
+To plot the \py{Cdf}, you can use \py{Render}, which returns
 a list of value-probability pairs.
 
-\begin{verbatim}
+\begin{code}
     xs, ps = cdf.Render()
     for x, p in zip(xs, ps):
         print x, p
-\end{verbatim}
+\end{code}
 
 The result is:
 
-\begin{verbatim}
+\begin{code}
 1 0.0
 1 0.2
 2 0.2
@@ -2172,14 +2256,14 @@ The result is:
 4 0.8
 5 0.8
 5 1.0
-\end{verbatim}
+\end{code}
 
 Each value appears twice.  That way when we plot the
 CDF, we get a stair-step pattern.
-\index{pyplot@{\tt pyplot}}
+\index{pyplot@\py{pyplot}}
 \index{plotting CDFs}
 
-\begin{verbatim}
+\begin{code}
 import matplotlib.pyplot as pyplot
 
     xs, ps = cdf.Render()
@@ -2190,7 +2274,7 @@ import matplotlib.pyplot as pyplot
     pyplot.xlabel('value, x')
     pyplot.ylabel('probability, CDF(x)')
     pyplot.show()
-\end{verbatim}
+\end{code}
 
 Figure~\ref{fig.cdf} shows the cumulative distribution
 function (CDF), for the values $(1,2,2,4,5)$.
@@ -2201,8 +2285,8 @@ a discontinuous function.
 
 \begin{exercise}
 
-Read the code in {\tt Cdf.py}.  What is the order of growth for
-{\tt MakeCdfFromList} and the methods {\tt Prob} and {\tt Value}?
+Read the code in \py{Cdf.py}.  What is the order of growth for
+\py{MakeCdfFromList} and the methods \py{Prob} and \py{Value}?
 \index{order of growth}
 \end{exercise}
 
@@ -2261,14 +2345,14 @@ with slope $-\lambda$.
 
 \begin{exercise}
 
-Write a function called \verb"plot_ccdf" that takes
+Write a function called \py{plot_ccdf} that takes
 a list of values and the corresponding list of probabilities
 and plots the CCDF on a log-$y$ scale.
 
-To test your function, use {\tt expovariate} from the {\tt random}
+To test your function, use \py{expovariate} from the \py{random}
 module to generate 100 values from an exponential distribution.  Plot
 the CCDF on a log-$y$ scale and see if it falls on a straight line.
-\index{random module@{\tt random} module}
+\index{random module@\py{random} module}
 
 \end{exercise}
 
@@ -2354,14 +2438,14 @@ straight line with slope $-\alpha$ and intercept $\alpha \log x_m$.
 
 \begin{exercise}
 
-Write a version of \verb"plot_ccdf" that plots the complementary
+Write a version of \py{plot_ccdf} that plots the complementary
 CCDF on a log-log scale.
 
-To test your function, use {\tt paretovariate} from the {\tt random}
+To test your function, use \py{paretovariate} from the \py{random}
 module to generate 100 values from a Pareto distribution.  Plot
 the CCDF on a log-$y$ scale and see if it falls on a straight line.
 What happens to the curve as you increase the number of values?
-\index{random module@{\tt random} module}
+\index{random module@\py{random} module}
 
 \end{exercise}
 
@@ -2869,9 +2953,9 @@ be computed directly from the indices; there is no need to follow a
 series of references.
 
 Here is a CA object that uses a NumPy array:
-\index{CA@{\tt CA}}
+\index{CA@\py{CA}}
 
-\begin{verbatim}
+\begin{code}
 import numpy
 
 class CA(object):
@@ -2882,46 +2966,46 @@ class CA(object):
         self.m = ratio*n + 1
         self.array = numpy.zeros((n, self.m), dtype=numpy.int8)
         self.next = 0
-\end{verbatim}
+\end{code}
 
-{\tt rule} is an integer in the range 0-255, which represents the
-CA rule table using Wolfram's encoding.  \verb"make_table" converts
+\py{rule} is an integer in the range 0-255, which represents the
+CA rule table using Wolfram's encoding.  \py{make_table} converts
 the rule to a dictionary that maps from neighborhood states to cell
 states.  For example, in Rule 50 the table maps from
 $(1,1,1)$ to 0.
 
-{\tt n} is the number of rows in the array, which is the number
-of time steps we will compute.  {\tt m} is the number of columns,
+\py{n} is the number of rows in the array, which is the number
+of time steps we will compute.  \py{m} is the number of columns,
 which is the number of cells.  To get started, I'll implement
 a finite array of cells.
 
-{\tt zeros} is provided by NumPy; it creates a new array with
-the given dimensions, {\tt n} by {\tt m}; {\tt dtype} stands
+\py{zeros} is provided by NumPy; it creates a new array with
+the given dimensions, \py{n} by \py{m}; \py{dtype} stands
 for ``data type,'' and it specifies the type of the array elements.
-{\tt int8} is an 8-bit integer, so we are limited to 256 states,
+\py{int8} is an 8-bit integer, so we are limited to 256 states,
 but that's no problem: we only need two.
-\index{zeros@{\tt zeros}}
+\index{zeros@\py{zeros}}
 
-{\tt next} is the index of the next time step.
+\py{next} is the index of the next time step.
 
 There are two common starting conditions for CAs: a single cell, or a row
-of random cells.  \verb"start_single" initializes the first row with
-a single cell and increments {\tt next}:
+of random cells.  \py{start_single} initializes the first row with
+a single cell and increments \py{next}:
 
-\begin{verbatim}
+\begin{code}
     def start_single(self):
         """Starts with one cell in the middle of the top row."""
         self.array[0, self.m/2] = 1
         self.next += 1
-\end{verbatim}
+\end{code}
 %
 The array index is a tuple that species the row and column of the cell,
 in that order.
 \index{array indexing}
 
-{\tt step} computes the next state of the CA:
+\py{step} computes the next state of the CA:
 
-\begin{verbatim}
+\begin{code}
     def step(self):
         i = self.next
         self.next += 1
@@ -2930,19 +3014,19 @@ in that order.
         t = self.table
         for j in xrange(1,self.m-1):
             a[i,j] = t[tuple(a[i-1, j-1:j+2])]
-\end{verbatim}
+\end{code}
 
-{\tt i} is the time step and the index of the row we are about to
-compute.  {\tt j} loops through the cells, skipping the first and
+\py{i} is the time step and the index of the row we are about to
+compute.  \py{j} loops through the cells, skipping the first and
 last, which are always off.
 
-Arrays support slice operations, so {\tt self.array[i-1, j-1:j+2]}
-gets three elements from row {\tt i-1}.
+Arrays support slice operations, so \py{self.array[i-1, j-1:j+2]}
+gets three elements from row \py{i-1}.
 Then we look up the neighborhood tuple in the table, get
 the next state, and store it in the array.
 \index{array slice}
 
-Array indexing is constant time, so {\tt step} is linear in $n$.
+Array indexing is constant time, so \py{step} is linear in $n$.
 Filling in the whole array is $O(nm)$.
 \index{order of growth}
 
@@ -2958,13 +3042,13 @@ Child classes extend the abstract class and implement the incomplete
 methods.  See \url{http://en.wikipedia.org/wiki/Abstract_type}.
 \index{abstract class}
 
-As an example, {\tt CADrawer}
+As an example, \py{CADrawer}
 defines an interface for drawing CAs; here is the definition:
 \index{implement}
 \index{interface}
-\index{CADrawer@{\tt CADrawer}}
+\index{CADrawer@\py{CADrawer}}
 
-\begin{verbatim}
+\begin{code}
 class Drawer(object):
     """Drawer is an abstract class that should not be instantiated.
     It defines the interface for a CA drawer; child classes of Drawer
@@ -3001,25 +3085,25 @@ class Drawer(object):
     def save(self, filename):
         """Saves the representation of the CA in filename."""
         raise UnimplementedMethodException
-\end{verbatim}
+\end{code}
 
 Abstract classes should not be instantiated; if you try, you
-get an {\tt UnimplementedMethodException}, which is a simple
-extension of {\tt Exception}:
-\index{UnimplementedMethodException@{\tt UnimplementedMethodException}}
+get an \py{UnimplementedMethodException}, which is a simple
+extension of \py{Exception}:
+\index{UnimplementedMethodException@\py{UnimplementedMethodException}}
 
-\begin{verbatim}
+\begin{code}
 class UnimplementedMethodException(Exception):
     """Used to indicate that a child class has not implemented an
     abstract method."""
-\end{verbatim}
+\end{code}
 
-To instantiate a {\tt CADrawer} you have to define a child class
+To instantiate a \py{CADrawer} you have to define a child class
 that implements the methods, then instantiate the child.
 \index{instantiate}
 
-{\tt CADrawer.py} provides three implementations, one that uses
-{\tt pyplot}, one that uses the Python Imaging Library (PIL), and
+\py{CADrawer.py} provides three implementations, one that uses
+\py{pyplot}, one that uses the Python Imaging Library (PIL), and
 one that generates Encapsulated Postscript (EPS).
 \index{pyplot}
 \index{Python Imaging Library}
@@ -3027,10 +3111,10 @@ one that generates Encapsulated Postscript (EPS).
 \index{Postscript}
 \index{EPS}
 
-Here is an example that uses {\tt PyplotDrawer} to display a
+Here is an example that uses \py{PyplotDrawer} to display a
 CA on the screen:
 
-\begin{verbatim}
+\begin{code}
     ca = CA(rule, n)
     ca.start_single()
     ca.loop(n-1)
@@ -3038,7 +3122,7 @@ CA on the screen:
     drawer = CADrawer.PyplotDrawer()
     drawer.draw(ca)
     drawer.show()
-\end{verbatim}
+\end{code}
 
 \begin{exercise}
 
@@ -3046,8 +3130,8 @@ Download \url{thinkcomplex.com/CA.py} and \url{thinkcomplex.com/CADrawer.py}
 and confirm that they run on your system; you might have to install
 additional Python packages.
 
-Create a new class called {\tt CircularCA} that extends
-{\tt CA} so that the cells are arranged in a ring.
+Create a new class called \py{CircularCA} that extends
+\py{CA} so that the cells are arranged in a ring.
 Hint: you might find it useful to add a column of ``ghost cells'' to
 the array.
 \index{CircularCA}
@@ -3119,7 +3203,7 @@ truly random because
 
 \item Many of them produce sequences with regularities that
 can be detected statistically.  For example, the original implementation
-of {\tt rand} in the C library used a linear congruential generator
+of \py{rand} in the C library used a linear congruential generator
 that yielded sequences with easily detectable serial correlations.
 \index{linear congruential generator}
 
@@ -3156,14 +3240,14 @@ This exercise asks you to implement and test several PRNGs.
 generators described at
 \url{http://en.wikipedia.org/wiki/Linear_congruential_generator}).
 
-\item Download {\tt DieHarder}, a random number test suite, from
+\item Download \py{DieHarder}, a random number test suite, from
 \url{http://phy.duke.edu/~rgb/General/rand_rate.php} and use it to
 test your PRNG.  How does it do?
 \index{DieHarder}
 
-\item Read the documentation of Python's {\tt random} module.
+\item Read the documentation of Python's \py{random} module.
 What PRNG does it use?  Test it using DieHarder.
-\index{random module@{\tt random} module}
+\index{random module@\py{random} module}
 
 \item Implement a Rule 30 CA on a ring with a few hundred cells,
 run it for as many time steps as you can in a reasonable amount
@@ -3432,16 +3516,16 @@ See \url{http://en.wikipedia.org/wiki/Turing_machine}.
 
 \begin{enumerate}
 
-\item Start with a copy of {\tt CA.py} named {\tt TM.py}.
+\item Start with a copy of \py{CA.py} named \py{TM.py}.
 Add attributes to represent the location of the head, the action
 table and the state register.
 
-\item Override {\tt step} to implement a Turing machine update.
+\item Override \py{step} to implement a Turing machine update.
 
 \item For the action table, use the rules for a 3-state busy beaver.
 \index{busy beaver}
 
-\item Write a class named {\tt TMDrawer} that generates an
+\item Write a class named \py{TMDrawer} that generates an
 image that represents the state of the tape and the position and
 state of the head.  For one example of what that might look like,
 see \url{http://mathworld.wolfram.com/TuringMachine.html}.
@@ -3718,11 +3802,11 @@ example, this array:
 \index{kernel}
 \index{weight}
 
-\begin{verbatim}
+\begin{code}
     kernel = numpy.array([[1,1,1],
                           [1,0,1],
                           [1,1,1]])
-\end{verbatim}
+\end{code}
 
 represents a neighborhood with eight neighbors, all with weight 1.
 
@@ -3730,19 +3814,19 @@ Convolution computes the weighted sum of the neighbors for each
 element of the array.  So this kernel computes the sum of the
 neighbors (not including the center element).
 
-For example, if {\tt array} represents a GoL grid with 1s for live
+For example, if \py{array} represents a GoL grid with 1s for live
 cells and 0s for dead cells we can use convolution to compute the
 number of neighbors for each cell.
 
-\begin{verbatim}
+\begin{code}
     import scipy.ndimage
     neighbors = scipy.ndimage.filters.convolve(array, kernel)
-\end{verbatim}
+\end{code}
 
-Here's an implementation of GoL using {\tt convolve}:
-\index{Life@{\tt Life}}
+Here's an implementation of GoL using \py{convolve}:
+\index{Life@\py{Life}}
 
-\begin{verbatim}
+\begin{code}
 import numpy
 import scipy.ndimage
 
@@ -3763,28 +3847,28 @@ class Life(object):
 
         boolean = (con==3) | (con==12) | (con==13)
         self.array = numpy.int8(boolean)
-\end{verbatim}
+\end{code}
 
-The attributes of the {\tt Life} object are {\tt n}, the number
-of rows and columns in the grid, {\tt mode}, which controls the
-behaviors of the boundary cells, {\tt array}, which represents
-the grid, and {\tt weights} which is the kernel used to count
+The attributes of the \py{Life} object are \py{n}, the number
+of rows and columns in the grid, \py{mode}, which controls the
+behaviors of the boundary cells, \py{array}, which represents
+the grid, and \py{weights} which is the kernel used to count
 the neighbors.
 
 The weight of the center cell is 10, so the number of neighbors
 is 0-8 for dead cells and 10-18 for live cells.
 
-In {\tt step}, {\tt boolean} is a boolean array with {\tt True}
-for live cells;  {\tt numpy.int8} converts it to integers.
+In \py{step}, \py{boolean} is a boolean array with \py{True}
+for live cells;  \py{numpy.int8} converts it to integers.
 
-To display an animated sequence of grids, I use {\tt pyplot}.
-Animation in {\tt pyplot} is a little awkward, but here's a class
+To display an animated sequence of grids, I use \py{pyplot}.
+Animation in \py{pyplot} is a little awkward, but here's a class
 that manages it:
 \index{animation}
 \index{pyplot}
-\index{LifeViewer@{\tt LifeViewer}}
+\index{LifeViewer@\py{LifeViewer}}
 
-\begin{verbatim}
+\begin{code}
 import matplotlib
 matplotlib.use('TkAgg')
 import matplotlib.pyplot as pyplot
@@ -3802,19 +3886,19 @@ class LifeViewer(object):
 
         self.pcolor = None
         self.update()
-\end{verbatim}
+\end{code}
 
-{\tt life} is a {\tt Life} object.  {\tt cmap} is a color map
-provided by {\tt matplotlib}; you can see the other
+\py{life} is a \py{Life} object.  \py{cmap} is a color map
+provided by \py{matplotlib}; you can see the other
 color maps at \url{http://www.scipy.org/Cookbook/Matplotlib/Show_colormaps}.
 \index{color map}
 
-{\tt self.fig} is a reference to the {\tt matplotlib} figure, and {\tt
+\py{self.fig} is a reference to the \py{matplotlib} figure, and {\tt
   self.pcolor} is a reference to the {\bf pseudocolor plot} created by
-{\tt update}:
+\py{update}:
 \index{pseudocolor plot}
 
-\begin{verbatim}
+\begin{code}
     def update(self):
         if self.pcolor:
             self.pcolor.remove()
@@ -3822,14 +3906,14 @@ color maps at \url{http://www.scipy.org/Cookbook/Matplotlib/Show_colormaps}.
         a = self.life.array
         self.pcolor = pyplot.pcolor(a, cmap=self.cmap)
         self.fig.canvas.draw()
-\end{verbatim}
+\end{code}
 
 If there is already a plot, we have to remove it; then we create
-a new one and invoke {\tt draw} to update the display.
+a new one and invoke \py{draw} to update the display.
 
 To run the animation, we need two methods:
 
-\begin{verbatim}
+\begin{code}
     def animate(self, steps=10):
         self.steps = steps
         self.fig.canvas.manager.window.after(1000, self.animate_callback)
@@ -3839,18 +3923,18 @@ To run the animation, we need two methods:
         for i in range(self.steps):
             self.life.step()
             self.update()
-\end{verbatim}
+\end{code}
 
-{\tt animate} gets the animation started.  It invokes {\tt pyplot.show},
+\py{animate} gets the animation started.  It invokes \py{pyplot.show},
 which sets up the GUI and waits for user events, but {\em first} it has
-to invoke {\tt window.after} to set up a callback, so that
-\verb"animate_callback" gets invoked after the window is set up.
+to invoke \py{window.after} to set up a callback, so that
+\py{animate_callback} gets invoked after the window is set up.
 The first argument is the delay in milliseconds.  The second
 argument is a bound method (see Chapter 19 of {\em Think Python}).
 \index{Think Python@{\em Think Python}}
 
-\verb"animate_callback" invokes {\tt step} to update the {\tt Life}
-object and {\tt update} to update the display.
+\py{animate_callback} invokes \py{step} to update the \py{Life}
+object and \py{update} to update the display.
 
 \begin{exercise}
 
@@ -3943,7 +4027,7 @@ a Turing machine or another machine known to be Turing complete.
 \begin{exercise}
 
 Many named patterns are available in portable file formats.
-Modify {\tt Life.py} to parse one of these formats and initialize
+Modify \py{Life.py} to parse one of these formats and initialize
 the grid.
 
 \end{exercise}
@@ -4156,7 +4240,7 @@ only white cells behind.
 
 Write an implementation of Langton's Ant.
 
-You can find a solution in {\tt TurmiteWorld.py}, which is
+You can find a solution in \py{TurmiteWorld.py}, which is
 part of Swampy.  See \url{http://thinkpython.com/swampy/}.
 \index{Swampy}
 
@@ -4280,8 +4364,8 @@ Can you find other CAs with non-integer fractal dimensions?  Be
 careful, you might have to run the CA for a while before
 $D_{box}$ converges.
 
-Here are some functions from {\tt numpy} you might find useful:
-{\tt cumsum}, {\tt log}, and {\tt polyfit}.
+Here are some functions from \py{numpy} you might find useful:
+\py{cumsum}, \py{log}, and \py{polyfit}.
 \index{NumPy}
 
 You can download my solution from \url{fractal.py}.
@@ -4627,24 +4711,24 @@ $H_{-n} = H_{N-n}$ to convert.
 
 \begin{exercise}
 
-Write a function named {\tt dft} that takes $h$, a sequence of $N$
+Write a function named \py{dft} that takes $h$, a sequence of $N$
 values, and returns the sequence $H_n$ with $n$ in the range $0$ to
 $N-1$.
 
 Python provides support for complex numbers as a built-in type.
-The function {\tt complex} takes two arguments, a real part
+The function \py{complex} takes two arguments, a real part
 and an imaginary part, and returns a complex number:
-\index{complex@{\tt complex}}
+\index{complex@\py{complex}}
 
-\begin{verbatim}
+\begin{code}
 >>> complex(1, 1)
 (1+1j)
-\end{verbatim}
+\end{code}
 
-The {\tt cmath} module provides math functions that support
+The \py{cmath} module provides math functions that support
 complex numbers:
 
-\begin{verbatim}
+\begin{code}
 >>> import cmath
 >>> i = complex(0, 1)
 >>> N = 128
@@ -4652,9 +4736,9 @@ complex numbers:
 (0.99879545620517241+0.049067674327418015j)
 >>> abs(complex(3, 4))
 5.0
-\end{verbatim}
+\end{code}
 
-What is the order of growth run time of {\tt dft}?
+What is the order of growth run time of \py{dft}?
 
 {\bf Hoisting} is a way to speed up code by moving an
 expression that does not change out of a loop.
@@ -4722,10 +4806,10 @@ This recursive algorithm is the Fast Fourier Transform.
 
 \begin{exercise}
 
-Write a function called {\tt fft} that implements
+Write a function called \py{fft} that implements
 the Fast Fourier Transform.  To check your function, you
-can compare it to the function {\tt fft} provided by
-the module {\tt numpy.fft}.
+can compare it to the function \py{fft} provided by
+the module \py{numpy.fft}.
 
 What is the order of growth run time of your implementation?
 What is the order of growth for the space required?
@@ -4735,8 +4819,8 @@ the sequence; instead, they transform the elements in place.  You can
 read \url{http://en.wikipedia.org/wiki/Butterfly_diagram} to get the details.
 \index{indexing}
 
-Once your {\tt fft} is working, write a function named
-{\tt psd} that takes a sequence, $h$, and returns its
+Once your \py{fft} is working, write a function named
+\py{psd} that takes a sequence, $h$, and returns its
 one-sided power spectral density, $P$.
 
 You can download my solution from \url{thinkcomplex.com/Fourier.py}.
@@ -5207,12 +5291,12 @@ a model in Resnick, {\em Turtles, Termites and Traffic Jams}.
 \index{Resnick, Mitchell}
 
 You can download my program from \url{thinkcomplex.com/Highway.py}.
-It uses {\tt TurtleWorld}, which is part of Swampy.
+It uses \py{TurtleWorld}, which is part of Swampy.
 See \url{thinkpython.com/swampy}.
 \index{Swampy}
 
-This module defines two classes: {\tt Highway}, which inherits from
-TurtleWorld, and {\tt Driver}, which inherits from Turtle.
+This module defines two classes: \py{Highway}, which inherits from
+TurtleWorld, and \py{Driver}, which inherits from Turtle.
 
 The Highway is a one-lane road that forms a circle, but it is displayed
 as a series of rows that spiral down the canvas.
@@ -5221,23 +5305,23 @@ Each driver starts with a random position and speed.  At each time
 step, each Driver accelerates or brakes based on the distance between
 it and the Driver in front.  Here is an example:
 
-\begin{verbatim}
+\begin{code}
     def choose_acceleration(self, dist):
         if dist < self.safe_distance:
             return -1
         else:
             return 0.3
-\end{verbatim}
+\end{code}
 
-If the following distance is too short, the {\tt Driver} brakes;
-otherwise it accelerates.  {\tt Highway.py} enforces two other
+If the following distance is too short, the \py{Driver} brakes;
+otherwise it accelerates.  \py{Highway.py} enforces two other
 constraints: there is a speed limit for each driver, and if the
-current speed would cause a collision, the {\tt Driver} comes to a
+current speed would cause a collision, the \py{Driver} comes to a
 complete stop.
 
-If you run {\tt Highway.py} you will probably see a traffic jam,
+If you run \py{Highway.py} you will probably see a traffic jam,
 and the natural question is, ``Why?''  There is nothing about the
-{\tt Highway} or {\tt Driver} behavior that obviously causes
+\py{Highway} or \py{Driver} behavior that obviously causes
 traffic jams.
 
 \begin{exercise}
@@ -5296,7 +5380,7 @@ only sees (or pays attention to) other boids in its field of
 vision and range.
 \index{local information}
 
-The {\tt Visual} package, also known as VPython, is well-suited
+The \py{Visual} package, also known as VPython, is well-suited
 for implementing boids.  It provides simple 3-D graphics as
 well as vector objects and operations that are useful for the
 computations.
@@ -5308,15 +5392,15 @@ You can download my implementation from
 on the description of boids in Flake, {\em The Computational
 Beauty of Nature}.
 
-The program defines two classes: {\tt Boid}, which implements the boid
-algorithm, and {\tt World}, which contains a list of Boids and a
+The program defines two classes: \py{Boid}, which implements the boid
+algorithm, and \py{World}, which contains a list of Boids and a
 ``carrot'' the Boids are attracted to.
 \index{carrot}
 
-The boid algorithm uses \verb"get_neighbors" to find other
+The boid algorithm uses \py{get_neighbors} to find other
 boids in the field of view:
 
-\begin{verbatim}
+\begin{code}
     def get_neighbors(self, others, radius, angle):
         boids = []
         for other in others:
@@ -5337,18 +5421,18 @@ boids in the field of view:
             boids.append(other)
 
         return boids
-\end{verbatim}
+\end{code}
 
-\verb"get_neighbors" uses vector subtraction to compute the
-vector from {\tt self} to {\tt other}.  The magnitude of
-this vector is the distance to the other boid.  \verb"diff_angle"
-computes the angle between the velocity of {\tt self}, which
+\py{get_neighbors} uses vector subtraction to compute the
+vector from \py{self} to \py{other}.  The magnitude of
+this vector is the distance to the other boid.  \py{diff_angle}
+computes the angle between the velocity of \py{self}, which
 is also the line of sight, and the other boid.
 
-{\tt center} finds the center of mass of the boids in the
+\py{center} finds the center of mass of the boids in the
 field of view and returns a vector pointing toward it:
 
-\begin{verbatim}
+\begin{code}
     def center(self, others):
         close = self.get_neighbors(others, r_center, a_center)
         t = [other.pos for other in close]
@@ -5358,45 +5442,45 @@ field of view and returns a vector pointing toward it:
             return limit_vector(toward)
         else:
             return null_vector
-\end{verbatim}
+\end{code}
 
-Similarly, {\tt avoid} finds the center of mass of any obstacles
+Similarly, \py{avoid} finds the center of mass of any obstacles
 in range and returns a vector pointing away from it,
-{\tt copy} returns the difference between the current heading
-and the average heading of the neighbors, and {\tt love}
+\py{copy} returns the difference between the current heading
+and the average heading of the neighbors, and \py{love}
 computes the heading toward the carrot.
 
-\verb"set_goal" computes the weighed sum of these goals and
+\py{set_goal} computes the weighed sum of these goals and
 sets the overall goal:
 
-\begin{verbatim}
+\begin{code}
     def set_goal(self, boids, carrot):
         self.goal = (w_avoid * self.avoid(boids, carrot) +
                      w_center * self.center(boids) +
                      w_copy * self.copy(boids) +
                      w_love * self.love(carrot))
-\end{verbatim}
+\end{code}
 
-Finally, {\tt move} updates the velocity, position and
+Finally, \py{move} updates the velocity, position and
 attitude of the boid:
 
-\begin{verbatim}
+\begin{code}
     def move(self, mu=0.1):
         self.vel = (1-mu) * self.vel + mu * self.goal
         self.vel.mag = 1
 
         self.pos += dt * self.vel
         self.axis = b_length * self.vel.norm()
-\end{verbatim}
+\end{code}
 
 The new velocity is the weighted sum of the old velocity
-and the goal.  The parameter {\tt mu} determines how quickly
-the birds can change speed and direction.  The time step, {\tt dt}
+and the goal.  The parameter \py{mu} determines how quickly
+the birds can change speed and direction.  The time step, \py{dt}
 determines how far the boids move.
 \index{weighted sum}
 
 Many parameters influence flock behavior, including the range, angle
-and weight for each behavior, and the maneuverability, {\tt mu}.
+and weight for each behavior, and the maneuverability, \py{mu}.
 \index{flock behavior}
 
 These parameters determine the ability of the boids to form and
@@ -5499,33 +5583,33 @@ Download \url{thinkcomplex.com/Referee.py}, which runs the tournament,
 and \url{thinkcomplex.com/PlayerFlipper.py}, which implements a simple
 player strategy.
 
-Here is the code from {\tt PlayerFlipper.py}:
+Here is the code from \py{PlayerFlipper.py}:
 
-\begin{verbatim}
+\begin{code}
 def move(history):
     mine, theirs = history
     if len(mine) % 2 == 0:
         return 'C'
     else:
         return 'D'
-\end{verbatim}
+\end{code}
 
-Any file that matches the pattern {\tt Player*.py} is recognized
-as a player.  The file should contain a definition for {\tt move},
+Any file that matches the pattern \py{Player*.py} is recognized
+as a player.  The file should contain a definition for \py{move},
 which takes the history of the match so far and returns a string:
-{\tt 'D'} for defect and {\tt 'C'} for cooperate.
+\py{'D'} for defect and \py{'C'} for cooperate.
 
-{\tt history} is a pair of lists: the first list contains the
+\py{history} is a pair of lists: the first list contains the
 player's previous responses in order; the second contains the
 opponent's responses.
 
-{\tt PlayerFlipper} checks whether the number of previous rounds
-is even or odd and returns {\tt 'C'} or {\tt 'D'} respectively.
+\py{PlayerFlipper} checks whether the number of previous rounds
+is even or odd and returns \py{'C'} or \py{'D'} respectively.
 
-Write a {\tt move} function in a file like {\tt PlayerFlipper.py}, but
+Write a \py{move} function in a file like \py{PlayerFlipper.py}, but
 replace ``Flipper'' with a name that summarizes your strategy.
 
-Run {\tt Referee.py} and see how your strategy does.
+Run \py{Referee.py} and see how your strategy does.
 
 After you run your own tournament, you can read about the results
 of Axelrod's tournament in his book, {\it The Evolution of Cooperation}.
@@ -5695,1138 +5779,6 @@ first read Chapter~\ref{overview}, some of the topics might not have
 made sense.  You might find it helpful to read that chapter again now.
 Then get to work on your case study!  See Appendix~\ref{submissions}.
 
-\chapter{Case study: Sugarscape}
-
-{\em Dan Kearney, Natalie Mattison and Theo Thompson}
-
-\section{The Original Sugarscape}
-
-Sugarscape is an agent-based model developed by Joshua M. Epstein and
-Robert Axtell to investigate the economics of wealth distribution.
-They presented the original model in their book,
-{\it Growing Artificial Societies}.
-
-The sugarscape is a virtual 2D grid where each cell has a certain
-amount of abstract wealth, called sugar.  Agents roam the grid
-and accumulate sugar.
-
-In the simplest Sugarscape, each agent has a sugar reserve, a
-metabolism at which rate it consumes its sugar, and a range of nearby
-cells that it can observe.  At each time step, the agent observes its
-nearby cells and moves to the cell with the most sugar. These rules
-can be expanded to include topics as varied as reproduction, death,
-disease, loans, and warfare. For example, a disease can be introduced
-to the system where a sick agent can infect nearby healthy agents.
-
-Despite its simplicity, the model generates outcomes that resemble the
-real world. When modeling wealth with Sugarscape, a long-tailed
-distribution appears where some agents are vastly richer than others.
-Similar behavior is seen in most real economies, where a small part of
-the population holds a large fraction of the wealth.  Extreme wealth
-inequality is generally considered a problem, because it means there
-are many people barely surviving while others are fabulously rich.
-
-\section{The Occupy movement}
-
-Wealth inequality has partly fueled a modern social movement known as
-the Occupy movement.  The first significant Occupy protest was on Wall
-Street in New York City, where thousands of protesters gathered to
-express their dismay with the distribution of wealth, among other
-things. The movement's motto is ``We are the 99\%'', reminding
-politicians to serve the majority, not the 1\% who control more than a
-third of the nation's wealth. A major goal of the movement is to
-achieve a more equal distribution of income, which protesters hope to
-accomplish by implementing a more progressive tax policy.
-
-One of the effects of taxation is to redistribute wealth
-from the rich to the poor.  But opponents of the Occupy movement (and
-many fiscal conservatives) claim that high tax rates for the
-rich actually hurt the population as a whole.  The logic is that
-wealthy people employ the poor, redistributing the wealth without the
-need for tax levies.
-
-
-\section{A New Take on Sugarscape}
-
-Our implementation of Sugarscape aims to study the effect of taxation
-on the wealth of a society. We want to show how extreme under- or
-over-taxation can affect the society and its individual agents, and
-what happens in between these two extremes. The model tests a ``flat
-tax'' system where every agent gets taxed a constant rate (say 10\% of
-its total wealth) and the tax pool is redistributed evenly among all
-the agents. We recreate the original Sugarscape and expand on it with
-the end goal of determining whether it is possible to shrink the wealth gap
-without crippling the society.
-
-
-\subsection{Pygame}
-
-In the process of implementing Sugarscape, we made a GUI to better
-understand what was happening on the grid. The visualization of the
-Sugarscape is done with Pygame, a set of Python modules that allows
-easy graphic drawing. Pygame can blit images onto the screen (see
-\url{http://en.wikipedia.org/wiki/Bit_blit}) and it has built-in
-methods for handling user input like mouse clicks and button presses,
-making it ideal for designing games or other programs that receive a
-lot of input.
-
-Below is an abbreviated version of our event loop that draws the cells
-in the GUI at each time step.  {\tt Sugarscape.nextstep} moves every agent
-forward by one time step and the rest of the code redraws the
-update. Redrawing the entire grid is slightly less efficient than
-changing existing rectangle objects but is a common convention for
-pygame. A square is drawn for each location, and the color of the
-square changes based on the amount of sugar contained there. Agents
-are represented by circles drawn on top of their current location.
-
-\begin{verbatim}
-
-def event_loop(self,sugarscape):
-   while True:
-      sugarscape.nextstep()
-      for i in range(sugarscape.length):
-          for j in range(sugarscape.width):
-              loc = sugarscape.get_location(i,j)
-              health_color = (0, 0, loc.get_sugar_amt()/loc.get_max_sugar())
-              pygame.draw.rect(self.window, healthColor,(12*i,12*j,10,10))
-      pygame.display.update()
-\end{verbatim}
-
-Users can control certain attributes of the Sugarscape by moving
-sliders underneath the grid. A histogram, implemented using the
-matplotlib library, shows the current distribution of wealth, and text
-fields show certain characteristics of the distribution.
-
-
-\section{Taxation and the Leave Behind}
-
-Taxation in our implementation of Sugarscape is handled with a
-Government object. Every ten time steps, the Government object
-collects a fraction of each agent's sugar reserve, then distributes
-the collected sugar to each agent equally.  This transfer represents
-services provided by the government as well as explicit redistribution
-of wealth.
-
-But if opponents of the Occupy movement are correct, transferring
-wealth from rich to poor makes society as a whole less productive.
-According to this theory, the rich create more wealth
-than the poor because they can open factories, fund
-research, and generally make investments into the
-economy.
-
-In order to simulate this effect, we need to augment the model with
-a mechanism of wealth creation.  We
-implement a simple ``leave behind'' feature, where agents leave some
-sugar behind as they leave a location:
-
-\[ leave\_behind = \frac{1}{5} 
-           \left( \frac{wealth\times N}{total\_wealth} \right)^{1.1} \]
-
-where $N$ is the total number of agents, $wealth$ is the amount of sugar
-the agent has, and $total\_wealth$ is the total sugar
-owned by all the agents.  Agents who own a large proportion of the
-total wealth leave behind larger amounts of sugar, making an
-investment into the Sugarscape, and increasing the total wealth.
-
-\section{The Gini coefficient}
-
-\begin{figure}[ht]
-\centerline{\includegraphics[width=3.0in]{figs/pmf_notax.pdf}}
-\caption{Histogram of wealth with no tax.\label{fig.notax}}
-\end{figure}
-
-To compare the effect of taxation on wealth distribution, we need a
-metric that measures how distributed or flat a certain wealth
-distribution is.  We use the Gini coefficient, which is often used in
-economics to measure the wealth gap (see
-\url{http://en.wikipedia.org/wiki/Gini_coefficient}). The Gini
-coefficient is between 0 and 1, with 0 the measurement of a perfectly
-uniform distribution, and 1 the measurement of a distribution with
-complete inequality.
-
-Figure~\ref{fig.notax} shows a histogram describing the wealth
-distribution when there is no tax system in place. For most initial
-conditions without taxation, the Sugarscape quickly develops a
-long-tailed distribution of wealth, skewed to the right. In these
-cases, some agents die quickly, particularly in an environment with
-many agents or one with low sugar regrowth rate. The separation
-between the rich and the poor is significant, and there aren't many
-agents occupying the middle ground. This is seen in real life in
-societies where there is no tax structure and there isn't much of a
-middle class.
-
-
-\section{Results With Taxation}
-
-\begin{figure}[ht]
-\centerline{\includegraphics[width=3.0in]{figs/pmf_20percent.pdf}}
-\caption{Histogram of wealth, with tax.\label{fig.withtax}}
-\end{figure}
-
-\begin{figure}[ht]
-\centerline{\includegraphics[width=3.0in]{figs/gini_coeff.pdf}}
-\caption{The Gini coefficient versus the tax rate.\label{fig.gini}}
-\end{figure}
-
-Figure~\ref{fig.withtax} shows the effect of a relatively high tax
-rate. The agents have a similar amount of sugar, and the economy has a
-low Gini coefficient, 0.02.
-
-Figure~\ref{fig.gini} shows that
-higher taxes in general result in lower Gini coefficients. This makes
-sense, since the point of our tax system is to redistribute
-wealth.
-
-\begin{figure}[ht]
-\centerline{\includegraphics[width=3.0in]{figs/mean_wealth.pdf}}
-\caption{Mean wealth versus tax rate.\label{fig.wealth}}
-\end{figure}
-
-In this model, perfect equality comes at a price.  With no taxation
-the mean wealth was 358; with a 20\% tax rate it drops to 157.
-Figure~\ref{fig.wealth} shows the effect of tax rate on wealth;
-mean wealth gets smaller as taxes get higher.
-
-
-
-\section{Conclusion}
-
-\begin{figure}[ht]
-\centering{\includegraphics[width=3.0in]{figs/bottom_quartile.pdf}}
-\caption{Bottom quartile value versus tax rate. At 4\% the average wealth of the bottom quartile is maximized.\label{fig.optimal}}
-\end{figure}
-
-%\begin{figure}[ht]
-%\centerline{\includegraphics[width=3.0in]{figs/pmf_2percent.pdf}}
-%\caption{The wealth distribution for a smaller tax rate (2\%). There is still s%ome deviation, but the mean wealth is high.}
-%\end{figure}
-
-It's up to a society to determine its ideal wealth distribution. 
-In our model, there is a conflict between the goals of maximizing
-total wealth and minimizing inequality.
-
-One way to reconcile this conflict is to maximize the wealth of
-the bottom quartile.  Figure~\ref{fig.optimal} shows the mean
-wealth of the poorest 25\% for a range of tax rates.  The optimal
-tax rate is around 4\%.  At lower rates, there is more total
-wealth, but the poor do not share it.  At higher rates, the poor
-have a bigger share of a smaller pie.
-
-Of course, this result depends on the details of our Sugarscape,
-especially the model of productivity.  But this simple model
-provides a way to explore relationships between wealth creation,
-taxation and inequality.
-
-\begin{exercise}
-
-You can download our implementation of Sugarscape from
-\url{thinkcomplex.com/Sugarscape.zip}.  Launch it by running
-{\tt Gui.py}.  The sliders allow you to control the parameters
-of the simulation.  Experiment with these parameters to see what
-effect they have on the distribution of wealth.
-
-\end{exercise}
-
-
-\chapter{Case study: Ant trails}
-
-{\em Chloe Vilain and Andrew Pikler}
-
-\section{Introduction}
-
-In nature, ants scavenge for food as a swarm. They choose their paths
-from the nest based on pheromone density, favoring paths with higher
-concentrations of pheromone.  Individuals lay pheromone trails upon
-finding food, allowing other members of their colony to passively
-follow them to the food source.  Because paths leading to food have
-higher pheromone density, increasing numbers of ants choose these
-successful paths.  As a result, ant trails transition over time from
-random paths to streamlined routes.  This organization and appearance
-of patterns over time is an example of \textbf{emergence}, the process
-by which complex systems and patterns arise from a multiplicity of
-simple systems.
-
-Ant feeding patterns lend themselves to simulation with
-\textbf{agent-based models}, which simulate the actions and
-interactions of autonomous agents to assess their effects on the
-system as a whole.  When we model ant feeding patterns, each ant is an
-agent in the model, a self-governing individual that makes decisions
-based on its surroundings.  When simulating large numbers of ants,
-behavior emerges that is reflective of ant behavior in the natural
-world.  Beyond being intrinsically fascinating, such models have
-applications in the ``real world'' in areas ranging from city planning
-to film production.
-
-\section{Model Overview}
-
-We can see one example of an agent-based model in Deneuborg et al.'s
-1989 paper \emph{The Blind Leading the Blind: Modeling Chemically
-  Mediated Army Ant Raid Patterns}, available from
-\url{http://www.ulb.ac.be/sciences/use/publications/JLD/58.pdf}.
-
-The premise of the model is that as ants move around they deposit
-a pheromone, which increases the likelihood that other ants will follow
-the same path. Ants that have found food lay more pheromone than ants
-that haven't, making it likely that other ants will follow their paths
-to find more food.
-
-The ants live in a two-dimensional world of discrete points arranged
-in a grid. At each step of the model, each ant has a certain
-probability of moving to one of two neighboring coordinates in the
-direction the ant is facing, away from the nest---forward left or
-forward right (see Figure~\ref{fig.antchoice}). All ants start in a
-corner of the world, which we call the \emph{nest}; at each time
-step of the simulation, we add more ants to the nest. This leads to a
-constant stream of outgoing ants.
-
-\begin{figure}
-\centerline{\includegraphics[width=3.0in]{figs/antchoice.jpg}}
-\caption{At each time step, ants move forward left or forward right.\label{fig.antchoice}}
-\end{figure}
-
-Once an ant has found food, it turns back towards the nest. It obeys
-the same rules for motion---that is, in each time step, its choice to
-move either forward left or forward right is influenced by the amounts
-of pheromone it sees, except now, these choices take it back towards
-the nest. Also, after moving, the ant lays more pheromone than it did
-while foraging for food. This significantly increases the probability
-that other foraging ants will follow its path to find, potentially,
-more food.
-
-\begin{figure}[ht]
-\centerline{\includegraphics[width=4.0in]{figs/plot.jpg}}
-\caption{The simulation after 1000 time steps.\label{fig.plot}}
-\end{figure}
-
-In its starting configuration, each point in the world has a chance of
-containing food. Once this starting condition has been set, we let the
-simulation run for about 1000 time steps, and plot the result. You can
-see the plot of one such simulation in Figure~\ref{fig.plot}, which is
-similar to the actual foraging patterns
-Deneuborg et al. present in their Figure 1.
-
-
-\begin{exercise}
-
-Download the code for our simulation, from
-\url{thinkcomplex.com/ants.py}.  Run it for 1000 time steps and see if
-your results look similar to Figure~\ref{fig.plot}. The simulation can
-be computationally intensive; 1000 time steps took almost two
-minutes on our computer, so be patient!
-\end{exercise}
-
-
-\section{API design}
-
-Challenges of writing a simulation such as this include designing
-classes that are easy for human readers of the code to
-understand, and implementing data structures that allow the
-code to execute efficiently.
-
-One way to break up a model into classes is to list the main nouns you
-use when describing the model, and then represent the most prominent
-of those nouns as objects. In our model, the primary objects are the
-World, which contains Ants, and Locations that represent points in
-the grid.
-
-The next step is to decide what information about the current state of
-the model an instance of each class is responsible for. In our case,
-the behavior of the World is defined by what Ants and Locations
-can do, so it makes sense to design our classes bottom-up and consider
-the World only once we have at least a tentative idea for the methods
-and attributes of Ants and Locations.
-
-For Ants, the most important information is where they are in the
-World, so each ant has the attributes \texttt{x} and \texttt{y} to
-store its coordinates. Also, each Ant keeps track of whether or not it
-is currently carrying food.  Each Ant has only local information about
-the World; keeping track of all the Ants is the job of the World
-object itself.
-
-Ants provide two methods the World uses to interact with them:
-
-\begin{itemize}
-
- \item \texttt{getPos}: Returns the current coordinates of this Ant.
-
- \item \texttt{move}:  Collects local information and moves the Ant accordingly.
-
-\end{itemize}
-
-%The Ant class contains numerous other methods, but these are intended
-%for internal use by each Ant object only, and not by the World. For
-%example, the methods \texttt{will\_move} and \texttt{will\_go\_right}
-%determine whether or not the Ant will move this turn and if so,
-%whether it will move forward right or forward left, but these methods
-%are only ever called by the Ant's \texttt{move} method. Similarly,
-%\texttt{move} is the only method that calls \texttt{lay\_pheromone},
-%which increases the pheromone count at the Ant's current Location in
-%the World.
-
-Locations know even less than Ants; each Location only keeps track of
-the food and pheromone it contains. Locations provide
-accessor methods that Ants and the World
-use to modify the Location's food and pheromone amounts.
-
-Locations do not keep track of their
-coordinates on the map, because they never change.  Instead, this information
-is represented implicitly by a dictionary that maps from coordinates
-to Location objects.
-
-There is only one World object; this instance keeps track of all
-existing Ants and Locations.  The World provides methods for controlling
-the state of the simulation: \texttt{move\_ants}
-advances the simulation by one time step by calling every
-existing Ant's \texttt{move} method, and evaporating a
-proportion of pheromone from each Location. Other methods
-include \texttt{add\_ants}, which adds a specified number of ants to
-the nest, \texttt{place\_food}, which puts food at each Location with
-some probability, and \texttt{get\_location}, which
-looks up the Location at given coordinates.
-
-\section{Sparse matrices}
-
-The group of Locations that make up our World is implemented as a
-\textbf{sparse matrix}. In this representation, Locations don't exist
-until they are needed; \texttt{World.get\_location} is
-responsible for fetching either the existing Location at the given
-coordinates, or creating a new Location if it doesn't exist.
-
-An alternate implementation would be a \textbf{dense matrix},
-either a Python list of lists or a Numpy array.
-In our case, the sparse matrix has two advantages:
-
-\begin{itemize}
-
-\item Since most of the World is empty most of the time, it is more
-  memory-efficient to only keep track of those Locations that aren't
-  empty.
-
-\item A sparse matrix doesn't have preset boundaries, so an Ant is free to
-  wander off in any direction. It would be more difficult to implement
-  this feature with a dense matrix.
-
-\end{itemize}
-
-\section{wx}
-
-We use the \texttt{wx} Python package to plot a picture of the ants
-after the simulation finishes running.
-
-We define a class called \texttt{AntPlot} which
-takes a World, creates a \texttt{wx} window, and plots
-the ants (see in Figure~\ref{fig.plot}):
-
-\begin{verbatim}
-class AntPlot:
-    def __init__(self, world):
-        self.world = world
-        self.app = wx.PySimpleApp()
-        self.w = 500
-        self.h = 500
-        self.frame = wx.Frame(None, -1, 'Ant Plot', size=(self.w, self.h))
-        self.canvas = FloatCanvas(self.frame, -1)
-        
-    
-    def draw(self):
-        positions = self.world.get_ant_dict()
-        for pos in positions:
-            x, y = pos
-            x -= self.w / 2
-            y -= self.h / 2
-            self.canvas.AddPoint((x, y))
-        self.frame.Show()
-        self.app.MainLoop()
-\end{verbatim}
-
-We use a {\tt wx} \texttt{FloatCanvas} to plot the ants.  Most
-canvases in GUI libraries define the point (0, 0) as the upper left
-corner of the canvas and have $x$ increase to the left and $y$ increase
-down, but the coordinates in the \texttt{FloatCanvas} work like in
-math---the origin is the middle, and the positive $y$ direction is up. This
-allows us to write simpler code because we don't have to transform our
-coordinates to the canvas's system.
-
-If you are interested in exploring \texttt{wx}
-further, \texttt{AntPlot} might be a good starting point.
-
-
-\begin{exercise}
-
-To understand the behavior of the model better, make some changes
-and see what effect they have.  For example, try altering the
-pheromone amounts in the model.
-What
-happens when Ants deposit significantly more or less pheromone?
-What happens when
-Ants only lay pheromone when leaving the nest? When returning? 
-\end{exercise}
-
-\begin{exercise}
-
-The distribution of food affects the structure of the trails.
-In \texttt{ant.py}, each Location has a 50\% probability of
-containing one particle of food.  What happens when each Location has
-a 1\% probability of containing 50 pieces of food?
-\end{exercise}
-
-\begin{exercise}
-
-So far, we have modeled one nest of ants.
-What happens with multiple nests? Pick a value $d$ and
-modify the code such that Ants spawn at (0, $d$) and ($d$, 0) in addition
-to (0,0).  Do the trails of ants converge, or do they all remain
-distinct? 
-
-Keep track of the amount of food
-collected in each nest. Does one of the nests do better than the
-others?
-
-What happens when ants from
-one nest lay slightly higher amounts of pheromone than those from the
-other nests?
-\end{exercise}
-
-
-\section{Applications}
-
-Agent-based models have numerous applications,
-from modeling traffic patterns to creating realistic battle
-simulations.  The entertainment industry uses agent-based
-models to simulate crowds in films, games, and advertisements.
-
-This kind of modeling is more scalable than filming; it is easier to
-simulate a large crowd than to recruit a thousands of extras.
-Agent-based models make it feasible to create large-scale, visually
-stunning sequences.
-
-The \emph{Lord of the Rings} trilogy is a salient example.  Visual
-effects developers were tasked with creating battles with hundreds of
-thousands of soldiers from a variety of races with different fighting
-techniques.  They implemented an agent-based model where each agent
-had about 200 possible motions (animated using motion capture).
-Agents followed simple rules to chose possible responses based on
-logic and probabilities.  Different races---elves, orcs and
-men---were based on the same ``master agent'' but had different
-weapons, abilities and programmed attack responses.
-
-Simulating thousands of agents in tandem allowed for exceptionally
-complex battle sequences.  The results sometimes surprised even the
-programmers---in one simulation, a number of agents fled the battle.
-They were not programmed to flee; that is, fleeing was not explicitly
-an option.  Rather, this behavior emerged from the interaction of
-agents following simple rules.
-This unexpected action, which would be realistic in
-an actual battle scenario, demonstrates the power of agent-based models.
-
-%The use of agent-based models allowed battle sequences to be
-%re-simulated and tinkered with until results were satisfactory.  This
-%freedom allowed directors to experiment far more than would have been
-%possible with casted battles.
-
-The software developed for the trilogy, called Massive, has become the
-industry standard for simulating large-scale battle sequences.
-Massive has since been used for battle sequences in
-movies like \emph{Chronicles of Narnia} and \emph{300}, and for
-more benign crowd simulations \emph{Happy Feet} and
-\emph{Avatar}.
-
-The models used in these films are more complicated than our simulated
-ant trails, but they are examples of the same concept.  Like the
-agents in \emph{Lord of the Rings}, our ants follow simple rules, but
-their interactions yield realistic, complex, and sometimes
-unpredictable, behavior.
-
-
-\chapter{Case study: Directed graphs and knots}
-
-{\em Rachel Bobbins and Noam Rubin}
-
-\section{Directed Graphs}
-
-Imagine that it's 2 a.m. during finals week, and you're scrambling to
-finish a research paper on \emph{topica obscura}. Your adrenaline
-jumps when you find a relevant Wikipedia article, with links
-to more Wikipedia articles! You start clicking away, jumping from page
-to page in search of facts. An hour later, you realize you're still
-clicking, but these are pages you've already visited. No matter which
-link you click, you can't seem to discover any new pages!
-
-If this has happened to you, you've unknowingly
-(and unfortunately) stumbled upon a knot in Wikipedia. Knots are a
-unique property of directed graphs. To understand them, it is necessary
-to have a basic understanding of directed graphs.
-	 	 	
-The graphs in the rest of this book are undirected. In an
-undirected graph, an edge represents a symmetric relationship between
-vertices. This abstraction is appropriate for some applications,
-such as acquaintance networks and transportation networks; but other
-applications involve asymmetric relationships, for example, links
-between pages in the World Wide Web.
-
-Wikipedia links are also asymmetric. Page A might link to page B, but
-page B doesn't have to include any links to page A. To fully describe
-the relationship between pages A and B, we need two bits of
-information: whether A links to B, and whether B links to A . This is
-the essence of a directed graph. In a directed graph, a directed
-edge, $e = (A,B)$, is an edge {\em from} A \emph{to} B.
-
-%\begin{figure}
-%\centerline{\includegraphics[width=3.0in]{figs/DirectedGraphExample.pdf}}
-%\caption{Caption.}
-%\end{figure}
-
-Knots are a unique (and sometimes cruel)
-property of directed graphs. A knot is a
-collection of vertices and edges with the property that every vertex
-in the knot has outgoing edges, and all outgoing edges from vertices
-in the knot terminate at other vertices in the knot. Thus it is
-impossible to leave the knot while following any path along its
-directed edges.
-
-\section{Implementation}
-
-In the scenario above, we imagine finding a knot in Wikipedia;
-that is, a set of articles with links to each other, but no
-links to other articles.
-
-We wondered whether such a thing was even possible. Given that there
-are 3,811,000+ articles on Wikipedia and they all link to different
-pages, it seemed unlikely that there would be a knot, but we decided
-to investigate.
-
-We started by extending \verb"Graph.py", from Section~\ref{graph.py}, to
-support directed graphs. The result is \verb"DirectedGraph.py", which
-you can download from \url{thinkcomplex.com/DirectedGraph.py}.
-
-When we were designing \verb"DirectedGraph", we wanted to preserve the
-order of growth of \verb"Vertex" and \verb"Arc" lookups as they were
-in \verb"Graph".  However, we needed to keep track of edges into a
-vertex and edges from a vertex. It made sense to keep track of these
-in separate dictionaries. Having two
-dictionaries takes twice as much memory, but this is a
-reasonable price to pay for maintaining the speed of lookups.
-
-\section{Detecting knots}
-
-%Our research found only distributed algorithms for
-%detecting knots.\footnote{See
-%  \url{http://www.cs.utexas.edu/users/misra/scannedPdf.dir/KnotDetection.pdf}}.% Distributed
-%algorithms are designed to run concurrently on multiple
-%processors. Identical but distinct chunks of the algorithm run on each
-%processor, and report to each other the results of their
-%computation. These kinds of algorithms are ideal for large research
-%projects, but we needed an algorithm that would run on a single
-%computer. To this end, we devised our own algorithm.
-
-To detect knots in a directed graph, we developed an algorithm based
-on a breadth-first-search. \verb"_bfsknots" searches for all the
-vertices that can be reached from a given starting vertex, and returns
-these vertices as a set.
-
-\begin{verbatim}
-  def _bfsknots(self, s):
-      # initialize the queue with the start vertex
-      queue = [s]
-      visited = set()
-      on_first_vertex = True
-      while queue:
-
-          # get the next vertex
-          v = queue.pop(0)
-
-          # skip it if it's already marked
-          if v in visited: continue
-
-          # if we're on the first vertex, we're not actually visting
-          if v != s or not on_first_vertex: visited.add(v)
-          on_first_vertex = False
-            
-          for x in self.out_vertices(v):
-              #if its out vertices have been cached, update visited
-              if x in self._knot_cache.keys():
-                  visited.update(self._knot_cache[x])
-                  visited.add(x)
-                    
-              #otherwise add it to the queue
-              elif x not in self._knot_cache.keys():
-                  queue.append(x)
-
-      return visited
-\end{verbatim}
-
-We run \verb"_bfsknots" for every vertex in
-the graph, and build a dictionary that maps from a vertex to the
-set of vertices it can reach.  That is, for each vertex, $V$, we
-know the set of reachable vertices, $S_V$.
-
-If there is a knot in the graph, then for every vertex, $V$, in the
-knot the reachable set $S_V$ is exactly the set of vertices in the knot.
-
-The function \verb"has_knot" iterates through each vertex in a graph,
-and returns True if this condition holds. If
-it checks the whole graph and does not find a knot, it returns False.
-
-\begin{verbatim}
-    def has_knot(self):
-        """
-        Returns true if directed graph has a knot.
-        """
-        self._knot_cache = {}
-        #build the cache of which vertices are accessible from which
-        for v in self:
-            self._knot_cache[v] = self._bfsknots(v)
-
-        #searches for knot
-        for v in self:
-            if self._knot_at_v(v):
-                return True
-        return False
-\end{verbatim}
-
-Finally, \verb"_knot_at_v" checks whether all vertices reachable
-from $V$ have the reachable set $S_V$.
-
-\begin{exercise}
-
-Download \url{thinkcomplex.com/DirectedGraph.py}.
-Read through the file to make yourself familiar with
-the terminology. Note that edges in DirectedGraph are represented by
-Arcs.
-
-Determine the order of growth of \verb"has_knots" experimentally. You
-can follow the example in Section~\ref{growth_experiment}. Below are
-some hints to help you out.
-
-\begin{enumerate}
-
- \item Use \verb"DirectedGraph.add_random_edges" to generate graphs of
-   different sizes.
-
-\item For each graph, time how long it takes to check if it has a knot.
-
-\item On a log-log scale, plot run time versus
-  the number of vertices and run time versus the number of edges.
-
-\end{enumerate}
-
-\end{exercise}
-
-\begin{exercise}
-Find all the knots in a directed graph.
-
-\begin{enumerate}
- \item Write a function, \verb"all_knots", that returns a list of all
-   knots in a graph, where each knot is a set of vertices.
-
-\item Write a function named \verb"entry_points" that returns a list
-  of all the vertices that serve as entry points into knots.
-
-\end{enumerate}
-
-\end{exercise}
-
-\section{Knots in Wikipedia}
-
-To find knots in Wikipedia, we selected 558 disjoint subsets of
-Wikipedia articles, organized by index. For example, the index of
-articles about neurobiology was used to define one subset, and the
-index of articles about Zimbabwe was used to define another
-subset. The 558 subsets contain about 321,000 articles, or
-10\% of Wikipedia.
-
-Of these subsets we examined, 38\% contained at least one knot. So if
-you are restricted to articles listed on a single index page, there is
-a substantial chance you will eventually find a knot.
-
-For the complete Wikipedia, the probability is lower because
-articles can link to articles in other indices.  Based on
-these results, we cannot say, yet, whether the complete Wikipedia
-has a knot.
-
-%For related work on the complete Wikipedia,
-%see research done by Stephen Dolan at Trinity College
-%Dublin: \url{http://mu.netsoc.ie/wiki/}.
-
-When you started your hypothetical research on \emph{topica obscura},
-you might have used journal articles instead of Wikipedia articles.
-Instead of links, you would have used citations to find other papers.
-
-In that case, you would never find a knot.  Why not? 
-Because science articles are
-published sequentially, and a paper cannot cite a paper that will be
-created in the future.  So the directed graph that represents papers
-and their citations cannot have a knot.
-
-
-
-\chapter{Case study: The Volunteer's Dilemma}
-
-{\em Molly Grossman, Mandy Korpusik, and Philip Loh}
-
-
-\section{The prairie dog's dilemma}
-
-Suppose you are a prairie dog assigned to guard duty with other
-prairie dogs from your town.  When you see a predator coming, you have
-two choices: sound the alarm or remain silent.  If you sound the
-alarm, you help ensure the safety of the other prairie dogs, but you
-also encourage the predator to come after you.  For you, it is safer
-to remain silent, but if all guards remain silent, everyone is less
-safe, including you.  What should you do when you see a predator?
-
-This scenario is an example of the Volunteer's Dilemma, a game similar
-to the Prisoner's Dilemma discussed in Section~\ref{prisoners}.  In
-the Prisoner's Dilemma each player has two options---cooperate and
-defect.  In the Volunteer's Dilemma each player also has two
-options---volunteer (sound the alarm in our prairie dog example) or
-ignore (remain silent).  If one player volunteers then the other
-player is better off ignoring.  But if both players ignore, both pay a
-high cost.
-
-In the Prisoner's Dilemma, both players are better off
-if they both cooperate; however, since neither knows what the other
-will do, each independently comes to the conclusion that he or she
-should defect.
-
-In the Volunteer's Dilemma, it is not immediately
-clear what outcome is best for both players.  Suppose the players
-are named Alice and Bob.  If Alice volunteers, Bob is better off ignoring;
-if Alice ignores, Bob is better off volunteering.  This does not
-provide a clear best strategy for Bob.  By the same
-analysis, Alice reaches the same
-conclusion: if Bob volunteers, she is better
-off ignoring; and if Bob ignores, she is better off volunteering.
-
-Instead of one optimal outcome, as in the Prisoner's Dilemma, there
-are two equally good outcomes: Bob volunteers
-and Alice ignores, or Bob ignores and Alice volunteers.
-
-In the prairie dog town, there are more than two guards.  As in the
-scenario with just Alice and Bob, only one player needs to volunteer
-to benefit the entire town.  So there are as many good outcomes as
-guards---in each case, one guard volunteers and the others ignore.
-
-If one guard is always going to volunteer, though, then there is
-little point in having multiple guards.  To make the situation more
-fair, we can allow the guards to distribute the burden of volunteering among
-themselves by making decisions randomly.  That is, each guard 
-chooses to ignore with some 
-probability $\gamma$ or to volunteer with probability $1 - \gamma$.
-The optimal value for $\gamma$ is that where each player volunteers as
-little as necessary to produce the common good.
-
-\section{Analysis}
-
-Marco Archetti investigates the optimal value of $\gamma$ in his
-paper ``The Volunteer's Dilemma and the Optimal Size of a Social
-Group.''  This section replicates his analysis. 
-
-When each player volunteers with the optimal probability,
-the expected payoff of volunteering is the same as the expected payoff
-of ignoring.  Were the payoff of volunteering higher than the payoff
-of ignoring, the player would volunteer more often and ignore less;
-the opposite is true were the payoff of ignoring higher than the
-payoff of volunteering.
-
-The optimal
-probability depends on the costs and benefits of each
-option.  In fact, the optimal $\gamma$ for two individuals is
-
-\[ \gamma_2 = c/a \]
-
-where $c$ is the cost of volunteering, and $a$ is the total cost
-if nobody volunteers.  In
-the prairie dog example, where the damage of nobody volunteering is
-high, $\gamma_2$ is small.
-
-If you transfer more prairie dogs to guard duty, there are more
-players to share the cost of volunteering, so we expect the
-probability of each player ignoring should increase.  Indeed, Archetti
-shows:
-
-\[ \gamma_N = \gamma_2^{1/(N-1)} \]
-
-$\gamma_N$ increases with
-$N$, so as the number of players increases, each player volunteers
-less.
-
-But, surprisingly, adding more guards does not make the town safer.
-If everyone volunteers at the optimal probability, the probability that
-everyone except you ignores is $\gamma_N^{N-1}$, which is $\gamma_2$, so
-it doesn't depend on $N$.  If you also ignore with probability $\gamma_N$,
-the probability that everyone ignores is $\gamma_2 \gamma_N$, which
-\emph{increases} with $N$.
-
-This result is disheartening.  We can ensure that the high-damage
-situation never occurs by placing the entire burden of the common good
-on one individual who must volunteer all the time.  We could instead
-be more fair and distribute the burden of volunteering among the
-players by asking each of them to volunteer some percentage of the
-time, but the high-damage situation will occur more frequently as the
-number of players who share the burden increases.
-
-\begin{exercise}
-
-Read about the Bystander Effect at
-\url{http://en.wikipedia.org/wiki/Bystander_effect}.  What
-explanation, if any, does the Volunteer's Dilemma provide for the
-Bystander Effect?
-
-\end{exercise}
-
-\begin{exercise}
-
-Some colleges have an Honor Code that requires students to report
-instances of cheating.  If a student cheats on an exam, other students
-who witness the infraction face a version of the volunteer's
-dilemma. As a witness, you have two options: report the offender or
-ignore. If you report, you help maintain the integrity of the Honor
-Code and the college's culture of honesty and integrity, but you incur
-costs, including strained relationships and emotional discomfort.  If
-someone else reports, you benefit without the stress and hassle.  But
-if everyone ignores, the integrity of the Honor Code is diminished, and
-if cheaters are not punished, other students might be more likely to
-cheat.
-
-Download and run \url{thinkcomplex.com/volunteersDilemma.py}, which
-contains a basic implementation of the Volunteer's Dilemma. The code
-plots the likelihood that nobody will volunteer with given values of
-$c$ and $a$ across a range of values for $N$.  Edit this code to
-investigate the Honor Code volunteer's dilemma.  How does the
-probability of nobody volunteering change as you modify the cost of
-volunteering, the cost of nobody volunteering, and size of the
-population?
-\end{exercise}
-
-
-\section{The Norms Game}
-
-At some colleges, cheating is commonplace and students seldom report
-cheaters.  At other colleges, cheating is rare and likely
-to be reported and punished.  The explicit and implicit rules about
-cheating, and reporting cheaters, are {\bf social norms}.
-
-Social norms influence the behavior of individuals: for example, you
-might be more likely to cheat if you think it is common and seldom
-punished.  But individuals also influence social norms: if more
-people report cheaters, fewer people will cheat.
-We can extend the analysis from the previous section to model these
-effects.
-
-Our model is based on a genetic algorithm presented by Robert Axelrod
-in ``Promoting Norms: An Evolutionary Approach to Norms.''  Genetic
-algorithms model the process of natural evolution.  We create a
-population of simulated individuals with different attributes.  The
-individuals interact in ways that test their fitness (by some
-definition of ``fitness'').  Individuals with higher fitness are more
-likely to reproduce, so over time the average fitness of the
-population increases.
-
-In the cheating scenario, the relevant attributes are:
-
-\begin{description}
-
-\item[boldness]: the likelihood that an individual cheats, and
-
-\item[vengefulness]: the likelihood that an individual reports
-  a cheater.
-
-\end{description}
-
-The players interact by playing two games, called
-``cheat-or-not'' and ``punish-or-not.''  In the first, each
-player decides whether to cheat, depending on the value of
-\emph{boldness}.  In the second, each player decides whether to
-report a cheater, depending on \emph{vengefulness}.
-These subgames are played several times per generation so each
-player has several opportunities to cheat and punish cheaters.
-
-The fitness of each player depends on how they play the
-subgames.  When a player cheats, his
-fitness increases by \emph{reward} points, but the fitness of others
-decreases by \emph{damage} points.  Each individual who reports a
-cheater loses \emph{cost} fitness points and causes the cheater to
-lose \emph{punishment} fitness points.
-
-At the end of each generation, individuals with the highest fitness
-levels have the most children in the next generation.
-The properties of each individual in the new generation are then
-mutated to maintain variation.
-
-This code summarizes the structure of the simulation:
-
-\begin{verbatim}
-for generations in range(many):
-    for steps in range(repetitions):
-        for person in persons:
-            cheat_or_not()
-            punish_or_not()
-    genetic_repopulation()
-    genetic_mutation()
-\end{verbatim}
-
-
-%Each player in our simulation of the norms game is represented by a
-%\texttt{Player} object.  A \texttt{Player} has three attributes,
-%\texttt{boldness}, \texttt{vengefulness}, and \texttt{fitness}.  When
-%repopulating, each individual with \texttt{fitness} greater than one
-%standard deviation above the mean has two children; each individual
-%with \texttt{fitness} less than one standard deviation below the mean
-%has zero children; others have one child.
-
-\section{Results}
-
-\begin{figure}
-  \begin{center}
-    \includegraphics[width=0.75\textwidth]{figs/replicateNorms_stableBV_06.pdf}
-  \end{center}
-  \caption{End conditions after 300 generations.\label{fig.normsRep}}
-\end{figure}
-
-Each run starts with a random population and runs for 300 generations.
-The parameters of the simulation are $reward = 3$, $damage = 1$, $cost
-= 2$, $punishment = 9$.  At the end, we compute the mean {\tt
-  boldness} and {\tt vengefulness} of the population.
-Figure~\ref{fig.normsRep} shows the results; each dot represents one
-run of the simulation.
-
-There are two clear clusters, one with low \texttt{boldness} and one
-with high \texttt{boldness}.  When \texttt{boldness} is low, the
-average \texttt{vengefulness} is spread out, which suggests that
-vengefulness does not matter very much.  If few people cheat,
-opportunities to punish are rare and the effect of vengefulness on
-fitness is small.  When \texttt{boldness} is high,
-\texttt{vengefulness} is consistently low.
-
-In the low-boldness cluster, average fitness is higher, so
-individuals in the high-boldness cluster would be better off if they
-could move.  But if they make a unilateral move toward higher
-boldness or higher vengefulness, their fitness suffers.  So the
-high-boldness scenario is stable, which is why this cluster exists.
-
-%The existence of this
-%cluster is less intuitive, because the mean population fitness is
-%highest if nobody cheats. However, just as in the Prisoner's Dilemma,
-%players are not concerned with the greater good or the mean population
-%fitness---cheating benefits oneself and harms everyone else, which is
-%a further advantage to the player. How then can we explain the low
-%level of vengefulness?
-
-%In the punish-or-not subgame, we can analyze whether or not each
-%individual should punish a cheater.  Recall that we are considering
-%relative fitness, so each individual wants to do well as compared to
-%others in the population.  Each time a student punishes the cheater,
-%the cheater receives an additional punishment $P$ and the punisher
-%pays a cost $C$.  The mean fitness therefore decreases by $(P + C) /
-%N$ each time another student punishes the cheater, which gives a
-%relative benefit to every student who did not punish.  If you punish
-%the cheater, the mean fitness decreases again by $(P + C) / N$, but
-%you pay a cost of $C$.  Punishing is only beneficial to you if the
-%cost you pay is less than the mean decrease in fitness; otherwise, you
-%are losing relative to the other players.  Therefore, you should only
-%punish if $(P + C) / N > C$.
-
-%This is only true for small values of $N$.  If every player only
-%punishes when it would benefit him or herself, the player will only
-%punish if the population size is very small.  The value of $N$ we used
-%in the simulation was sufficiently large to encourage players not to
-%punish, so we saw the cluster with high boldness and low vengefulness.
-%Like the results of the Prisoner's Dilemma and the Volunteer's
-%Dilemma, this is disheartening because all players would be better off
-%in overall fitness if none of them cheated, yet the tendency is to
-%encourage cheation by not punishing.
-
-%\begin{exercise}
-
-%The implementation of the punish-or-not subgame described above is
-%slightly different from the chemistry class cheating example, which
-%has an implicit Volunteer's Dilemma.  In that example, the cheater
-%received punishment $P$ once if at least one individual called him out
-%but did not receive extra punishment if multiple individuals reported
-%him.  Repeat the analysis of the punish-or-not subgame for the
-%chemistry class example and determine in which situation you should
-%punish fellow cheaters if punishment follows the Volunteer's Dilemma.
-%\end{exercise}
-
-\section{Improving the chances}
-
-\begin{figure}
-  \begin{center}
-    \includegraphics[width=0.75\textwidth]{figs/varyCP_09.pdf}
-  \end{center}
-  \caption{Proportion of good outcomes, varying the cost of reporting cheaters and the punishment for cheating.}\label{fig.varyCP}
-\end{figure}
-
-Suppose you are founding a new college and thinking about the academic
-culture you want to create.  You probably prefer an
-environment where cheating is rare.  But our simulations suggest that
-there are two stable outcomes, with low and high rates of cheating.
-What can you do to improve the chances of reaching (and staying in)
-the low-cheating regime?
-
-The parameters of the simulation affect the probability of the
-outcomes.  In the previous section, the parameters were $reward = 3$,
-$damage = 1$, $cost = 2$, $punishment = 9$.  The probability of
-reaching the low-cheating regime was about 50\%.  If you were
-founding a new college, you might not like those odds.
-
-The parameters that have the strongest effect on the outcome are
-$cost$, the cost of reporting a cheater, and $punishment$, the cost
-of getting caught.  Figure~\ref{fig.varyCP}
-shows how the proportion of good outcomes depends on these parameters.
-
-%When we increase the cost of enforcing the norm,
-%players who do not volunteer benefit even more than when the cost was
-%lower from volunteerism of other players. This puts the volunteers at
-%a much greater disadvantage compared to the non-volunteers, and, over
-%time, more of the non-volunteers are reproduced than the
-%volunteers---which means that the cheaters are even less likely to be
-%punished and that there would be an advantage to being bold. The
-%population would then stabilize with a higher mean boldness, and an
-%outcome that is less favorable.
-
-%When we increase the punishment levied
-%on cheaters, the players with high boldness---who would be the most
-%likely to be punished---are at a greater disadvantage when
-%punished. Over time, the population stabilizes with a lower mean
-%boldness.
-
-There are two ways to increase the chances of a good outcome,
-decreasing $cost$ or increasing $punishment$.  If we fix
-$punishment=9$ and decrease $cost$ to 1, the probability of a good
-outcome is 80\%.  If we fix $cost=2$, to achieve the same probability,
-we have to increase $punishment$ to 11.
-
-Which option is more appealing depends on practical and cultural
-considerations.  Of course, we have to be careful not to take this
-model too seriously.  It is a highly abstracted model of complex human
-behavior.  Nevertheless, it provides insight into the emergence
-and stability of social norms.
-
-\begin{exercise}
-
-In this section we fixed $reward$ and $damage$, and explored the
-effect of $cost$ and $punishment$.
-Download our code from \url{thinkcomplex.com/normsGame.py} and
-run it to replicate these results.
-
-Then modify it to explore the effect of $reward$ and $damage$.  With
-the other parameters fixed, what values of $reward$ and $damage$ give
-a 50\% chance of reaching a good outcome?  What about 70\% and 90\%?
-\end{exercise}
-
-\begin{exercise}
-
-The games in this case study are based on work in
-Game Theory, which is a set of mathematical methods for analyzing the
-behavior of agents who follow simple rules in response to economic
-costs and benefits.  You can read more about Game Theory at
-\url{http://en.wikipedia.org/wiki/Game_theory}.
-\end{exercise}
-
-
-% END OF CASE STUDIES
 
 \appendix
 
@@ -7081,18 +6033,18 @@ or dictionary---are also constant time, regardless of the size
 of the data structure.
 \index{indexing}
 
-A {\tt for} loop that traverses a sequence or dictionary is
+A \py{for} loop that traverses a sequence or dictionary is
 usually linear, as long as all of the operations in the body
 of the loop are constant time.  For example, adding up the
 elements of a list is linear:
 
-\begin{verbatim}
+\begin{code}
     total = 0
     for x in t:
         total += x
-\end{verbatim}
+\end{code}
 
-The built-in function {\tt sum} is also linear because it does
+The built-in function \py{sum} is also linear because it does
 the same thing, but it tends to be faster because it is a more
 efficient implementation; in the language of algorithmic analysis,
 it has a smaller leading coefficient.
@@ -7102,9 +6054,9 @@ run time is quadratic
 because string concatenation is linear.
 \index{string concatenation}
 
-The string method {\tt join} is usually faster because it is
+The string method \py{join} is usually faster because it is
 linear in the total length of the strings.
-\index{join@{\tt join}}
+\index{join@\py{join}}
 
 As a rule of thumb, if the body of a loop is in $O(n^a)$ then
 the whole loop is in $O(n^{a+1})$.  The exception is if you can
@@ -7117,8 +6069,8 @@ does dividing.  So if the body of a loop is in $O(n^a)$ and it runs $n
 / k$ times, the loop is in $O(n^{a+1})$, even for large $k$.
 
 Most string and tuple operations are linear, except indexing and {\tt
-  len}, which are constant time.  The built-in functions {\tt min} and
-{\tt max} are linear.  The run-time of a slice operation is
+  len}, which are constant time.  The built-in functions \py{min} and
+\py{max} are linear.  The run-time of a slice operation is
 proportional to the length of the output, but independent of the size
 of the input.
 \index{string methods}
@@ -7152,16 +6104,16 @@ there are some exceptions:
 
 \begin{itemize}
 
-\item The run time of {\tt copy} is proportional to the number of
+\item The run time of \py{copy} is proportional to the number of
   elements, but not the size of the elements (it copies references,
   not the elements themselves).
 
-\item The run time of {\tt update} is
+\item The run time of \py{update} is
   proportional to the size of the dictionary passed as a parameter,
   not the dictionary being updated.
 
-\item {\tt keys}, {\tt values} and {\tt items} are linear because they
-  return new lists; {\tt iterkeys}, {\tt itervalues} and {\tt
+\item \py{keys}, \py{values} and \py{items} are linear because they
+  return new lists; \py{iterkeys}, \py{itervalues} and {\tt
     iteritems} are constant time because they return iterators.  But
   if you loop through the iterators, the loop will be linear.  Using
   the ``iter'' functions saves some overhead, but it doesn't change
@@ -7225,9 +6177,9 @@ In the worst case it has to traverse the entire collection, so the run
 time is linear.
 \index{linear search}
 
-The {\tt in} operator for sequences uses a linear search; so do string
-methods like {\tt find} and {\tt count}.
-\index{in@{\tt in} operator}
+The \py{in} operator for sequences uses a linear search; so do string
+methods like \py{find} and \py{count}.
+\index{in@\py{in} operator}
 
 If the elements of the sequence are in order, you can use a {\bf
   bisection search}, which is $O(\log n)$.  Bisection search is
@@ -7246,15 +6198,15 @@ times faster than a linear search.
 
 \begin{exercise}
 
-Write a function called {\tt bisection} that takes a sorted list
+Write a function called \py{bisection} that takes a sorted list
 and a target value and returns the index of the value
-in the list, if it's there, or {\tt None} if it's not.
-\index{bisect@{\tt bisect} module}
+in the list, if it's there, or \py{None} if it's not.
+\index{bisect@\py{bisect} module}
 
 \index{bisect module}
 \index{module!bisect}
 
-Or you could read the documentation of the {\tt bisect} module
+Or you could read the documentation of the \py{bisect} module
 and use that!
 
 \end{exercise}
@@ -7267,7 +6219,7 @@ There is another data structure, called a {\bf hashtable} that
 is even faster---it can do a search in constant time---and it
 doesn't require the items to be sorted.  Python dictionaries
 are implemented using hashtables, which is why most dictionary
-operations, including the {\tt in} operator, are constant time.
+operations, including the \py{in} operator, are constant time.
 
 
 \section{Hashtables}
@@ -7287,22 +6239,22 @@ implement are:
 
 \begin{description}
 
-\item[{\tt add(k, v)}:] Add a new item that maps from key {\tt k}
-to value {\tt v}.  With a Python dictionary, {\tt d}, this operation
-is written {\tt d[k] = v}.
+\item[\py{add(k, v)}:] Add a new item that maps from key \py{k}
+to value \py{v}.  With a Python dictionary, \py{d}, this operation
+is written \py{d[k] = v}.
 
-\item[{\tt get(target)}:] Look up and return the value that corresponds
-to key {\tt target}.  With a Python dictionary, {\tt d}, this operation
-is written {\tt d[target]} or {\tt d.get(target)}.
+\item[\py{get(target)}:] Look up and return the value that corresponds
+to key \py{target}.  With a Python dictionary, \py{d}, this operation
+is written \py{d[target]} or \py{d.get(target)}.
 
 \end{description}
 
 For now, I assume that each key only appears once.
 The simplest implementation of this interface uses a list of
 tuples, where each tuple is a key-value pair.
-\index{LinearMap@{\tt LinearMap}}
+\index{LinearMap@\py{LinearMap}}
 
-\begin{verbatim}
+\begin{code}
 class LinearMap(object):
 
     def __init__(self):
@@ -7316,34 +6268,34 @@ class LinearMap(object):
             if key == k:
                 return val
         raise KeyError
-\end{verbatim}
+\end{code}
 
-{\tt add} appends a key-value tuple to the list of items, which
+\py{add} appends a key-value tuple to the list of items, which
 takes constant time.
 
-{\tt get} uses a {\tt for} loop to search the list:
+\py{get} uses a \py{for} loop to search the list:
 if it finds the target key it returns the corresponding value;
-otherwise it raises a {\tt KeyError}.
-So {\tt get} is linear.
-\index{KeyError@{\tt KeyError}}
+otherwise it raises a \py{KeyError}.
+So \py{get} is linear.
+\index{KeyError@\py{KeyError}}
 
-An alternative is to keep the list sorted by key.  Then {\tt get}
+An alternative is to keep the list sorted by key.  Then \py{get}
 could use a bisection search, which is $O(\log n)$.  But inserting a
 new item in the middle of a list is linear, so this might not be the
 best option.  There are other data structures (see
   \url{http://en.wikipedia.org/wiki/Red-black_tree})  that can implement {\tt
-  add} and {\tt get} in log time, but that's still not as good as
+  add} and \py{get} in log time, but that's still not as good as
 constant time, so let's move on.
 \index{red-black tree}
 
-One way to improve {\tt LinearMap} is to break the list of key-value
+One way to improve \py{LinearMap} is to break the list of key-value
 pairs into smaller lists.  Here's an implementation called
-{\tt BetterMap}, which is a list of 100 LinearMaps.  As we'll see
-in a second, the order of growth for {\tt get} is still linear,
-but {\tt BetterMap} is a step on the path toward hashtables:
-\index{BetterMap@{\tt BetterMap}}
+\py{BetterMap}, which is a list of 100 LinearMaps.  As we'll see
+in a second, the order of growth for \py{get} is still linear,
+but \py{BetterMap} is a step on the path toward hashtables:
+\index{BetterMap@\py{BetterMap}}
 
-\begin{verbatim}
+\begin{code}
 class BetterMap(object):
 
     def __init__(self, n=100):
@@ -7362,16 +6314,16 @@ class BetterMap(object):
     def get(self, k):
         m = self.find_map(k)
         return m.get(k)
-\end{verbatim}
+\end{code}
 
-\verb"__init__" makes a list of {\tt n} {\tt LinearMap}s.
+\py{__init__} makes a list of \py{n} \py{LinearMap}s.
 
-\verb"find_map" is used by
-{\tt add} and {\tt get}
+\py{find_map} is used by
+\py{add} and \py{get}
 to figure out which map to put the
 new item in, or which map to search.
 
-\verb"find_map" uses the built-in function {\tt hash}, which takes
+\py{find_map} uses the built-in function \py{hash}, which takes
 almost any Python object and returns an integer.  A limitation of this
 implementation is that it only works with hashable keys.  Mutable
 types like lists and dictionaries are unhashable.
@@ -7381,14 +6333,14 @@ Hashable objects that are considered equal return the same hash value,
 but the converse is not necessarily true: two different objects
 can return the same hash value.
 
-\verb"find_map" uses the modulus operator to wrap the hash values
-into the range from 0 to {\tt len(self.maps)}, so the result is a legal
+\py{find_map} uses the modulus operator to wrap the hash values
+into the range from 0 to \py{len(self.maps)}, so the result is a legal
 index into the list.  Of course, this means that many different
 hash values will wrap onto the same index.  But if the hash function
 spreads things out pretty evenly (which is what hash functions
 are designed to do), then we expect $n/100$ items per LinearMap.
 
-Since the run time of {\tt LinearMap.get} is proportional to the
+Since the run time of \py{LinearMap.get} is proportional to the
 number of items, we expect BetterMap to be about 100 times faster
 than LinearMap.  The order of growth is still linear, but the
 leading coefficient is smaller.  That's nice, but still not
@@ -7405,7 +6357,7 @@ adding more LinearMaps.
 Here is an implementation of a hashtable:
 \index{HashMap}
 
-\begin{verbatim}
+\begin{code}
 class HashMap(object):
 
     def __init__(self):
@@ -7430,34 +6382,34 @@ class HashMap(object):
                 new_maps.add(k, v)
 
         self.maps = new_maps
-\end{verbatim}
+\end{code}
 
-Each {\tt HashMap} contains a {\tt BetterMap}; \verb"__init__" starts
-with just 2 LinearMaps and initializes {\tt num}, which keeps track of
+Each \py{HashMap} contains a \py{BetterMap}; \py{__init__} starts
+with just 2 LinearMaps and initializes \py{num}, which keeps track of
 the number of items.
 
-{\tt get} just dispatches to {\tt BetterMap}.  The real work happens
-in {\tt add}, which checks the number of items and the size of the
-{\tt BetterMap}: if they are equal, the average number of items per
-LinearMap is 1, so it calls {\tt resize}.
+\py{get} just dispatches to \py{BetterMap}.  The real work happens
+in \py{add}, which checks the number of items and the size of the
+\py{BetterMap}: if they are equal, the average number of items per
+LinearMap is 1, so it calls \py{resize}.
 
-{\tt resize} make a new {\tt BetterMap}, twice as big as the previous
+\py{resize} make a new \py{BetterMap}, twice as big as the previous
 one, and then ``rehashes'' the items from the old map to the new.
 
 Rehashing is necessary because changing the number of LinearMaps
 changes the denominator of the modulus operator in
-\verb"find_map".  That means that some objects that used
+\py{find_map}.  That means that some objects that used
 to wrap into the same LinearMap will get split up (which is
 what we wanted, right?).
 \index{rehashing}
 
 Rehashing is linear, so
-{\tt resize} is linear, which might seem bad, since I promised
-that {\tt add} would be constant time.  But remember that
-we don't have to resize every time, so {\tt add} is usually
+\py{resize} is linear, which might seem bad, since I promised
+that \py{add} would be constant time.  But remember that
+we don't have to resize every time, so \py{add} is usually
 constant time and only occasionally linear.  The total amount
-of work to run {\tt add} $n$ times is proportional to $n$,
-so the average time of each {\tt add} is constant time!
+of work to run \py{add} $n$ times is proportional to $n$,
+so the average time of each \py{add} is constant time!
 \index{constant time}
 
 To see how this works, think about starting with an empty
@@ -7470,11 +6422,11 @@ add the third item (one more unit).  Adding the next item
 costs 1 unit, so the total so far is
 6 units of work for 4 items.
 
-The next {\tt add} costs 5 units, but the next three
+The next \py{add} costs 5 units, but the next three
 are only one unit each, so the total is 14 units for the
 first 8 adds.
 
-The next {\tt add} costs 9 units, but then we can add 7 more
+The next \py{add} costs 9 units, but then we can add 7 more
 before the next resize, so the total is 30 units for the
 first 16 adds.
 
@@ -7490,7 +6442,7 @@ is $O(1)$.
 Figure~\ref{fig.hash} shows how this works graphically.  Each
 block represents a unit of work.  The columns show the total
 work for each add in order from left to right: the first two
-{\tt adds} cost 1 units, the third costs 3 units, etc.
+\py{adds} cost 1 units, the third costs 3 units, etc.
 
 \begin{figure}
 \centerline{\includegraphics[width=5.5in]{figs/towers.pdf}}
@@ -7507,7 +6459,7 @@ An important feature of this algorithm is that when we resize the
 HashTable it grows geometrically; that is, we multiply the size by a
 constant.  If you increase the size
 arithmetically---adding a fixed number each time---the average time
-per {\tt add} is linear.
+per \py{add} is linear.
 \index{geometric resizing}
 
 You can download my implementation of HashMap from
@@ -7516,19 +6468,19 @@ is no reason to use it; if you want a map, just use a Python dictionary.
 
 \begin{exercise}
 
-My implementation of {\tt HashMap} accesses the attributes of
-{\tt BetterMap} directly, which shows poor object-oriented design.
+My implementation of \py{HashMap} accesses the attributes of
+\py{BetterMap} directly, which shows poor object-oriented design.
 \index{object-oriented design}
 
 \begin{enumerate}
 
-\item The special method \verb"__len__" is invoked by the built-in
-function {\tt len}.  Write a \verb"__len__" method for {\tt BetterMap}
-and use it in {\tt add}.
-\index{len@{\tt \_\_len\_\_}}
+\item The special method \py{__len__} is invoked by the built-in
+function \py{len}.  Write a \py{__len__} method for \py{BetterMap}
+and use it in \py{add}.
+\index{len@\py{\_\_len\_\_}}
 
-\item Use a generator to write {\tt BetterMap.iteritems}, and use it
-in {\tt resize}.
+\item Use a generator to write \py{BetterMap.iteritems}, and use it
+in \py{resize}.
 \index{generator}
 
 \end{enumerate}
@@ -7544,10 +6496,10 @@ you can use tuples but not lists as keys in a dictionary.  An
 alternative is to use a tree-based map.
 
 Write an implementation of the map interface called
-{\tt TreeMap} that uses a red-black tree to perform {\tt add}
-and {\tt get} in log time.
+\py{TreeMap} that uses a red-black tree to perform \py{add}
+and \py{get} in log time.
 \index{red-black tree}
-\index{TreeMap@{\tt TreeMap}}
+\index{TreeMap@\py{TreeMap}}
 
 \end{exercise}
 
@@ -7563,54 +6515,54 @@ in Python:
 
 \begin{itemize}
 
-\item You could use the {\tt +=} operator:
+\item You could use the \py{+=} operator:
 
-\begin{verbatim}
+\begin{code}
     total = []
     for x in t:
         total += x
-\end{verbatim}
+\end{code}
 
-\item Or the {\tt extend} method:
+\item Or the \py{extend} method:
 
-\begin{verbatim}
+\begin{code}
     total = []
     for x in t:
         total.extend(x)
-\end{verbatim}
+\end{code}
 
-\item Or the built-in function {\tt sum}:
+\item Or the built-in function \py{sum}:
 
-\begin{verbatim}
+\begin{code}
     total = sum(t, [])
-\end{verbatim}
+\end{code}
 
-The second argument to {\tt sum} is the initial value for the total.
+The second argument to \py{sum} is the initial value for the total.
 
 \end{itemize}
 
-Without knowing how {\tt +=} and {\tt extend} and {\tt sum} are
+Without knowing how \py{+=} and \py{extend} and \py{sum} are
 implemented, it is hard to analyze their performance.  For example,
-if {\tt total += x} creates a new list every time, the loop
-is quadratic; but if it modifies {\tt total}, it's linear.
-\index{+=@{\tt +=} operator}
-\index{extend@{\tt extend}}
-\index{sum@{\tt sum}}
+if \py{total += x} creates a new list every time, the loop
+is quadratic; but if it modifies \py{total}, it's linear.
+\index{+=@\py{+=} operator}
+\index{extend@\py{extend}}
+\index{sum@\py{sum}}
 
 To find out, we could read the source code, but as an exercise, let's see
 if we can figure it out by measuring run times.
 
 A simple way to measure the run time of a program is to use
-the function {\tt times} in the {\tt os} module, which returns
+the function \py{times} in the \py{os} module, which returns
 a tuple of floats indicating the time your process has used
-(see the documentation for details).  I use a function, {\tt etime},
+(see the documentation for details).  I use a function, \py{etime},
 which returns the sum of ``user time'' and ``system time'' which
 is usually what we care about for performance measurement:
-\index{os module@{\tt os} module}
+\index{os module@\py{os} module}
 \index{user time}
 \index{system time}
 
-\begin{verbatim}
+\begin{code}
 import os
 
 def etime():
@@ -7619,24 +6571,24 @@ def etime():
 
     user, sys, chuser, chsys, real = os.times()
     return user+sys
-\end{verbatim}
+\end{code}
 
 To measure the elapsed time of a function you can call
-{\tt etime} twice and compute the difference:
+\py{etime} twice and compute the difference:
 
-\begin{verbatim}
+\begin{code}
     start = etime()
 
     # put the code you want to measure here
 
     end = etime()
     elapsed = end - start
-\end{verbatim}
+\end{code}
 
 Alternatively, if you use IPython, you can use the
-{\tt timeit} command. See \url{ipython.scipy.org}.
+\py{timeit} command. See \url{ipython.scipy.org}.
 \index{IPython}
-\index{timeit@{\tt timeit}}
+\index{timeit@\py{timeit}}
 
 If an algorithm is quadratic, we expect the run time, $t$
 as a function of input size, $n$, to look like this:
@@ -7659,39 +6611,39 @@ Similarly if the algorithm is linear, we expect a line with
 slope 1.
 \index{linear}
 
-I wrote three functions that concatenate lists: \verb"sum_plus" uses
-{\tt +=}; \verb"sum_extend" uses {\tt list.extend}; and \verb"sum_sum"
-uses {\tt sum}.  I timed them for a range of {\tt n} and plotted the
+I wrote three functions that concatenate lists: \py{sum_plus} uses
+\py{+=}; \py{sum_extend} uses \py{list.extend}; and \py{sum_sum}
+uses \py{sum}.  I timed them for a range of \py{n} and plotted the
 results on a log-log scale.  Figures~\ref{listsum1} and \ref{listsum2}
 show the results.
 
 \begin{figure}
 \centerline{\includegraphics[height=2.5in]{figs/listsum1.pdf}}
-\caption{Runtime versus {\tt n}.  The dashed lines have slope 1.\label{listsum1}}
+\caption{Runtime versus \py{n}.  The dashed lines have slope 1.\label{listsum1}}
 \end{figure}
 
 \begin{figure}
 \centerline{\includegraphics[height=2.5in]{figs/listsum2.pdf}}
-\caption{Runtime versus {\tt n}.  The dashed line has slope 2.\label{listsum2}}
+\caption{Runtime versus \py{n}.  The dashed line has slope 2.\label{listsum2}}
 \end{figure}
 
 In Figure~\ref{listsum1} I fit a line with slope 1 to the curves.
 The data fit this line well, so we conclude
-that these implementations are linear.  The implementation for {\tt +=}
+that these implementations are linear.  The implementation for \py{+=}
 is faster by a constant factor because it takes some time
-to look up the {\tt extend} method each time through the loop.
+to look up the \py{extend} method each time through the loop.
 
 In Figure~\ref{listsum2} the data fit a line with slope 2, so the
-implementation of {\tt sum} is quadratic.
+implementation of \py{sum} is quadratic.
 \index{quadratic}
 
 
-\section{{\tt pyplot}}
-\index{pyplot@{\tt pyplot}}
+\section{\py{pyplot}}
+\index{pyplot@\py{pyplot}}
 \label{pyplot}
 
-To make the figures in this section I used {\tt pyplot}, which is part of
-{\tt matplotlib}.  If {\tt matplotlib} is not part of your Python
+To make the figures in this section I used \py{pyplot}, which is part of
+\py{matplotlib}.  If \py{matplotlib} is not part of your Python
 installation, you might have to install it, or you can use another
 library to make plots.
 \index{pyplot}
@@ -7699,7 +6651,7 @@ library to make plots.
 
 Here's an example that makes a simple plot:
 
-\begin{verbatim}
+\begin{code}
 import matplotlib.pyplot as pyplot
 
 pyplot.plot(xs, ys)
@@ -7710,26 +6662,26 @@ pyplot.title('')
 pyplot.xlabel('n')
 pyplot.ylabel('run time (s)')
 pyplot.show()
-\end{verbatim}
+\end{code}
 
-The import statement makes {\tt matplotlib.pyplot} accessible
-with the shorter name {\tt pyplot}.
+The import statement makes \py{matplotlib.pyplot} accessible
+with the shorter name \py{pyplot}.
 
-{\tt plot} takes a list of $x$-values and a list of $y$-values and
+\py{plot} takes a list of $x$-values and a list of $y$-values and
 plots them.  The lists have to have the same length.
-{\tt xscale} and {\tt yscale} make the axes either linear or logarithmic.
+\py{xscale} and \py{yscale} make the axes either linear or logarithmic.
 
-{\tt title}, {\tt xlabel} and {\tt ylabel} are self-explanatory.
-Finally, {\tt show} displays the plot on the screen.  You could also
-use {\tt savefig} to save the plot in a file.
+\py{title}, \py{xlabel} and \py{ylabel} are self-explanatory.
+Finally, \py{show} displays the plot on the screen.  You could also
+use \py{savefig} to save the plot in a file.
 
-Documentation of {\tt pyplot} is at \url{http://matplotlib.sourceforge.net/}.
+Documentation of \py{pyplot} is at \url{http://matplotlib.sourceforge.net/}.
 
 
 \begin{exercise}
 
 Test the performance of
-{\tt LinearMap}, {\tt BetterMap} and {\tt HashMap}; see if you
+\py{LinearMap}, \py{BetterMap} and \py{HashMap}; see if you
 can characterize their order of growth.
 
 You can download my map implementations from
@@ -7737,7 +6689,7 @@ You can download my map implementations from
 from \url{thinkcomplex.com/listsum.py}.
 
 You will have to find a range
-of {\tt n} that is big enough to show asymptotic behavior, but small
+of \py{n} that is big enough to show asymptotic behavior, but small
 enough to run quickly.
 
 \end{exercise}
@@ -7888,14 +6840,7 @@ Here are the books:
 
 
 
-
+\backmatter
 \printindex
-
-\clearemptydoublepage
-
-%\blankpage
-%\blankpage
-%\blankpage
-
 
 \end{document}
