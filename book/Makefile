@@ -1,36 +1,28 @@
+F = thinkcomplexity2
+DEST = /home/downey/public_html/greent/complexity2
+
 all:	book.tex
 	pdflatex book
 	makeindex book.idx
 	pdflatex book
-	mv book.pdf thinkcomplexity.pdf
-	evince thinkcomplexity.pdf
+	mv book.pdf $(F).pdf
+	evince $(F).pdf
 
-hevea:
-	# replace the pdfs with eps
-	sed s/.pdf/.eps/g book.tex > temp.tex
-	sed s/.jpg/.eps/g temp.tex > thinkcomplexity.tex
-	latex thinkcomplexity
+hevea:	book.tex header.html footer.html
+	cp book.tex $(F).tex
+	pdflatex $(F)
+	hevea -O -e latexonly htmlonly $(F).tex
+	imagen -png -pdf $(F)
+	hacha $(F).html
 	rm -rf html
 	mkdir html
-	hevea -O -e latexonly htmlonly thinkcomplexity
-# the following greps are a kludge to prevent imagen from seeing
-# the definitions in latexonly, and to avoid headers on the images
-	grep -v latexonly thinkcomplexity.image.tex > a; mv a thinkcomplexity.image.tex
-	grep -v fancyhdr thinkcomplexity.image.tex > a; mv a thinkcomplexity.image.tex
-	imagen -png thinkcomplexity
-	hacha thinkcomplexity.html
 	cp up.png next.png back.png html
-	mv index.html thinkcomplexity.css thinkcomplexity*.html thinkcomplexity*.png *motif.gif html
-
-DEST = /home/downey/public_html/greent/complexity
+	mv index.html $(F).css $(F)*.html $(F)*.png html
 
 distrib:
 	rm -rf dist
-	mkdir dist dist/tex dist/tex/figs
-	rsync -a thinkcomplexity.pdf html dist
-	rsync -a Makefile book.tex latexonly htmlonly dist/tex
-	rsync -a figs/*.fig figs/*.eps dist/tex/figs
-	cd dist; zip -r complexity.tex.zip tex; rm -r tex
+	mkdir dist
+	rsync -a $(F).pdf html dist
 	rsync -a dist/* $(DEST)
 	chmod -R o+r $(DEST)/*
 	cd $(DEST)/..; sh back
@@ -54,7 +46,7 @@ OREILLY = /home/downey/oreilly/complexity
 oreilly:
 	rsync -a book/ $(OREILLY)
 	rsync -a figs/* $(OREILLY)/figs
-	rsync -a thinkcomplexity.pdf $(OREILLY)/pdf
+	rsync -a $(F).pdf $(OREILLY)/pdf
 
 clean:
 	rm -f *~ *.aux *.log *.dvi *.idx *.ilg *.ind *.toc

@@ -183,7 +183,7 @@ Needham MA 02492
 
 Permission is granted to copy, distribute, transmit and adapt
 this work under a Creative Commons
-Attribution-NonCommercial-ShareAlike 4.0 Unported International License:
+Attribution-NonCommercial-ShareAlike 4.0 International License:
 \url{http://creativecommons.org/licenses/by-nc-sa/4.0/}.
 
 If you are interested in distributing a commercial version of this
@@ -990,7 +990,19 @@ chapter again.
 
 \chapter{Graphs}
 
-% TODO: Overview
+\newcommand{\Erdos}{Erd\H{o}s}
+\newcommand{\Renyi}{R\'{e}nyi}
+
+The first three chapters of this book are about models that describe
+systems that are made up of components and connections between components.
+For example, in an ecological food web, the components are species
+and the connections represent predator-prey relationships.
+
+In this chapter, I introduce NetworkX, a Python package for building
+and studying these models.  We start with the \Erdos-\Renyi~model,
+which has some interesting mathematical properties.  In the next
+chapter we move on to models that are more useful for explaining
+real-world systems.
 
 The code for this chapter is in {\tt chap02.ipynb} in the respository
 for this book.  More information about working with the code is
@@ -1214,9 +1226,6 @@ In both of these examples, the nodes are strings, but in general they
 can be any hashable type.
 
 
-\newcommand{\Erdos}{Erd\H{o}s}
-\newcommand{\Renyi}{R\'{e}nyi}
-
 \section{Random graphs}
 
 A random graph is just what it sounds like: a graph with nodes and edges
@@ -1314,7 +1323,7 @@ we'll develop functions to check whether a graph is connected.
 
 
 \section{Connected graphs}
-\label{bfs}
+\label{connected}
 
 A graph is {\bf connected} if there is a path from every node to every
 other node.  
@@ -1340,24 +1349,23 @@ example, in the complete graph we generated in the previous section:
 [1, 2, 3, 4, 5, 6, 7, 8, 9]
 \end{code}
 
-Suppose we start at node $s$.  We can mark $s$ as ``reachable'',
+Suppose we start at node $s$.  We can mark $s$ as ``seen'',
 then we can mark its neighbors.
 Then we mark the neighbor's neighbors, and so
 on, until you can't reach any more nodes.  If all nodes are
-marked, the graph is connected.
+seen, the graph is connected.
 
 Here's what that looks like in Python:
 
 \begin{code}
 def reachable_nodes(G, start):
-    reachable = set()
+    seen = set()
     stack = [start]
     while stack:
         node = stack.pop()
-        if node in reachable:
-            continue
-        reachable.add(node)
-        stack.extend(G.neighbors(node))
+        if node not in seen:
+            seen.add(node)
+            stack.extend(G.neighbors(node))
     return reachable
 \end{code}
 
@@ -1365,7 +1373,7 @@ def reachable_nodes(G, start):
   start}, and returns the set of nodes that can be reached from {\tt
   start}.
 
-Initially the set, \py{reachable}, is empty, and we create a
+Initially the set, \py{seen}, is empty, and we create a
 list called \py{stack} that keeps track of nodes we have
 discovered but not yet processed.  Initially the stack contains
 a single node, \py{start}.
@@ -1376,16 +1384,16 @@ Now, each time through the loop, we
 
 \item Remove one node from the stack.
 
-\item If the node is already in \py{reachable}, we go back
+\item If the node is already in \py{seen}, we go back
 to Step 1.
 
-\item Otherwise, we add the node to \py{reachable} and add its
+\item Otherwise, we add the node to \py{seen} and add its
 neighbors to the stack.
 
 \end{enumerate}
 
 When the stack is empty, we can't reach any more nodes, so we
-break out of the loop and return \py{reachable}.
+break out of the loop and return \py{seen}.
 
 As an example, we can find all nodes in the complete graph that
 are reachable from node 0:
@@ -1395,13 +1403,13 @@ are reachable from node 0:
 {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
 \end{code}
 
-Initially, the stack contains node 0 and \py{reachable} is empty.
-The first time through the loop, node 0 is added to \py{reachable}
+Initially, the stack contains node 0 and \py{seen} is empty.
+The first time through the loop, node 0 is added to \py{seen}
 and all the other nodes are added to the stack (since they are all
 neighbors of node 0).
 
 The next time through the loop, \py{pop} returns the last element
-in the stack, which is node 9.  So node 9 gets added to \py{reachable}
+in the stack, which is node 9.  So node 9 gets added to \py{seen}
 and its neighbors get added to the stack.  
 
 Notice that the same node can appear more than once in the stack;
@@ -1422,7 +1430,7 @@ def is_connected(G):
 \py{nodes_iter}, which returns an iterator object, and passing the
 result to \py{next}, which returns the first node.
 
-\py{reachable} gets the set of nodes that can be reached from
+\py{seen} gets the set of nodes that can be reached from
 \py{start}.  If the size of this set is the same as the size
 of the graph, that means we can reach all nodes, which means the
 graph is connected.
@@ -1566,6 +1574,82 @@ These experiments are consistent with the results \Erdos~and
 \Renyi~proved in their papers.
 
 
+\section{Analysis of graph algorithms}
+\label{graphanalysis}
+
+I think chapter I presented an algorithm for checking whether
+a graph is connected; in the next few chapters, we will see
+a few more graph algorithms.  And we will want to analyze the
+performance of those algorithms, figuring out how their run times
+grow as the size of the graphs increases.
+
+If you are not already familiar with analysis of algorithms,
+you should read Appendix~\ref{alganalysis} before you continue.
+
+\newcommand{\V}{n}
+\newcommand{\E}{m}
+
+The order of growth for graph algorithms is usually expressed
+as a function of $\V$, the number of vertices, and $\E$, the number
+of edges.
+\index{analysis of graph algorithms}
+\index{graph algorithm}
+
+As an example, let's analyze \py{reachable_nodes} from
+Section~\ref{connected}:
+
+\begin{code}
+def reachable_nodes(G, start):
+    seen = set()
+    stack = [start]
+    while stack:
+        node = stack.pop()
+        if node not in seen:
+            seen.add(node)
+            stack.extend(G.neighbors(node))
+    return seen
+\end{code}
+
+Each time through the loop, we pop a node off the stack; by default,
+\py{pop} removes and returns the last element of a list, which is
+a constant time operation.
+
+Next we check whether the node is in \py{seen}, which is a set,
+so checking membership is constant time.
+
+If the node is not already in \py{seen}, we add it, which is
+constant time, and then add the neighbors to the stack, which is
+linear in the number of neighbors.
+
+To express the run time in terms of $\V$ and $\E$, we can add up
+the total number of times each node is added \py{seen}
+and \py{stack}.
+
+Each node is only added to \py{seen} once, so the total number
+of additions is $\V$.
+
+But nodes might be added to \py{stack} many times, depending on
+how many neighbors they have.  If a node has $k$ neighbors, it
+is added to \py{stack} $k$ times.  Of course, if it has $k$ neighbors,
+that means it is connected to $k$ edges.
+
+So the total number
+of additions to \py{stack} is the total number of edges, $\E$,
+doubled because we consider every edge twice.
+
+Therefore, the order of growth for this function is $O(\V + \E)$,
+which is a convenient way to say that the run time grows in proportion
+to either $\V$ or $\E$, whichever is ``bigger.''  \index{breadth first
+  search} \index{BFS}
+
+If we know the relationship
+between $\V$ and $\E$, we can simplify this expression.  For
+example, the number of edges is $n(n-1)/2$, which is in
+$O(\V^2)$.  So for a complete graph, \py{reachable_nodes} is 
+quadratic in $\V$.
+\index{quadratic}
+
+
 \section{Exercises}
 
 The code for this chapter is in \py{chap02.ipynb}, which is a
@@ -1575,6 +1659,31 @@ about working with this code, see Section~\ref{???}.
 \begin{exercise}
 Launch \py{chap02.ipynb} and run the code.  There are a few short
 exercises embedded in the notebook that you might want to try.
+\end{exercise}
+
+\begin{exercise}
+In Section~\ref{graphanalysis} we analyzed the performance of
+\py{reachable_nodes} and classified it in $O(n + m)$, where $n$ is the
+number of nodes and $m$ is the number of edges.  Continuing the
+analysis, what is the order of growth for \py{is_connected}?
+
+\begin{code}
+def is_connected(G):
+    start = next(G.nodes_iter())
+    reachable = reachable_nodes(G, start)
+    return len(reachable) == len(G)
+\end{code}
+
+
+\end{exercise}
+
+\begin{exercise}
+In my implementation of \py{reachable_nodes}, you might be bothered by
+the apparent inefficiency of adding {\em all} neighbors to the stack
+without checking whether they are already in \py{seen}.  Write a
+version of this function that checks the neighbors before adding them
+to the stack.  Does this ``optimization'' change the order of growth?
+Does it make the function faster?
 \end{exercise}
 
 
@@ -1614,64 +1723,6 @@ first type of ER graph?
 \chapter{Small world graphs}
 
 Overview
-
-
-\section{Analysis of graph algorithms}
-
-\newcommand{\V}{|V|}
-\newcommand{\E}{|E|}
-
-The order of growth for a graph algorithm is usually expressed
-as a function of $\V$, the number of vertices, and $\E$, the number
-of edges.
-\index{analysis of graph algorithms}
-\index{graph algorithm}
-
-The order of growth for BFS is $O(\V + \E)$, which is a convenient
-way to say that the run time grows in proportion to either $\V$ or
-$\E$, whichever is ``bigger.''
-\index{breadth first search}
-\index{BFS}
-
-To see why, think about these four operations:
-
-\begin{description}
-
-\item Adding a vertex to the queue: this happens once for each
-vertex, so the total cost is in $O(\V)$.
-
-\item Removing a vertex from the queue: this happens once for each
-vertex, so the total cost is in $O(\V)$.
-
-\item Marking a vertex ``visited'': this happens once for each
-vertex, so the total cost is in $O(\V)$.
-
-\item Checking whether a vertex is marked: this happens once each
-edge, so the total cost is in $O(\E)$.
-
-\end{description}
-
-Adding them up, we get $O(\V + \E)$.  If we know the relationship
-between $\V$ and $\E$, we can simplify this expression.  For
-example, in a regular graph, the number of edges is in $O(\V)$ so BFS
-is linear in $\V$.  In a complete graph, the number of edges is in
-$O(\V^2)$ so BFS is quadratic in $\V$.
-\index{quadratic}
-
-Of course, this analysis is based on the assumption that all four
-operations---adding and removing vertices, marking and checking
-marks---are constant time.
-\index{constant time}
-
-Marking vertices is easy.  You can add an attribute to the {\tt
-  Vertex} objects or put the marked ones in a set and use
-the \py{in} operator.
-
-But making a first-in-first-out (FIFO) queue that can add and remove
-vertices in constant time turns out to be non-trivial.
-\index{queue}
-
-
 
 
 \section{Stanley Milgram}
@@ -1773,18 +1824,16 @@ small-world graphs:
 \begin{enumerate}
 
 \item Start with a regular graph with $n$ nodes and degree $k$.  
-  Watts and Strogatz start with a ring lattice, which is
-  a kind of regular graph.  You could replicate their experiment or
-  try instead a graph that is regular but not a ring lattice.
+  Watts and Strogatz use a ring lattice, which is
+  a kind of regular graph (details in the next section).
 
-\item Choose a subset of the edges in the graph and ``rewire'' them by
-  replacing them with random edges.  Again, you could replicate the
-  procedure described in the paper or experiment with alternatives.
+\item Choose a subset of the edges and ``rewire'' them by
+  replacing them with random edges.
   \index{rewire}
 
 \end{enumerate}
 
-The proportion of edges that are rewired is a parameter, $p$,
+The probability that an edge is rewired is a parameter, $p$,
 that controls how random the graph is.  With $p=0$, the graph
 is regular; with $p=1$ it is random.
 \index{parameter}
@@ -1793,60 +1842,23 @@ Watts and Strogatz found that small values of $p$ yield graphs
 with high clustering, like a regular graph, and low path
 lengths, like a random graph.
 
-\begin{exercise}
-
-Read the Watts and Strogatz paper and answer the following
-questions:
+In this chapter I will replicate the Watts and Strogatz experiment
+in the following steps:
 
 \begin{enumerate}
 
-\item What process do Watts and Strogatz use to rewire their
-graphs?
+\item ???
 
-\item What is the definition of the clustering coefficient $C(p)$?
-\index{clustering coefficient}
+\item
 
-\item What is the definition of the average path length $L(p)$?
+\item
 
-\item What real-world graphs did Watts and Strogatz look at?
-What evidence do they present that these graphs have the
-same structure as the graphs generated by their model?
+\item
 
 \end{enumerate}
 
-\end{exercise}
 
-
-\begin{exercise}
-
-Create a file named \py{SmallWorldGraph.py} and define a class named
-\py{SmallWorldGraph} that inherits from \py{RandomGraph}.
-
-If you did Exercise~\ref{ex.randomgraph} you can use your own
-\py{RandomGraph.py}; otherwise you can download mine from
-\url{thinkcomplex.com/RandomGraph.py}.
-
-\begin{enumerate}
-
-\item Write a method called \py{rewire} that takes a probability {\tt
-  p} as a parameter and, starting with a regular graph, rewires
-the graph using Watts and Strogatz's algorithm.
-
-\item Write a method called \py{clustering_coefficient} that
-computes and returns the clustering coefficient as defined in the
-paper.
-
-\item Make a graph that replicates the line marked $C(p)/C(0)$ in
-Figure 2 of the paper.  In other words,
-confirm that the clustering coefficient drops off slowly for
-small values of $p$.
-
-\end{enumerate}
-
-Before we can replicate the other line, we have to learn about shortest
-path algorithms.
-
-\end{exercise}
+\section{Breadth First Search}
 
 
 \section{Dijkstra}
@@ -2009,6 +2021,59 @@ and reach your own conclusions.
 
 \begin{exercise}
 
+Read the Watts and Strogatz paper and answer the following
+questions:
+
+\begin{enumerate}
+
+\item What process do Watts and Strogatz use to rewire their
+graphs?
+
+\item What is the definition of the clustering coefficient $C(p)$?
+\index{clustering coefficient}
+
+\item What is the definition of the average path length $L(p)$?
+
+\item What real-world graphs did Watts and Strogatz look at?
+What evidence do they present that these graphs have the
+same structure as the graphs generated by their model?
+
+\end{enumerate}
+
+\end{exercise}
+
+
+
+
+
+
+
+\begin{exercise}
+
+%# from  https://github.com/networkx/networkx/blob/master/networkx/algorithms/components/connected.py
+
+\begin{code}
+def _plain_bfs(G, source):
+    """A fast BFS node generator"""
+    seen = set()
+    nextlevel = {source}
+    while nextlevel:
+        thislevel = nextlevel
+        nextlevel = set()
+        for v in thislevel:
+            if v not in seen:
+                yield v
+                seen.add(v)
+                nextlevel.update(G[v])
+\end{code}
+
+\end{exercise}
+
+
+
+
+\begin{exercise}
+
 The following implementation of a BFS
 contains two performance errors.  What are
 they?  What is the actual order of growth for this algorithm?
@@ -2035,6 +2100,9 @@ Then use a FIFO implementation to fix the errors and confirm
 that your algorithm is linear.
 
 \end{exercise}
+
+
+
 
 
 \begin{exercise}
