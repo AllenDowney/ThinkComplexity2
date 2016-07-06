@@ -505,7 +505,7 @@ science: suppose someone asked you why planetary orbits are
 elliptical.  You might invoke Newton's law of universal
 gravitation and use it to write a differential equation that describes
 planetary motion.  Then you could solve the differential equation and
-show that the solution is an ellipse.  Voil\`{a}!
+show that the solution is an ellipse.  QED!
 \index{gravitation}
 \index{planetary motion}
 
@@ -1270,6 +1270,7 @@ graphs and check whether they are connected.
 
 
 \section{Generating graphs}
+\label{generating}
 
 \begin{figure}
 \centerline{\includegraphics[width=3.5in]{figs/chap02-3.pdf}}
@@ -1286,10 +1287,10 @@ you might want to read Appendix~\ref{???} and then come back.
 
 \begin{code}
 def all_pairs(nodes):
-    for i, node1 in enumerate(nodes):
-        for j, node2 in enumerate(nodes):
+    for i, u in enumerate(nodes):
+        for j, v in enumerate(nodes):
             if i>j:
-                yield node1, node2
+                yield u, v
 \end{code}
 
 We can use \py{all_pairs} to construct a complete graph:
@@ -1464,10 +1465,10 @@ added to the graph:
 
 \begin{code}
 def random_pairs(nodes, p):
-    for i, node1 in enumerate(nodes):
-        for j, node2 in enumerate(nodes):
+    for i, u in enumerate(nodes):
+        for j, v in enumerate(nodes):
             if i>j and flip(p):
-                yield node1, node2
+                yield u, v
 \end{code}
 
 \py{flip} returns \py{True} with the
@@ -1556,10 +1557,17 @@ We can get a clearer view of the transition by estimating the probability
 of connectivity for a range of values of $p$:
 
 \begin{code}
+import numpy as np
+
 n = 10
 ps = np.logspace(-2.5, 0, 11)
 ys = [prob_connected(n, p) for p in ps]
 \end{code}
+
+This is the first example we've seen using NumPy.  Following convention,
+I import NumPy as {\tt np}.  The function \py{logspace} returns an
+array of 11 values from $10^{-2.5}$ to $10^0 = 1$, equally spaced
+on a logarithmic scale.
 
 Figure~\ref{chap02-5} shows the results, with
 a vertical line at $p^*$.  As expected, the transition from 0 to 1
@@ -1642,11 +1650,10 @@ which is a convenient way to say that the run time grows in proportion
 to either $\V$ or $\E$, whichever is ``bigger.''  \index{breadth first
   search} \index{BFS}
 
-If we know the relationship
-between $\V$ and $\E$, we can simplify this expression.  For
-example, the number of edges is $n(n-1)/2$, which is in
-$O(\V^2)$.  So for a complete graph, \py{reachable_nodes} is 
-quadratic in $\V$.
+If we know the relationship between $\V$ and $\E$, we can simplify
+this expression.  For example, in a complete graph the number of edges
+is $n(n-1)/2$, which is in $O(\V^2)$.  So for a complete graph,
+\py{reachable_nodes} is quadratic in $\V$.
 \index{quadratic}
 
 
@@ -1722,7 +1729,22 @@ first type of ER graph?
 
 \chapter{Small world graphs}
 
-Overview
+Many networks in the real world, including social networks, have
+the ``small world property'', which is that the average distance
+between nodes, measured in number of edges on the shortest path,
+is much smaller than expected.
+
+In this chapter, I present Stanley Milgram's famous Small World
+Experiment, which was the first scientific demonstration of
+the small world property in a real social network.  Then we'll
+consider Watts-Strogatz graphs, which are intended as a model of
+small world graphs.
+I'll replicate the experiment Watts and Strogatz performed and
+explain what it is intended to show.
+
+Along the way, we'll see two new graph algorithms: breadth-first
+search (BFS) and Dijkstra's algorithm for computing the shortest
+path between nodes in a graph.
 
 
 \section{Stanley Milgram}
@@ -1811,7 +1833,7 @@ Their initial result was what you might expect: regular graphs
 have high clustering and high path lengths;
 random graphs with the same size tend to have low clustering
 and low path lengths.  So neither of these is a good model of
-social networks, which seem to combine high clustering with
+social networks, which combine high clustering with
 short path lengths.
 
 Their goal was to create a {\bf generative model} of a social
@@ -1847,15 +1869,347 @@ in the following steps:
 
 \begin{enumerate}
 
-\item ???
+\item We'll start by constructing a ring lattice, which is a kind
+of regular graph.
 
-\item
+\item Then we'll rewire it as Watts and Strogatz did.
 
-\item
+\item We'll write a function to measure the degree of clustering
+and use a NetworkX function to compute path lengths.
 
-\item
+\item Then we'll compute the degree of clustering and path length for
+a range of values of $p$.
+
+\item Finally, I'll present an efficient algorithm for computing shortest
+paths, Dijkstra's algorithm.
 
 \end{enumerate}
+
+
+\section{Ring lattices}
+
+\begin{figure}
+\centerline{\includegraphics[width=3.5in]{figs/chap03-1.pdf}}
+\caption{A ring lattice with $n=10$ and $k=4$.}
+\label{chap03-1}
+\end{figure}
+
+A {\bf regular} graph is a graph where each node has the same number
+of neighbors; the number of neighbors is also called the {\bf degree}
+of the node.
+
+A ring lattice is a kind of regular graph, which Watts and Strogatz
+use as the basis of their model.
+In a ring lattice with $n$ nodes, the nodes can be arranged in a circle
+with each node connected the $k$ nearest neighbors.
+
+For example, a ring lattice with $n=3$
+and $k=2$ would add the following edges: $(0, 1)$, $(1, 2)$, and
+$(2, 0)$.  Notice that the edges ``wrap around'' from the
+highest-numbered node back to 0.
+
+More generally, we can enumerate the edges like this:
+
+\begin{code}
+def adjacent_edges(nodes, halfk):
+    n = len(nodes)
+    for i, u in enumerate(nodes):
+        for j in range(i+1, i+halfk+1):
+            v = nodes[j % n]
+            yield u, v
+\end{code}
+
+\py{adjacent_edges} takes a list of nodes and a parameter,
+\py{halfk}, which is half of $k$.  It is a generator function that
+yields one edge at a time.  It uses the modulus operator, \py{%},
+to wrap around from the highest-numbered node to the lowest.
+
+We can test it like this:
+
+\begin{code}
+>>> nodes = range(3)
+>>> for edge in adjacent_edges(nodes, 1):
+...     print(edge)
+(0, 1)
+(1, 2)
+(2, 0)
+\end{code}
+
+Now we can use \py{adjacent_edges} to make a ring lattice:
+
+\begin{code}
+def make_ring_lattice(n, k):
+    G = nx.Graph()
+    nodes = range(n)
+    G.add_nodes_from(nodes)
+    G.add_edges_from(adjacent_edges(nodes, k//2))
+    return G
+\end{code}
+
+Notice that \py{make_ring_lattice} uses floor division to compute
+\py{halfk}, so if \py{k} is odd, it will round down and generate
+a ring lattice with degree \py{k-1}.  That's probably not what we
+want, but it is good enough for now.
+
+We can test the function like this:
+
+\begin{code}
+lattice = make_ring_lattice(10, 4)
+\end{code}
+
+Figure~\ref{chap03-1} shows the result.
+
+
+\section{WS graphs}
+
+\begin{figure}
+\centerline{\includegraphics[width=3.5in]{figs/chap03-2.pdf}}
+\caption{WS graphs with $n=20$, $k=4$, and $p=0$ (left), $p=0.2$ (middle),
+and $p=1$ (right).}
+\label{chap03-2}
+\end{figure}
+
+To make a Watts-Strogatz (WS) graph, we start with a ring lattice and
+``rewire'' some of the edges.  In their paper, Watts and Strogatz
+consider the edges in a particular order and rewire each one with
+probability $p$.  If an edge is rewired, they leave the first node
+unchanged and choose the second node at random.  They don't allow self
+loops or multiple edges; that is, you can't have a edge from a node to
+itself, and you can't have more than one edge between the same two
+nodes.
+
+Here is my implementation of this process.
+
+\begin{code}
+def rewire(G, p):
+    nodes = set(G.nodes())
+    for edge in G.edges():
+        if flip(p):
+            u, v = edge
+            choices = nodes - {u} - set(G[u])
+            new_v = choice(tuple(choices))
+            G.remove_edge(u, v)
+            G.add_edge(u, new_v)
+\end{code}
+
+The parameter \py{p} is the probability of rewiring an edge.  The
+\py{for} loop enumerates the edges and uses \py{flip}, which returns
+\py{True} with probability \py{p}, to choose which ones get rewired.
+
+If we are rewiring an edge from node \py{u} to node \py{v}, we
+have to choose a replacement for \py{v}, called \py{new_v}.
+To compute the possible choices,
+we start with \py{nodes}, which is a set,
+and subtract off \py{u} and its neighbors, which avoids self
+loops and multiple edges.  
+
+Then we choose \py{new_v} from \py{choices}, remove the existing
+edge from \py{u} to \py{v}, and add a new edge from \py{u} to
+\py{new_v}.
+
+As an aside, the expression \py{G[u]} returns a
+dictionary that contains the neighbors of \py{u} as keys.  In
+this case it is a little faster than using \py{G.neighbors}.
+
+This function does not consider the edges in the order specified
+by Watts and Strogatz, but it doesn't seem to affect
+the results.
+
+Figure~\ref{chap03-2} shows WS graphs with $n=20$, $k=4$, and 
+a range of values of $p$.  When $p=0$, the graph is a ring lattice.
+When $p=1$, it is completely random.  As we'll see, the interesting
+things happen in between.
+
+
+\section{Clustering}
+
+The next step is to compute the clustering coefficient, which
+quantifies the tendency for the nodes to form cliques.
+A {\bf clique} is a set of nodes that are completely connected;
+that is, there are edges between all pairs of nodes in the set.
+
+Suppose a particular node, $u$, has $k$ neighbors.  If all of the
+neighbors are connected to each other, there would be $k(k-1)/2$
+edges among them.  The fraction of those edges that actually exist
+is the local clustering coefficient for $u$, denoted $C_u$.
+It is called
+a ``coefficient'' because it is always between 0 and 1.
+
+If we compute the average of $C_u$ over all nodes, we get the
+``network average clustering coefficient'', denoted $\bar{C}$.
+
+Here is a function that computes it. 
+
+\begin{code}
+def node_clustering(G, u):
+    neighbors = G[u]
+    k = len(neighbors)
+    if k < 2:
+        return np.nan
+        
+    total = k * (k-1) / 2
+    exist = 0    
+    for v, w in all_pairs(neighbors):
+        if G.has_edge(v, w):
+            exist +=1
+    return exist / total
+\end{code}
+
+Again I use the expression \py{G[u]}, which returns a dictionary
+with the neighbors of \py{node} as keys.  If a node has fewer than 2
+neighbors, the clustering coefficient is undefined.  The value
+\py{np.nan} is a special floating-point value that represents ``not
+a number''.
+
+Otherwise we compute the number of possible edges among the neighbors,
+\py{total}, and then count the number of those edges that actually
+exist.  The result is the fraction of all edges that exist.
+
+We can test the function like this:
+   
+\begin{code}
+>>> lattice = make_ring_lattice(10, 4)
+>>> node_clustering(lattice, 1)
+0.5
+\end{code}
+
+In a ring lattice with $k=4$, the clusting coefficient for each node
+is 0.5 (if you are not convinced, take another look at
+Figure~\ref{chap03-1}).
+
+Now we can compute the network average clustering coefficient like this:
+   
+\begin{code}
+def clustering_coefficient(G):
+    cc = np.mean([node_clustering(G, node) for node in G])
+    return cc
+\end{code}
+
+\py{np.mean} is a NumPy function that computes the mean of the numbers
+in a list or array.
+
+And we can test it like this:
+
+\begin{code}
+>>> clustering_coefficient(lattice)
+0.5
+\end{code}
+
+In this graph, the local clustering coefficient for all nodes is 0.5,
+so the average across nodes is 0.5.  Of course, we expect this value
+to be different for WS graphs.
+
+
+\section{Shortest path lengths}
+
+The next step is to compute the characteristic path length, $L$, which
+is the average length of the shortest path between each pair of nodes.
+To compute it, I'll start with a function provided by NetworkX,
+\py{shortest_path_length}.  I'll use it to replicate the Watts and
+Strogatz experiment, then I'll explain how it works.
+
+Here's a function that takes a graph and returns a list of shortest
+path lengths, one for each pair of nodes.
+
+\begin{code}
+def path_lengths(G):
+    length_map = nx.shortest_path_length(G)
+    lengths = [length_map[u][v] for u, v in all_pairs(G)]
+    return lengths
+\end{code}
+
+The return value from \py{nx.shortest_path_length} is a dictionary
+of dictionaries.  The outer dictionary maps from each node, \py{u},
+to a dictionary that maps from each node, \py{v}, to the length of
+the shortest path from \py{u} to \py{v}.
+
+With the list of lengths from \py{path_lengths}, we can compute $L$
+like this:
+
+\begin{code}
+def characteristic_path_length(G):
+    return np.mean(path_lengths(G))
+\end{code}
+
+And we can test it with a small ring lattice:
+
+\begin{code}
+>>> lattice = make_ring_lattice(3, 2)
+>>> characteristic_path_length(lattice)
+1.0
+\end{code}
+
+In this example, all 3 nodes are connected to each other, so the
+mean path length is 1.
+
+
+\section{The WS experiment}
+
+Now we are ready to replicate the WS experiment, which showed that for
+a range of values of $p$, a WS graph has high clustering like a
+regular graph and short path lengths like a random graph.
+
+I'll start with \py{run_one_graph}, which takes \py{n}, \py{k}, and \py{p}; it
+generates a WS graph with the given parameters and computes the
+mean path length, \py{mpl}, and clustering coefficient \py{cc}:
+
+\begin{code}
+def run_one_graph(n, k, p):
+    ws = make_ws_graph(n, k, p)    
+    mpl = characteristic_path_length(ws)
+    cc = clustering_coefficient(ws)
+    print(mpl, cc)
+    return mpl, cc
+\end{code}
+
+Watts and Strogatz ran their experiment with \py{n=1000} and \py{k=10}.
+With these parameters, \py{run_one_graph} takes about one second on
+my computer; most of that time is spent computing the
+mean path length.
+
+Now we need to compute these values for a range of `p`.  I'll use
+the NumPy function `logspace` again to compute `ps`:
+
+\begin{code}
+ps = np.logspace(-4, 0, 9)
+\end{code}
+
+For each value of `p`, I generate 3 random graphs and we'll average the
+results.  Here's the function that runs the experiment:
+
+\begin{code}
+def run_experiment(ps, n=1000, k=10, iters=3):
+    res = {}
+    for p in ps:
+        print(p)
+        res[p] = []
+        for _ in range(iters):
+            res[p].append(run_one_graph(n, k, p))
+    return res
+\end{code}
+
+The result is a dictionary that maps from each value of `p` to
+a list of `(mpl, cc)` pairs.
+
+The last step is to aggregate the results:
+
+\begin{code}
+L = []
+C = []
+for p, t in sorted(res.items()):
+    mpls, ccs = zip(*t)
+    mpl = np.mean(mpls)
+    cc = np.mean(ccs)
+    L.append(mpl)
+    C.append(cc)
+\end{code}
+
+
+
+\begin{code}
+L = np.array(L) / L[0]
+C = np.array(C) / C[0]
+\end{code}
 
 
 \section{Breadth First Search}
