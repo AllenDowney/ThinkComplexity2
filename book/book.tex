@@ -1367,7 +1367,7 @@ def reachable_nodes(G, start):
         if node not in seen:
             seen.add(node)
             stack.extend(G.neighbors(node))
-    return reachable
+    return seen
 \end{code}
 
 \py{reachable_nodes} takes a \py{Graph} and a starting node, {\tt
@@ -1921,7 +1921,7 @@ def adjacent_edges(nodes, halfk):
 
 \py{adjacent_edges} takes a list of nodes and a parameter,
 \py{halfk}, which is half of $k$.  It is a generator function that
-yields one edge at a time.  It uses the modulus operator, \py{%},
+yields one edge at a time.  It uses the modulus operator, \verb"%",
 to wrap around from the highest-numbered node to the lowest.
 
 We can test it like this:
@@ -2045,7 +2045,7 @@ def node_clustering(G, u):
     neighbors = G[u]
     k = len(neighbors)
     if k < 2:
-        return np.nan
+        return 1
         
     total = k * (k-1) / 2
     exist = 0    
@@ -2057,9 +2057,8 @@ def node_clustering(G, u):
 
 Again I use the expression \py{G[u]}, which returns a dictionary
 with the neighbors of \py{node} as keys.  If a node has fewer than 2
-neighbors, the clustering coefficient is undefined.  The value
-\py{np.nan} is a special floating-point value that represents ``not
-a number''.
+neighbors, the clustering coefficient is undefined, but for simplicity
+\py{node_clustering} returns 1.
 
 Otherwise we compute the number of possible edges among the neighbors,
 \py{total}, and then count the number of those edges that actually
@@ -2145,7 +2144,14 @@ mean path length is 1.
 
 \section{The WS experiment}
 
-Now we are ready to replicate the WS experiment, which showed that for
+\begin{figure}
+\centerline{\includegraphics[width=3.5in]{figs/chap03-3.pdf}}
+\caption{Clustering coefficient (C) and characteristic path length (L) for
+WS graphs with $n=1000$, $k=10$, and a range of $p$.}
+\label{chap03-3}
+\end{figure}
+
+Now we are ready to replicate the WS experiment, which shows that for
 a range of values of $p$, a WS graph has high clustering like a
 regular graph and short path lengths like a random graph.
 
@@ -2167,14 +2173,14 @@ With these parameters, \py{run_one_graph} takes about one second on
 my computer; most of that time is spent computing the
 mean path length.
 
-Now we need to compute these values for a range of `p`.  I'll use
-the NumPy function `logspace` again to compute `ps`:
+Now we need to compute these values for a range of \py{p}.  I'll use
+the NumPy function \py{logspace} again to compute \py{ps}:
 
 \begin{code}
 ps = np.logspace(-4, 0, 9)
 \end{code}
 
-For each value of `p`, I generate 3 random graphs and we'll average the
+For each value of \py{p}, I generate 3 random graphs and we'll average the
 results.  Here's the function that runs the experiment:
 
 \begin{code}
@@ -2188,8 +2194,8 @@ def run_experiment(ps, n=1000, k=10, iters=3):
     return res
 \end{code}
 
-The result is a dictionary that maps from each value of `p` to
-a list of `(mpl, cc)` pairs.
+The result is a dictionary that maps from each value of \py{p} to
+a list of \py{(mpl, cc)} pairs.
 
 The last step is to aggregate the results:
 
@@ -2204,91 +2210,31 @@ for p, t in sorted(res.items()):
     C.append(cc)
 \end{code}
 
+Each time through the loop, we get a value of $p$ and a list of
+\py{(mpl, cc)} pairs.  We use \py{zip} to extracts two lists, \py{mpls} and
+\py{ccs}, then compute their means and append them to \py{L} and \py{C}, which
+are lists of path lengths and clustering coefficients.
 
+In order to plot \py{L} and \py{C} on the same axes, we standardize them
+by dividing through by the first element:
 
 \begin{code}
 L = np.array(L) / L[0]
 C = np.array(C) / C[0]
 \end{code}
 
+Figure~\ref{chap03-3} shows the results.  As $p$ increases, the mean
+path length drops quickly, because even a small number of randomly
+rewired edges provide shortcuts between regions of the graph that
+are far apart in the lattice.  On the other hand, removing local links
+decreases the clustering coefficient, but much more slowly.
 
-\section{Breadth First Search}
+As a result, there is a wide range of $p$ where a WS graph has the
+properties of a small world graph, high clustering and low path
+lengths.
 
-
-\section{Dijkstra}
-
-Edsger W. Dijkstra was a Dutch computer scientist who invented an
-efficient shortest-path algorithm (see
-\url{http://en.wikipedia.org/wiki/Dijkstra's_algorithm}).  He also invented the
-semaphore, which is a data structure used to coordinate programs that
-communicate with each other (see
-\url{http://en.wikipedia.org/wiki/Semaphore_(programming)} and Downey, {\em The
-  Little Book of Semaphores}).
-\index{Dijkstra, Edsger}
-\index{Little Book of Semaphores@{\em The Little Book of Semaphores}}
-
-Dijkstra is famous (and notorious) as the author of a series
-of essays on computer science.
-Some, like ``A Case against the GO TO Statement,'' have
-had a profound effect on programming practice.
-Others, like
-``On the Cruelty of Really Teaching Computing Science,'' are
-entertaining in their cantankerousness, but less effective.
-
-Dijkstra's algorithm solves the ``single source shortest path problem,''
-which means that it finds the minimum distance from a given ``source''
-node to every other node in the graph (or at least every connected
-node).
-\index{shortest path}
-\index{single source shortest path}
-\index{Dijkstra's algorithm}
-
-We start with a simplified version of the algorithm that
-considers all edges the same length.  The more general version
-works with any non-negative edge lengths.
-
-The simplified version is similar to the breadth-first search
-in Section~\ref{bfs} except that instead of marking visited nodes,
-we label them with their distance from the source.  Initially
-all nodes are labeled with an infinite distance.  Like a
-breadth-first search, Dijkstra's algorithm uses a queue of
-discovered unvisited nodes.
-\index{breadth-first search}
-\index{BFS}
-
-\begin{enumerate}
-
-\item Give the source node distance 0 and add it to the queue.
-Give the other nodes infinite distance.
-\index{source node}
-\index{queue}
-
-\item Remove a vertex from the queue and assign its distance to $d$.  Find
-  the vertices it is connected to.  For each connected vertex
-  with infinite distance, replace the distance with $d+1$ and
-  add it to the queue.
-
-\item If the queue is not empty, go back to Step 2.
-
-\end{enumerate}
-
-The first time you execute Step 2, the only node in the queue
-has distance 0.  The second time, the queue contains all
-nodes with distance 1.  Once those nodes are processed, the
-queue contains all nodes with distance 2, and so on.
-
-So when a node is discovered for the first time, it is labeled
-with the distance $d+1$, which is the shortest path to that
-node.  It is not possible that you will discover a shorter
-path later, because if there were a shorter path, you would
-have discovered it sooner.  That is not a proof
-of the correctness of the algorithm, but it sketches
-the structure of the proof by contradiction.
-\index{labelling nodes}
-
-In the more general case, where the edges have different lengths,
-it is possible to discover a shorter path after you have
-discovered a longer path, so a little more work is needed.
+And that's why Watts and Strogatz propose WS graphs as a
+model for real-world networks that exhibit the small world phenomenon.
 
 
 \section{What kind of explanation is {\em that}?}
@@ -2343,11 +2289,11 @@ analysis.  Finally, the results seem less like a proof and
 more like an example.
 \index{abstract model}
 
-Many of the models in this book are like the Watts and
-Strogatz model: abstract, simulation-based and (at least
-superficially) less formal than conventional mathematical
-models.  One of the goals of this book it to consider the
-questions these models raise:
+Many of the models in this book are like the Watts and Strogatz model:
+abstract, simulation-based and (at least superficially) less formal
+than conventional mathematical models.  One of the goals of this book
+it to consider the questions these models raise:
+
 \index{simulation-based model}
 
 \begin{itemize}
@@ -2370,45 +2316,243 @@ speculative.  I encourage you to consider them skeptically
 and reach your own conclusions.
 
 
+\section{Breadth-First Search}
+
+When we computed shortest paths, we used a function provided by
+NetworkX, but I have not explained how it works.  To do that, I'll
+start with breadth-first search, which is the basis of Dijkstra's
+algorithm for computing shortest paths.
+
+In Section~\ref{connected} I presented \py{reachable_nodes}, which finds all
+the nodes that can be reached from a given starting node:
+
+\begin{code}
+def reachable_nodes(G, start):
+    seen = set()
+    stack = [start]
+    while stack:
+        node = stack.pop()
+        if node not in seen:
+            seen.add(node)
+            stack.extend(G.neighbors(node))
+    return seen
+\end{code}
+
+I didn't say so at the time, but \py{reachable_nodes} performs a
+depth-first search (DFS).  Now we'll modify it to perform breadth-first
+search (BFS).
+
+To understand the difference, imagine you are exploring a castle.
+You start in a room with three doors marked A, B, and C.  You open
+door C and discover another room, with doors marked D, E, and F.
+
+Which door do you open next?  If you are feeling adventurous, you might
+want to go deeper into the castle and choose D, E, or F.  That would be
+a DFS.
+
+But if you wanted to be more systematic, you might go back and explore
+A and B before D, E, and F.  That would be a breadth-first search.
+
+In \py{reachable_nodes}, we use \py{list.pop} to choose the next node to
+``explore''.  By default, \py{pop} returns the last element of the list,
+which is the last one we added.  In the example, that would be door F.
+
+If we want to perform a BFS instead, the simplest solution is to
+pop the first element off the stack:
+
+\begin{code}
+        node = stack.pop(0)
+\end{code}
+
+That works, but it is slow.  In Python, popping the last element
+of a list takes constant time, but popping the first element is linear
+in the length of the list.  In the worst case, the length of the
+stack is $O(\V)$, which makes this implementation of BFS $O(\V\E)$,
+which is much worse than what it should be, $O(\V + \E)$.
+
+We can solve this problem with a double-ended queue, also known
+as a {\bf deque}.  The important feature of a deque is that you
+can add and remove elements from the beginning or end in constant time.
+To see how it is implemented, see \url{https://en.wikipedia.org/wiki/Double-ended_queue}.
+
+Python provides a \py{deque} in the \py{collections} module, so we can
+import it like this:
+
+\begin{code}
+from collections import deque
+\end{code}
+
+And we can use it to write an efficient BFS:
+
+\begin{code}
+def reachable_nodes_bfs(G, start):
+    seen = set()
+    queue = deque([start])
+    while queue:
+        node = queue.popleft()
+        if node not in seen:
+            seen.add(node)
+            queue.extend(G.neighbors(node))
+    return seen
+\end{code}
+
+The differences are:
+
+\begin{itemize}
+
+\item I replaced the list called \py{stack} with a deque called \py{queue}.
+
+\item I replaced \py{pop} with \py{popleft}, which removes and returns
+leftmost element of the queue, which was the first to be added.
+
+\end{itemize}
+
+This version is back to being $O(\V + \E)$.  Now we're ready to
+find shortest paths.
+
+
+\section{Dijkstra's algorithm}
+\label{dijkstra}
+
+Edsger W. Dijkstra was a Dutch computer scientist who invented an
+efficient shortest-path algorithm (see
+\url{http://en.wikipedia.org/wiki/Dijkstra's_algorithm}).  He also invented the
+semaphore, which is a data structure used to coordinate programs that
+communicate with each other (see
+\url{http://en.wikipedia.org/wiki/Semaphore_(programming)} and Downey, {\em The
+  Little Book of Semaphores}).
+
+\index{Dijkstra, Edsger}
+\index{Little Book of Semaphores@{\em The Little Book of Semaphores}}
+
+Dijkstra is famous (and notorious) as the author of a series
+of essays on computer science.
+Some, like ``A Case against the GO TO Statement,'' have
+had a profound effect on programming practice.
+Others, like
+``On the Cruelty of Really Teaching Computing Science,'' are
+entertaining in their cantankerousness, but less effective.
+
+{\bf Dijkstra's algorithm} solves the ``single source shortest path
+problem,'' which means that it finds the minimum distance from a given
+``source'' node to every other node in the graph (or at least every
+connected node).
+
+\index{shortest path}
+\index{single source shortest path} 
+\index{Dijkstra's algorithm}
+
+We start with a simplified version of the algorithm that
+considers all edges the same length.  The more general version
+works with any non-negative edge lengths.
+
+The simplified version is similar to the breadth-first search
+in Section~\ref{bfs} except that we replace the set called
+\py{seen} with a dictionary called \py{dist}, which maps from each
+node to its distance from the source:
+
+\begin{code}
+def shortest_path_dijkstra(G, start):
+    dist = {start: 0}
+    queue = deque([start])
+    while queue:
+        node = queue.popleft()
+        new_dist = dist[node] + 1
+
+        neighbors = set(G[node]) - set(dist)
+        for n in neighbors:
+            dist[n] = new_dist
+        
+        queue.extend(neighbors)
+    return dist
+\end{code}
+
+Here's how it works:
+
+\begin{itemize}
+
+\item Initially, \py{queue} contains a single element, \py{start}, and \py{dist}
+maps from \py{start} to distance 0 (which is the distance from \py{start} to
+itself).
+
+\item Each time through the loop, we use \py{popleft} to select nodes
+in the order they were added to the queue.
+
+\item Next we find all neighbors of \py{node} that are not already in
+\py{dist}.
+
+\item Since the distance from \py{start} to \py{node} is \py{dist[node]}, the
+distance to any of the undiscovered neighbors is \py{dist[node]+1}.
+
+\item For each neighbor, we add an entry to \py{dist}, then we add
+the neighbors to the queue.
+
+\end{itemize}
+
+This algorithm only works if we use BFS, not DFS.  Why?
+
+The first time through the loop \py{node} is \py{start}, and \py{new_dist}
+is 1.  So the neighbors of \py{start} get distance 1 and they
+go in the queue.
+
+When we process the neighbors of \py{start}, all of {\em their}
+neighbors get distance 2.  We know that none of them can have
+distance 1, because if they did, we would have discovered
+them during the first iteration.
+
+Similarly, when we process the nodes with distance 2, we give
+their neighbors distance 3.  We know that none of them can
+have distance 1 or 2, because if they did, we would have
+discovered them during a previous iteration.
+
+And so on.  If you are familiar with proof by induction, you
+can see where this is going.
+
+But this argument only works if we process all nodes with distance
+1 before we start processing nodes with distance 2, and so on.
+And that's exactly what BFS does.
+
+In the exercises at the end of this chapter, you'll write a version
+of Dijkstra's algorithm using DFS, so you'll have a chance to see
+what goes wrong.
+
 
 \section{Exercises}
 
 \begin{exercise}
 
-Read the Watts and Strogatz paper and answer the following
-questions:
+In a ring lattice, every node has the same number of neighbors.  The
+number of neighbors is called the {\bf degree} of the node, and a
+graph where all nodes have the same degree is called a {\bf regular
+  graph}.
 
-\begin{enumerate}
+All ring lattices are regular, but not all regular graphs are ring
+lattices.  In particular, if \py{k} is odd, we can't construct a ring
+lattice, but we might be able to construct a regular graph.
 
-\item What process do Watts and Strogatz use to rewire their
-graphs?
-
-\item What is the definition of the clustering coefficient $C(p)$?
-\index{clustering coefficient}
-
-\item What is the definition of the average path length $L(p)$?
-
-\item What real-world graphs did Watts and Strogatz look at?
-What evidence do they present that these graphs have the
-same structure as the graphs generated by their model?
-
-\end{enumerate}
+Write a function called \py{make_regular_graph} that takes \py{n} and \py{k}
+and returns a regular graph that contains \py{n} nodes, where every node
+has \py{k} neighbors.  If it's not possible to make a regular graph with
+the given values of \py{n} and \py{k}, the function should raise a
+\py{ValueError}.
 
 \end{exercise}
 
 
-
-
-
-
-
 \begin{exercise}
 
-%# from  https://github.com/networkx/networkx/blob/master/networkx/algorithms/components/connected.py
+My implementation of \py{reachable_nodes_bfs} is efficient in the sense
+that it is in $O(\V + \E)$, but it incurs a lot of overhead adding nodes
+to the queue and removing them.  NetworkX provides a simple, fast
+implementation of BFS, available from the NetworkX repository on
+  GitHub at \url{https://github.com/networkx/networkx/blob/master/networkx/algorithms/components/connected.py}.
+
+%TODO: tinyurl
+
+Here is a version I modified to return a set of nodes:
 
 \begin{code}
 def _plain_bfs(G, source):
-    """A fast BFS node generator"""
     seen = set()
     nextlevel = {source}
     while nextlevel:
@@ -2416,14 +2560,16 @@ def _plain_bfs(G, source):
         nextlevel = set()
         for v in thislevel:
             if v not in seen:
-                yield v
                 seen.add(v)
                 nextlevel.update(G[v])
+    return seen
 \end{code}
 
+Compare this function to \py{reachable_nodes_bfs} and see which is
+faster.  Then see if you can modify this function to implement a
+faster version of \py{shortest_path_dijkstra}
+
 \end{exercise}
-
-
 
 
 \begin{exercise}
@@ -2449,28 +2595,16 @@ def bfs(top_node, visit):
                      if c not in visited and c not in queue)
 \end{code}
 
-Test this code with a range of graph sizes and check your analysis.
-Then use a FIFO implementation to fix the errors and confirm
-that your algorithm is linear.
-
 \end{exercise}
-
-
-
 
 
 \begin{exercise}
-
-Write an implementation of Dijkstra's algorithm and use it
-to compute the average path length of a SmallWorldGraph.
-
-Make a graph that replicates the line marked $L(p)/L(0)$ in
-Figure 2 of the Watts and Strogatz paper.  Confirm that the
-average path length drops off quickly for
-small values of $p$.  What is the range of values for $p$
-that yield graphs with high clustering and low path lengths?
-
+In Section~\ref{dijkstra}, I claimed that Dijkstra's algorithm does
+not work unless it uses BFS.  Write a version of
+\py{shortest_path_dijkstra} that uses DFS and test it on a few examples
+to see what goes wrong.
 \end{exercise}
+
 
 
 \begin{exercise}
@@ -2482,15 +2616,15 @@ the same qualitative result (high clustering and low path lengths).
 \index{small world phenomenon}
 
 To answer this question, choose a variation of the
-Watts and Strogatz model and replicate their Figure 2.
+Watts and Strogatz model and repeat the experiment.
 There are two kinds of variation you might consider:
 
 \begin{itemize}
 
 \item Instead of starting with a regular graph, start with
-another graph with high clustering.  One option is a locally-connected
-graph where vertices are placed at random locations in the plane
-and each vertex is connected to its nearest $k$ neighbors.
+another graph with high clustering.  For example, you could
+put nodes at random locations in a 2-D space
+and connect each node to its nearest $k$ neighbors.
 
 \item Experiment with different kinds of rewiring.
 
@@ -2505,26 +2639,24 @@ say that the results of the paper are {\bf robust}.
 
 \begin{exercise}
 
-To compute the average path length in a SmallWorldGraph, you
-probably ran Dijkstra's single-source shortest path algorithm
-for each node in the graph.  In effect, you solved the
-``all-pairs shortest path'' problem, which finds the shortest path
-between all pairs of nodes.
-\index{shortest path}
-\index{all pairs shortest path}
+Dijkstra's algorithm solves the ``single source shortest path''
+problem, but to compute the characteristic path length of a graph,
+we actually want to solve the ``all pairs shortest path'' problem.
 
-\begin{enumerate}
+Of course, one option is to run Dijkstra's algorithm $n$ times,
+once for each starting node.  And for some applications, that's
+probably good enough.  But there are are more efficient alternatives.
 
-\item Find an algorithm for the all-pairs shortest path problem
-and implement it.  Compare the run time with your
-``all-source Dijkstra'' algorithm.
+Find an algorithm for the all-pairs shortest path problem and
+implement it.  See
+\url{https://en.wikipedia.org/wiki/Shortest_path_problem#All-pairs_shortest_paths}.
 
-\item Which algorithm gives better order-of-growth run time
-as a function of the number of vertices and edges?  Why do you
-think Dijkstra's algorithm does better than the order-of-growth
-analysis suggests?
+Compare the run time of your implementation with running
+Dijkstra's algorithm $n$ times.  Which algorithm is better in
+theory?  Which is better in practice?  Which one does NetworkX
+use?
 
-\end{enumerate}
+% https://github.com/networkx/networkx/blob/master/networkx/algorithms/shortest_paths/unweighted.py
 
 \end{exercise}
 
