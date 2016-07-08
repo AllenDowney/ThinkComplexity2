@@ -21,7 +21,7 @@
 \newcommand{\thetitle}{Think Complexity}
 \newcommand{\thesubtitle}{Exploring Complexity Science in Python}
 \newcommand{\theauthors}{Allen B. Downey}
-\newcommand{\theversion}{2.0.1}
+\newcommand{\theversion}{2.0.4}
 
 %%%% Both LATEX and PLASTEX
 
@@ -812,7 +812,7 @@ years in the future.
 \end{description}
 
 We get back to explanatory models in Chapter~\ref{scale-free},
-instrumentalism in Chapter~\ref{life} and holism in Chapter~\ref{soc}.
+instrumentalism in Chapter~\ref{life}, and holism in Chapter~\ref{soc}.
 
 
 \section{A new kind of engineering}
@@ -2022,6 +2022,7 @@ things happen in between.
 
 
 \section{Clustering}
+\label{clustering}
 
 The next step is to compute the clustering coefficient, which
 quantifies the tendency for the nodes to form cliques.
@@ -2045,7 +2046,7 @@ def node_clustering(G, u):
     neighbors = G[u]
     k = len(neighbors)
     if k < 2:
-        return 1
+        return 0
         
     total = k * (k-1) / 2
     exist = 0    
@@ -2058,7 +2059,7 @@ def node_clustering(G, u):
 Again I use the expression \py{G[u]}, which returns a dictionary
 with the neighbors of \py{node} as keys.  If a node has fewer than 2
 neighbors, the clustering coefficient is undefined, but for simplicity
-\py{node_clustering} returns 1.
+\py{node_clustering} returns 0.
 
 Otherwise we compute the number of possible edges among the neighbors,
 \py{total}, and then count the number of those edges that actually
@@ -2100,6 +2101,7 @@ to be different for WS graphs.
 
 
 \section{Shortest path lengths}
+\label{pathlength}
 
 The next step is to compute the characteristic path length, $L$, which
 is the average length of the shortest path between each pair of nodes.
@@ -2348,7 +2350,7 @@ door C and discover another room, with doors marked D, E, and F.
 
 Which door do you open next?  If you are feeling adventurous, you might
 want to go deeper into the castle and choose D, E, or F.  That would be
-a DFS.
+a depth-first search.
 
 But if you wanted to be more systematic, you might go back and explore
 A and B before D, E, and F.  That would be a breadth-first search.
@@ -2664,6 +2666,161 @@ use?
 
 \chapter{Scale-free networks}
 \label{scale-free}
+
+\section{Social network data}
+
+Watts-Strogatz graphs are intended to model networks in the natural
+and social sciences.  In their original paper, Watts and Strogatz
+looked at the network of film actors (connected if they have appeared
+in a movie together); the electrical power grid in the western United
+States; and the network of neurons in the brain of the roundworm
+{\it C. elegans}.  They found that all of these networks had the
+high connectivity and low path lengths characteristic of small world
+graphs.
+
+In this section we'll perform the same analysis with a different dataset,
+a set Facebook users and their friends.  If you are
+not familiar with Facebook, users
+who are connected on Facebook are called ``friends'', regardless of
+the nature of their relationship in the real world.
+
+I'll use data from the Stanford Network Analysis Project (SNAP), which
+shares large datasets from online social networks and other sources.
+Specifically, I'll use their Facebook dataset\footnote{J. McAuley and
+  J. Leskovec. Learning to Discover Social Circles in Ego
+  Networks. NIPS, 2012.}, which includes 4039 users and 88,234
+friend relationships among them.  This dataset is in the repository
+for this book, but it is also available from the SNAP web site at
+\url{https://snap.stanford.edu/data/egonets-Facebook.html}
+
+The data file contains one line per edge, with users identified by
+integers from 0 to 4038.  Here's the code that reads the file:
+
+\begin{code}
+def read_graph(filename):
+    G = nx.Graph()
+    array = np.loadtxt(filename, dtype=int)
+    G.add_edges_from(array)
+    return G
+\end{code}
+
+NumPy provides a function called `loadtext` that reads the
+given file and returns the contents as a NumPy array.  The
+parameter `dtype` specifies the type of the elements of the array.
+
+Then we can use `add_edges_from` to iterate the rows of the array
+and make edges.  Here are the results:
+
+\begin{code}
+>>> fb = read_graph('facebook_combined.txt.gz')
+>>> n = len(fb)
+>>> m = len(fb.edges())
+>>> n, m
+(4039, 88234)
+\end{code}
+
+The number of nodes and edges are consistent with the documentation
+of the dataset.
+
+Now we can check whether this dataset has the characteristics of
+a small world graph: high clustering and low path lengths.
+I'll use `clustering_coefficient` from Section~\ref{clustering}
+
+\begin{code}
+from thinkcomplexity import clustering_coefficient
+C = clustering_coefficient(fb)
+C
+\end{code}
+
+Alternatively, you could use `average_clustering`, which is provided
+by NetworkX:
+
+\begin{code}
+nx.average_clustering(fb)
+\end{code}
+
+Either way, the clustering coefficient is 0.61, which is high,
+as we expect if this network has the small world property.
+
+To compute the average path length, I'll use `path_lengths` from
+Section~\ref{pathlength}
+
+\begin{code}
+from thinkcomplexity import path_lengths
+pls = path_lengths(fb)
+L = np.mean(pls)
+\end{code}
+
+The average path length between any two users is 3.7, which is
+quite small in a network of more than 4000 users.  It's a small
+world after all.
+
+Now let's see if we can construct a WS graph that has the same
+characteristics as this network.
+
+\section{WS Model}
+
+In this network, the ratio of edges to nodes is about 44:
+
+\begin{code}
+>>> k = int(round(2*m/n))
+>>> k
+44
+\end{code}
+
+We can make a WS graph with `n=4039` and `k=44`.  When `p=0`, we
+get a ring lattice.
+
+\begin{code}
+lattice = nx.watts_strogatz_graph(n, k, 0)
+\end{code}
+
+In this graph, clustering is high: `C` is 0.73, compared to 0.61
+in the dataset.  But the average path length is 46, much higher
+than in the dataset!
+
+With `p=1` we get a random graph:
+
+\begin{code}
+random = nx.watts_strogatz_graph(n, k, 1)
+\end{code}
+
+In the random graph, the average path length is 2.6, even shorter than
+in the dataset (3.7), but the clustering coefficient is only 0.011.
+
+By trial and error, we find that when `p=0.05` we get a WS graph with
+high clustering and low path length:
+
+\begin{code}
+ws = nx.watts_strogatz_graph(n, k, 0.05, seed=15)
+\end{code}
+
+In this graph `C` is 0.63, a bit higher than
+in the dataset, and `L` is 3.2, a bit lower than in the dataset.
+So this graph models the small world characteristics of the dataset
+well.
+
+So far, so good.
+
+
+\section{Degree}
+
+Recall that the degree of a node is the number of edges it is connected
+to.  If the WS graph is a good model for the Facebook data, it
+should have the same total (or average) degree, and ideally the same
+variance in degree, across nodes.
+
+This function returns a list of degrees in a graph, one for each node:
+
+\begin{code}
+def degrees(G):
+    return [G.degree(u) for u in G]
+\end{code}
+
+
+Results from WS and FB...
+
+
 
 \section{Zipf's Law}
 
