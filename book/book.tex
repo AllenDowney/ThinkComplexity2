@@ -2704,11 +2704,11 @@ def read_graph(filename):
     return G
 \end{code}
 
-NumPy provides a function called `loadtext` that reads the
+NumPy provides a function called \py{loadtext} that reads the
 given file and returns the contents as a NumPy array.  The
-parameter `dtype` specifies the type of the elements of the array.
+parameter \py{dtype} specifies the type of the elements of the array.
 
-Then we can use `add_edges_from` to iterate the rows of the array
+Then we can use \py{add_edges_from} to iterate the rows of the array
 and make edges.  Here are the results:
 
 \begin{code}
@@ -2724,7 +2724,7 @@ of the dataset.
 
 Now we can check whether this dataset has the characteristics of
 a small world graph: high clustering and low path lengths.
-I'll use `clustering_coefficient` from Section~\ref{clustering}
+I'll use \py{clustering_coefficient} from Section~\ref{clustering}
 
 \begin{code}
 from thinkcomplexity import clustering_coefficient
@@ -2732,7 +2732,7 @@ C = clustering_coefficient(fb)
 C
 \end{code}
 
-Alternatively, you could use `average_clustering`, which is provided
+Alternatively, you could use \py{average_clustering}, which is provided
 by NetworkX:
 
 \begin{code}
@@ -2742,7 +2742,7 @@ nx.average_clustering(fb)
 Either way, the clustering coefficient is 0.61, which is high,
 as we expect if this network has the small world property.
 
-To compute the average path length, I'll use `path_lengths` from
+To compute the average path length, I'll use \py{path_lengths} from
 Section~\ref{pathlength}
 
 \begin{code}
@@ -2768,35 +2768,35 @@ In this network, the ratio of edges to nodes is about 44:
 44
 \end{code}
 
-We can make a WS graph with `n=4039` and `k=44`.  When `p=0`, we
+We can make a WS graph with \py{n=4039} and \py{k=44}.  When \py{p=0}, we
 get a ring lattice.
 
 \begin{code}
 lattice = nx.watts_strogatz_graph(n, k, 0)
 \end{code}
 
-In this graph, clustering is high: `C` is 0.73, compared to 0.61
-in the dataset.  But the average path length is 46, much higher
+In this graph, clustering is high: \py{C} is 0.73, compared to 0.61
+in the dataset.  But \py{L} is 46, much higher
 than in the dataset!
 
-With `p=1` we get a random graph:
+With \py{p=1} we get a random graph:
 
 \begin{code}
 random = nx.watts_strogatz_graph(n, k, 1)
 \end{code}
 
-In the random graph, the average path length is 2.6, even shorter than
-in the dataset (3.7), but the clustering coefficient is only 0.011.
+In the random graph, \py{L} is 2.6, even shorter than
+in the dataset (3.7), but \py{C} is only 0.011, so that's no good.
 
-By trial and error, we find that when `p=0.05` we get a WS graph with
+By trial and error, we find that when \py{p=0.05} we get a WS graph with
 high clustering and low path length:
 
 \begin{code}
 ws = nx.watts_strogatz_graph(n, k, 0.05, seed=15)
 \end{code}
 
-In this graph `C` is 0.63, a bit higher than
-in the dataset, and `L` is 3.2, a bit lower than in the dataset.
+In this graph \py{C} is 0.63, a bit higher than
+in the dataset, and \py{L} is 3.2, a bit lower than in the dataset.
 So this graph models the small world characteristics of the dataset
 well.
 
@@ -2804,6 +2804,12 @@ So far, so good.
 
 
 \section{Degree}
+
+\begin{figure}
+\centerline{\includegraphics[width=5.5in]{figs/chap04-1.pdf}}
+\caption{PMF of degree in the Facebook network and in the WS model.}
+\label{chap04-1}
+\end{figure}
 
 Recall that the degree of a node is the number of edges it is connected
 to.  If the WS graph is a good model for the Facebook data, it
@@ -2817,89 +2823,358 @@ def degrees(G):
     return [G.degree(u) for u in G]
 \end{code}
 
+The mean degree in the Facebook network is 43.7; the mean degree in
+the WS model is 44.  So far, so good.
 
-Results from WS and FB...
+However, the standard deviation of degrees in the WS model is 1.5;
+the standard deviation in the data is 52.4.  Oops.
+
+What's going on here?  To get a better view, we have to look at the
+{\bf distribution} of degrees, not just the mean and standard deviation.
+
+I'll represent the distribution of degrees with a \py{Pmf} object,
+which is defined in the \py{thinkstats2} module.  
+\py{Pmf} stands for ``probability mass function'';
+if you are not familiar with this concept,
+you might want to read Chapter 3 of {\it Think Stats, 2nd edition}
+at \url{http://greenteapress.com/thinkstats2/html/thinkstats2004.html}.
+
+Briefly, a \py{Pmf} maps from values to their probabilities.
+A \py{Pmf} of degrees is a mapping from each possible degree, $d$, to the
+fraction of nodes with degree $d$.
+
+As an example, I'll construct a graph with nodes 1, 2, and 3 connected
+to a central node, 0:
+
+\begin{code}
+G = nx.Graph()
+G.add_edge(1, 0)
+G.add_edge(2, 0)
+G.add_edge(3, 0)
+nx.draw(G)
+\end{code}
+
+Here's the list of degrees in this graph:
+
+\begin{code}
+>>> degrees(G)
+[3, 1, 1, 1]
+\end{code}
+
+Node 0 has degree 3, the others have degree 1.  Now I can make
+a \py{Pmf} that represents this degree distribution:
+
+\begin{code}
+>>> from thinkstats2 import Pmf
+>>> Pmf(degrees(G))
+Pmf({1: 0.75, 3: 0.25})
+\end{code}
+
+The result is a \py{Pmf} object that maps from each degree to a
+fraction or probability.  In this example, 75\% of the nodes have
+degree 1 and 25\% have degree 3.
+
+Now we can make a \py{Pmf} that contains node degrees from the Facebook
+data, and compute the mean and standard deviation:
+
+\begin{code}
+>>> from thinkstats2 import Pmf
+>>> pmf_fb = Pmf(degrees(fb))
+>>> pmf_fb.Mean(), pmf_fb.Std()
+(43.691, 52.414)
+\end{code}
+
+And the same for the WS model:
+
+\begin{code}
+>>> pmf_ws = Pmf(degrees(ws))
+>>> pmf_ws.mean(), pmf_ws.std()
+(44.000, 1.465)
+\end{code}
+
+We can use the \py{thinkplot} module to plot the results:
+
+\begin{code}
+thinkplot.Pdf(pmf_fb, label='Facebook')
+thinkplot.Pdf(pmf_ws, label='WS graph')
+\end{code}
+
+Figure~\ref{chap04-1} shows the two distributions.  They are
+very different.
+  
+In the WS model, most users have about 44 friends; the minimum is 38
+and the maximum is 50.  That's not much variation.
+In the Facebook network, there are many users with only 1 or 2 friends,
+but one has more than 1000!
+
+Distributions like this, with many small values and a few very large
+values, are called {\bf heavy-tailed}.  
+
+
+\section{Heavy-tailed distributions}
+
+\begin{figure}
+\centerline{\includegraphics[width=5.5in]{figs/chap04-2.pdf}}
+\caption{PMF of degree in the Facebook network and in the WS model,
+on a log-log scale.}
+\label{chap04-2}
+\end{figure}
+
+Heavy-tailed distributions are a
+common feature in many areas of complexity science and they will be a
+recurring theme of this book.
+
+We can get a clearer picture of a heavy-tailed distribution by
+plotting it on a log-log axis, as shown in Figure~\ref{chap04-2}.
+This transformation emphasizes the tail of the distribution; that
+is, the probabilities of large values.
+
+Under this transformation, the Facebook data fall approximately on a
+straight line, which suggests that there is a ``power law''
+relationship between the largest values in the distribution and their
+probabilities.  Mathematically,
+
+\newcommand{\PMF}{\mathrm{PMF}}
+
+\[ \PMF(k) \sim k^{-\alpha} \]
+
+where $\PMF(k)$ is the fraction of nodes with degree $k$, $\alpha$
+is a parameter, and the symbol $\sim$ indicates that the PMF is
+asymptotic to $k^{-\alpha}$ as $k$ increases.
+
+If we take the log of both sides, we get
+
+\[ \log \PMF(k) \sim -\alpha \log k \]
+
+So if a distribution follows a power law and we plot $\PMF(k)$ versus
+$k$ on a log-log scale, we expect a straight line with slope
+$-\alpha$, at least for large values of $k$.
+
+All power law distributions are heavy-tailed, but there are other
+heavy-tailed distributions that don't follow a power law.  We will
+see more examples soon.
+
+\newcommand{\Barabasi}{Barab\'{a}si}
+
+But first, we have a problem: the WS model has the high clustering
+and low path length we see in the data, but the degree distribution
+doesn't resemble the data at all.  This discrepancy is the motivation
+for our next topic, the \Barabasi-Albert model.
+
+
+\section{\Barabasi-Albert model}
+\label{scale.free}
+
+In 1999 \Barabasi~and Albert published a paper,
+``Emergence of Scaling in Random Networks'', that characterizes the
+structure of several real-world networks,
+including graphs that represent the interconnectivity of movie actors,
+world-wide web (WWW) pages, and elements in the electrical power grid
+in the western United States.  You can download the paper from
+\url{http://www.sciencemag.org/content/286/5439/509}.
+
+\index{movie actor}
+\index{world-wide web}
+\index{electrical power grid}
+
+They measure the degree of each node and compute $\PMF(k)$, the
+probability that a vertex has degree $k$.  Then they plot $\PMF(k)$
+versus $k$ on a log-log scale.  The plots fit a
+straight line, at least for large values of $k$;
+so \Barabasi~and Albert conclude that these
+distributions are heavy-tailed.
+
+They also propose a model that generates graphs with the same
+property.  The essential features of the model, which distinguish it
+from the WS model, are:
+\index{generative model}
+
+\begin{description}
+
+\item[Growth:]  Instead of starting with a fixed number of vertices,
+the BA model starts with a small graph and adds vertices one at a time.
+
+\item[Preferential attachment:] When a new edge is created, it is
+more likely to connect to a vertex that already has a large number
+of edges.  This ``rich get richer'' effect is characteristic of
+the growth patterns of some real-world networks.
+\index{preferential attachment}
+\index{rich get richer}
+
+\end{description}
+
+Finally, they show that graphs generated by the \Barabasi-Albert (BA)
+model model have a distribution of degrees that obeys a power law.
+
+Graphs with this property are sometimes called {\bf scale-free networks},
+for reasons I won't explain; if you are curious, you can read more
+at \url{http://en.wikipedia.org/wiki/Scale-free_network}.
+\index{scale-free network}
+
+NetworkX provides a function that generates BA graphs.  We will use
+it first; then I'll show you how it works.
+
+\begin{code}
+ba = nx.barabasi_albert_graph(n=4039, k=22)
+\end{code}
+
+The parameters are \py{n}, the number of nodes to generate, and
+\py{k}, the number of edges each node starts with when it is added to
+the graph.  I chose \py{k=22} because that is the average number
+of edges per node in the Facebook data.
+
+\begin{figure}
+\centerline{\includegraphics[width=5.5in]{figs/chap04-3.pdf}}
+\caption{PMF of degree in the Facebook data and in the BA model,
+on a log-log scale.}
+\label{chap04-2}
+\end{figure}
+
+The resulting graph has 4039 nodes and 21.9 edges per node.
+Since every edge is connected to two nodes, the average degree
+is 43.8, very close to the average degree in the Facebook data,
+43.7.
+
+And the standard deviation of degree is 40.9, which is a bit
+less than in the Facebook data, 52.4, but it is much better
+than what we got from the WS graph, 1.5.
+
+Figure~\ref{chap04-3} shows the degree distributions for the
+Facebook data and the BA model on a log-log scale.  The model
+is not perfect; in particular, it deviates from the data when
+\py{k} is less than 10.  But the tail looks like a straight line,
+which suggests that this process generates degree distributions
+that follow a power law.
+
+So the BA model is better than the WS model at reproducing the degree
+distribution.  But does it have the small world property?
+
+In this example, the average path length, $L$, is $2.5$, which
+is even more ``small world'' than the actual network, which has
+$L=3.69$.  So that's good, although maybe too good.
+
+On the other hand, the clustering coefficient, $C$, is $0.037$,
+not even close to the value in the Facebook network, $0.606$.
+So that's a problem.
+
+Table~\ref{table04-1} summarizes these results.  The WS model captures
+the small world characteristics, but not the degree distribution.  The
+BA model captures the degree distribution, at least approximately,
+and the average path length, but not the clustering coefficient.
+
+In the exercises at the end of this chapter, you can explore other
+models intended to capture all of these characteristics.
+
+\begin{table}[]
+\centering
+\caption{Characteristics of the Facebook data and two models.}
+\label{table04-1}
+\begin{tabular}{lrrr}
+\hline
+            & \textbf{Facebook} & \textbf{WS model} & \textbf{BA model} \\ 
+\hline
+C           & 0.606             & 0.630             & 0.037             \\ 
+L           & 3.69              & 3.23              & 2.51              \\
+mean degree & 43.7              & 44                & 43.7              \\
+std degree  & 52.4              & 1.5               & 40.1              \\
+power law?  & maybe             & no                & yes               \\
+\hline
+\end{tabular}
+\end{table}
+
+
+\section{Generating BA graphs}
+
+In the previous sections we used a NetworkX function to generate BA
+graphs; now let's see how it works.  Here is a version
+of `barabasi_albert_graph`, with some changes I made to
+make it easier to read:
+
+\begin{code}
+def barabasi_albert_graph(n, k):
+
+    G = nx.empty_graph(k)
+    targets = list(range(k))
+    repeated_nodes = []
+
+    for source in range(k, n):
+
+        G.add_edges_from(zip([source]*k, targets))
+
+        repeated_nodes.extend(targets)
+        repeated_nodes.extend([source] * k)
+
+        targets = _random_subset(repeated_nodes, k)
+
+    return G
+\end{code}
+
+The parameters are \py{n}, the number of nodes we want, and \py{k}, the
+number of edges each new node gets (which will turn out to be
+approximately the number of edges per node).
+
+We start with a graph that has \py{k} nodes and no edges.  Then we
+initialize two variables:
+
+\begin{description}
+
+\item[\py{targets}:] The list of \py{k} nodes that will be connected
+to the next node.  Initially \py{targets} contains the original
+\py{k} nodes; later it will contain a random subset of nodes.
+
+\item[\py{repeated_nodes}:] A list of existing nodes where each
+node appears once for every edge it is connected to.  When we
+select from \py{repeated_nodes}, the probability of selecting any
+node is proportional to the number of edges it has.
+
+\end{description}
+
+Each time through the loop, we add edges from the source to
+each node in \py{targets}.  Then we update \py{repeated_nodes} by
+adding each target once and the new node \py{k} times.
+
+Finally, we choose a subject of the nodes to be targets for the
+next iteration.  Here's the definition of \py{_random_subset}:
+
+\begin{code}
+def _random_subset(repeated_nodes, k):
+    targets = set()
+    while len(targets) < k:
+        x = random.choice(repeated_nodes)
+        targets.add(x)
+    return targets
+\end{code}
+
+Each time through the loop, \py{_random_subset} chooses from
+\py{repeated_nodes} and adds the chosen node to \py{targets}.  Because
+\py{targets} is a set, it automatically discards duplicates, so
+the loop only exits when we have selected \py{k} different nodes.
 
 
 
-\section{Zipf's Law}
+\begin{code}
+\end{code}
 
-Zipf's law describes a relationship between the frequencies and ranks
-of words in natural languages; see
-  \url{http://en.wikipedia.org/wiki/Zipf's_law}.  The ``frequency'' of
-a word is the number of times it appears in a body of work.
-The ``rank'' of a word is its position in a list of words
-sorted by frequency: the most common word has rank 1, the
-second most common has rank 2, etc.
-\index{Zipf's law}
 
-Specifically, Zipf's Law
-predicts that the frequency, $f$, of the word with rank $r$ is:
-\index{frequency}
-\index{rank}
+\begin{code}
+\end{code}
 
-\[ f = c r^{-s} \]
-%
-where $s$ and $c$ are parameters that depend on the language and the
-text.
-\index{parameter}
+\begin{code}
+\end{code}
 
-If you take the logarithm of both sides of this equation, you get:
+\begin{code}
+\end{code}
 
-\index{logarithm}
+\begin{code}
+\end{code}
 
-\[ \log f = \log c - s \log r \]
-%
-So if you plot $\log f$ versus $\log r$, you should get
-a straight line with slope $-s$ and intercept $\log c$.
-\index{log-log plot}
-
-\begin{exercise}
-
-Write a program that reads a text from a file, counts word
-frequencies, and prints one line for each word, in descending order of
-frequency.  You can test it by downloading an out-of-copyright book in
-plain text format from \py{gutenberg.net}.  You might want to remove
-punctuation from the words.
-
-If you need some help getting started, you can download
-\url{thinkcomplex.com/Pmf.py}, which provides an
-object named \py{Hist} that maps from value to frequencies.
-\index{Hist@\py{Hist}}
-
-Plot the results and check whether they form
-a straight line.  For plotting suggestions, see Section~\ref{pyplot}.
-Can you estimate the value of $s$?
-
-You can download my solution from
-\url{thinkcomplex.com/Zipf.py}
-
-\end{exercise}
 
 
 
 \section{Cumulative distributions}
 
-A distribution is a statistical description of a set of values.
-For example, if you collect the population of every city and town
-in the U.S., you would have a set of about 14,000 integers.
-\index{cumulative distribution}
+Motivate
 
-The simplest description of this set is a list of numbers, which
-would be complete but not very informative.  A more concise description
-is a statistical summary like the mean and variation, but
-that is not a complete description because there are many sets
-of values with the same summary statistics.
-\index{summary statistic}
-
-One alternative is a histogram, which divides the range of
-possible values into ``bins'' and counts the number of values that
-fall in each bin.  Histograms are common, so they are
-easy to understand, but it is tricky to get the bin size right.  If the bins
-are too small, the number of values in each bin is also small,
-so the histogram doesn't give much insight.  If the bins are
-too large, they lump together a wide range of values, which
-obscures details that might be important. \index{histogram} \index{bin size}
 
 A better alternative is a {\bf cumulative distribution function}
 (CDF), which maps from a value, $x$, to the fraction of values less
@@ -3002,70 +3277,6 @@ Read the code in \py{Cdf.py}.  What is the order of growth for
 \end{exercise}
 
 
-\section{Continuous distributions}
-
-The distributions we have seen so far are sometimes called
-{\bf empirical distributions} because they are based on a
-dataset that comes from some kind of empirical observation.
-\index{empirical distribution}
-
-An alternative is a {\bf continuous distribution},
-which is characterized by a CDF that is a continuous function.
-Some of these distributions, like the
-Gaussian or normal
-distribution, are well known, at least to people who have studied
-statistics.  Many real world phenomena can be approximated by
-continuous distributions, which is why they are useful.
-\index{continuous distribution}
-\index{normal distribution}
-\index{Gaussian distribution}
-
-For example, if you observe a mass of radioactive material with
-an instrument that can detect decay events, the distribution
-of times between events will most likely fit an exponential
-distribution.  The same is true for any series where
-an event is equally likely at any time.
-\index{exponential distribution}
-
-The CDF of the exponential distribution is:
-
-\[ CDF(x) = 1 - e^{-\lambda x} \]
-
-The parameter, $\lambda$, determines the mean and variance
-of the distribution.  This equation can be used to derive
-a simple visual test for whether a dataset can be well
-approximated by an exponential distribution.  All you
-have to do is plot the {\bf complementary distribution}
-on a log-$y$ scale.
-\index{parameter}
-\index{complementary distribution}
-
-The complementary distribution (CCDF) is just $1 - CDF(x)$;
-if you plot the complementary distribution of a dataset
-that you think is exponential, you expect to see a function
-like:
-
-\[ y = 1 - CDF(x) \sim e^{-\lambda x} \]
-
-If you take the log of both sides of this equation, you get:
-
-\[ \log y \sim -\lambda x \]
-
-So on a log-$y$ scale the CCDF should look like a straight line
-with slope $-\lambda$.
-
-\begin{exercise}
-
-Write a function called \py{plot_ccdf} that takes
-a list of values and the corresponding list of probabilities
-and plots the CCDF on a log-$y$ scale.
-
-To test your function, use \py{expovariate} from the \py{random}
-module to generate 100 values from an exponential distribution.  Plot
-the CCDF on a log-$y$ scale and see if it falls on a straight line.
-\index{random module@\py{random} module}
-
-\end{exercise}
 
 
 \section{Pareto distributions}
@@ -3161,143 +3372,8 @@ What happens to the curve as you increase the number of values?
 \end{exercise}
 
 
-\begin{exercise}
 
-The distribution of populations for cities and towns has been proposed
-as an example of a real-world phenomenon that can be described
-with a Pareto distribution.
-\index{population}
-
-The U.S. Census Bureau publishes data on the population of every
-incorporated city and town in the United States.  I wrote a
-small program that downloads this data and converts it into a
-convenient form.  You can download it from
-\url{thinkcomplex.com/populations.py}.
-\index{U.S. Census Bureau}
-
-Read over the program to make sure you know what it does and then
-write a program that computes and plots the distribution of
-populations for the 14593 cities and towns in the dataset.
-
-Plot the CDF on linear and log-$x$ scales so you can get a sense of
-the shape of the distribution.  Then plot the CCDF on a log-log scale
-to see if it has the characteristic shape of a Pareto distribution.
-
-What conclusion do you draw about the distribution of sizes
-for cities and towns?
-
-\end{exercise}
-
-\newcommand{\Barabasi}{Barab\'{a}si}
-
-\section{\Barabasi~and Albert}
-\label{scale.free}
-
-In 1999 \Barabasi~and Albert published a paper in {\em Science},
-``Emergence of Scaling in Random Networks,'' that characterizes the
-structure (also called ``topology'') of several real-world networks,
-including graphs that represent the interconnectivity of movie actors,
-world-wide web (WWW) pages, and elements in the electrical power grid
-in the western United States.  You can download the paper from
-\url{http://www.sciencemag.org/content/286/5439/509}.
-\index{topology} \index{movie actor} \index{world-wide web}
-\index{electrical power grid}
-
-They measure the degree (number of connections) of each node and
-compute $P(k)$, the probability that a vertex has degree $k$; then
-they plot $P(k)$ versus $k$ on a log-log scale.  The tail of the plot
-fits a straight line, so they conclude that it obeys a {\bf power
-  law}; that is, as $k$ gets large, $P(k)$ is asymptotic to
-$k^{- \gamma}$, where $\gamma$ is a parameter that determines the rate
-of decay.
-\index{degree}
-\index{power law}
-
-They also propose a model that generates random graphs with the same
-property.  The essential features of the model, which distinguish it
-from the \Erdos-\Renyi~ model and the Watts-Strogatz model, are:
-\index{generative model}
-
-\begin{description}
-
-\item[Growth:]  Instead of starting with a fixed number of vertices,
-\Barabasi~and Albert start with a small graph and add vertices gradually.
-
-\item[Preferential attachment:] When a new edge is created, it is
-more likely to connect to a vertex that already has a large number
-of edges.  This ``rich get richer'' effect is characteristic of
-the growth patterns of some real-world networks.
-\index{preferential attachment}
-\index{rich get richer}
-
-\end{description}
-
-Finally, they show that graphs generated by this model have a
-distribution of degrees that obeys a power law.  Graphs that
-have this property are sometimes called {\bf scale-free networks};
-see \url{http://en.wikipedia.org/wiki/Scale-free_network}.
-That name can be confusing because it is the distribution
-of degrees that is scale-free, not the network.
-\index{scale-free network}
-
-In order to maximize confusion, distributions that obey the power law
-are sometimes called {\bf scaling distributions} because they are
-invariant under a change of scale.  That means that if you change the
-units the quantities are expressed in, the slope parameter, $\gamma$,
-doesn't change.  You can read \url{http://en.wikipedia.org/wiki/Power_law} for
-the details, but it is not important for what we are doing here.
-\index{scaling distribution}
-
-
-\begin{exercise}
-
-This exercise asks you to make connections between the Watts-Strogatz (WS)
-and \Barabasi-Albert (BA) models:
-\index{Watts-Strogatz model}
-\index{Barabasi-Albert model@\Barabasi-Albert model}
-
-\begin{enumerate}
-
-\item Read \Barabasi~and Albert's paper and implement their algorithm
-for generating graphs.  See if you can replicate their Figure 2(A),
-which shows $P(k)$ versus $k$ for a graph with 150 000 vertices.
-
-\item Use the WS model to generate the largest graph you can in
-a reasonable amount of time.  Plot $P(k)$ versus $k$ and see if
-you can characterize the tail behavior.
-
-\item Use the BA model to generate a graph with about 1000 vertices
-and compute the characteristic length and clustering coefficient
-as defined in the Watts and Strogatz paper.  Do scale-free networks
-have the characteristics of a small-world graph?
-
-\end{enumerate}
-
-\end{exercise}
-
-
-\section{Zipf, Pareto and power laws}
-
-
-At this point we have seen three phenomena that yield a straight line
-on a log-log plot:
-\index{log-log plot}
-
-\begin{description}
-
-\item[Zipf plot:] Frequency as a function of rank.
-\index{Zipf plot}
-
-\item[Pareto CCDF:] The complementary CDF of a Pareto distribution.
-\index{complementary CDF}
-
-\item[Power law plot:] A histogram of frequencies.
-\index{power law}
-
-\end{description}
-
-The similarity in these plots is not a coincidence; these
-visual tests are closely related.
+\section{Pareto and the power law}
 
 Starting with a power-law distribution, we have:
 
@@ -3328,67 +3404,69 @@ because all we need to know is:
 Which shows that the distribution of $k$ is asymptotic to a
 Pareto distribution with $\alpha = \gamma - 1$.
 
-Similarly, if we start with a straight line on a Zipf plot,
-we have\footnote{This derivation follows
-Adamic, ``Zipf, power law and
-Pareto---a ranking tutorial,'' available at
-\url{www.hpl.hp.com/research/idl/papers/ranking/ranking.html}}:
 
-\[ f = c r^{-s} \]
+\section{Continuous distributions}
 
-Where $f$ is the frequency of the word with rank $r$.  Inverting
-this relationship yields:
-\index{rank}
+The distributions we have seen so far are sometimes called
+{\bf empirical distributions} because they are based on a
+dataset that comes from some kind of empirical observation.
+\index{empirical distribution}
 
-\[ r = (f/c)^{-{1/s}} \]
+An alternative is a {\bf continuous distribution},
+which is characterized by a CDF that is a continuous function.
+Some of these distributions, like the
+Gaussian or normal
+distribution, are well known, at least to people who have studied
+statistics.  Many real world phenomena can be approximated by
+continuous distributions, which is why they are useful.
+\index{continuous distribution}
+\index{normal distribution}
+\index{Gaussian distribution}
 
-Now subtracting 1 and dividing through by the number of different
-words, $n$, we get
+For example, if you observe a mass of radioactive material with
+an instrument that can detect decay events, the distribution
+of times between events will most likely fit an exponential
+distribution.  The same is true for any series where
+an event is equally likely at any time.
+\index{exponential distribution}
 
-\[ \frac{r-1}{n} = \frac{(f/c)^{-{1/s}}}{n} - \frac{1}{n} \]
+The CDF of the exponential distribution is:
 
-Which is only interesting because if $r$ is the rank of a word,
-then $(r-1)/n$ is the fraction of words with lower ranks, which is
-the fraction of words with higher frequency, which is the
-CCDF of the distribution of frequencies:
+\[ CDF(x) = 1 - e^{-\lambda x} \]
 
-\[ CCDF(x) = \frac{(f/c)^{-{1/s}}}{n} - \frac{1}{n} \]
+The parameter, $\lambda$, determines the mean and variance
+of the distribution.  This equation can be used to derive
+a simple visual test for whether a dataset can be well
+approximated by an exponential distribution.  All you
+have to do is plot the {\bf complementary distribution}
+on a log-$y$ scale.
+\index{parameter}
+\index{complementary distribution}
 
-To characterize the asymptotic behavior
-for large $n$ we can ignore $c$ and $1/n$, which yields:
+The complementary distribution (CCDF) is just $1 - CDF(x)$;
+if you plot the complementary distribution of a dataset
+that you think is exponential, you expect to see a function
+like:
 
-\[ CCDF(x) \sim f^{-{1/s}} \]
+\[ y = 1 - CDF(x) \sim e^{-\lambda x} \]
 
-Which shows that if a set of words obeys Zipf's law, the
-distribution of their frequencies is asymptotic to a
-Pareto distribution with $\alpha = 1/s$.
+If you take the log of both sides of this equation, you get:
 
-So the three visual tests are mathematically equivalent; a dataset
-that passes one test will pass all three.  But as a practical
-matter, the power law plot is noisier than the other two, because
-it is the derivative of the CCDF.
-\index{noise}
+\[ \log y \sim -\lambda x \]
 
-The Zipf and CCDF plots are more robust, but Zipf's law is only
-applicable to discrete data (like words), not continuous quantities.
-CCDF plots work with both.
-\index{robust}
-
-For these reasons---robustness and generality---I recommend
-using CCDFs.
-
+So on a log-$y$ scale the CCDF should look like a straight line
+with slope $-\lambda$.
 
 \begin{exercise}
 
-The Stanford Large Network Dataset Collection is a repository of
-datasets from a variety of networks, including social networks,
-communication and collaboration, Internet and road networks.
-See \url{http://snap.stanford.edu/data/index.html}.
-\index{Stanford Large Network Dataset Collection}
+Write a function called \py{plot_ccdf} that takes
+a list of values and the corresponding list of probabilities
+and plots the CCDF on a log-$y$ scale.
 
-Download one of these datasets and explore.  Is there evidence
-of small-world behavior?  Is the network scale-free?  What else
-can you discover?
+To test your function, use \py{expovariate} from the \py{random}
+module to generate 100 values from an exponential distribution.  Plot
+the CCDF on a log-$y$ scale and see if it falls on a straight line.
+\index{random module@\py{random} module}
 
 \end{exercise}
 
@@ -3498,6 +3576,99 @@ Do these criteria influence your opinion about the WS and BA models?
 Are there other criteria you think should be considered?
 
 \end{exercise}
+
+
+\section{Exercises}
+
+% BA data here http://www3.nd.edu/~networks/resources.htm
+
+\begin{exercise}
+
+The Stanford Large Network Dataset Collection is a repository of
+datasets from a variety of networks, including social networks,
+communication and collaboration, Internet and road networks.
+See \url{http://snap.stanford.edu/data/index.html}.
+\index{Stanford Large Network Dataset Collection}
+
+Download one of these datasets and explore.  Is there evidence
+of small-world behavior?  Is the network scale-free?  What else
+can you discover?
+
+\end{exercise}
+
+\begin{exercise}
+
+The distribution of populations for cities and towns has been proposed
+as an example of a real-world phenomenon that can be described
+with a Pareto distribution.
+\index{population}
+
+The U.S. Census Bureau publishes data on the population of every
+incorporated city and town in the United States.  I wrote a
+small program that downloads this data and converts it into a
+convenient form.  You can download it from
+\url{thinkcomplex.com/populations.py}.
+\index{U.S. Census Bureau}
+
+Read over the program to make sure you know what it does and then
+write a program that computes and plots the distribution of
+populations for the 14593 cities and towns in the dataset.
+
+Plot the CDF on linear and log-$x$ scales so you can get a sense of
+the shape of the distribution.  Then plot the CCDF on a log-log scale
+to see if it has the characteristic shape of a Pareto distribution.
+
+What conclusion do you draw about the distribution of sizes
+for cities and towns?
+
+\end{exercise}
+
+
+\begin{exercise}
+
+Zipf's law describes a relationship between the frequencies and ranks
+of words in natural languages; see
+  \url{http://en.wikipedia.org/wiki/Zipf's_law}.  The ``frequency'' of
+a word is the number of times it appears in a body of work.
+The ``rank'' of a word is its position in a list of words
+sorted by frequency: the most common word has rank 1, the
+second most common has rank 2, etc.
+\index{Zipf's law}
+
+Specifically, Zipf's Law
+predicts that the frequency, $f$, of the word with rank $r$ is:
+\index{frequency}
+\index{rank}
+
+\[ f = c r^{-s} \]
+%
+where $s$ and $c$ are parameters that depend on the language and the
+text.
+\index{parameter}
+
+If you take the logarithm of both sides of this equation, you get:
+
+\index{logarithm}
+
+\[ \log f = \log c - s \log r \]
+%
+So if you plot $\log f$ versus $\log r$, you should get
+a straight line with slope $-s$ and intercept $\log c$.
+\index{log-log plot}
+
+Write a program that reads a text from a file, counts word
+frequencies, and prints one line for each word, in descending order of
+frequency.  You can test it by downloading an out-of-copyright book in
+plain text format from \py{gutenberg.net}.  You might want to remove
+punctuation from the words.
+
+Plot the results and check whether they form
+a straight line.
+
+\end{exercise}
+
+
+
 
 
 
