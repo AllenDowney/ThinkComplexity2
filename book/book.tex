@@ -1804,9 +1804,12 @@ download it from
 \index{Watts, Duncan} \index{Strogatz, Steven} \index{small world
   network}
 
-Watts and Strogatz started with two kinds of graph that were well
-understood: random graphs and regular graphs.  They looked at two
-properties of these graphs, clustering and path length.
+Watts and Strogatz start with two kinds of graph that were well
+understood: random graphs and regular graphs.  In a random graph, nodes
+are connected at random.  In a regular graph, every node has the
+same number of neighbors.
+They consider two
+properties of these graphs, clustering and path length:
 \index{random graph}
 \index{regular graph}
 \index{clustering}
@@ -1829,25 +1832,24 @@ a social network.
 
 \end{description}
 
-Their initial result was what you might expect: regular graphs
-have high clustering and high path lengths;
-random graphs with the same size tend to have low clustering
+Watts and Strogatz show that regular graphs
+have high clustering and high path lengths, whereas
+random graphs with the same size usually have low clustering
 and low path lengths.  So neither of these is a good model of
 social networks, which combine high clustering with
 short path lengths.
 
 Their goal was to create a {\bf generative model} of a social
 network.  A generative model tries to explain a phenomenon by
-modeling the process that builds or leads to the phenomenon.  In
-this case Watts and Strogatz proposed a process for building
+modeling the process that builds or leads to the phenomenon.
+Watts and Strogatz proposed this process for building
 small-world graphs:
 \index{generative model}
 
 \begin{enumerate}
 
-\item Start with a regular graph with $n$ nodes and degree $k$.  
-  Watts and Strogatz use a ring lattice, which is
-  a kind of regular graph (details in the next section).
+\item Start with a regular graph with $n$ nodes and each node
+  connected to $k$ neighbors.
 
 \item Choose a subset of the edges and ``rewire'' them by
   replacing them with random edges.
@@ -1864,7 +1866,7 @@ Watts and Strogatz found that small values of $p$ yield graphs
 with high clustering, like a regular graph, and low path
 lengths, like a random graph.
 
-In this chapter I will replicate the Watts and Strogatz experiment
+In this chapter I replicate the Watts and Strogatz experiment
 in the following steps:
 
 \begin{enumerate}
@@ -1886,7 +1888,7 @@ paths, Dijkstra's algorithm.
 \end{enumerate}
 
 
-\section{Ring lattices}
+\section{Ring lattice}
 
 \begin{figure}
 \centerline{\includegraphics[width=3.5in]{figs/chap03-1.pdf}}
@@ -2056,7 +2058,7 @@ def node_clustering(G, u):
     return exist / total
 \end{code}
 
-Again I use the expression \py{G[u]}, which returns a dictionary
+Again I use \py{G[u]}, which returns a dictionary
 with the neighbors of \py{node} as keys.  If a node has fewer than 2
 neighbors, the clustering coefficient is undefined, but for simplicity
 \py{node_clustering} returns 0.
@@ -2681,7 +2683,7 @@ graphs.
 In this section we'll perform the same analysis with a different dataset,
 a set Facebook users and their friends.  If you are
 not familiar with Facebook, users
-who are connected on Facebook are called ``friends'', regardless of
+who are connected to each other are called ``friends'', regardless of
 the nature of their relationship in the real world.
 
 I'll use data from the Stanford Network Analysis Project (SNAP), which
@@ -2724,43 +2726,87 @@ of the dataset.
 
 Now we can check whether this dataset has the characteristics of
 a small world graph: high clustering and low path lengths.
-I'll use \py{clustering_coefficient} from Section~\ref{clustering}
+
+In Section~\ref{clustering} we wrote a function to compute
+the network average clustering coefficient.  NetworkX provides
+a function called \py{average_clustering}, which does the same
+thing a little faster.
+
+But for larger graphs, they are both too slow, taking time
+proportional to $n k^2$, where $n$ is the number of nodes and
+$k$ is the number of neighbors each node is connected to.
+
+Fortunately, NetworkX provides a function that estimates the
+clustering coefficient by random sampling.  You can invoke it like
+this:
 
 \begin{code}
-from thinkcomplexity import clustering_coefficient
-C = clustering_coefficient(fb)
-C
+    from networkx.algorithms.approximation import average_clustering
+    average_clustering(G, trials=1000)
 \end{code}
-
-Alternatively, you could use \py{average_clustering}, which is provided
-by NetworkX:
+    
+The following function does something similar for path lengths.
 
 \begin{code}
-nx.average_clustering(fb)
+def random_path_lengths(G, nodes=None, trials=1000):
+    if nodes is None:
+        nodes = G.nodes()
+    else:
+        nodes = list(nodes)
+
+    pairs = np.random.choice(nodes, (trials, 2))
+    lengths = [nx.shortest_path_length(G, *pair) 
+               for pair in pairs]
+    return lengths
 \end{code}
 
-Either way, the clustering coefficient is 0.61, which is high,
+\py{G} is a graph, \py{nodes} is the list of nodes we should sample
+from, and \py{trials} is the number of random paths to sample.
+If `nodes` is `None`, we sample from the entire graph.
+
+\py{pairs} is a NumPy array of randomly chosen nodes with
+one row for each trial and two columns.
+
+The list comprehension enumerates the rows in the array and
+computes the shortest distance between each pair of nodes.
+The result is a list of path lengths.
+
+\py{estimate_path_length} generates a list of random path lengths and
+returns their mean:
+    
+\begin{code}
+def estimate_path_length(G, nodes=None, trials=1000):
+    return np.mean(random_path_lengths(G, nodes, trials))
+\end{code}
+
+I'll use \py{average_clustering} to compute $C$:
+
+\begin{code}
+C = average_clustering(fb)
+\end{code}
+
+And \py{estimate_path_lengths} to compute $L$:
+
+\begin{code}
+L = estimate_path_lengths(fb)
+\end{code}
+
+The clustering coefficient is about 0.61, which is high,
 as we expect if this network has the small world property.
 
-To compute the average path length, I'll use \py{path_lengths} from
-Section~\ref{pathlength}
-
-\begin{code}
-from thinkcomplexity import path_lengths
-pls = path_lengths(fb)
-L = np.mean(pls)
-\end{code}
-
-The average path length between any two users is 3.7, which is
-quite small in a network of more than 4000 users.  It's a small
+And the average path is 3.7, which is
+quite short in a network of more than 4000 users.  It's a small
 world after all.
 
 Now let's see if we can construct a WS graph that has the same
 characteristics as this network.
 
+
 \section{WS Model}
 
-In this network, the ratio of edges to nodes is about 44:
+In the Facebook dataset, the average number of edges per node is about
+22.  Since each edge is connected to two nodes, the average degree
+is twice the number of edges per node:
 
 \begin{code}
 >>> k = int(round(2*m/n))
@@ -2782,7 +2828,7 @@ than in the dataset!
 With \py{p=1} we get a random graph:
 
 \begin{code}
-random = nx.watts_strogatz_graph(n, k, 1)
+random_graph = nx.watts_strogatz_graph(n, k, 1)
 \end{code}
 
 In the random graph, \py{L} is 2.6, even shorter than
@@ -2807,14 +2853,14 @@ So far, so good.
 
 \begin{figure}
 \centerline{\includegraphics[width=5.5in]{figs/chap04-1.pdf}}
-\caption{PMF of degree in the Facebook network and in the WS model.}
+\caption{PMF of degree in the Facebook dataset and in the WS model.}
 \label{chap04-1}
 \end{figure}
 
-Recall that the degree of a node is the number of edges it is connected
-to.  If the WS graph is a good model for the Facebook data, it
-should have the same total (or average) degree, and ideally the same
-variance in degree, across nodes.
+Recall that the degree of a node is the number of neighbors it is
+connected to.  If the WS graph is a good model for the Facebook network,
+it should have the same total (or average) degree, and ideally the
+same variance in degree, across nodes.
 
 This function returns a list of degrees in a graph, one for each node:
 
@@ -2823,7 +2869,7 @@ def degrees(G):
     return [G.degree(u) for u in G]
 \end{code}
 
-The mean degree in the Facebook network is 43.7; the mean degree in
+The mean degree in the dataset is 43.7; the mean degree in
 the WS model is 44.  So far, so good.
 
 However, the standard deviation of degrees in the WS model is 1.5;
@@ -2874,8 +2920,8 @@ The result is a \py{Pmf} object that maps from each degree to a
 fraction or probability.  In this example, 75\% of the nodes have
 degree 1 and 25\% have degree 3.
 
-Now we can make a \py{Pmf} that contains node degrees from the Facebook
-data, and compute the mean and standard deviation:
+Now we can make a \py{Pmf} that contains node degrees from the
+dataset, and compute the mean and standard deviation:
 
 \begin{code}
 >>> from thinkstats2 import Pmf
@@ -2904,7 +2950,7 @@ very different.
   
 In the WS model, most users have about 44 friends; the minimum is 38
 and the maximum is 50.  That's not much variation.
-In the Facebook network, there are many users with only 1 or 2 friends,
+In the dataset, there are many users with only 1 or 2 friends,
 but one has more than 1000!
 
 Distributions like this, with many small values and a few very large
@@ -2915,7 +2961,7 @@ values, are called {\bf heavy-tailed}.
 
 \begin{figure}
 \centerline{\includegraphics[width=5.5in]{figs/chap04-2.pdf}}
-\caption{PMF of degree in the Facebook network and in the WS model,
+\caption{PMF of degree in the Facebook dataset and in the WS model,
 on a log-log scale.}
 \label{chap04-2}
 \end{figure}
@@ -2929,12 +2975,14 @@ plotting it on a log-log axis, as shown in Figure~\ref{chap04-2}.
 This transformation emphasizes the tail of the distribution; that
 is, the probabilities of large values.
 
-Under this transformation, the Facebook data fall approximately on a
+Under this transformation, the data fall approximately on a
 straight line, which suggests that there is a ``power law''
 relationship between the largest values in the distribution and their
 probabilities.  Mathematically,
 
 \newcommand{\PMF}{\mathrm{PMF}}
+\newcommand{\CDF}{\mathrm{CDF}}
+\newcommand{\CCDF}{\mathrm{CCDF}}
 
 \[ \PMF(k) \sim k^{-\alpha} \]
 
@@ -3021,26 +3069,26 @@ ba = nx.barabasi_albert_graph(n=4039, k=22)
 The parameters are \py{n}, the number of nodes to generate, and
 \py{k}, the number of edges each node starts with when it is added to
 the graph.  I chose \py{k=22} because that is the average number
-of edges per node in the Facebook data.
+of edges per node in the dataset.
 
 \begin{figure}
 \centerline{\includegraphics[width=5.5in]{figs/chap04-3.pdf}}
-\caption{PMF of degree in the Facebook data and in the BA model,
+\caption{PMF of degree in the Facebook dataset and in the BA model,
 on a log-log scale.}
-\label{chap04-2}
+\label{chap04-3}
 \end{figure}
 
 The resulting graph has 4039 nodes and 21.9 edges per node.
 Since every edge is connected to two nodes, the average degree
-is 43.8, very close to the average degree in the Facebook data,
+is 43.8, very close to the average degree in the dataset,
 43.7.
 
 And the standard deviation of degree is 40.9, which is a bit
-less than in the Facebook data, 52.4, but it is much better
+less than in the dataset, 52.4, but it is much better
 than what we got from the WS graph, 1.5.
 
 Figure~\ref{chap04-3} shows the degree distributions for the
-Facebook data and the BA model on a log-log scale.  The model
+Facebook network and the BA model on a log-log scale.  The model
 is not perfect; in particular, it deviates from the data when
 \py{k} is less than 10.  But the tail looks like a straight line,
 which suggests that this process generates degree distributions
@@ -3054,7 +3102,7 @@ is even more ``small world'' than the actual network, which has
 $L=3.69$.  So that's good, although maybe too good.
 
 On the other hand, the clustering coefficient, $C$, is $0.037$,
-not even close to the value in the Facebook network, $0.606$.
+not even close to the value in the dataset, $0.61$.
 So that's a problem.
 
 Table~\ref{table04-1} summarizes these results.  The WS model captures
@@ -3067,19 +3115,19 @@ models intended to capture all of these characteristics.
 
 \begin{table}[]
 \centering
-\caption{Characteristics of the Facebook data and two models.}
-\label{table04-1}
 \begin{tabular}{lrrr}
 \hline
             & \textbf{Facebook} & \textbf{WS model} & \textbf{BA model} \\ 
 \hline
-C           & 0.606             & 0.630             & 0.037             \\ 
+C           & 0.61             & 0.63             & 0.037             \\ 
 L           & 3.69              & 3.23              & 2.51              \\
 mean degree & 43.7              & 44                & 43.7              \\
 std degree  & 52.4              & 1.5               & 40.1              \\
 power law?  & maybe             & no                & yes               \\
 \hline
 \end{tabular}
+\caption{Characteristics of the Facebook network compared to two models.}
+\label{table04-1}
 \end{table}
 
 
@@ -3087,7 +3135,7 @@ power law?  & maybe             & no                & yes               \\
 
 In the previous sections we used a NetworkX function to generate BA
 graphs; now let's see how it works.  Here is a version
-of `barabasi_albert_graph`, with some changes I made to
+of \py{barabasi_albert_graph}, with some changes I made to
 make it easier to read:
 
 \begin{code}
@@ -3151,324 +3199,115 @@ Each time through the loop, \py{_random_subset} chooses from
 the loop only exits when we have selected \py{k} different nodes.
 
 
-
-\begin{code}
-\end{code}
-
-
-\begin{code}
-\end{code}
-
-\begin{code}
-\end{code}
-
-\begin{code}
-\end{code}
-
-\begin{code}
-\end{code}
-
-
-
-
 \section{Cumulative distributions}
+\label{cdf}
 
-Motivate
+\begin{figure}
+\centerline{\includegraphics[width=5.5in]{figs/chap04-4.pdf}}
+\caption{CDF of degree in the Facebook dataset along with the WS model (left) and the BA model (right), on a log-x scale.}
+\label{chap04-4}
+\end{figure}
 
+Figure~\ref{chap04-3} represents the degree distribution by plotting
+the probability mass function (PMF) on a log-log scale.  That's how
+\Barabasi~and Albert present their results and it is the representation
+used most often in articles about power law distributions.  But it
+is not the best way to look at data like this.
 
 A better alternative is a {\bf cumulative distribution function}
 (CDF), which maps from a value, $x$, to the fraction of values less
-than or equal to $x$.  If you choose a value at random, $CDF(x)$
-is the probability that the value you get is less
 than or equal to $x$.
 \index{cumulative distribution function}
 \index{CDF}
 
-For a list of $n$ values, the simplest way to compute CDF is to
-sort the values.  Then the CDF of the $i$th value (starting from 1)
-is $i/n$.
-
-I have written a class called \py{Cdf} that provides functions
-for creating and manipulating CDFs.  You can download it from
-\url{thinkcomplex.com/Cdf.py}.
-\index{Cdf@\py{Cdf}}
-
-As an example, we'll compute the CDF for the values \{1,2,2,4,5\}:
+Given a \py{Pmf}, the simplest way to compute a cumulative probability
+is to add up the probabilities for values up to and including $x$:
 
 \begin{code}
-import Cdf
-cdf = Cdf.MakeCdfFromList([1,2,2,4,5])
+def cumulative_prob(pmf, x):
+    ps = [pmf[value] for value in pmf if value<=x]
+    return sum(ps)
 \end{code}
 
-\py{MakeCdfFromList} can take any sequence or iterator.
-Once you have the \py{Cdf}, you can find the probability, $CDF(x)$, for
-a given value:
+For example, given the degree distribution in the dataset,
+\py{pmf_pf}, we can compute the fraction of users with 25 or fewer
+friends:
 
 \begin{code}
-prob = cdf.Prob(2)
+>>> cumulative_prob(pmf_fb, 25)
+0.506
 \end{code}
 
-The result is 0.6, because 3/5 of the values are less than or equal to 2.
-You can also compute the value for a given probability:
+The result is close to 0.5, which means that the median number
+of friends is about 25.
+
+CDFs are better for visualization because they are less noisy than
+PMFs.  Once you get used to intepreting CDFs, they provide
+a clearer picture of the shape of a
+distribution than PMFs.
+
+The \py{thinkstats} module provides a class called \py{Cdf} that
+represents a cumulative distribution function.  We can use it
+to compute the CDF of degree in the dataset.
 
 \begin{code}
-value = cdf.Value(0.5)
+from thinkstats2 import Cdf
+cdf_fb = Cdf(degrees(fb), label='Facebook')
 \end{code}
 
-The value with probability 0.5 is the median, which in this example is 2.
+And \py{thinkplot} provides a function called \py{Cdf} that plots
+cumulative distribution functions.
+
+\begin{code}
+thinkplot.Cdf(cdf_fb)
+\end{code}
+
+Figure~\ref{chap04-04} shows the degree CDF for the Facebook dataset
+along with the WS model (left) and the BA model (right).  The x-axis
+is on a log scale.
 
 \begin{figure}
-\centerline{\includegraphics[width=3.0in]{figs/cdf_example.pdf}}
-\caption{CDF of the values \{1,2,2,4,5\}.\label{fig.cdf}}
+\centerline{\includegraphics[width=5.5in]{figs/chap04-5.pdf}}
+\caption{Complementary CDF of degree in the Facebook dataset along with the WS model (left) and the BA model (right), on a log-log scale.}
+\label{chap04-5}
 \end{figure}
 
-To plot the \py{Cdf}, you can use \py{Render}, which returns
-a list of value-probability pairs.
+Clearly the CDF for the WS model is very different from the CDF
+from the data.  The BA model is better, but still not very good,
+especially for small values.
 
-\begin{code}
-    xs, ps = cdf.Render()
-    for x, p in zip(xs, ps):
-        print x, p
-\end{code}
+In the tail of the distribution (values greater than 100) it looks
+like the BA model matches the dataset well enough, but it is
+hard to see.  We can get a clearer view with one other view of the
+data: plotting the complementary CDF on a log-log scale.
 
-The result is:
+The {\bf complementary CDF} (CCDF) is defined
 
-\begin{code}
-1 0.0
-1 0.2
-2 0.2
-2 0.6
-4 0.6
-4 0.8
-5 0.8
-5 1.0
-\end{code}
+\[ \CCDF(x) = 1 - \CDF(x) \]
 
-Each value appears twice.  That way when we plot the
-CDF, we get a stair-step pattern.
-\index{pyplot@\py{pyplot}}
-\index{plotting CDFs}
+If is useful because if the PMF follows a power law, the CCDF 
+also follows a power law:
 
-\begin{code}
-import matplotlib.pyplot as pyplot
+\[ \CCDF(x) = \left( \frac{x}{x_m} \right)^{-\alpha} \]
 
-    xs, ps = cdf.Render()
-
-    pyplot.plot(xs, ps, linewidth=3)
-    pyplot.axis([0.9, 5.1, 0, 1])
-    pyplot.title('CDF')
-    pyplot.xlabel('value, x')
-    pyplot.ylabel('probability, CDF(x)')
-    pyplot.show()
-\end{code}
-
-Figure~\ref{fig.cdf} shows the cumulative distribution
-function (CDF), for the values $(1,2,2,4,5)$.
-
-I drew vertical lines at each of the values, which is not
-mathematically correct.  To be more rigorous, I should draw
-a discontinuous function.
-
-\begin{exercise}
-
-Read the code in \py{Cdf.py}.  What is the order of growth for
-\py{MakeCdfFromList} and the methods \py{Prob} and \py{Value}?
-\index{order of growth}
-\end{exercise}
-
-
-
-
-\section{Pareto distributions}
-
-The Pareto distribution is named after the economist Vilfredo
-Pareto, who used it to describe the distribution of wealth;
-see \url{http://en.wikipedia.org/wiki/Pareto_distribution}.  Since then,
-people have used it to describe
-phenomena in the natural and social sciences
-including sizes of cities and towns, sand particles
-and meteorites, forest fires and earthquakes.
-\index{Pareto distribution}
-\index{Pareto, Vilfredo}
-
-The Pareto distribution is characterized by a CDF with the following
-form:
-
-\[ CDF(x) = 1- \left( \frac{x}{x_m} \right) ^{-\alpha} \]
-
-The parameters $x_m$ and $\alpha$ determine the location and shape of
-the distribution.  $x_m$ is the minimum possible quantity.
-\index{parameter}
-
-Values from a Pareto distribution often have these properties:
-
-\begin{description}
-
-\item[Long tail:] Pareto distributions contain many small values
-and a few very large ones.
-\index{long tail}
-
-\item[80/20 rule:] The large values in a Pareto distribution are
-so large that they make up a disproportionate share of the total.
-In the context of wealth, the 80/20 rule says that 20\% of the
-people own 80\% of the wealth.
-\index{80/20 rule}
-
-\item[Scale free:] Short-tailed distributions are centered around
-a typical size, which is called a ``scale.''  For example, the
-great majority of adult humans are between 100 and 200 cm in height,
-so we could say that the scale of human height is a few hundred
-centimeters.  But for long-tailed distributions, there is no
-similar range (bounded by a factor of two) that contains the
-bulk of the distribution.  So we say that these distributions
-are ``scale-free.''
-\index{scale}
-\index{scale-free}
-
-\end{description}
-
-To get a sense of the difference between the Pareto and Gaussian
-distributions, imagine what the world would be like if the
-distribution of human height were Pareto.
-
-In Pareto World, the shortest person is 100 cm,
-and the median is 150 cm, so that part of the distribution is not
-very different from ours.
-\index{Pareto World}
-
-But if you generate 6 billion values from this distribution
-distribution, the tallest person might
-be 100 km---that's what it means to
-be scale-free!
-
-There is a simple visual test that indicates whether an empirical
-distribution is well-characterized by a Pareto distribution: on a
-log-log scale, the CCDF looks like a straight line.  The derivation is
-similar to what we saw in the previous section.
-
-The equation for the CCDF is:
-
-\[ y = 1 - CDF(x) \sim \left( \frac{x}{x_m} \right) ^{-\alpha} \]
+where $x_m$ is the minimum possible value and $\alpha$ is a parameter
+that determines the shape of the distribution.
 
 Taking the log of both sides yields:
 
-\[ \log y \sim -\alpha (\log x - \log x_m ) \]
+\[ \log \CCDF(x) = -\alpha (\log x - \log x_m) \]
 
-So if you plot $\log y$ versus $\log x$, it should look like a
-straight line with slope $-\alpha$ and intercept $\alpha \log x_m$.
-\index{log-log plot}
+So if the distribution obeys a power law, we expect the CCDF on
+a log-log scale to be a straight line with slope $-\alpha$.
 
-\begin{exercise}
+Figure~\ref{chap04-5} shows the CCDF of degree for the Facebook data,
+along with the WS model (left) and the BA model (right), on a log-log
+scale.
 
-Write a version of \py{plot_ccdf} that plots the complementary
-CCDF on a log-log scale.
+With this way of looking at the data, we can see that the BA model
+matches the tail of the distribution (values above 20) reasonably well.
+The WS model does not.
 
-To test your function, use \py{paretovariate} from the \py{random}
-module to generate 100 values from a Pareto distribution.  Plot
-the CCDF on a log-$y$ scale and see if it falls on a straight line.
-What happens to the curve as you increase the number of values?
-\index{random module@\py{random} module}
-
-\end{exercise}
-
-
-
-\section{Pareto and the power law}
-
-Starting with a power-law distribution, we have:
-
-\[ P(k) \sim k^{- \gamma} \]
-
-If we choose a random node in a scale free network,
-$P(k)$ is the probability that its degree equals $k$.
-\index{degree}
-
-The cumulative distribution function, $CDF(k)$, is the probability
-that the degree is less than or equal to $k$, so we can
-get that by summation:
-
-\[ CDF(k) = \sum_{i=0}^k P(i) \]
-
-For large values of $k$ we can approximate the summation with
-an integral:
-
-\[ \sum_{i=0}^k i^{- \gamma} \sim \int_{i=0}^k i^{- \gamma} =
-\frac{1}{\gamma -1} (1 - k^{-\gamma + 1}) \]
-
-To make this a proper CDF we could normalize it so that it
-goes to 1 as $k$ goes to infinity, but that's not necessary,
-because all we need to know is:
-
-\[ CDF(k) \sim 1 - k^{-\gamma + 1} \]
-
-Which shows that the distribution of $k$ is asymptotic to a
-Pareto distribution with $\alpha = \gamma - 1$.
-
-
-\section{Continuous distributions}
-
-The distributions we have seen so far are sometimes called
-{\bf empirical distributions} because they are based on a
-dataset that comes from some kind of empirical observation.
-\index{empirical distribution}
-
-An alternative is a {\bf continuous distribution},
-which is characterized by a CDF that is a continuous function.
-Some of these distributions, like the
-Gaussian or normal
-distribution, are well known, at least to people who have studied
-statistics.  Many real world phenomena can be approximated by
-continuous distributions, which is why they are useful.
-\index{continuous distribution}
-\index{normal distribution}
-\index{Gaussian distribution}
-
-For example, if you observe a mass of radioactive material with
-an instrument that can detect decay events, the distribution
-of times between events will most likely fit an exponential
-distribution.  The same is true for any series where
-an event is equally likely at any time.
-\index{exponential distribution}
-
-The CDF of the exponential distribution is:
-
-\[ CDF(x) = 1 - e^{-\lambda x} \]
-
-The parameter, $\lambda$, determines the mean and variance
-of the distribution.  This equation can be used to derive
-a simple visual test for whether a dataset can be well
-approximated by an exponential distribution.  All you
-have to do is plot the {\bf complementary distribution}
-on a log-$y$ scale.
-\index{parameter}
-\index{complementary distribution}
-
-The complementary distribution (CCDF) is just $1 - CDF(x)$;
-if you plot the complementary distribution of a dataset
-that you think is exponential, you expect to see a function
-like:
-
-\[ y = 1 - CDF(x) \sim e^{-\lambda x} \]
-
-If you take the log of both sides of this equation, you get:
-
-\[ \log y \sim -\lambda x \]
-
-So on a log-$y$ scale the CCDF should look like a straight line
-with slope $-\lambda$.
-
-\begin{exercise}
-
-Write a function called \py{plot_ccdf} that takes
-a list of values and the corresponding list of probabilities
-and plots the CCDF on a log-$y$ scale.
-
-To test your function, use \py{expovariate} from the \py{random}
-module to generate 100 values from an exponential distribution.  Plot
-the CCDF on a log-$y$ scale and see if it falls on a straight line.
-\index{random module@\py{random} module}
-
-\end{exercise}
 
 
 \section{Explanatory models}
@@ -3531,16 +3370,15 @@ B, B' and B'', that are similar to O in different ways.
 In that case, which model explains O?
 \index{abstract model}
 
-The small world phenomenon is an example: the
-Watts-Strogatz (WS) model and the \Barabasi-Albert (BA) model
-both exhibit small world behavior, but they offer different
-explanations:
+The small world phenomenon is an example: the Watts-Strogatz (WS)
+model and the \Barabasi-Albert (BA) model both exhibit elements of
+small world behavior, but they offer different explanations:
 
 \begin{itemize}
 
 \item The WS model suggests that social networks are ``small'' because
   they include both strongly-connected clusters and ``weak ties'' that
-  connect clusters (see \url{http://en.wikipedia.org/wiki/Mark_Granovetter}).
+  connect clusters (see \url{http://en.wikipedia.org/wiki/Mark_Granovetter#The_strength_of_weak_ties}).
 \index{weak ties}
 
 \item The BA model suggests that social networks are small because
@@ -3553,8 +3391,13 @@ explanations:
 As is often the case in young areas of science, the problem is
 not that we have no explanations, but too many.
 
+
+\section{Exercises}
+
 \begin{exercise}
 
+In Section~\ref{model1} we discussed two explanations for the
+small world phenomenon, ``weak ties'' and ``hubs''.
 Are these explanations compatible; that is, can they both be right?
 Which do you find more satisfying as an explanation, and why?
 
@@ -3562,12 +3405,10 @@ Is there data you could collect, or experiments you could perform,
 that would provide evidence in favor of one model over the other?
 
 Choosing among competing models is the topic of Thomas Kuhn's
-essay, ``Objectivity, Value Judgment, and Theory Choice.''
-Kuhn was a historian of science who wrote {\em The
-Structure of Scientific Revolutions} in 1962, and spent the rest of
-his life explaining what he meant to say.
+essay, ``Objectivity, Value Judgment, and Theory Choice'', which
+you can read at 
+\url{https://github.com/AllenDowney/ThinkComplexity2/blob/master/papers/kuhn.pdf}.
 \index{Kuhn, Thomas}
-\index{Structure of Scientific Revolutions@{\it The Structure of Scientific Revolutions}}
 \index{theory choice}
 \index{objectivity}
 
@@ -3578,98 +3419,52 @@ Are there other criteria you think should be considered?
 \end{exercise}
 
 
-\section{Exercises}
-
-% BA data here http://www3.nd.edu/~networks/resources.htm
-
 \begin{exercise}
 
-The Stanford Large Network Dataset Collection is a repository of
-datasets from a variety of networks, including social networks,
-communication and collaboration, Internet and road networks.
-See \url{http://snap.stanford.edu/data/index.html}.
-\index{Stanford Large Network Dataset Collection}
-
-Download one of these datasets and explore.  Is there evidence
-of small-world behavior?  Is the network scale-free?  What else
-can you discover?
-
-\end{exercise}
-
-\begin{exercise}
-
-The distribution of populations for cities and towns has been proposed
-as an example of a real-world phenomenon that can be described
-with a Pareto distribution.
-\index{population}
-
-The U.S. Census Bureau publishes data on the population of every
-incorporated city and town in the United States.  I wrote a
-small program that downloads this data and converts it into a
-convenient form.  You can download it from
-\url{thinkcomplex.com/populations.py}.
-\index{U.S. Census Bureau}
-
-Read over the program to make sure you know what it does and then
-write a program that computes and plots the distribution of
-populations for the 14593 cities and towns in the dataset.
-
-Plot the CDF on linear and log-$x$ scales so you can get a sense of
-the shape of the distribution.  Then plot the CCDF on a log-log scale
-to see if it has the characteristic shape of a Pareto distribution.
-
-What conclusion do you draw about the distribution of sizes
-for cities and towns?
+NetworkX provides a function called \py{powerlaw_cluster_graph} that
+implements the "Holme and Kim algorithm for growing graphs with
+powerlaw degree distribution and approximate average clustering".
+Read the documentation of this function and see if you can use it to
+generate a graph that has the same number of nodes as the Facebook
+dataset, the same average degree, and the same clustering coefficient.
+How does the degree distribution in the model compare to the actual
+distribution?
 
 \end{exercise}
 
 
 \begin{exercise}
 
-Zipf's law describes a relationship between the frequencies and ranks
-of words in natural languages; see
-  \url{http://en.wikipedia.org/wiki/Zipf's_law}.  The ``frequency'' of
-a word is the number of times it appears in a body of work.
-The ``rank'' of a word is its position in a list of words
-sorted by frequency: the most common word has rank 1, the
-second most common has rank 2, etc.
-\index{Zipf's law}
+Data files from the \Barabasi~and Albert paper are available from
+\url{http://www3.nd.edu/~networks/resources.htm}.  Their actor
+collaboration data is included in the repository for this book in a
+file named \py{actor.dat.gz}.  The following function reads the file and
+builds the graph.
 
-Specifically, Zipf's Law
-predicts that the frequency, $f$, of the word with rank $r$ is:
-\index{frequency}
-\index{rank}
+\begin{code}
+import gzip
 
-\[ f = c r^{-s} \]
-%
-where $s$ and $c$ are parameters that depend on the language and the
-text.
-\index{parameter}
+def read_actor_network(filename, n=None):
+    G = nx.Graph()
+    with gzip.open(filename) as f:
+        for i, line in enumerate(f):
+            nodes = [int(x) for x in line.split()]
+            G.add_edges_from(thinkcomplexity.all_pairs(nodes))
+            if n and i >= n:
+                break
+    return G
+\end{code}
 
-If you take the logarithm of both sides of this equation, you get:
+Compute the number of actors in the graph and the average degree.
+Plot the PMF of degree on a log-log scale.  Also plot the CDF of
+degree on a log-x scale, to see the general shape of the distribution,
+and on a log-log scale, to see whether the tail follows a power law.
 
-\index{logarithm}
-
-\[ \log f = \log c - s \log r \]
-%
-So if you plot $\log f$ versus $\log r$, you should get
-a straight line with slope $-s$ and intercept $\log c$.
-\index{log-log plot}
-
-Write a program that reads a text from a file, counts word
-frequencies, and prints one line for each word, in descending order of
-frequency.  You can test it by downloading an out-of-copyright book in
-plain text format from \py{gutenberg.net}.  You might want to remove
-punctuation from the words.
-
-Plot the results and check whether they form
-a straight line.
+Note: The actor network is not connected, so you might want to use
+\py{nx.connected_component_subgraphs} to find connected subsets of the
+nodes.
 
 \end{exercise}
-
-
-
-
 
 
 \chapter{Cellular Automata}
@@ -7726,3 +7521,198 @@ Here are the books:
 \printindex
 
 \end{document}
+
+
+
+
+\section{Pareto distributions}
+
+The Pareto distribution is named after the economist Vilfredo
+Pareto, who used it to describe the distribution of wealth;
+see \url{http://en.wikipedia.org/wiki/Pareto_distribution}.  Since then,
+people have used it to describe
+phenomena in the natural and social sciences
+including sizes of cities and towns, sand particles
+and meteorites, forest fires and earthquakes.
+\index{Pareto distribution}
+\index{Pareto, Vilfredo}
+
+The Pareto distribution is characterized by a CDF with the following
+form:
+
+\[ CDF(x) = 1- \left( \frac{x}{x_m} \right) ^{-\alpha} \]
+
+The parameters $x_m$ and $\alpha$ determine the location and shape of
+the distribution.  $x_m$ is the minimum possible quantity.
+\index{parameter}
+
+Values from a Pareto distribution often have these properties:
+
+\begin{description}
+
+\item[Long tail:] Pareto distributions contain many small values
+and a few very large ones.
+\index{long tail}
+
+\item[80/20 rule:] The large values in a Pareto distribution are
+so large that they make up a disproportionate share of the total.
+In the context of wealth, the 80/20 rule says that 20\% of the
+people own 80\% of the wealth.
+\index{80/20 rule}
+
+\item[Scale free:] Short-tailed distributions are centered around
+a typical size, which is called a ``scale.''  For example, the
+great majority of adult humans are between 100 and 200 cm in height,
+so we could say that the scale of human height is a few hundred
+centimeters.  But for long-tailed distributions, there is no
+similar range (bounded by a factor of two) that contains the
+bulk of the distribution.  So we say that these distributions
+are ``scale-free.''
+\index{scale}
+\index{scale-free}
+
+\end{description}
+
+To get a sense of the difference between the Pareto and Gaussian
+distributions, imagine what the world would be like if the
+distribution of human height were Pareto.
+
+In Pareto World, the shortest person is 100 cm,
+and the median is 150 cm, so that part of the distribution is not
+very different from ours.
+\index{Pareto World}
+
+But if you generate 6 billion values from this distribution
+distribution, the tallest person might
+be 100 km---that's what it means to
+be scale-free!
+
+There is a simple visual test that indicates whether an empirical
+distribution is well-characterized by a Pareto distribution: on a
+log-log scale, the CCDF looks like a straight line.  The derivation is
+similar to what we saw in the previous section.
+
+The equation for the CCDF is:
+
+\[ y = 1 - CDF(x) \sim \left( \frac{x}{x_m} \right) ^{-\alpha} \]
+
+Taking the log of both sides yields:
+
+\[ \log y \sim -\alpha (\log x - \log x_m ) \]
+
+So if you plot $\log y$ versus $\log x$, it should look like a
+straight line with slope $-\alpha$ and intercept $\alpha \log x_m$.
+\index{log-log plot}
+
+\begin{exercise}
+
+Write a version of \py{plot_ccdf} that plots the complementary
+CCDF on a log-log scale.
+
+To test your function, use \py{paretovariate} from the \py{random}
+module to generate 100 values from a Pareto distribution.  Plot
+the CCDF on a log-$y$ scale and see if it falls on a straight line.
+What happens to the curve as you increase the number of values?
+\index{random module@\py{random} module}
+
+\end{exercise}
+
+
+
+\section{Pareto and the power law}
+
+Starting with a power-law distribution, we have:
+
+\[ P(k) \sim k^{- \gamma} \]
+
+If we choose a random node in a scale free network,
+$P(k)$ is the probability that its degree equals $k$.
+\index{degree}
+
+The cumulative distribution function, $CDF(k)$, is the probability
+that the degree is less than or equal to $k$, so we can
+get that by summation:
+
+\[ CDF(k) = \sum_{i=0}^k P(i) \]
+
+For large values of $k$ we can approximate the summation with
+an integral:
+
+\[ \sum_{i=0}^k i^{- \gamma} \sim \int_{i=0}^k i^{- \gamma} =
+\frac{1}{\gamma -1} (1 - k^{-\gamma + 1}) \]
+
+To make this a proper CDF we could normalize it so that it
+goes to 1 as $k$ goes to infinity, but that's not necessary,
+because all we need to know is:
+
+\[ CDF(k) \sim 1 - k^{-\gamma + 1} \]
+
+Which shows that the distribution of $k$ is asymptotic to a
+Pareto distribution with $\alpha = \gamma - 1$.
+
+
+\section{Continuous distributions}
+
+The distributions we have seen so far are sometimes called
+{\bf empirical distributions} because they are based on a
+dataset that comes from some kind of empirical observation.
+\index{empirical distribution}
+
+An alternative is a {\bf continuous distribution},
+which is characterized by a CDF that is a continuous function.
+Some of these distributions, like the
+Gaussian or normal
+distribution, are well known, at least to people who have studied
+statistics.  Many real world phenomena can be approximated by
+continuous distributions, which is why they are useful.
+\index{continuous distribution}
+\index{normal distribution}
+\index{Gaussian distribution}
+
+For example, if you observe a mass of radioactive material with
+an instrument that can detect decay events, the distribution
+of times between events will most likely fit an exponential
+distribution.  The same is true for any series where
+an event is equally likely at any time.
+\index{exponential distribution}
+
+The CDF of the exponential distribution is:
+
+\[ CDF(x) = 1 - e^{-\lambda x} \]
+
+The parameter, $\lambda$, determines the mean and variance
+of the distribution.  This equation can be used to derive
+a simple visual test for whether a dataset can be well
+approximated by an exponential distribution.  All you
+have to do is plot the {\bf complementary distribution}
+on a log-$y$ scale.
+\index{parameter}
+\index{complementary distribution}
+
+The complementary distribution (CCDF) is just $1 - CDF(x)$;
+if you plot the complementary distribution of a dataset
+that you think is exponential, you expect to see a function
+like:
+
+\[ y = 1 - CDF(x) \sim e^{-\lambda x} \]
+
+If you take the log of both sides of this equation, you get:
+
+\[ \log y \sim -\lambda x \]
+
+So on a log-$y$ scale the CCDF should look like a straight line
+with slope $-\lambda$.
+
+\begin{exercise}
+
+Write a function called \py{plot_ccdf} that takes
+a list of values and the corresponding list of probabilities
+and plots the CCDF on a log-$y$ scale.
+
+To test your function, use \py{expovariate} from the \py{random}
+module to generate 100 values from an exponential distribution.  Plot
+the CCDF on a log-$y$ scale and see if it falls on a straight line.
+\index{random module@\py{random} module}
+
+\end{exercise}
+
