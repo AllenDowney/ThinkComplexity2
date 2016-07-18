@@ -1004,7 +1004,7 @@ which has some interesting mathematical properties.  In the next
 chapter we move on to models that are more useful for explaining
 real-world systems.
 
-The code for this chapter is in {\tt chap02.ipynb} in the respository
+The code for this chapter is in {\tt chap02.ipynb} in the repository
 for this book.  More information about working with the code is
 in Section~\ref{???}.
 
@@ -1569,8 +1569,12 @@ I import NumPy as {\tt np}.  The function \py{logspace} returns an
 array of 11 values from $10^{-2.5}$ to $10^0 = 1$, equally spaced
 on a logarithmic scale.
 
+To compute \py{ys}, I use a list comprehension that iterates the
+elements of \py{ps} and computes the probability that a random
+graph with each value of \py{p} is connected.
+
 Figure~\ref{chap02-5} shows the results, with
-a vertical line at $p^*$.  As expected, the transition from 0 to 1
+a vertical line at $p^*$.  The transition from 0 to 1
 occurs near the predicted critical value.  With $p$ on a log scale,
 the transition is roughly symmetric.
 
@@ -1746,6 +1750,9 @@ Along the way, we'll see two new graph algorithms: breadth-first
 search (BFS) and Dijkstra's algorithm for computing the shortest
 path between nodes in a graph.
 
+The code for this chapter is in {\tt chap03.ipynb} in the repository
+for this book.  More information about working with the code is
+in Section~\ref{???}.
 
 \section{Stanley Milgram}
 
@@ -2669,6 +2676,28 @@ use?
 \chapter{Scale-free networks}
 \label{scale-free}
 
+\newcommand{\Barabasi}{Barab\'{a}si}
+
+In this chapter, we'll data from an online social network, and use a
+Watts-Strogatz graph to model it.  The WS model has characteristics of
+a small world network, like the data, but it has low
+variability in the number of neighbors from node to node,
+unlike the data.
+
+This discrepancy is the motivation for a network model developed
+by \Barabasi~and Albert.  The BA model captures the observed variability
+in the number of neighbors, and it has one of the small world
+properties, short path lengths, but it does not have the high
+clustering of a small world network.
+
+The chapter ends with a discussion of WS and BA graphs as explanatory
+models for small world networks.
+
+The code for this chapter is in {\tt chap04.ipynb} in the respository
+for this book.  More information about working with the code is
+in Section~\ref{???}.
+
+
 \section{Social network data}
 
 Watts-Strogatz graphs are intended to model networks in the natural
@@ -2680,11 +2709,11 @@ States; and the network of neurons in the brain of the roundworm
 high connectivity and low path lengths characteristic of small world
 graphs.
 
-In this section we'll perform the same analysis with a different dataset,
-a set Facebook users and their friends.  If you are
-not familiar with Facebook, users
-who are connected to each other are called ``friends'', regardless of
-the nature of their relationship in the real world.
+In this section we'll perform the same analysis with a different
+dataset, a set Facebook users and their friends.  If you are not
+familiar with Facebook, users who are connected to each other are
+called ``friends'', regardless of the nature of their relationship in
+the real world.
 
 I'll use data from the Stanford Network Analysis Project (SNAP), which
 shares large datasets from online social networks and other sources.
@@ -2762,7 +2791,7 @@ def random_path_lengths(G, nodes=None, trials=1000):
 
 \py{G} is a graph, \py{nodes} is the list of nodes we should sample
 from, and \py{trials} is the number of random paths to sample.
-If `nodes` is `None`, we sample from the entire graph.
+If \py{nodes} is \py{None}, we sample from the entire graph.
 
 \py{pairs} is a NumPy array of randomly chosen nodes with
 one row for each trial and two columns.
@@ -3001,8 +3030,6 @@ $-\alpha$, at least for large values of $k$.
 All power law distributions are heavy-tailed, but there are other
 heavy-tailed distributions that don't follow a power law.  We will
 see more examples soon.
-
-\newcommand{\Barabasi}{Barab\'{a}si}
 
 But first, we have a problem: the WS model has the high clustering
 and low path length we see in the data, but the degree distribution
@@ -3467,12 +3494,21 @@ nodes.
 \end{exercise}
 
 
-\chapter{Cellular Automata}
+\chapter{Cellular Automatons}
 \label{automata}
 
-A {\bf cellular automaton} is a model of a world with very simple physics.
-``Cellular'' means that the space is divided into discrete chunks,
-called cells.  An ``automaton'' is a machine that performs
+%TODO: Intro
+
+The code for this chapter is in {\tt chap05.ipynb} in the repository
+for this book.  More information about working with the code is
+in Section~\ref{???}.
+
+
+\section{Cellular Automaton}
+
+A {\bf cellular automaton} is a model of a world with very simple
+physics.  ``Cellular'' means that the world is divided into discrete
+chunks, called cells.  An ``automaton'' is a machine that performs
 computations---it could be a real machine, but more often the
 ``machine'' is a mathematical abstraction or a computer simulation.
 \index{cellular automaton}
@@ -3502,7 +3538,7 @@ smallest interesting number of states, 2, and another simple rule,
 $x_i = (x_{i-1} + 1) \% 2$, where $\%$ is the remainder (or
 modulus) operator.
 
-This CA performs a simple calculation: it blinks.  That is,
+The behavior of this CA is simple: it blinks.  That is,
 the state of the cell switches between 0 and 1 after every time step.
 
 Most CAs are {\bf deterministic}, which means that rules do not
@@ -3512,19 +3548,14 @@ CAs, but I will not address them here.
 \index{deterministic}
 
 
+\section{Wolfram's experiment}
 
-\section{Stephen Wolfram}
+The CA in the previous section had only one cell, so we can think of
+it as zero-dimensional, and it wasn't very interesting.  In the rest
+of this chapter, we explore one-dimensional (1-D) CAs, which turn out to
+be surprisingly interesting.
 
-The CA in the previous section was 0-dimensional and it wasn't very
-interesting.  But 1-dimensional CAs turn out to be surprisingly
-interesting.
-\index{Wolfram, Stephen}
 \index{1-D cellular automaton}
-
-In the early 1980s Stephen Wolfram published a series of papers
-presenting a systematic study of 1-dimensional CAs.  He identified
-four general categories of behavior, each more interesting than
-the last.
 
 To say that a CA has dimensions is to say that the cells are
 arranged in a contiguous space so that some of them are
@@ -3548,6 +3579,12 @@ in a row.
 The rules that determine how the system evolves in time are
 based on the notion of a ``neighborhood,'' which is the set
 of cells that determines the next state of a given cell.
+
+In the early 1980s Stephen Wolfram published a series of papers
+presenting a systematic study of 1-D CAs.  He identified
+four general categories of behavior, each more interesting than
+the last.
+
 Wolfram's experiments use a 3-cell neighborhood: the cell itself
 and its left and right neighbors.
 \index{neighborhoos}
@@ -3569,7 +3606,7 @@ next   & 0   & 0   & 1   & 1   & 0   & 0   & 1   & 0 \\
 \hline
 \end{tabular}}
 
-The row first shows the eight states a
+The first row shows the eight states a
 neighborhood can be in.  The second row shows the state of
 the center cell during the next time step.  As a concise encoding
 of this table, Wolfram suggested reading the bottom row
@@ -3578,11 +3615,12 @@ decimal, Wolfram calls this CA ``Rule 50.''
 \index{enumeration}
 
 \begin{figure}
-\centerline{\includegraphics[height=1.5in]{figs/rule-50-10.pdf}}
-\caption{Rule 50 after 10 time steps.\label{fig.rule50}}
+\centerline{\includegraphics[height=1.5in]{figs/chap05-1.pdf}}
+\caption{Rule 50 after 10 time steps.}
+\label{chap05-1}
 \end{figure}
 
-Figure~\ref{fig.rule50} shows the effect of Rule 50 over 10
+Figure~\ref{chap05-1} shows the effect of Rule 50 over 10
 time steps.  The first row shows the state of the system during the first
 time step; it starts with one cell ``on'' and the rest ``off''.
 The second row shows the state of the system during the
@@ -3597,6 +3635,499 @@ that includes all of the cells that can be affected by it.
 \index{triangle of influence}
 
 
+\section{Classifying CAs}
+
+\begin{figure}
+\centerline{\includegraphics[height=1.5in]{figs/chap05-3.pdf}}
+\caption{Rule 18 after 64 steps.}
+\label{chap05-3}
+\end{figure}
+
+How many different CAs are there?
+
+Since each cell is either on or off, we can specify the state
+of a cell with a single bit.  In a neighborhood with three cells,
+there are 8 possible configurations, so there are 8 entries
+in the rule tables.  And since each entry contains a single bit,
+we can specify a table using 8 bits.  With 8 bits, we can
+specify 256 different rules.
+
+One of Wolfram's first experiments with CA was to test all 256
+possibilities and try to classify them.
+
+Examining the results visually, he proposed that the behavior of CAs
+can be grouped into four classes.  Class 1 contains the simplest (and
+least interesting) CAs, the ones that evolve from almost any starting
+condition to the same uniform pattern.  As a trivial example, Rule 0
+always generates an empty pattern after one time step.
+
+\index{classifying cellular automata}
+
+Rule 50 is an example of Class 2.  It generates a simple pattern with
+nested structure; that is, the pattern contains many smaller versions
+of itself.  Rule 18 makes the nested structure even clearer;
+Figure~\ref{chap05-3} shows what it looks like after 64 steps.
+
+\index{Rule 18}
+ 
+\newcommand{\Sierpinski}{Sierpi\'{n}ski}
+
+This pattern resembles the \Sierpinski triangle, which
+you can read about at \url{http://en.wikipedia.org/wiki/Sierpinski_triangle}.
+\index{Sierpi\'{n}ski triangle}
+
+Some Class 2 CAs generate patterns that are intricate and
+pretty, but compared to Classes 3 and 4, they are relatively
+simple.
+
+
+\section{Randomness}
+
+\begin{figure}
+\centerline{\includegraphics[height=2.5in]{figs/chap05-4.pdf}}
+\caption{Rule 30 after 100 time steps.}
+\label{chap05-4}
+\end{figure}
+
+Class 3 contains CAs that generate randomness.
+Rule 30 is an example; Figure~\ref{chap05-4} shows what it looks like
+after 100 time steps.
+\index{randomness}
+\index{Class 3 behavior}
+\index{Rule 30}
+
+Along the left side there is an apparent pattern, and on the right
+side there are triangles in various sizes, but the center seems
+quite random.  In fact, if you take the center column and treat it as a
+sequence of bits, it is hard to distinguish from a truly random
+sequence.  It passes many of the statistical tests people use
+to test whether a sequence of bits is random.
+
+Programs that produce random-seeming numbers are called
+{\bf pseudo-random number generators} (PRNGs).  They are not considered
+truly random because:
+
+\index{pseudo-random number generator}
+\index{PRNG}
+
+\begin{itemize}
+
+\item Many of them produce sequences with regularities that can be
+  detected statistically.  For example, the original implementation of
+  \py{rand} in the C library used a linear congruential generator that
+  yielded sequences with easily detectable serial correlations.
+
+  \index{linear congruential generator}
+
+\item Any PRNG that uses a finite amount of state (that is, storage)
+  will eventually repeat itself.  One of the characteristics of a
+  generator is the {\bf period} of this repetition.
+
+\index{period}
+
+\item The underlying process is fundamentally deterministic, unlike
+  some physical processes, like radioactive decay and thermal noise,
+  that are considered to be fundamentally random.
+
+\index{deterministic}
+
+\end{itemize}
+
+Modern PRNGs produce sequences that are statistically
+indistinguishable from random, and they can be implemented with with
+periods so long that the universe will collapse before they repeat.
+The existence of these generators raises the question of whether there
+is any real difference between a good quality pseudo-random sequence
+and a sequence generated by a ``truly'' random process.  In {\em A New
+  Kind of Science}, Wolfram argues that there is not (pages 315--326).
+\index{New Kind of Science@{\it A New Kind of Science}}
+
+
+\section{Determinism}
+\label{determinism}
+
+The existence of Class 3 CAs is surprising.  To explain how
+surprising, let me start with philosophical
+{\bf determinism} (see \url{http://en.wikipedia.org/wiki/Determinism}).
+Many philosophical stances are hard to define precisely because
+they come in a variety of flavors.  I often find it useful
+to define them with a list of statements ordered from weak
+to strong:
+\index{determinism}
+
+\begin{description}
+
+\item[D1:] Deterministic models can make accurate predictions
+for some physical systems.
+
+\item[D2:] Many physical systems can be modeled by deterministic
+processes, but some are intrinsically random.
+
+\item[D3:] All events are caused by prior events, but many
+physical systems are nevertheless fundamentally unpredictable.
+
+\item[D4:] All events are caused by prior events, and can (at
+least in principle) be predicted.
+
+\index{causation}
+
+\end{description}
+
+My goal in constructing this range is to make D1 so weak that
+virtually everyone would accept it, D4 so strong that almost no one
+would accept it, with intermediate statements that some people accept.
+
+The center of mass of world opinion swings along this range in
+response to historical developments and scientific discoveries.  Prior
+to the scientific revolution, many people regarded the working of the
+universe as fundamentally unpredictable or controlled by supernatural
+forces.  After the triumphs of Newtonian mechanics, some optimists
+came to believe something like D4; for example, in 1814 Pierre-Simon
+Laplace wrote
+
+\index{Newtonian mechanics}
+\index{Laplace, Pierre-Simon}
+
+\begin{quote}
+We may regard the present state of the universe as the effect of its
+past and the cause of its future. An intellect which at a certain
+moment would know all forces that set nature in motion, and all
+positions of all items of which nature is composed, if this intellect
+were also vast enough to submit these data to analysis, it would
+embrace in a single formula the movements of the greatest bodies of
+the universe and those of the tiniest atom; for such an intellect
+nothing would be uncertain and the future just like the past would be
+present before its eyes.
+\end{quote}
+
+This ``intellect'' came to be called ``Laplace's Demon''.
+See \url{http://en.wikipedia.org/wiki/Laplace's_demon}.  The word
+``demon'' in this context has the sense of ``spirit,'' with no
+implication of evil.
+
+\index{Laplace's Demon}
+
+Discoveries in the 19th and 20th centuries gradually dismantled
+Laplace's hope.  Thermodynamics, radioactivity,
+and quantum mechanics posed successive challenges to strong
+forms of determinism.
+
+\index{entropy}
+\index{radioactive decay}
+\index{quantum mechanics}
+
+In the 1960s chaos theory showed that in some deterministic systems
+prediction is only possible over short time scales,  limited by
+precision in the measurement of initial conditions.
+\index{chaos}
+
+Most of these systems are continuous in space (if not time) and
+nonlinear, so the complexity of their behavior is not entirely
+surprising.  Wolfram's demonstration of complex behavior in simple
+cellular automata is more surprising---and disturbing, at least to a
+deterministic world view.
+
+\index{complex behavior}
+\index{simple rules}
+
+So far I have focused on scientific challenges to determinism, but the
+longest-standing objection is the conflict between
+determinism and human free will.  Complexity science provides
+a possible resolution of this apparent conflict; I'll come
+back to this topic in Section~\ref{free.will}.
+\index{free will}
+
+
+\section{Structures}
+
+\begin{figure}
+\centerline{\includegraphics[height=2.5in]{figs/chap05-5.pdf}}
+\caption{Rule 110 after 100 time steps.}
+\label{chap05-5}
+\end{figure}
+
+The behavior of Class 4 CAs is even more surprising.  Several 1-D CAs,
+most notably Rule 110, are {\bf Turing complete}, which means that
+they can compute any computable function.  This property, also called
+{\bf universality}, was proved by Matthew Cook in 1998.  See
+\url{http://en.wikipedia.org/wiki/Rule_110}.
+
+\index{Turing complete}
+\index{universality}
+\index{Cook, Matthew}
+
+Figure~\ref{chap05-5} shows what Rule 110 looks like with an initial
+condition of a single cell and 100 time steps.
+At this time scale it is not apparent that anything special is
+going on.  There are some regular patterns but also some features
+that are hard to characterize.
+\index{Rule 110}
+
+Figure~\ref{chap05-6} shows a bigger picture, starting with a random
+initial condition and 600 time steps:
+
+\begin{figure}
+\centerline{\includegraphics[width=5.5in,height=5.5in]{figs/chap05-6.pdf}}
+\caption{Rule 110 with random initial conditions and 600 time steps.}
+\label{chap05-6}
+\end{figure}
+
+After about 100 steps the background settles into a simple repeating
+pattern, but there are a number of persistent structures that appear
+as disturbances in the background.  Some of these structures
+are stable, so they appear as vertical lines.  Others translate in
+space, appearing as diagonals with different slopes, depending on
+how many time steps they take to shift by one column.  These
+structures are called {\bf spaceships}.
+\index{spaceships}
+
+Collisions between spaceships yield different results
+depending on the types of the spaceships and the phase they are in
+when they collide.  Some collisions annihilate both ships; others
+leave one ship unchanged; still others yield one or more ships of
+different types.
+
+These collisions are the basis of computation in a Rule 110 CA.  If
+you think of spaceships as signals that propagate on wires, and
+collisions as gates that compute logical operations like AND and OR,
+you can see what it means for a CA to perform a computation.
+
+
+\section{Universality}
+
+To understand universality, we have to understand computability
+theory, which is about models of computation and what they compute.
+
+\index{universality}
+
+One of the most general models of computation is the Turing machine,
+which is an abstract computer proposed by Alan Turing in 1936.  A
+Turing machine is a 1-D CA, infinite in both directions, augmented
+with a read-write head.  At any time, the head is positioned over a
+single cell.  It can read the state of that cell (usually there are
+only two states) and it can write a new value into the cell.
+
+\index{Turing machine}
+\index{Turing, Alan}
+
+In addition, the machine has a register, which records the state
+of the machine (one of a finite number of states), and a table
+of rules.  For each machine state and cell state, the table
+specifies an action.  Actions include modifying the cell
+the head is over and moving one cell to the left or right.
+\index{register}
+\index{tape}
+\index{read/write head}
+\index{cell}
+
+A Turing machine is not a practical design for a computer, but it
+models common computer architectures.  For a given program running on
+a real computer, it is possible (at least in principle) to construct a
+Turing machine that performs an equivalent computation.
+
+The Turing machine is useful because it is possible to characterize
+the set of functions that can be computed by a Turing machine,
+which is what Turing did.  Functions in this set are
+called Turing computable.
+
+\index{computable function}
+
+To say that a Turing machine can compute any Turing-computable
+function is a {\bf tautology}: it is true by definition.  But
+Turing-computability is more interesting than that.
+
+\index{tautology}
+
+It turns out that just about every reasonable model of computation
+anyone has come up with is Turing complete; that is, it can compute
+exactly the same set of functions as the Turing machine.
+Some of these models, like lamdba calculus, are very different
+from a Turing machine, so their equivalence is surprising.
+
+\index{lambda calculus}
+\index{Church-Turing thesis}
+
+This observation led to the Church-Turing Thesis, which is essentially
+a definition of what it means to be computable.  The ``thesis'' is
+that Turing-computability is the right, or at least natural,
+definition of computability, because it describes the power of such a
+diverse collection of models of computation.
+
+The Rule 110 CA is yet another model of computation, and remarkable
+for its simplicity.  That it, too, turns out to be universal lends
+support to the Church-Turing Thesis.
+
+In {\em A New Kind of Science}, Wolfram states a variation of this
+thesis, which he calls the ``principle of computational equivalence:''
+
+\index{principle of computational equivalence}
+\index{New Kind of Science@{\it A New Kind of Science}}
+
+\begin{quote}
+Almost all processes that are not obviously simple can be viewed as
+computations of equivalent sophistication.
+
+More specifically, the principle of computational equivalence says
+that systems found in the natural world can perform computations up to
+a maximal (``universal'') level of computational power, and that most
+systems do in fact attain this maximal level of computational
+power. Consequently, most systems are computationally
+equivalent (see
+  \url{mathworld.wolfram.com/PrincipleofComputationalEquivalence.html}).
+\end{quote}
+
+Applying these definitions to CAs, Classes 1 and 2 are ``obviously
+simple.''  It may be less obvious that Class 3 is simple, but in a way
+perfect randomness is as simple as perfect order; complexity happens
+in between.  So Wolfram's claim is that Class 4 behavior is common in
+the natural world, and that almost all of the systems that manifest it
+are computationally equivalent.
+\index{Class 4 behavior}
+
+
+\section{Falsifiability}
+
+Wolfram holds that his principle is a stronger claim than the
+Church-Turing Thesis because it is about the natural world rather
+than abstract models of computation.  But saying that natural processes
+``can be viewed as computations'' strikes me as a statement about
+theory choice more than a hypothesis about the natural world.
+
+\index{falsifiability}
+
+Also, with qualifications like
+``almost'' and undefined terms like ``obviously simple,'' his
+hypothesis may be {\bf unfalsifiable}.  Falsifiability is
+an idea from the philosophy of science, proposed by Karl Popper
+as a demarcation between scientific hypotheses and pseudoscience.
+A hypothesis is falsifiable if there is an experiment, at least
+in the realm of practicality, that would contradict the hypothesis
+if it were false.
+
+\index{Popper, Karl}
+
+For example, the claim that all life on earth is descended
+from a common ancestor is falsifiable because it makes specific
+predictions about similarities in the genetics of modern species
+(among other things).  If we discovered a new species whose
+DNA was almost entirely different from ours, that would
+contradict (or at least bring into question) the theory of
+universal common descent.
+
+\index{universal common descent}
+
+On the other hand, ``special creation,'' the claim that all species
+were created in their current form by a supernatural agent, is
+unfalsifiable because there is nothing that we could observe about the
+natural world that would contradict it.  Any outcome of any experiment
+could be attributed to the will of the creator.
+
+\index{special creation}
+
+Unfalsifiable hypotheses can be appealing because
+they are impossible to refute.  If your goal is never to be
+proved wrong, you should choose hypotheses that are as
+unfalsifiable as possible.
+
+But if your goal is to make reliable predictions about the world---and
+this is at least one of the goals of science---unfalsifiable
+hypotheses are useless.  The problem is that they have
+no consequences (if they had consequences, they would be
+falsifiable).
+
+\index{prediction}
+
+For example, if the theory of special creation were true, what good
+would it do me to know it?  It wouldn't tell me anything about the
+creator except that he has an ``inordinate fondness for beetles''
+(attributed to J.~B.~S.~Haldane).  And unlike the
+theory of common descent, which informs many areas of science
+and bioengineering, it would be of no use for understanding
+the world or acting in it.
+
+\index{Haldane, J.~B.~S.}
+\index{beetles}
+
+
+\section{What is this a model of?}
+\label{model3}
+
+\begin{figure}
+\centerline{\includegraphics[height=2.5in]{figs/model3.pdf}}
+\caption{The logical structure of a simple physical model.}
+\label{fig.model3}
+\end{figure}
+
+Some cellular automata are primarily mathematical artifacts.  They are
+interesting because they are surprising, or useful, or pretty, or
+because they provide tools for creating new mathematics (like the
+Church-Turing thesis).
+
+\index{mathematics}
+
+But it is not clear that they are models of physical systems.  And if
+they are, they are highly abstracted, which is to say that they are
+not very detailed or realistic.
+
+\index{physical model}
+
+For example, some species of cone snail produce a pattern on their
+shells that resembles the patterns generated by cellular automata
+(seee \url{en.wikipedia.org/wiki/Cone_snail}).  So it is natural to
+suppose that a CA is a model of the mechanism that produces patterns
+on shells as they grow.  But, at least initially, it is not clear how
+the elements of the model (so-called cells, communication between
+neighbors, rules) correspond to the elements of a growing snail (real
+cells, chemical signals, protein interaction networks).
+
+\index{cone snail}
+\index{abstract model}
+
+For conventional physical models, being realistic is a virtue, at
+least up to a point.  If the elements of a model correspond to the
+elements of a physical system, there is an obvious analogy between the
+model and the system.  In general, we expect a model that is more
+realistic to make better predictions and to provide more believable
+explanations.
+
+\index{realistic model}
+
+Of course, this is only true up to a point.  Models that are
+more detailed are harder to work with, and usually less
+amenable to analysis.  At some point, a model becomes so complex
+that it is easier to experiment with the system.
+
+At the other extreme, simple models can be compelling exactly because
+they are simple.
+
+Simple models offer a different kind of explanation than detailed
+models.  With a detailed model, the argument goes something
+like this: ``We are interested in physical system S, so we
+construct a detailed model, M, and show by analysis and simulation
+that M exhibits a behavior, B, that is similar (qualitatively
+or quantitatively) to an observation of the real system, O.
+So why does O happen?  Because S is similar to M, and
+B is similar to O, and we can prove that M leads to B.''
+\index{argument by analogy}
+
+With simple models we can't claim that S is similar to M, because it
+isn't.  Instead, the argument goes like this: ``There is a set of models
+that share a common set of features.  Any model that has these
+features exhibits behavior B.  If we make an observation, O, that
+resembles B, one way to explain it is to show that the system, S, has
+the set of features sufficient to produce B.''
+
+For this kind of argument, adding more features doesn't help.  Making
+the model more realistic doesn't make the model more reliable; it only
+obscures the difference between the essential features that cause O
+and the incidental features that are particular to S.
+
+Figure~\ref{fig.model3} shows the logical structure of this kind of
+model.  The features $x$ and $y$ are sufficient to produce the
+behavior.  Adding more detail, like features $w$ and $z$, might make
+the model more realistic, but that realism adds no explanatory power.
+
+
 \section{Implementing CAs}
 
 \begin{figure}
@@ -3604,13 +4135,13 @@ that includes all of the cells that can be affected by it.
 \caption{A list of lists (left) and a Numpy array (right).\label{fig.array}}
 \end{figure}
 
-To generate the previous figure, I wrote a Python program that
-implements and draws CAs.
-You can download my code from \url{thinkcomplex.com/CA.py}.
-and \url{thinkcomplex.com/CADrawer.py}.
+To generate the figures in this chapter, I wrote a Python class called
+\py{CA}, which represents a cellular automaton, and classes for plotting
+the results.  In the next few sections I explain how they work.
+
 \index{implementing cellular automata}
 
-To store the state of the CA, I use a NumPy array.  An array is a
+To store the state of the CA, I use a NumPy array, which is a
 multi-dimensional data structure whose elements are all the same type.
 It is similar to a nested list, but usually smaller and faster.  
 Figure~\ref{fig.array} shows why.
@@ -3629,283 +4160,231 @@ references, and it saves time because the location of an element can
 be computed directly from the indices; there is no need to follow a
 series of references.
 
-Here is a CA object that uses a NumPy array:
-\index{CA@\py{CA}}
+To explain how my code works, I'll start with a CA that computes the
+``parity'' of the cells in each neighborhood.  The parity of a number
+is 0 if the number is even and 1 if it is odd.
+
+First I create an array of zeros with a single 1 in the middle of
+the first row.
 
 \begin{code}
-import numpy
-
-class CA(object):
-
-    def __init__(self, rule, n=100, ratio=2):
-        self.table = make_table(rule)
-        self.n = n
-        self.m = ratio*n + 1
-        self.array = numpy.zeros((n, self.m), dtype=numpy.int8)
-        self.next = 0
+>>> rows = 5
+>>> cols = 11
+>>> ca = np.zeros((rows, cols))
+>>> ca[0, 5] = 1
+print(ca)
+[[ 0.  0.  0.  0.  0.  1.  0.  0.  0.  0.  0.]
+ [ 0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.]
+ [ 0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.]
+ [ 0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.]
+ [ 0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.]]
 \end{code}
 
-\py{rule} is an integer in the range 0-255, which represents the
-CA rule table using Wolfram's encoding.  \py{make_table} converts
-the rule to a dictionary that maps from neighborhood states to cell
-states.  For example, in Rule 50 the table maps from
-$(1,1,1)$ to 0.
-
-\py{n} is the number of rows in the array, which is the number
-of time steps we will compute.  \py{m} is the number of columns,
-which is the number of cells.  To get started, I'll implement
-a finite array of cells.
-
-\py{zeros} is provided by NumPy; it creates a new array with
-the given dimensions, \py{n} by \py{m}; \py{dtype} stands
-for ``data type,'' and it specifies the type of the array elements.
-\py{int8} is an 8-bit integer, so we are limited to 256 states,
-but that's no problem: we only need two.
-\index{zeros@\py{zeros}}
-
-\py{next} is the index of the next time step.
-
-There are two common starting conditions for CAs: a single cell, or a row
-of random cells.  \py{start_single} initializes the first row with
-a single cell and increments \py{next}:
+\py{plot_ca} displays the results graphically:
 
 \begin{code}
-    def start_single(self):
-        """Starts with one cell in the middle of the top row."""
-        self.array[0, self.m/2] = 1
-        self.next += 1
-\end{code}
-%
-The array index is a tuple that species the row and column of the cell,
-in that order.
-\index{array indexing}
+import matplotlib.pyplot as plt
 
-\py{step} computes the next state of the CA:
+def plot_ca(ca, rows, cols):
+    cmap = plt.get_cmap('Blues')
+    plt.imshow(array, interpolation='none', cmap=cmap)
+\end{code}
+
+Following convention, I import \py{pyplot} with the abbreviated name
+\py{plt}.  \py{imshow} treats the array as an ``image'' and displays
+it.  Using the colormap \py{'Blues'} draws the on cells in dark blue and
+the off cells in light blue.
+
+Now, to compute the state of the CA during the next time step,
+we can use \py{step}:
 
 \begin{code}
-    def step(self):
-        i = self.next
-        self.next += 1
-
-        a = self.array
-        t = self.table
-        for j in xrange(1,self.m-1):
-            a[i,j] = t[tuple(a[i-1, j-1:j+2])]
+def step(array, i):
+    rows, cols = array.shape
+    for j in range(1, cols):
+        array[i, j] = sum(array[i-1, j-1:j+2]) % 2
 \end{code}
 
-\py{i} is the time step and the index of the row we are about to
-compute.  \py{j} loops through the cells, skipping the first and
-last, which are always off.
+The parameter \py{ca} is the NumPy array that represents the state of
+the CA.  \py{rows} and \py{cols} are the dimensions of the array, and
+\py{i} is the index of the timestep we should compute.  I use \py{i} to
+indicate rows of the array, which correspond to time, and \py{j} to
+indicate columns, which correspond to space.
 
-Arrays support slice operations, so \py{self.array[i-1, j-1:j+2]}
-gets three elements from row \py{i-1}.
-Then we look up the neighborhood tuple in the table, get
-the next state, and store it in the array.
-\index{array slice}
-
-Array indexing is constant time, so \py{step} is linear in $n$.
-Filling in the whole array is $O(nm)$.
-\index{order of growth}
-
-You can read more about NumPy and arrays at
-\url{scipy.org/Tentative_NumPy_Tutorial}.
+Inside \py{step} we loop through the elements of row \py{i}.  Each
+element is the sum of three elements from the previous row, mod 2.
 
 
-\section{CADrawer}
+\section{Convolution}
 
-An {\bf abstract class} is a class definition that specifies the
-interface for a set of methods without providing an implementation.
-Child classes extend the abstract class and implement the incomplete
-methods.  See \url{http://en.wikipedia.org/wiki/Abstract_type}.
-\index{abstract class}
+The \py{step} function in the previous section is simple, but it is
+not very fast.  In general, we can speed up operations like this
+if we can replace \py{for} loops with NumPy operations, because 
+\py{for} loops incur a lot of overhead in the Python interpreter.
+In this section I'll show how we can speed up \py{step} using the
+NumPy function \py{convolve}.
 
-As an example, \py{CADrawer}
-defines an interface for drawing CAs; here is the definition:
-\index{implement}
-\index{interface}
-\index{CADrawer@\py{CADrawer}}
+First, instead of using a slice operator to select a neighborhood,
+we can use array multiplication.  Specifically,
+we multiply \py{array} by a {\bf window}
+that contains ones for the cells we want to select and zeros for
+the rest.
+
+For example, the following window selects the first three elements:
 
 \begin{code}
-class Drawer(object):
-    """Drawer is an abstract class that should not be instantiated.
-    It defines the interface for a CA drawer; child classes of Drawer
-    should implement draw, show and save.
-
-    If draw_array is not overridden, the child class should provide
-    draw_cell.
-    """
-    def __init__(self):
-        msg = 'CADrawer is an abstract type and should not be instantiated.'
-        raise UnimplementedMethodException, msg
-
-    def draw(self, ca):
-        """Draws a representation of cellular automaton (CA).
-        This function generally has no visible effect."""
-        raise UnimplementedMethodException
-
-    def draw_array(self, a):
-        """Iterate through array (a) and draws any non-zero cells."""
-        for i in xrange(self.rows):
-            for j in xrange(self.cols):
-                if a[i,j]:
-                    self.draw_cell(j, self.rows-i-1)
-
-    def draw_cell(self, ca):
-        """Draws a single cell.
-        Not required for all implementations."""
-        raise UnimplementedMethodException
-
-    def show(self):
-        """Displays the representation on the screen, if possible."""
-        raise UnimplementedMethodException
-
-    def save(self, filename):
-        """Saves the representation of the CA in filename."""
-        raise UnimplementedMethodException
+>>> window = np.zeros(cols, dtype=np.int8)
+>>> window[:3] = 1
+>>> print(window)
+[1 1 1 0 0 0 0 0 0 0 0]
 \end{code}
 
-Abstract classes should not be instantiated; if you try, you
-get an \py{UnimplementedMethodException}, which is a simple
-extension of \py{Exception}:
-\index{UnimplementedMethodException@\py{UnimplementedMethodException}}
+If we multiply by the last row of \py{array}, we get the first
+three elements:
 
 \begin{code}
-class UnimplementedMethodException(Exception):
-    """Used to indicate that a child class has not implemented an
-    abstract method."""
+>>> print(array[4])
+>>> print(window * array[4])
+[0 1 0 0 0 1 0 0 0 1 0]
+[0 1 0 0 0 0 0 0 0 0 0]
 \end{code}
 
-To instantiate a \py{CADrawer} you have to define a child class
-that implements the methods, then instantiate the child.
-\index{instantiate}
-
-\py{CADrawer.py} provides three implementations, one that uses
-\py{pyplot}, one that uses the Python Imaging Library (PIL), and
-one that generates Encapsulated Postscript (EPS).
-\index{pyplot}
-\index{Python Imaging Library}
-\index{PIL}
-\index{Postscript}
-\index{EPS}
-
-Here is an example that uses \py{PyplotDrawer} to display a
-CA on the screen:
+Now we can use \py{sum} and the modulus operator
+to compute the first element of the next row:
 
 \begin{code}
-    ca = CA(rule, n)
-    ca.start_single()
-    ca.loop(n-1)
-
-    drawer = CADrawer.PyplotDrawer()
-    drawer.draw(ca)
-    drawer.show()
+>>> sum(window * array[4]) % 2
+1
 \end{code}
+
+If we shift the window to the right, it selects the next three
+elements, and so on.  So we can rewrite \py{step} like this:
+
+\begin{code}
+def step2(array, i):
+    rows, cols = array.shape
+    window = np.zeros(cols)
+    window[:3] = 1
+    for j in range(1, cols):
+        array[i, j] = sum(window * array[i-1]) % 2
+        window = np.roll(window, 1)
+\end{code}
+
+\py{roll} shifts the window to the right (it also wraps it around to the
+beginning, but that doesn't affect this function).  
+
+\py{step2} yields the same results as \py{step}.  It is still not
+very fast, but it is a step in the right direction because the
+operation we just performed is {\bf convolution}.
+
+This operation---multiplying by a window, summing
+the result, shifting the window, and repeating---is used for a
+variety of applications, so NumPy provides
+a function called \py{convolve} that computes it.
+
+We can use it to write faster, simpler version of \py{step}:
+
+\begin{code}
+def step3(array, i):
+    window = np.array([1, 1, 1])
+    array[i] = np.convolve(array[i-1], window, mode='same') % 2
+\end{code}
+
+When we use
+\py{np.convolve}, the window does not have to be the same size as
+\py{array}, so making the window is a little simpler.
+
+The \py{mode} parameter determines the size of the result.  You can
+read the details in the NumPy documentation, but when the mode is
+\py{'same'}, the result is the same size as the input.
+
+Now there's just one more step.  The function we have so far
+works if the CA rule only depends on the sum of the neighbors, but
+most rules also depend on which neighbors are on and off.  For
+example, \py{100} and \py{001} might yield different results.
+
+We can make \py{step} more general using a window with
+elements \py{[1, 2, 4]}, which interprets the neighborhood as a binary
+number.  For example, the neighborhood \py{100} yields 1; \py{010} yields 2,
+and \py{001} yields 4.
+Then we can take these results and look them up in the rule table.
+
+Here's the more general version of \py{step}:
+
+\begin{code}
+def step4(array, i):
+    window = np.array([1, 2, 4])
+    convolved = np.convolve(array[i-1], window, mode='same')
+    array[i] = table[convolved]
+\end{code}
+
+The first two lines are almost the same.  The last line looks
+up each element from \py{convolved} in \py{table} and assigns the
+results to \py{array[i]}.
+
+Finally, here's the function that computes the table:
+
+\begin{code}
+def make_table(rule):
+    rule = np.array([rule], dtype=np.uint8)
+    table = np.unpackbits(rule)[::-1]
+    return table
+\end{code}
+
+The parameter, \py{rule}, is an integer between 0 and 255.
+The first line put the rule into an array with a single element
+so we can use \py{unpackbits}, which converts the rule number
+to its binary representation.  For
+example, here's the table for Rule 150:
+
+\begin{code}
+>>> table = make_table(150)
+>>> print(table)
+[0 1 1 0 1 0 0 1]
+\end{code}
+
+In \py{thinkcomplexity.py}, you'll find definitions for \py{CA},
+which encapsulates the code in this section, and two classes
+that draw CAs, \py{PyplotDrawer} and \py{EPSDrawer}.
+
+
+\section{Exercises}
 
 \begin{exercise}
 
-Download \url{thinkcomplex.com/CA.py} and \url{thinkcomplex.com/CADrawer.py}
-and confirm that they run on your system; you might have to install
-additional Python packages.
-
-Create a new class called \py{CircularCA} that extends
-\py{CA} so that the cells are arranged in a ring.
-Hint: you might find it useful to add a column of ``ghost cells'' to
-the array.
-\index{CircularCA}
-\index{ghost cells}
-
-You can download my solution from
-\url{thinkcomplex.com/CircularCA.py}
+The code for this chapter is in the Jupyter notebook {\tt chap05.ipynb}
+in the repository for this book.  Open this notebook, read the code,
+and run the cells.  You can use this notebook to work on the
+exercises in this chapter.  My solutions are in {\tt chap05soln.ipynb}.
 
 \end{exercise}
 
 
-\section{Classifying CAs}
+\begin{exercise}
 
-\begin{figure}
-\centerline{\includegraphics[height=1.5in]{figs/rule-18-64.pdf}}
-\caption{Rule 18 after 64 steps.\label{fig.rule18}}
-\end{figure}
+The goal of this exercise is to implement a Turing machine.
+See \url{http://en.wikipedia.org/wiki/Turing_machine}.
 
-Wolfram proposes that the behavior of CAs can be grouped
-into four classes.  Class 1 contains the simplest (and least
-interesting) CAs, the ones that evolve from almost any starting
-condition to the same uniform pattern.  As a trivial example,
-Rule 0 always generates an empty pattern after one time step.
-\index{classifying cellular automata}
+\begin{enumerate}
 
-Rule 50 is an example of Class 2.  It generates a simple pattern with
-nested structure; that is, the pattern contains many smaller versions
-of itself.  Rule 18 makes the nested structure even clearer;
-Figure~\ref{fig.rule18} shows what it looks like after 64 steps.
-\index{Rule 18}
- 
-This pattern resembles the Sierpi\'{n}ski triangle, which
-you can read about at \url{http://en.wikipedia.org/wiki/Sierpinski_triangle}.
-\index{Sierpi\'{n}ski triangle}
+\item Start with a copy of \py{CA.py} named \py{TM.py}.
+Add attributes to represent the location of the head, the action
+table and the state register.
 
-Some Class 2 CAs generate patterns that are intricate and
-pretty, but compared to Classes 3 and 4, they are relatively
-simple.
+\item Override \py{step} to implement a Turing machine update.
 
+\item For the action table, use the rules for a 3-state busy beaver.
+\index{busy beaver}
 
-\section{Randomness}
+\item Write a class named \py{TMDrawer} that generates an
+image that represents the state of the tape and the position and
+state of the head.  For one example of what that might look like,
+see \url{http://mathworld.wolfram.com/TuringMachine.html}.
 
-\begin{figure}
-\centerline{\includegraphics[height=2.5in]{figs/rule-30-100.pdf}}
-\caption{Rule 30 after 100 time steps.\label{fig.rule30}}
-\end{figure}
+\end{enumerate}
 
-Class 3 contains CAs that generate randomness.
-Rule 30 is an example; Figure~\ref{fig.rule30} shows what it looks like
-after 100 time steps.
-\index{randomness}
-\index{Class 3 behavior}
-\index{Rule 30}
+\end{exercise}
 
-Along the left side there is an apparent pattern, and on the right
-side there are triangles in various sizes, but the center seems
-quite random.  In fact, if you take the center column and treat it as a
-sequence of bits, it is hard to distinguish from a truly random
-sequence.  It passes many of the statistical tests people use
-to test whether a sequence of bits is random.
-
-Programs that produce random-seeming numbers are called
-{\bf pseudo-random number generators} (PRNGs).  They are not considered
-truly random because
-\index{pseudo-random number generator}
-\index{PRNG}
-
-\begin{itemize}
-
-\item Many of them produce sequences with regularities that
-can be detected statistically.  For example, the original implementation
-of \py{rand} in the C library used a linear congruential generator
-that yielded sequences with easily detectable serial correlations.
-\index{linear congruential generator}
-
-\item Any PRNG that uses a finite amount
-of state (that is, storage) will eventually repeat itself.  One of the
-characteristics of a generator is the {\bf period} of this
-repetition.
-\index{period}
-
-\item The underlying process is fundamentally deterministic,
-unlike some physical processes, like radioactive decay and
-thermal noise, that are considered to be fundamentally
-random.
-\index{deterministic}
-
-\end{itemize}
-
-Modern PRNGs produce sequences that are statistically
-indistinguishable from random, and they can be implemented with with
-periods so long that the universe will collapse before they repeat.
-The existence of these generators raises the question of whether there
-is any real difference between a good quality pseudo-random sequence
-and a sequence generated by a ``truly'' random process.  In {\em A New
-  Kind of Science}, Wolfram argues that there is not (pages 315--326).
-\index{New Kind of Science@{\it A New Kind of Science}}
 
 \begin{exercise}
 
@@ -3937,147 +4416,6 @@ Test it using DieHarder.
 \end{exercise}
 
 
-\section{Determinism}
-\label{determinism}
-
-The existence of Class 3 CAs is surprising.  To understand how
-surprising, it is useful to consider philosophical
-{\bf determinism} (see \url{http://en.wikipedia.org/wiki/Determinism}).
-Most philosophical stances are hard to define precisely because
-they come in a variety of flavors.  I often find it useful
-to define them with a list of statements ordered from weak
-to strong:
-\index{determinism}
-
-\begin{description}
-
-\item[D1:] Deterministic models can make accurate predictions
-for some physical systems.
-
-\item[D2:] Many physical systems can be modeled by deterministic
-processes, but some are intrinsically random.
-
-\item[D3:] All events are caused by prior events, but many
-physical systems are nevertheless fundamentally unpredictable.
-
-\item[D4:] All events are caused by prior events, and can (at
-least in principle) be predicted.
-\index{causation}
-
-\end{description}
-
-My goal in constructing this range is to make D1 so weak that
-virtually everyone would accept it, D4 so strong that almost no one
-would accept it, with intermediate statements that some people accept.
-
-The center of mass of world opinion swings along this range in
-response to historical developments and scientific discoveries.  Prior
-to the scientific revolution, many people regarded the working of the
-universe as fundamentally unpredictable or controlled by supernatural
-forces.  After the triumphs of Newtonian mechanics, some optimists
-came to believe something like D4; for example, in 1814 Pierre-Simon
-Laplace wrote
-\index{Newtonian mechanics}
-\index{Laplace, Pierre-Simon}
-
-\begin{quote}
-We may regard the present state of the universe as the effect of its
-past and the cause of its future. An intellect which at a certain
-moment would know all forces that set nature in motion, and all
-positions of all items of which nature is composed, if this intellect
-were also vast enough to submit these data to analysis, it would
-embrace in a single formula the movements of the greatest bodies of
-the universe and those of the tiniest atom; for such an intellect
-nothing would be uncertain and the future just like the past would be
-present before its eyes.
-\end{quote}
-
-This ``intellect'' came to be called ``Laplace's Demon''.
-See \url{http://en.wikipedia.org/wiki/Laplace's_demon}.  The word
-``demon'' in this context has the sense of ``spirit,'' with no
-implication of evil.
-\index{Laplace's Demon}
-
-Discoveries in the 19th and 20th centuries gradually dismantled
-this hope.  The thermodynamic concept of entropy, radioactive decay,
-and quantum mechanics posed successive challenges to strong
-forms of determinism.
-\index{entropy}
-\index{radioactive decay}
-\index{quantum mechanics}
-
-In the 1960s chaos theory showed that in some deterministic systems
-prediction is only possible over short time scales,  limited by
-the precision of measurement of initial conditions.
-\index{chaos}
-
-Most of these systems are continuous in space (if not time) and
-nonlinear, so the complexity of their behavior is not entirely
-surprising.  Wolfram's demonstration of complex behavior in simple
-cellular automata is more surprising---and disturbing, at least to a
-deterministic world view.
-\index{complex behavior}
-\index{simple rules}
-
-So far I have focused on scientific challenges to determinism, but the
-longest-standing objection is the conflict between
-determinism and human free will.  Complexity science provides
-a possible resolution of this apparent conflict; we come
-back to this topic in Section~\ref{free.will}.
-\index{free will}
-
-
-\section{Structures}
-
-\begin{figure}
-\centerline{\includegraphics[height=2.5in]{figs/rule-110-100.pdf}}
-\caption{Rule 110 after 100 time steps.\label{fig.rule110}}
-\end{figure}
-
-The behavior of Class 4 CAs is even more surprising.  Several 1-D CAs,
-most notably Rule 110, are {\bf Turing complete}, which means that
-they can compute any computable function.  This property, also called
-{\bf universality}, was proved by Matthew Cook in 1998.  See
-\url{http://en.wikipedia.org/wiki/Rule_110}.
-\index{Turing complete}
-\index{universality}
-\index{Cook, Matthew}
-
-Figure~\ref{fig.rule110} shows what Rule 110 looks like with an initial
-condition of a single cell and 100 time steps.
-At this time scale it is not apparent that anything special is
-going on.  There are some regular patterns but also some features
-that are hard to characterize.
-\index{Rule 110}
-
-Figure~\ref{rule110} shows a bigger picture, starting with a random
-initial condition and 600 time steps:
-
-\begin{figure}
-\centerline{\includegraphics[width=5.5in,height=5.5in]{figs/rule-110-600-random.pdf}}
-\caption{Rule 110 with random initial conditions and 600 time steps.\label{rule110}}
-\end{figure}
-
-After about 100 steps the background settles into a simple repeating
-pattern, but there are a number of persistent structures that appear
-as disturbances in the background.  Some of these structures
-are stable, so they appear as vertical lines.  Others translate in
-space, appearing as diagonals with different slopes, depending on
-how many time steps they take to shift by one column.  These
-structures are called {\bf spaceships}.
-\index{spaceships}
-
-Collisions between spaceships yield different results
-depending on the types of the spaceships and the phase they are in
-when they collide.  Some collisions annihilate both ships; others
-leave one ship unchanged; still others yield one or more ships of
-different types.
-
-These collisions are the basis of computation in a Rule 110 CA.  If
-you think of spaceships as signals that propagate on wires, and
-collisions as gates that compute logical operations like AND and OR,
-you can see what it means for a CA to perform a computation.
-
 \begin{exercise}
 
 This exercise asks you to experiment with Rule 110 and see how
@@ -4099,175 +4437,6 @@ many spaceships you can find.
 \end{enumerate}
 
 \end{exercise}
-
-
-\section{Universality}
-
-To understand universality, we have to understand computability
-theory, which is about models of computation and what they compute.
-\index{universality}
-
-One of the most general models of computation is the Turing machine,
-which is an abstract computer proposed by Alan Turing in 1936.  A
-Turing machine is a 1-D CA, infinite in both directions, augmented
-with a read-write head.  At any time, the head is positioned over a
-single cell.  It can read the state of that cell (usually there are
-only two states) and it can write a new value into the cell.
-\index{Turing machine}
-\index{Turing, Alan}
-
-In addition, the machine has a register, which records the state
-of the machine (one of a finite number of states), and a table
-of rules.  For each machine state and cell state, the table
-specifies an action.  Actions include modifying the cell
-the head is over and moving one cell to the left or right.
-\index{register}
-\index{tape}
-\index{read/write head}
-\index{cell}
-
-A Turing machine is not a practical design for a computer, but it
-models common computer architectures.  For a given program running on
-a real computer, it is possible (at least in principle) to construct a
-Turing machine that performs an equivalent computation.
-
-The Turing machine is useful because it is possible to characterize
-the set of functions that can be computed by a Turing machine,
-which is what Turing did.  Functions in this set are
-called Turing computable.
-\index{computable function}
-
-To say that a Turing machine can compute any Turing-computable
-function is a {\bf tautology}: it is true by definition.  But
-Turing-computability is more interesting than that.
-\index{tautology}
-
-It turns out that just about every reasonable model of computation
-anyone has come up with is Turing complete; that is, it can compute
-exactly the same set of functions as the Turing machine.
-Some of these models, like lamdba calculus, are very different
-from a Turing machine, so their equivalence is surprising.
-\index{lambda calculus}
-\index{Church-Turing thesis}
-
-This observation led to the Church-Turing Thesis, which is essentially
-a definition of what it means to be computable.  The ``thesis'' is
-that Turing-computability is the right, or at least natural,
-definition of computability, because it describes the power of such a
-diverse collection of models of computation.
-
-The Rule 110 CA is yet another model of computation, and remarkable
-for its simplicity.  That it, too, turns out to be universal lends
-support to the Church-Turing Thesis.
-
-In {\em A New Kind of Science}, Wolfram states a variation of this
-thesis, which he calls the ``principle of computational equivalence:''
-\index{principle of computational equivalence}
-\index{New Kind of Science@{\it A New Kind of Science}}
-
-\begin{quote}
-Almost all processes that are not obviously simple can be viewed as
-computations of equivalent sophistication.
-
-More specifically, the principle of computational equivalence says
-that systems found in the natural world can perform computations up to
-a maximal (``universal'') level of computational power, and that most
-systems do in fact attain this maximal level of computational
-power. Consequently, most systems are computationally
-equivalent (see
-  \url{mathworld.wolfram.com/PrincipleofComputationalEquivalence.html}).
-\end{quote}
-
-Applying these definitions to CAs, Classes 1 and 2 are ``obviously
-simple.''  It may be less obvious that Class 3 is simple, but in a way
-perfect randomness is as simple as perfect order; complexity happens
-in between.  So Wolfram's claim is that Class 4 behavior is common in
-the natural world, and that almost all of the systems that manifest it
-are computationally equivalent.
-\index{Class 4 behavior}
-
-\begin{exercise}
-
-The goal of this exercise is to implement a Turing machine.
-See \url{http://en.wikipedia.org/wiki/Turing_machine}.
-
-\begin{enumerate}
-
-\item Start with a copy of \py{CA.py} named \py{TM.py}.
-Add attributes to represent the location of the head, the action
-table and the state register.
-
-\item Override \py{step} to implement a Turing machine update.
-
-\item For the action table, use the rules for a 3-state busy beaver.
-\index{busy beaver}
-
-\item Write a class named \py{TMDrawer} that generates an
-image that represents the state of the tape and the position and
-state of the head.  For one example of what that might look like,
-see \url{http://mathworld.wolfram.com/TuringMachine.html}.
-
-\end{enumerate}
-
-\end{exercise}
-
-
-\section{Falsifiability}
-
-Wolfram holds that his principle is a stronger claim than the
-Church-Turing Thesis because it is about the natural world rather
-than abstract models of computation.  But saying that natural processes
-``can be viewed as computations'' strikes me as a statement about
-theory choice more than a hypothesis about the natural world.
-\index{falsifiability}
-
-Also, with qualifications like
-``almost'' and undefined terms like ``obviously simple,'' his
-hypothesis may be {\bf unfalsifiable}.  Falsifiability is
-an idea from the philosophy of science, proposed by Karl Popper
-as a demarcation between scientific hypotheses and pseudoscience.
-A hypothesis is falsifiable if there is an experiment, at least
-in the realm of practicality, that would contradict the hypothesis
-if it were false.
-\index{Popper, Karl}
-
-For example, the claim that all life on earth is descended
-from a common ancestor is falsifiable because it makes specific
-predictions about similarities in the genetics of modern species
-(among other things).  If we discovered a new species whose
-DNA was almost entirely different from ours, that would
-contradict (or at least bring into question) the theory of
-universal common descent.
-\index{universal common descent}
-
-On the other hand, ``special creation,'' the claim that all species
-were created in their current form by a supernatural agent, is
-unfalsifiable because there is nothing that we could observe about the
-natural world that would contradict it.  Any outcome of any experiment
-could be attributed to the will of the creator.
-\index{special creation}
-
-Unfalsifiable hypotheses can be appealing because
-they are impossible to refute.  If your goal is never to be
-proved wrong, you should choose hypotheses that are as
-unfalsifiable as possible.
-
-But if your goal is to make reliable predictions about the world---and
-this is at least one of the goals of science---then unfalsifiable
-hypotheses are useless.  The problem is that they have
-no consequences (if they had consequences, they would be
-falsifiable).
-\index{prediction}
-
-For example, if the theory of special creation were true, what good
-would it do me to know it?  It wouldn't tell me anything about the
-creator except that he has an ``inordinate fondness for beetles''
-(attributed to J.~B.~S.~Haldane).  And unlike the
-theory of common descent, which informs many areas of science
-and bioengineering, it would be of no use for understanding
-the world or acting in it.
-\index{Haldane, J.~B.~S.}
-\index{beetles}
 
 \begin{exercise}
 
@@ -4302,81 +4471,6 @@ highly of Popper's work?
 \end{exercise}
 
 
-
-\section{What is this a model of?}
-\label{model3}
-
-\begin{figure}
-\centerline{\includegraphics[height=2.5in]{figs/model3.pdf}}
-\caption{The logical structure of a simple physical model.\label{fig.model3}}
-\end{figure}
-
-Some cellular automata are primarily mathematical artifacts.
-They are interesting because they are surprising,
-or useful, or pretty, or because they provide tools for
-creating new mathematics (like the Church-Turing thesis).
-\index{mathematics}
-
-But it is not clear that they are models of physical systems.  And if
-they are, they are highly abstracted, which is to say that they are
-not very detailed or realistic.
-\index{physical model}
-
-For example, some species of cone
-snail produce a
-pattern on their shells that resembles the patterns generated by
-cellular automata (seee \url{en.wikipedia.org/wiki/Cone_snail}).
-So it is natural to suppose that a CA is a model of the mechanism that
-produces patterns on shells as they grow.  But, at least initially, it
-is not clear how the elements of the model (so-called cells,
-communication between neighbors, rules) correspond to the elements of
-a growing snail (real cells, chemical signals, protein interaction
-networks).
-\index{cone snail}
-\index{abstract model}
-
-For conventional physical models, being realistic is a virtue, at
-least up to a point.  If the elements of a model correspond to the
-elements of a physical system, there is an obvious analogy between the
-model and the system.  In general, we expect a model that is more
-realistic to make better predictions and to provide more believable
-explanations.
-\index{realistic model}
-
-Of course, this is only true up to a point.  Models that are
-more detailed are harder to work with, and usually less
-amenable to analysis.  At some point, a model becomes so complex
-that it is easier to experiment with the system.
-
-At the other extreme, simple models can be compelling
-exactly because they are simple.
-
-Simple models offer a different kind of explanation than detailed
-models.  With a detailed model, the argument goes something
-like this: ``We are interested in physical system S, so we
-construct a detailed model, M, and show by analysis and simulation
-that M exhibits a behavior, B, that is similar (qualitatively
-or quantitatively) to an observation of the real system, O.
-So why does O happen?  Because S is similar to M, and
-B is similar to O, and we can prove that M leads to B.''
-\index{argument by analogy}
-
-With simple models we can't claim that S is similar to M, because it
-isn't.  Instead, the argument goes like this: ``There is a set of models
-that share a common set of features.  Any model that has these
-features exhibits behavior B.  If we make an observation, O, that
-resembles B, one way to explain it is to show that the system, S, has
-the set of features sufficient to produce B.''
-
-For this kind of argument, adding more features doesn't help.  Making
-the model more realistic doesn't make the model more reliable; it only
-obscures the difference between the essential features that cause O
-and the incidental features that are particular to S.
-
-Figure~\ref{fig.model3} shows the logical structure of this kind of
-model.  The features $x$ and $y$ are sufficient to produce the
-behavior.  Adding more detail, like features $w$ and $z$, might make
-the model more realistic, but that realism adds no explanatory power.
 
 
 \chapter{Game of Life}
