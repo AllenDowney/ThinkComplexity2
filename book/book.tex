@@ -21,7 +21,7 @@
 \newcommand{\thetitle}{Think Complexity}
 \newcommand{\thesubtitle}{Exploring Complexity Science in Python}
 \newcommand{\theauthors}{Allen B. Downey}
-\newcommand{\theversion}{2.0.4}
+\newcommand{\theversion}{2.0.5}
 
 %%%% Both LATEX and PLASTEX
 
@@ -4360,23 +4360,53 @@ exercises in this chapter.  My solutions are in {\tt chap05soln.ipynb}.
 \end{exercise}
 
 
+
 \begin{exercise}
 
-The goal of this exercise is to implement a Turing machine.
-See \url{http://en.wikipedia.org/wiki/Turing_machine}.
+This exercise asks you to experiment with Rule 110 and 
+some of its spaceships.  
 
 \begin{enumerate}
 
-\item Start with a copy of \py{CA.py} named \py{TM.py}.
-Add attributes to represent the location of the head, the action
-table and the state register.
+\item Read the Wikipedia page about Rule 110, which describes its
+  background pattern and spaceships:
+  \url{https://en.wikipedia.org/wiki/Rule_110}.
 
-\item Override \py{step} to implement a Turing machine update.
+\item Create a Rule 110 CA with an initial condition that yields the
+  stable background pattern.
 
-\item For the action table, use the rules for a 3-state busy beaver.
+Note that the CA class provides
+\py{start_string}, which allow you to initialize the state of
+the array using a string of \py{1}s and \py{0}s.
+
+\item Modify the initial condition by adding different patterns in the
+  center of the row and see which ones yield spaceships.  You might
+  want to enumerate all possible patterns of $n$ bits, for some
+  reasonable value of $n$.  For each spaceship, can you find the
+  period and rate of translation?  What is the biggest spaceship you
+  can find?
+
+\item What happens when spaceships collide?
+
+\end{enumerate}
+
+\end{exercise}
+
+
+
+\begin{exercise}
+
+The goal of this exercise is to implement a Turing machine.
+
+\begin{enumerate}
+
+\item Read about Turing machines at \url{http://en.wikipedia.org/wiki/Turing_machine}.
+
+\item Write a class called \py{Turing} that implements a Turing machine.
+For the action table, use the rules for a 3-state busy beaver.
 \index{busy beaver}
 
-\item Write a class named \py{TMDrawer} that generates an
+\item Write a class named \py{TuringDrawer} that generates an
 image that represents the state of the tape and the position and
 state of the head.  For one example of what that might look like,
 see \url{http://mathworld.wolfram.com/TuringMachine.html}.
@@ -4389,26 +4419,27 @@ see \url{http://mathworld.wolfram.com/TuringMachine.html}.
 \begin{exercise}
 
 This exercise asks you to implement and test several PRNGs.
+For testing, you will need to install 
+\py{DieHarder}, which you can download from 
+\url{https://www.phy.duke.edu/~rgb/General/dieharder.php}, or it
+might be available as a package for your operating system.
+\index{DieHarder}
 
 \begin{enumerate}
 
 \item Write a program that implements one of the linear congruential
 generators described at
 \url{http://en.wikipedia.org/wiki/Linear_congruential_generator}).
-
-\item Download \py{DieHarder}, a random number test suite, from
-\url{http://phy.duke.edu/~rgb/General/rand_rate.php} and use it to
-test your PRNG.  How does it do?
-\index{DieHarder}
+Test it using \py{DieHarder}.
 
 \item Read the documentation of Python's \py{random} module.
-What PRNG does it use?  Test it using DieHarder.
+What PRNG does it use?  Test it.
 \index{random module@\py{random} module}
 
-\item Implement a Rule 30 CA on a ring with a few hundred cells,
+\item Implement a Rule 30 CA with a few hundred cells,
 run it for as many time steps as you can in a reasonable amount
 of time, and output the center column as a sequence of bits.
-Test it using DieHarder.
+Test it.
 \index{Rule 30}
 
 \end{enumerate}
@@ -4418,34 +4449,12 @@ Test it using DieHarder.
 
 \begin{exercise}
 
-This exercise asks you to experiment with Rule 110 and see how
-many spaceships you can find.
-
-\begin{enumerate}
-
-\item Modify your program from the previous exercises so it starts
-  with an initial condition that yields the stable background
-  pattern.
-
-\item Modify the initial condition by adding different patterns in the
-  center of the row and see which ones yield spaceships.  You might
-  want to enumerate all possible patterns of $n$ bits, for some
-  reasonable value of $n$.  For each spaceship, can you find the
-  period and rate of translation?  What is the biggest spaceship you
-  can find?
-
-\end{enumerate}
-
-\end{exercise}
-
-\begin{exercise}
-
 Falsifiability is an appealing and useful idea, but among
 philosophers of science it is not generally accepted
 as a solution to the demarcation problem, as Popper claimed.
 
-Read \url{http://en.wikipedia.org/wiki/Falsifiability} and answer the following
-questions.
+Read \url{http://en.wikipedia.org/wiki/Falsifiability} and answer the
+following questions.
 
 \begin{enumerate}
 
