@@ -3,16 +3,17 @@ exploring complexity science with Python.  Available free from
 
 http://greenteapress.com/complexity
 
-Copyright 2011 Allen B. Downey.
-Distributed under the GNU General Public License at gnu.org/licenses/gpl.html.
+Copyright 2016 Allen Downey
+MIT License: http://opensource.org/licenses/MIT
 """
 
-import numpy
-import scipy.ndimage
+import sys
 
-import matplotlib
-matplotlib.use('TkAgg')
-import matplotlib.pyplot as pyplot
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+
+from scipy.signal import convolve2d
 
 
 class Life(object):
@@ -20,99 +21,113 @@ class Life(object):
 
     n:     the number of rows and columns
     """
+    table = np.zeros(20, dtype=np.uint8)
+    table[[3, 12, 13]] = 1
 
-    def __init__(self, n, mode='wrap', random=False):
+    def __init__(self, n, m=None):
         """Attributes:
         n:      number of rows and columns
-        mode:   how border conditions are handled
-        array:  the numpy array that contains the data.
-        weights: the kernel used for convolution
         """
         self.n = n
-        self.mode = mode
-        if random:
-            self.array = numpy.random.random_integers(0, 1, (n, n))
-        else:
-            self.array = numpy.zeros((n, n), numpy.int8)
+        self.m = n if m is None else m
+        self.array = np.zeros((n, m), np.uint8)
+        self.kernel = np.array([[1, 1, 1],
+                                   [1,10, 1],
+                                   [1, 1, 1]])
 
-        self.weights = numpy.array([[1,1,1],
-                                    [1,10,1],
-                                    [1,1,1]])
-
-    def add_glider(self, x=0, y=0):
-        coords = [(0,1), (1,2), (2,0), (2,1), (2,2)]
-        for i, j in coords:
-            self.array[x+i, y+j] = 1
-
-    def loop(self, steps=1):
-        """Executes the given number of time steps."""
-        [self.step() for i in xrange(steps)]
+    def add_cells(self, x, y, *strings):
+        """Adds cells at the given location.
+        
+        x: left coordinate
+        y: top coordinate
+        strings: list of strings of 0s and 1s
+        """
+        for i, s in enumerate(strings):
+            self.array[y+i, x:x+len(s)] = np.array([int(b) for b in s])
 
     def step(self):
         """Executes one time step."""
-        con = scipy.ndimage.filters.convolve(self.array, 
-                                             self.weights,
-                                             mode=self.mode)
-
-        boolean = (con==3) | (con==12) | (con==13)
-        self.array = numpy.int8(boolean)
+        c = convolve2d(self.array, self.kernel, mode='same')
+        self.array = self.table[c]
 
 
-class LifeViewer(object):
+class LifeViewer:
     """Generates an animated view of the grid."""
-    def __init__(self, life, cmap=matplotlib.cm.gray_r):
+    def __init__(self, life):
         self.life = life
-        self.cmap = cmap
-
-        self.fig = pyplot.figure()
-        pyplot.axis([0, life.n, 0, life.n])
-        pyplot.xticks([])
-        pyplot.yticks([])
-
-        self.pcolor = None
-        self.update()
-
-    def update(self):
+        self.im = None
+    
+    def draw(self):
         """Updates the display with the state of the grid."""
-        if self.pcolor:
-            self.pcolor.remove()
-
         a = self.life.array
-        self.pcolor = pyplot.pcolor(a, cmap=self.cmap)
-        self.fig.canvas.draw()
+        cmap = plt.get_cmap('Greens')
+        self.im = plt.imshow(a, cmap=cmap, interpolation='none')
+        plt.xticks([])
+        plt.yticks([])
 
-    def animate(self, steps=10):
-        """Creates the GUI and then invokes animate_callback.
-
-        Generates an animation with the given number of steps.
+    def animate(self, frames=20, interval=200):
+        """Creates an animation.
+        
+        frames: number of frames to draw
+        interval: time between frames in ms
         """
-        self.steps = steps
-        self.fig.canvas.manager.window.after(1000, self.animate_callback)
-        pyplot.show()
+        fig = plt.figure()
+        self.draw()
+        anim = animation.FuncAnimation(fig, self.animate_func, 
+                                       frames=frames, interval=interval)
+        return anim
 
-    def animate_callback(self):
-        """Runs the animation."""
-        for i in range(self.steps):
+    def animate_func(self, i):
+        """Draws one frame of the animation."""
+        if i > 0:
             self.life.step()
-            self.update()
+        a = self.life.array
+        self.im.set_array(a)
+        return (self.im,)
 
+glider_gun = [
+    '000000000000000000000000100000000000',
+    '000000000000000000000010100000000000',
+    '000000000000110000001100000000000011',
+    '000000000001000100001100000000000011',
+    '110000000010000010001100000000000000',
+    '110000000010001011000010100000000000',
+    '000000000010000010000000100000000000',
+    '000000000001000100000000000000000000',
+    '000000000000110000000000000000000000'
+]
 
-def main(script, n=20, *args):
+lwss = [
+    '0001',
+    '00001',
+    '10001',
+    '01111'
+]
 
-    n = int(n)
+bhep = [
+    '1',
+    '011',
+    '001',
+    '001',
+    '01'
+]
 
-    life = Life(n, random=False)
-    life.add_glider()
+def main(script, *args):
+    n = 200
+    m = 1200
+    life = Life(n, m)
+    #life.add_cells(n//2, n//2, '11101', '1', '00011', '01101', '10101')
+    #life.add_cells(n//2, n//2, *glider_gun)
+    x = 100
+    life.add_cells(x, n//2-8, *lwss)
+    life.add_cells(x, n//2+6, *lwss)
+    life.add_cells(x, n//2-1, *bhep)
     viewer = LifeViewer(life)
-    viewer.animate(steps=100)
-
+    #viewer.draw()
+    anim = viewer.animate(frames=100, interval=0)
+    plt.show()
 
 if __name__ == '__main__':
-    import sys
+    main(*sys.argv)
 
-    profile = False
-    if profile:
-        import cProfile
-        cProfile.run('main(*sys.argv)')
-    else:
-        main(*sys.argv)
+
