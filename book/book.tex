@@ -477,7 +477,7 @@ systems with many interacting components.
 \index{complexity science}
 \index{complex systems}
 
-Complex systems include networks and graphs, cellular automata,
+Complex systems include networks and graphs, cellular automatons,
 agent-based models and swarms, fractals and self-organizing
 systems, chaotic systems and cybernetic systems.  These terms
 might not mean much to you at this point.  We will get to them
@@ -488,9 +488,9 @@ soon, but you can get a preview at
 \section{A new kind of science}
 
 In 2002 Stephen Wolfram published {\em A New Kind of Science} where he
-presents his and others' work on cellular automata and describes a
+presents his and others' work on cellular automatons and describes a
 scientific approach to the study of computational systems.  We'll get
-back to Wolfram in Chapter~\ref{automata}, but I want to borrow his
+back to Wolfram in Chapter~\ref{automatons}, but I want to borrow his
 title for something a little broader.
 \index{Wolfram, Stephen}
 \index{New Kind of Science@{\it A New Kind of Science}}
@@ -520,7 +520,7 @@ Let me contrast that with a different kind of explanation.  Suppose
 you move to a city like Detroit that is racially segregated, and you
 want to know why it's like that.  If you do some research, you might
 find a paper by Thomas Schelling called ``Dynamic Models of
-Segregation,'' which proposes a simple model of racial segregation
+Segregation'', which proposes a simple model of racial segregation
 (a copy is available from \url{http://statistics.berkeley.edu/~aldous/157/Papers/Schelling_Seg_Models.pdf}).
 \index{Schelling}
 \index{segregation}
@@ -531,7 +531,7 @@ Here is a summary of the paper (from Chapter~\ref{agent-based}):
 \begin{quote}
 The Schelling model of the city is an array of cells where each cell
 represents a house.  The houses are occupied by two kinds of
-``agents,'' labeled red and blue, in roughly equal numbers.  About
+``agents'', labeled red and blue, in roughly equal numbers.  About
 10\% of the houses are empty.  \index{Schelling, Thomas}
 \index{agent}
 
@@ -639,7 +639,7 @@ clarify {\em why} it was inevitable.
 Strogatz is a mathematician, so his enthusiasm for proofs is
 understandable, but his proof doesn't address what is, to me, the
 most interesting part the phenomenon.  In order to prove that ``sync
-was inevitable,'' Strogatz makes several simplifying assumptions, in
+was inevitable'', Strogatz makes several simplifying assumptions, in
 particular that each firefly can see all the others.
 \index{proof}
 
@@ -699,7 +699,7 @@ book.
 \item[Continuous $\rightarrow$ discrete] Classical models tend to be
   based on continuous mathematics, like calculus; models of complex
   systems are often based on discrete mathematics, including graphs and
-  cellular automata.
+  cellular automatons.
 \index{continuous}
 \index{discrete}
 
@@ -713,7 +713,7 @@ book.
 
 \item[Deterministic $\rightarrow$ stochastic] Classical models are
   usually deterministic, which may reflect underlying philosophical
-  determinism, discussed in Chapter~\ref{automata}; complex models
+  determinism, discussed in Chapter~\ref{automatons}; complex models
   often feature randomness.
 \index{deterministic}
 \index{stochastic}
@@ -763,7 +763,7 @@ universally) accepted.
 \index{four-color theorem}
 
 Conversely, a substantial body of economic analysis is based on a
-model of human behavior called ``Economic man,'' or, with tongue in
+model of human behavior called ``Economic man'', or, with tongue in
 cheek, {\it Homo economicus}.  Research based on this model was
 highly regarded for several decades, especially if it involved
 mathematical virtuosity.  More recently, this model is treated with
@@ -2438,14 +2438,14 @@ communicate with each other (see
 
 Dijkstra is famous (and notorious) as the author of a series
 of essays on computer science.
-Some, like ``A Case against the GO TO Statement,'' have
+Some, like ``A Case against the GO TO Statement'', have
 had a profound effect on programming practice.
 Others, like
-``On the Cruelty of Really Teaching Computing Science,'' are
+``On the Cruelty of Really Teaching Computing Science'', are
 entertaining in their cantankerousness, but less effective.
 
 {\bf Dijkstra's algorithm} solves the ``single source shortest path
-problem,'' which means that it finds the minimum distance from a given
+problem'', which means that it finds the minimum distance from a given
 ``source'' node to every other node in the graph (or at least every
 connected node).
 
@@ -3495,28 +3495,36 @@ nodes.
 
 
 \chapter{Cellular Automatons}
-\label{automata}
+\label{automatons}
 
-%TODO: Intro
-
-The code for this chapter is in {\tt chap05.ipynb} in the repository
-for this book.  More information about working with the code is
-in Section~\ref{???}.
-
-
-\section{Cellular Automaton}
-
-A {\bf cellular automaton} is a model of a world with very simple
+A {\bf cellular automaton} (CA) is a model of a world with very simple
 physics.  ``Cellular'' means that the world is divided into discrete
 chunks, called cells.  An ``automaton'' is a machine that performs
 computations---it could be a real machine, but more often the
 ``machine'' is a mathematical abstraction or a computer simulation.
 \index{cellular automaton}
 
-Automata are governed by rules that determine how the system evolves
-in time.  Time is divided into discrete steps, and the rules
+This chapter presents experiments Steven Wolfram performed
+in the 1980s, showing that some cellular automatons display
+surprisingly complicated behavior, including the ability to
+perform arbitrary computations.
+
+I discuss implications of these results, and at the end of the
+chapter I suggest methods for implementing CAs efficiently in Python.
+
+The code for this chapter is in {\tt chap05.ipynb} in the repository
+for this book.  More information about working with the code is
+in Section~\ref{???}.
+
+
+\section{A simple CA}
+
+Cellular automatons\footnote{You might also see the plural
+  ``automata''.} are governed by rules that determine how the system
+evolves in time.  Time is divided into discrete steps, and the rules
 specify how to compute the state of the world during the next time
 step based on the current state.
+
 \index{time step}
 
 As a trivial example, consider a cellular automaton (CA) with
@@ -3559,7 +3567,7 @@ be surprisingly interesting.
 
 To say that a CA has dimensions is to say that the cells are
 arranged in a contiguous space so that some of them are
-considered ``neighbors.''  In one dimension, there are three
+considered ``neighbors''.  In one dimension, there are three
 natural configurations:
 \index{neighbor}
 
@@ -3577,7 +3585,7 @@ in a row.
 \end{description}
 
 The rules that determine how the system evolves in time are
-based on the notion of a ``neighborhood,'' which is the set
+based on the notion of a ``neighborhood'', which is the set
 of cells that determines the next state of a given cell.
 
 In the early 1980s Stephen Wolfram published a series of papers
@@ -3611,7 +3619,7 @@ neighborhood can be in.  The second row shows the state of
 the center cell during the next time step.  As a concise encoding
 of this table, Wolfram suggested reading the bottom row
 as a binary number.  Because 00110010 in binary is 50 in
-decimal, Wolfram calls this CA ``Rule 50.''
+decimal, Wolfram calls this CA ``Rule 50''.
 \index{enumeration}
 
 \begin{figure}
@@ -3661,7 +3669,7 @@ least interesting) CAs, the ones that evolve from almost any starting
 condition to the same uniform pattern.  As a trivial example, Rule 0
 always generates an empty pattern after one time step.
 
-\index{classifying cellular automata}
+\index{classifying cellular automatons}
 
 Rule 50 is an example of Class 2.  It generates a simple pattern with
 nested structure; that is, the pattern contains many smaller versions
@@ -3802,7 +3810,7 @@ present before its eyes.
 
 This ``intellect'' came to be called ``Laplace's Demon''.
 See \url{http://en.wikipedia.org/wiki/Laplace's_demon}.  The word
-``demon'' in this context has the sense of ``spirit,'' with no
+``demon'' in this context has the sense of ``spirit'', with no
 implication of evil.
 
 \index{Laplace's Demon}
@@ -3824,7 +3832,7 @@ precision in the measurement of initial conditions.
 Most of these systems are continuous in space (if not time) and
 nonlinear, so the complexity of their behavior is not entirely
 surprising.  Wolfram's demonstration of complex behavior in simple
-cellular automata is more surprising---and disturbing, at least to a
+cellular automatons is more surprising---and disturbing, at least to a
 deterministic world view.
 
 \index{complex behavior}
@@ -3879,6 +3887,7 @@ are stable, so they appear as vertical lines.  Others translate in
 space, appearing as diagonals with different slopes, depending on
 how many time steps they take to shift by one column.  These
 structures are called {\bf spaceships}.
+
 \index{spaceships}
 
 Collisions between spaceships yield different results
@@ -3977,7 +3986,7 @@ equivalent (see
 \end{quote}
 
 Applying these definitions to CAs, Classes 1 and 2 are ``obviously
-simple.''  It may be less obvious that Class 3 is simple, but in a way
+simple''.  It may be less obvious that Class 3 is simple, but in a way
 perfect randomness is as simple as perfect order; complexity happens
 in between.  So Wolfram's claim is that Class 4 behavior is common in
 the natural world, and that almost all of the systems that manifest it
@@ -3996,7 +4005,7 @@ theory choice more than a hypothesis about the natural world.
 \index{falsifiability}
 
 Also, with qualifications like
-``almost'' and undefined terms like ``obviously simple,'' his
+``almost'' and undefined terms like ``obviously simple'', his
 hypothesis may be {\bf unfalsifiable}.  Falsifiability is
 an idea from the philosophy of science, proposed by Karl Popper
 as a demarcation between scientific hypotheses and pseudoscience.
@@ -4016,7 +4025,7 @@ universal common descent.
 
 \index{universal common descent}
 
-On the other hand, ``special creation,'' the claim that all species
+On the other hand, ``special creation'', the claim that all species
 were created in their current form by a supernatural agent, is
 unfalsifiable because there is nothing that we could observe about the
 natural world that would contradict it.  Any outcome of any experiment
@@ -4058,7 +4067,7 @@ the world or acting in it.
 \label{fig.model3}
 \end{figure}
 
-Some cellular automata are primarily mathematical artifacts.  They are
+Some cellular automatons are primarily mathematical artifacts.  They are
 interesting because they are surprising, or useful, or pretty, or
 because they provide tools for creating new mathematics (like the
 Church-Turing thesis).
@@ -4072,7 +4081,7 @@ not very detailed or realistic.
 \index{physical model}
 
 For example, some species of cone snail produce a pattern on their
-shells that resembles the patterns generated by cellular automata
+shells that resembles the patterns generated by cellular automatons
 (seee \url{en.wikipedia.org/wiki/Cone_snail}).  So it is natural to
 suppose that a CA is a model of the mechanism that produces patterns
 on shells as they grow.  But, at least initially, it is not clear how
@@ -4139,7 +4148,7 @@ To generate the figures in this chapter, I wrote a Python class called
 \py{CA}, which represents a cellular automaton, and classes for plotting
 the results.  In the next few sections I explain how they work.
 
-\index{implementing cellular automata}
+\index{implementing cellular automatons}
 
 To store the state of the CA, I use a NumPy array, which is a
 multi-dimensional data structure whose elements are all the same type.
@@ -4483,10 +4492,11 @@ highly of Popper's work?
 
 
 \chapter{Game of Life}
+
 \label{life}
 
-One of the first cellular automata to be studied, and probably the
-most popular of all time, is a 2-D CA called ``The Game of Life,'' or GoL
+One of the first cellular automatons to be studied, and probably the
+most popular of all time, is a 2-D CA called ``The Game of Life'', or GoL
 for short.  It was developed by John H. Conway and popularized in 1970
 in Martin Gardner's column in {\em Scientific American}.
 See \url{http://en.wikipedia.org/wiki/Conway_Game_of_Life}.
@@ -4494,36 +4504,44 @@ See \url{http://en.wikipedia.org/wiki/Conway_Game_of_Life}.
 \index{Conway, John H.}
 \index{Gardner, Martin}
 
-The cells in GoL are arranged in a 2-D {\bf grid},
-either infinite in both
-directions or wrapped around.  A grid wrapped
-in both directions is called a {\bf torus} because it is topographically
-equivalent to the surface of a doughnut.
-See \url{http://en.wikipedia.org/wiki/Torus}.
-\index{torus}
+The cells in GoL are arranged in a 2-D {\bf grid}, either infinite in
+both directions or wrapped around.  A grid wrapped in both directions
+is called a {\bf torus} because it is topographically equivalent to
+the surface of a doughnut.  See
+\url{http://en.wikipedia.org/wiki/Torus}.
+
 \index{grid}
+\index{torus}
 
 Each cell has two states---live and dead---and 8 neighbors---north,
 south, east, west, and the four diagonals.  This set of neighbors
-is sometimes called a Moore neighborhood.
+is sometimes called a ``Moore neighborhood''.
+
 \index{Moore neighborhood}
 \index{neighborhood}
 
-The rules of GoL are {\bf totalistic}, which means that the next
-state of a cell depends on the number of live neighbors only,
-not on their arrangement.  The following table summarizes the
-rules:
-\index{totalistic}
+Like the 1-D CAs in the previous chapters, the Game of Life evolves
+over time by following rules about which cells will be live or dead
+during the next time step.
+
+In GoL, the next state of each cell depends on its current state
+and its number of live neighbors.
+
+If a cell is alive, it survives if it has 2 or 3 neighbors, and
+dies if it has more or fewer.  If a cell is dead, it stays dead
+unless it has exactly 3 neighbors.
+
+The following table summarizes the rules:
 
 \begin{tabular}{|l|c|c|}
 \hline
-Number of     &   Current      & Next \\
-neighbors     &   state        & state \\
+Current    &    Number of     & Next \\
+state      &    neighbors     & state \\
 \hline
-2--3          &   live           & live         \\
-0--1,4--8     &   live           & dead         \\
-3             &   dead           & live         \\
-0--2,4--8     &   dead           & dead         \\
+live       &  2--3          & live         \\
+live       &  0--1, 4--8    & dead         \\
+dead       &  3             & live         \\
+dead       &  0--2, 4--8    & dead         \\
 \hline
 \end{tabular}
 
@@ -4537,13 +4555,15 @@ GoL is popular because:
 
 \item There are simple initial conditions that yield
 surprisingly complex behavior.
+
 \index{complex behavior}
 
 \item There are many interesting stable patterns: some
 oscillate (with various periods) and some move like the
 spaceships in Wolfram's Rule 110 CA.
 
-\item Like Rule 110, GoL is Turing complete.
+\item And like Rule 110, GoL is Turing complete.
+
 \index{Turing complete}
 \index{universal}
 
@@ -4551,9 +4571,10 @@ spaceships in Wolfram's Rule 110 CA.
 no initial condition that yields unbounded growth in the number
 of live cells---and offered \$50 to anyone who could prove
 or disprove it.
+
 \index{unbounded}
 
-\item The increasing availability of computers made it possible
+\item The increasing availability of computers makes it possible
 to automate the computation and display the results graphically.
 That turns out to be more fun than Conway's original implementation
 using a checkerboard.
@@ -4561,179 +4582,62 @@ using a checkerboard.
 \end{itemize}
 
 
-\section{Implementing Life}
-
-To implement GoL efficiently, we can take advantage of the
-multi-dimensional convolution function in SciPy.  SciPy is a Python
-package that provides functions related to scientific computing.
-You can read about it at \url{http://www.scipy.org/}; if it is not
-already on your system, you might have to install it.
-\index{implementing Game of Life}
-\index{SciPy}
-
-{\bf Convolution} is an operation common in digital image processing,
-where an image is an array of pixels, and many operations involve
-computing a function of a pixel and its neighbors.
-\index{convolution}
-
-The neighborhood is described by a smaller array, called a {\bf kernel}
-that specifies the location and {\bf weight} of the neighbors.  For
-example, this array:
-\index{kernel}
-\index{weight}
-
-\begin{code}
-    kernel = numpy.array([[1,1,1],
-                          [1,0,1],
-                          [1,1,1]])
-\end{code}
-
-represents a neighborhood with eight neighbors, all with weight 1.
-
-Convolution computes the weighted sum of the neighbors for each
-element of the array.  So this kernel computes the sum of the
-neighbors (not including the center element).
-
-For example, if \py{array} represents a GoL grid with 1s for live
-cells and 0s for dead cells we can use convolution to compute the
-number of neighbors for each cell.
-
-\begin{code}
-    import scipy.ndimage
-    neighbors = scipy.ndimage.filters.convolve(array, kernel)
-\end{code}
-
-Here's an implementation of GoL using \py{convolve}:
-\index{Life@\py{Life}}
-
-\begin{code}
-import numpy
-import scipy.ndimage
-
-class Life(object):
-
-    def __init__(self, n, mode='wrap'):
-        self.n = n
-        self.mode = mode
-        self.array = numpy.random.random_integers(0, 1, (n, n))
-        self.weights = numpy.array([[1,1,1],
-                                    [1,10,1],
-                                    [1,1,1]])
-
-    def step(self):
-        con = scipy.ndimage.filters.convolve(self.array,
-                                             self.weights,
-                                             mode=self.mode)
-
-        boolean = (con==3) | (con==12) | (con==13)
-        self.array = numpy.int8(boolean)
-\end{code}
-
-The attributes of the \py{Life} object are \py{n}, the number
-of rows and columns in the grid, \py{mode}, which controls the
-behaviors of the boundary cells, \py{array}, which represents
-the grid, and \py{weights} which is the kernel used to count
-the neighbors.
-
-The weight of the center cell is 10, so the number of neighbors
-is 0-8 for dead cells and 10-18 for live cells.
-
-In \py{step}, \py{boolean} is a boolean array with \py{True}
-for live cells;  \py{numpy.int8} converts it to integers.
-
-To display an animated sequence of grids, I use \py{pyplot}.
-Animation in \py{pyplot} is a little awkward, but here's a class
-that manages it:
-\index{animation}
-\index{pyplot}
-\index{LifeViewer@\py{LifeViewer}}
-
-\begin{code}
-import matplotlib
-matplotlib.use('TkAgg')
-import matplotlib.pyplot as pyplot
-
-class LifeViewer(object):
-
-    def __init__(self, life, cmap=matplotlib.cm.gray_r):
-        self.life = life
-        self.cmap = cmap
-
-        self.fig = pyplot.figure()
-        pyplot.axis([0, life.n, 0, life.n])
-        pyplot.xticks([])
-        pyplot.yticks([])
-
-        self.pcolor = None
-        self.update()
-\end{code}
-
-\py{life} is a \py{Life} object.  \py{cmap} is a color map
-provided by \py{matplotlib}; you can see the other
-color maps at \url{http://www.scipy.org/Cookbook/Matplotlib/Show_colormaps}.
-\index{color map}
-
-\py{self.fig} is a reference to the \py{matplotlib} figure, and {\tt
-  self.pcolor} is a reference to the {\bf pseudocolor plot} created by
-\py{update}:
-\index{pseudocolor plot}
-
-\begin{code}
-    def update(self):
-        if self.pcolor:
-            self.pcolor.remove()
-
-        a = self.life.array
-        self.pcolor = pyplot.pcolor(a, cmap=self.cmap)
-        self.fig.canvas.draw()
-\end{code}
-
-If there is already a plot, we have to remove it; then we create
-a new one and invoke \py{draw} to update the display.
-
-To run the animation, we need two methods:
-
-\begin{code}
-    def animate(self, steps=10):
-        self.steps = steps
-        self.fig.canvas.manager.window.after(1000, self.animate_callback)
-        pyplot.show()
-
-    def animate_callback(self):
-        for i in range(self.steps):
-            self.life.step()
-            self.update()
-\end{code}
-
-\py{animate} gets the animation started.  It invokes \py{pyplot.show},
-which sets up the GUI and waits for user events, but {\em first} it has
-to invoke \py{window.after} to set up a callback, so that
-\py{animate_callback} gets invoked after the window is set up.
-The first argument is the delay in milliseconds.  The second
-argument is a bound method (see Chapter 19 of {\em Think Python}).
-\index{Think Python@{\em Think Python}}
-
-\py{animate_callback} invokes \py{step} to update the \py{Life}
-object and \py{update} to update the display.
-
-\begin{exercise}
-
-Download my implementation of GoL from \url{thinkcomplex.com/Life.py}.
-
-Start the CA in a random state and run it until it stabilizes.
-What stable patterns can you identify?
-
-\end{exercise}
-
 
 \section{Life patterns}
 
+\begin{figure}
+\centerline{\includegraphics[height=1.75in]{figs/chap06-1.pdf}}
+\caption{A stable pattern called a beehive.}
+\label{chap06-1}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[height=1.75in]{figs/chap06-2.pdf}}
+\caption{An oscillator called a toad.}
+\label{chap06-2}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[height=1.75in]{figs/chap06-3.pdf}}
+\caption{A spaceship called a glider.}
+\label{chap06-3}
+\end{figure}
+
 If you run GoL from a random starting state, a number of stable
-patterns are likely to appear.  Blocks, boats, beehives, blinkers and
-gliders are among the most common.
+patterns are likely to appear.  Over time, people have identified
+these patterns and given them names.
+
 \index{Game of Life patterns}
-\index{glider}
+
+For example, Figure~\ref{chap06-1} shows a pattern called a
+``beehive'' that is stable.  Every cell in the beehive
+has 2 or 3 neighbors, so they all survive, and none of the dead
+cells adjacent to the beehive have 3 neighbors, so no new cells
+are born.
+
+Other patterns ``oscillate''; that is, they change over time but
+eventually return to their starting configuration, provided that
+they don't collide with another pattern.  For example,
+Figure~\ref{chap06-2} shows a pattern called a ``toad'', which
+is an oscillator that alternates between two states.  The
+``period'' of this oscillator is 2.
+
+\index{oscillator}
+
+Finally, some patterns oscillate and return to the starting
+configuration, but shifted in space.  Because these patterns 
+seem to move through space, they are called ``spaceships''.
+
+Figure~\ref{chap06-3} shows a particular spaceship called a
+``glider''.  After a period of 4 steps, the glider is back in the
+starting configuration, shifted one unit down and to the right.
+
+\index{glider} 
 \index{spaceship}
+
+Depending on the starting orientation, gliders can move along any
+of the four diagonals.  There are other spaceships that
+move horizontally and vertically.
 
 People have spent embarrassing
 amounts of time finding and naming these patterns.  If you search
@@ -4741,56 +4645,66 @@ the web, you will find many collections.
 
 From most initial conditions, GoL quickly reaches a stable
 state where the number of live cells is nearly constant
-(usually with a small amount of oscillation).
+(possibly with some oscillation).
+
+\begin{figure}
+\centerline{\includegraphics[height=1.75in]{figs/chap06-4.pdf}}
+\caption{Starting and final configurations of the r-pentomino.}
+\label{chap06-4}
+\end{figure}
 
 But there are a some simple starting conditions that take a
 long time to settle down and yield a surprising
 number of live cells.  These patterns are called ``Methuselahs''
 because they are so long-lived.
+
 \index{Methuselah}
 
 One of the simplest is the
-r-pentomino, which has only five cells in the shape of a ``r,'' hence
-the name.  It runs for 1103 steps and yields 6 gliders, 8 blocks, 4
-blinkers, 4 beehives, 1 boat, 1 ship, and 1 loaf.
-One of the longest-lived small patterns is rabbits, which starts
-with 9 live cells and takes 17 331 steps to stabilize.
+r-pentomino, which has only five cells, roughly in the shape of the
+letter ``r''.  Figure~\ref{chap06-4} shows the initial configuration
+of the r-pentomino and the final configuration after 1103 steps.
+
+This configuration is ``final'' in the sense that all remaining
+patterns are either stable, oscillators, or gliders that will never
+collide with another pattern.  In total, the r-pentomino yields 6
+gliders, 8 blocks, 4 blinkers, 4 beehives, 1 boat, 1 ship, and 1 loaf.
+
 \index{r-pentomino}
-
-\begin{exercise}
-
-Start with an r-pentomino as an initial condition and confirm
-that the results are consistent with the description above.
-You might have to adjust the size of the grid and the boundary behavior.
-
-\end{exercise}
 
 
 \section{Conway's conjecture}
 
+\begin{figure}
+\centerline{\includegraphics[height=1.75in]{figs/chap06-5.pdf}}
+\caption{Gosper's glider gun, which produces a stream of gliders.}
+\label{chap06-5}
+\end{figure}
+
 The existence of long-lived patterns brings us back to Conway's
-original question: are there initial patterns that never stabilize?
-Conway thought not, but he described two kinds of pattern that would
-prove him wrong, a ``gun'' and a ``puffer train.''  A gun is a stable
-pattern that periodically produces a spaceship---as the stream of
-spaceships moves out from the source, the number of live cells grows
-indefinitely.  A puffer train is a translating pattern that leaves
-live cells in its wake.
+question: are there initial patterns that never stabilize?  Conway
+conjectured that there were not, but he described two kinds of pattern
+that would prove him wrong, a ``gun'' and a ``puffer train''.  A gun
+is a stable pattern that periodically produces a spaceship---as the
+stream of spaceships moves out from the source, the number of live
+cells grows indefinitely.  A puffer train is a translating pattern
+that leaves live cells in its wake.
+
 \index{glider gun}
 \index{puffer train}
 
 It turns out that both of these patterns exist.  A team led
 by Bill Gosper discovered the first, a glider gun now called
-Gosper's Gun.  Gosper also discovered the first puffer train.
-You can find descriptions and animations of these patterns
-in several places on the Web.
+Gosper's Gun, which is shown in Figure~\ref{chap06-5}.
+Gosper also discovered the first puffer train.
+
 \index{Gosper, Bill}
 
 There are many patterns of both types, but they are not easy to
 design or find.  That is not a coincidence.  Conway chose the
 rules of GoL so that his conjecture would not be obviously
 true or false.  Of all the possible rules for a 2-D CA, most
-yield simple behavior; most initial conditions stabilize quickly
+yield simple behavior: most initial conditions stabilize quickly
 or grow unboundedly.  By avoiding uninteresting CAs, Conway
 was also avoiding Wolfram's Class 1 and Class 2 behavior, and
 probably Class 3 as well.
@@ -4798,19 +4712,12 @@ probably Class 3 as well.
 If we believe Wolfram's Principle of Computational Equivalence, we
 expect GoL to be in Class 4.  And it is.  The Game of Life was proved
 Turing complete in 1982 (and again, independently, in 1983).
-Since then several people have constructed GoL patterns that implement
+Since then, several people have constructed GoL patterns that implement
 a Turing machine or another machine known to be Turing complete.
+
 \index{Class 4 behavior}
 \index{Turing complete}
 \index{universality}
-
-\begin{exercise}
-
-Many named patterns are available in portable file formats.
-Modify \py{Life.py} to parse one of these formats and initialize
-the grid.
-
-\end{exercise}
 
 
 \section{Realism}
@@ -4973,7 +4880,193 @@ strengths.
 \end{exercise}
 
 
-\section{Turmites}
+
+\section{Implementing Life}
+
+To implement GoL efficiently, we can take advantage of the
+multi-dimensional convolution function in SciPy.  SciPy is a Python
+package that provides functions related to scientific computing.
+\index{implementing Game of Life}
+\index{SciPy}
+
+{\bf Convolution} is an operation common in digital image processing,
+where an image is an array of pixels, and many operations involve
+computing a function of a pixel and its neighbors.
+\index{convolution}
+
+The neighborhood is described by a smaller array, called a {\bf
+  kernel} that specifies the location and {\bf weight} of the
+neighbors.  For example, this array represents a neighborhood with
+eight neighbors, all with weight 1:
+
+\index{kernel}
+\index{weight}
+
+\begin{code}
+    kernel = numpy.array([[1,1,1],
+                          [1,0,1],
+                          [1,1,1]])
+\end{code}
+
+Convolution computes the weighted sum of the neighbors for each
+element of the array.  So this kernel computes the sum of the
+neighbors (not including the center element).
+
+For example, if \py{array} represents a GoL grid with 1s for live
+cells and 0s for dead cells we can use convolution to compute the
+number of neighbors for each cell.
+
+\begin{code}
+    import scipy.ndimage
+    neighbors = scipy.ndimage.filters.convolve(array, kernel)
+\end{code}
+
+Here's an implementation of GoL using \py{convolve}:
+\index{Life@\py{Life}}
+
+\begin{code}
+import numpy
+import scipy.ndimage
+
+class Life(object):
+
+    def __init__(self, n, mode='wrap'):
+        self.n = n
+        self.mode = mode
+        self.array = numpy.random.random_integers(0, 1, (n, n))
+        self.weights = numpy.array([[1,1,1],
+                                    [1,10,1],
+                                    [1,1,1]])
+
+    def step(self):
+        con = scipy.ndimage.filters.convolve(self.array,
+                                             self.weights,
+                                             mode=self.mode)
+
+        boolean = (con==3) | (con==12) | (con==13)
+        self.array = numpy.int8(boolean)
+\end{code}
+
+The attributes of the \py{Life} object are \py{n}, the number
+of rows and columns in the grid, \py{mode}, which controls the
+behaviors of the boundary cells, \py{array}, which represents
+the grid, and \py{weights} which is the kernel used to count
+the neighbors.
+
+The weight of the center cell is 10, so the number of neighbors
+is 0-8 for dead cells and 10-18 for live cells.
+
+In \py{step}, \py{boolean} is a boolean array with \py{True}
+for live cells;  \py{numpy.int8} converts it to integers.
+
+To display an animated sequence of grids, I use \py{pyplot}.
+Animation in \py{pyplot} is a little awkward, but here's a class
+that manages it:
+\index{animation}
+\index{pyplot}
+\index{LifeViewer@\py{LifeViewer}}
+
+\begin{code}
+import matplotlib
+matplotlib.use('TkAgg')
+import matplotlib.pyplot as pyplot
+
+class LifeViewer(object):
+
+    def __init__(self, life, cmap=matplotlib.cm.gray_r):
+        self.life = life
+        self.cmap = cmap
+
+        self.fig = pyplot.figure()
+        pyplot.axis([0, life.n, 0, life.n])
+        pyplot.xticks([])
+        pyplot.yticks([])
+
+        self.pcolor = None
+        self.update()
+\end{code}
+
+\py{life} is a \py{Life} object.  \py{cmap} is a color map
+provided by \py{matplotlib}; you can see the other
+color maps at \url{http://www.scipy.org/Cookbook/Matplotlib/Show_colormaps}.
+\index{color map}
+
+\py{self.fig} is a reference to the \py{matplotlib} figure, and {\tt
+  self.pcolor} is a reference to the {\bf pseudocolor plot} created by
+\py{update}:
+\index{pseudocolor plot}
+
+\begin{code}
+    def update(self):
+        if self.pcolor:
+            self.pcolor.remove()
+
+        a = self.life.array
+        self.pcolor = pyplot.pcolor(a, cmap=self.cmap)
+        self.fig.canvas.draw()
+\end{code}
+
+If there is already a plot, we have to remove it; then we create
+a new one and invoke \py{draw} to update the display.
+
+To run the animation, we need two methods:
+
+\begin{code}
+    def animate(self, steps=10):
+        self.steps = steps
+        self.fig.canvas.manager.window.after(1000, self.animate_callback)
+        pyplot.show()
+
+    def animate_callback(self):
+        for i in range(self.steps):
+            self.life.step()
+            self.update()
+\end{code}
+
+\py{animate} gets the animation started.  It invokes \py{pyplot.show},
+which sets up the GUI and waits for user events, but {\em first} it has
+to invoke \py{window.after} to set up a callback, so that
+\py{animate_callback} gets invoked after the window is set up.
+The first argument is the delay in milliseconds.  The second
+argument is a bound method (see Chapter 19 of {\em Think Python}).
+\index{Think Python@{\em Think Python}}
+
+\py{animate_callback} invokes \py{step} to update the \py{Life}
+object and \py{update} to update the display.
+
+\begin{exercise}
+
+Download my implementation of GoL from \url{thinkcomplex.com/Life.py}.
+
+Start the CA in a random state and run it until it stabilizes.
+What stable patterns can you identify?
+
+\end{exercise}
+
+
+
+
+\section{Exercises}
+
+\begin{exercise}
+
+Many named patterns are available in portable file formats.
+Modify \py{Life.py} to parse one of these formats and initialize
+the grid.
+
+\end{exercise}
+
+
+
+\begin{exercise}
+
+One of the longest-lived small patterns is rabbits, which starts
+with 9 live cells and takes 17 331 steps to stabilize.
+
+\end{exercise}
+
+
+\begin{exercise}
 
 If you generalize the Turing machine to two dimensions, or
 add a read-write head to a 2-D CA, the result is a
@@ -5006,7 +5099,7 @@ better by now.  Starting with all white cells, Langton's ant
 moves in a seemingly random pattern for more than 10 000 steps
 before it enters a cycle with a period of 104 steps.  After
 each cycle, the ant is translated diagonally, so it leaves
-a trail called the ``highway.''
+a trail called the ``highway''.
 \index{complex behavior}
 \index{period}
 
@@ -5016,13 +5109,7 @@ highway, another can follow it, overtake it, and cause it to
 reverse its pattern, moving back up the highway and leaving
 only white cells behind.
 
-\begin{exercise}
-
 Write an implementation of Langton's Ant.
-
-You can find a solution in \py{TurmiteWorld.py}, which is
-part of Swampy.  See \url{http://thinkpython.com/swampy/}.
-\index{Swampy}
 
 \end{exercise}
 
@@ -5092,7 +5179,7 @@ to zero.
 \end{figure}
 
 To investigate the behavior of fractal dimension, we'll apply it
-to cellular automata.  Box-counting for CAs is simple; we
+to cellular automatons.  Box-counting for CAs is simple; we
 just count the number of ``on'' cells in each time step and
 add them up.
 \index{fractal cellular automaton}
@@ -5215,7 +5302,7 @@ Percolation processes often exhibit a phase change; that is, an
 abrupt transition from one behavior (low flow) to another
 (high flow) with a small change in a continuous parameter (like
 the porosity of the material).  This transition is sometimes
-called a ``tipping point.''
+called a ``tipping point''.
 \index{tipping point}
 
 There are two common models of these systems: bond percolation
@@ -5236,7 +5323,7 @@ of connected cells is considered a cluster.
 The rate of flow in a percolation system is primarily determined by
 whether or not the porous cells form a path all the way through the
 material, so it is useful to know whether a set of cells (or bonds)
-contains a ``spanning cluster.''  There are several
+contains a ``spanning cluster''.  There are several
 definitions of a spanning cluster; the choice depends on the system
 you are trying to model. The simplest choice is a cluster that reaches
 the top and bottom row of the grid.
@@ -5263,7 +5350,7 @@ increases quickly from near 0 to near 1.
 \begin{exercise}
 
 The paper ``Efficient Monte Carlo Algorithm and High-Precision Results
-for Percolation,'' by Newman and Ziff, presents an efficient algorithm
+for Percolation'', by Newman and Ziff, presents an efficient algorithm
 for checking whether there is a path through a grid.  You can download
 this paper from \url{http://arxiv.org/abs/cond-mat/0005264}.
 Read it
@@ -5299,7 +5386,7 @@ Figure 2(a).
 \section{Sand piles}
 
 In 1987 Bak, Tang and Wiesenfeld published a paper in Physical Review
-Letters, ``Self-organized criticality: an explanation of $1/f$ noise.''
+Letters, ``Self-organized criticality: an explanation of $1/f$ noise''.
 You can download it from \url{http://prl.aps.org/abstract/PRL/v59/i4/p381_1}.
 
 The title takes some explaining.  A system is ``critical'' if it is
@@ -5421,7 +5508,7 @@ a complex sound that contains components at many different
 frequencies.  The frequency with the most power is 440, which is why
 we perceive the sound as a middle A, but there are also components at
 880, 1320 and many higher frequencies.  These components are called
-``harmonics.''
+``harmonics''.
 \index{pitch}
 \index{Hertz}
 \index{harmonics}
@@ -5653,7 +5740,7 @@ and estimate the slope.
 
 \begin{exercise}
 
-In a 1989 paper, ``Self-organized criticality in the 'Game of Life',''
+In a 1989 paper, ``Self-organized criticality in the 'Game of Life''',
 Bak, Chen and Creutz present evidence that the Game of Life is a
 self-organized critical system
 (\url{http://www.nature.com/nature/journal/v342/n6251/abs/342780a0.html}).
@@ -5668,7 +5755,7 @@ of $t$ and $s$.  Also, see if you can think of an effective
 experiment to test for $1/f$ noise.
 
 Some later work has called the conclusions of this paper into
-question.  You might want to read Blok, ``Life without bounds,''
+question.  You might want to read Blok, ``Life without bounds'',
 at \url{http://zoology.ubc.ca/~rikblok/lib/blok95b.html}.
 
 \end{exercise}
@@ -5806,7 +5893,7 @@ but others do not.  \index{rice pile model}
 
 Similarly, Pruessner and Jensen studied large-scale versions of the
 forest fire model (using an algorithm similar to Newman and Ziff's).
-In their 2004 paper, ``Efficient algorithm for the forest fire model,''
+In their 2004 paper, ``Efficient algorithm for the forest fire model'',
 they present evidence that the system is not critical after all
 (\url{http://pre.aps.org/abstract/PRE/v70/i6/e066707}).
 \index{forest fire model}
@@ -5890,7 +5977,7 @@ These conclusions are not comforting.  Among other things, they
 imply that large earthquakes and some kinds of accidents are
 fundamentally unpredictable.  It is impossible to look at the
 state of a critical system and say whether a large avalanche
-is ``due.''  If the system is in a critical state, then a large
+is ``due''.  If the system is in a critical state, then a large
 avalanche is always possible.  It just depends on the
 next grain of sand.
 
@@ -5930,10 +6017,10 @@ does self-organized criticality have for this theory?
 
 \section{Thomas Schelling}
 
-In 1971 Thomas Schelling published ``Dynamic Models of Segregation,''
+In 1971 Thomas Schelling published ``Dynamic Models of Segregation'',
 which proposes a simple model of racial segregation.  The Schelling
 model of the world is a grid; each cell represents a
-house.  The houses are occupied by two kinds of ``agents,''
+house.  The houses are occupied by two kinds of ``agents'',
 labeled red and blue, in roughly equal numbers.  About 10\% of the
 houses are empty.
 \index{Schelling, Thomas}
@@ -6133,12 +6220,12 @@ example, if they have different speed limits or following distances?
 \section{Boids}
 
 In 1987 Craig Reynolds published ``Flocks, herds and
-schools: A distributed behavioral model,'' which describes an
+schools: A distributed behavioral model'', which describes an
 agent-based model of herd behavior.  You can download his
 paper from \url{http://www.red3d.com/cwr/papers/1987/boids.html}.
 \index{Reynolds, Craig}
 
-Agents in this models are called ``boids,'' which is both a
+Agents in this models are called ``boids'', which is both a
 contraction of ``bird-oid'' and an accented pronunciation of ``bird''
 (although boids are also used to model fish and herding land animals).
 \index{boid}
@@ -6425,7 +6512,7 @@ system without building or observing it.
 \index{Wolfram, Stephen}
 \index{natural law}
 
-But many cellular automata are {\bf computationally irreducible},
+But many cellular automatons are {\bf computationally irreducible},
 which means that there are no shortcuts.  The only way to get the
 outcome is to implement the system.
 \index{computationally irreducible}
@@ -6532,7 +6619,7 @@ Read more about free will at
 \url{http://en.wikipedia.org/wiki/Free_will}.  The view that free will
 is compatible with determinism is called {\bf compatibilism}.  One of
 the strongest challenges to compatibilism is the ``consequence
-argument.''  What is the consequence argument?  What response can you
+argument''.  What is the consequence argument?  What response can you
 give to the consequence argument based on what you have read in this
 book?
 \end{exercise}
@@ -6544,7 +6631,7 @@ In the philosophy of mind, {\em Strong AI} is the position that an
 appropriately-programmed computer could have a mind in the same sense
 that humans have minds.
 
-John Searle presented a thought experiment called ``The Chinese Room,''
+John Searle presented a thought experiment called ``The Chinese Room'',
 intended to show that {\em Strong AI} is false.  You can read about
 it at \url{http://en.wikipedia.org/wiki/Chinese_room}.
 
@@ -6578,7 +6665,7 @@ of different algorithms in order to guide design decisions.
 During the 2008 United States Presidential Campaign, candidate
 Barack Obama was asked to perform an impromptu analysis when
 he visited Google.  Chief executive Eric Schmidt jokingly asked him
-for ``the most efficient way to sort a million 32-bit integers.''
+for ``the most efficient way to sort a million 32-bit integers''.
 Obama had apparently been tipped off, because he quickly
 replied, ``I think the bubble sort would be the wrong way to go.''
 See \url{http://www.youtube.com/watch?v=k4RRi_ntQc8}.
@@ -6951,7 +7038,7 @@ item and determines whether the target is in the collection, often
 returning the index of the target.
 \index{search}
 
-The simplest search algorithm is a ``linear search,'' which traverses
+The simplest search algorithm is a ``linear search'', which traverses
 the items of the collection in order, stopping if it finds the target.
 In the worst case it has to traverse the entire collection, so the run
 time is linear.
@@ -7664,13 +7751,13 @@ people own 80\% of the wealth.
 \index{80/20 rule}
 
 \item[Scale free:] Short-tailed distributions are centered around
-a typical size, which is called a ``scale.''  For example, the
+a typical size, which is called a ``scale''.  For example, the
 great majority of adult humans are between 100 and 200 cm in height,
 so we could say that the scale of human height is a few hundred
 centimeters.  But for long-tailed distributions, there is no
 similar range (bounded by a factor of two) that contains the
 bulk of the distribution.  So we say that these distributions
-are ``scale-free.''
+are ``scale-free''.
 \index{scale}
 \index{scale-free}
 
