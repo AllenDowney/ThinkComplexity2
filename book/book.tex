@@ -21,7 +21,7 @@
 \newcommand{\thetitle}{Think Complexity}
 \newcommand{\thesubtitle}{Exploring Complexity Science in Python}
 \newcommand{\theauthors}{Allen B. Downey}
-\newcommand{\theversion}{2.0.5}
+\newcommand{\theversion}{2.0.6}
 
 %%%% Both LATEX and PLASTEX
 
@@ -4225,6 +4225,7 @@ element is the sum of three elements from the previous row, mod 2.
 
 
 \section{Convolution}
+\label{convolution}
 
 The \py{step} function in the previous section is simple, but it is
 not very fast.  In general, we can speed up operations like this
@@ -4306,6 +4307,10 @@ When we use
 The \py{mode} parameter determines the size of the result.  You can
 read the details in the NumPy documentation, but when the mode is
 \py{'same'}, the result is the same size as the input.
+
+
+\section{CA tables}
+\label{tables}
 
 Now there's just one more step.  The function we have so far
 works if the CA rule only depends on the sum of the neighbors, but
@@ -4493,6 +4498,27 @@ highly of Popper's work?
 
 \chapter{Game of Life}
 
+In this chapter we consider two-dimensional cellular automatons,
+especially John Conway's Game of Life (GoL).  Like some of
+the 1-D CAs in the previous chapter, GoL follows simple rules and
+produces surprisingly complicated behavior.  And like Wolfram's
+Rule 110, GoL turns out to be universal; that is, it can compute
+any computable function, at least in theory.
+
+Complex behavior in GoL raises issues in the philosophy of
+science, in particular scientific realism and instrumentalism.
+I discuss these issues and suggest additional reading.
+
+At the end of the chapter, I present several ways to implement
+GoL efficiently in Python.
+
+The code for this chapter is in {\tt chap05.ipynb} in the repository
+for this book.  More information about working with the code is
+in Section~\ref{???}.
+
+
+\section{Conway's GoL}
+
 \label{life}
 
 One of the first cellular automatons to be studied, and probably the
@@ -4521,12 +4547,10 @@ is sometimes called a ``Moore neighborhood''.
 \index{neighborhood}
 
 Like the 1-D CAs in the previous chapters, the Game of Life evolves
-over time by following rules about which cells will be live or dead
-during the next time step.
+over time according to rules, which are like simple laws of physics.
 
 In GoL, the next state of each cell depends on its current state
 and its number of live neighbors.
-
 If a cell is alive, it survives if it has 2 or 3 neighbors, and
 dies if it has more or fewer.  If a cell is dead, it stays dead
 unless it has exactly 3 neighbors.
@@ -4740,12 +4764,14 @@ just patterns of air flow, but we give them personal names.  And
 people, like gliders, are not made up of the same cells over time.
 But even if you replace every cell in your body, we consider you the
 same person.
+
 \index{hurricane}
 
 This is not a new observation---about 2500 years ago Heraclitus
 pointed out that you can't step in the same river twice---but the
 entities that appear in the Game of Life are a useful test case for
 thinking about {\bf philosophical realism}.
+
 \index{philosophical realism}
 
 In the context of philosophy, realism is the view that entities
@@ -4756,6 +4782,7 @@ we form of the world.  For example, our vision systems perceive
 something like a 2-D projection of a scene, and our brains
 use that image to construct a 3-D model of the objects in the
 scene.
+
 \index{perception}
 \index{conception}
 
@@ -4767,12 +4794,13 @@ example, Mendelian genetics postulates a ``gene'' as a unit that
 controls a heritable characteristic.  Eventually we discovered that
 genes are encoded in DNA, but for about 50 years, a gene was just a
 postulated entity.  See \url{http://en.wikipedia.org/wiki/Gene}.
+
 \index{gene}
 \index{postulated entity}
 
 Again, I find it useful to state philosophical positions in a range of
-strengths, where SR1 is a weak form of scientific realism and SR4 is a
-strong form:
+strengths; here are four statements of scientific realism with increasing
+strength:
 
 \begin{description}
 
@@ -4808,6 +4836,7 @@ the view that we can't say whether a theory is true or false because
 we can't know whether a theory corresponds to reality.  Theories are
 instruments that we use for our purposes; a theory is useful, or not,
 to the degree that it is fit for its purpose.
+
 \index{instrumentalism}
 
 To see whether you are comfortable with instrumentalism, consider
@@ -4823,6 +4852,7 @@ the following statements:
   description because it allows us to make predictions and communicate
   about the weather.''
 \end{quote}
+
 \index{hurricane}
 
 \begin{quote}
@@ -4830,6 +4860,7 @@ the following statements:
   are useful tools for thinking and communicating about psychology (or
   at least some people think so).''
 \end{quote}
+
 \index{Id}
 \index{Freud, Sigmund}
 \index{Superego}
@@ -4840,6 +4871,7 @@ electro-magnetism, but they aren't real.  We could construct
 other theories, without postulating electrons, that would be
 just as useful.''
 \end{quote}
+
 \index{electron}
 
 \begin{quote}
@@ -4849,6 +4881,7 @@ just as useful.''
   underground as a barely-contiguous network of cells.  We focus
   on mushrooms for practical reasons like visibility and edibility.''
 \end{quote}
+
 \index{mushroom}
 
 \begin{quote}
@@ -4858,7 +4891,7 @@ just as useful.''
   cell?  Water in a cell?  Structural parts of a cell?  Hair?  Dead
   skin?  Dirt?  Bacteria on your skin?  Bacteria in your gut?
   Mitochondria?  How many of those molecules do you include when you
-  weigh yourself.  Conceiving the world in terms of discrete objects
+  weigh yourself?  Conceiving the world in terms of discrete objects
   is useful, but the entities we identify are not real.''
 \end{quote}
 
@@ -4870,183 +4903,150 @@ others, ask yourself why.  What are the differences in these
 scenarios that influence your reaction?  Can you make
 a principled distinction between them?
 
-\begin{exercise}
-
-Read \url{http://en.wikipedia.org/wiki/Instrumentalism}
-and construct a sequence
-of statements that characterize instrumentalism in a range of
-strengths.
-
-\end{exercise}
+For more on instrumentalism, see
+\url{http://en.wikipedia.org/wiki/Instrumentalism}.
 
 
 
 \section{Implementing Life}
 
-To implement GoL efficiently, we can take advantage of the
-multi-dimensional convolution function in SciPy.  SciPy is a Python
-package that provides functions related to scientific computing.
-\index{implementing Game of Life}
-\index{SciPy}
-
-{\bf Convolution} is an operation common in digital image processing,
-where an image is an array of pixels, and many operations involve
-computing a function of a pixel and its neighbors.
-\index{convolution}
-
-The neighborhood is described by a smaller array, called a {\bf
-  kernel} that specifies the location and {\bf weight} of the
-neighbors.  For example, this array represents a neighborhood with
-eight neighbors, all with weight 1:
-
-\index{kernel}
-\index{weight}
+To represent an array of cells, I'll use a NumPy array with type {\tt
+  uint8}, which is an 8-bit unsigned integer.  As an example, I'll
+start with random cells:
 
 \begin{code}
-    kernel = numpy.array([[1,1,1],
-                          [1,0,1],
-                          [1,1,1]])
+a = np.random.randint(2, size=(10, 10)).astype(np.uint8)
 \end{code}
 
-Convolution computes the weighted sum of the neighbors for each
-element of the array.  So this kernel computes the sum of the
-neighbors (not including the center element).
-
-For example, if \py{array} represents a GoL grid with 1s for live
-cells and 0s for dead cells we can use convolution to compute the
-number of neighbors for each cell.
+There are a few ways we can compute the GoL rules.  The simplest
+is to use \py{for} loops to iterate through the rows and columns of
+the array:
 
 \begin{code}
-    import scipy.ndimage
-    neighbors = scipy.ndimage.filters.convolve(array, kernel)
+b = np.zeros_like(a)
+rows, cols = a.shape
+for i in range(1, rows-1):
+    for j in range(1, cols-1):
+        state = a[i, j]
+        neighbors = a[i-1:i+2, j-1:j+2]
+        k = np.sum(neighbors) - state
+        if state:
+            if k==2 or k==3:
+                b[i, j] = 1
+        else:
+            if k == 3:
+                b[i, j] = 1
 \end{code}
 
-Here's an implementation of GoL using \py{convolve}:
-\index{Life@\py{Life}}
+Initially, \py{b} is an array of zeros with the same size as \py{a}.  Each
+time through the loop, \py{state} is the condition of the center cell and
+\py{neighbors} is the 3x3 neighborhood.  \py{k} is the number of neighbors
+(not including the center cell).
+The nested \py{if} statements evaluate the GoL rules and turn on cells
+in \py{b} accordingly.
+
+This implementation is a straightforward translation of the rules, but
+it is verbose and slow.  We can do better using convolution, as we saw
+in Section~\ref{convolution}.  There, we used \py{np.convolve} to compute
+a 1-D convolution.  Now, to perform 2-D convolution, we'll use
+\py{convolve2d} from \py{scipy.signal}, a SciPy module that provides
+functions related to signal processing:
 
 \begin{code}
-import numpy
-import scipy.ndimage
+from scipy.signal import convolve2d
 
-class Life(object):
+kernel = np.array([[1, 1, 1],
+                   [1, 0, 1],
+                   [1, 1, 1]])
 
-    def __init__(self, n, mode='wrap'):
-        self.n = n
-        self.mode = mode
-        self.array = numpy.random.random_integers(0, 1, (n, n))
-        self.weights = numpy.array([[1,1,1],
-                                    [1,10,1],
-                                    [1,1,1]])
-
-    def step(self):
-        con = scipy.ndimage.filters.convolve(self.array,
-                                             self.weights,
-                                             mode=self.mode)
-
-        boolean = (con==3) | (con==12) | (con==13)
-        self.array = numpy.int8(boolean)
+c = convolve2d(a, kernel, mode='same')
 \end{code}
 
-The attributes of the \py{Life} object are \py{n}, the number
-of rows and columns in the grid, \py{mode}, which controls the
-behaviors of the boundary cells, \py{array}, which represents
-the grid, and \py{weights} which is the kernel used to count
-the neighbors.
+What we called a ``window'' in the context of 1-D convolution is
+called a ``kernel'' in the context of 2-D convolution, but the idea
+is the same:  \py{convolve2d} multiplies the kernel and the array to
+select a neighborhood, then adds up the result.  This kernel selects
+the 8 neighbors that surround the center cell.
 
-The weight of the center cell is 10, so the number of neighbors
-is 0-8 for dead cells and 10-18 for live cells.
+\py{convolve2d} applies the kernel to each location in the array; with
+\py{mode='same'}, the result has the same size as \py{a}.
 
-In \py{step}, \py{boolean} is a boolean array with \py{True}
-for live cells;  \py{numpy.int8} converts it to integers.
-
-To display an animated sequence of grids, I use \py{pyplot}.
-Animation in \py{pyplot} is a little awkward, but here's a class
-that manages it:
-\index{animation}
-\index{pyplot}
-\index{LifeViewer@\py{LifeViewer}}
+Now we can use logical operators to compute the rules:
 
 \begin{code}
-import matplotlib
-matplotlib.use('TkAgg')
-import matplotlib.pyplot as pyplot
-
-class LifeViewer(object):
-
-    def __init__(self, life, cmap=matplotlib.cm.gray_r):
-        self.life = life
-        self.cmap = cmap
-
-        self.fig = pyplot.figure()
-        pyplot.axis([0, life.n, 0, life.n])
-        pyplot.xticks([])
-        pyplot.yticks([])
-
-        self.pcolor = None
-        self.update()
+b = (c==3) | (c==2) & a
+b = b.astype(np.uint8)
 \end{code}
 
-\py{life} is a \py{Life} object.  \py{cmap} is a color map
-provided by \py{matplotlib}; you can see the other
-color maps at \url{http://www.scipy.org/Cookbook/Matplotlib/Show_colormaps}.
-\index{color map}
+The first line computes a boolean array with \py{True} where there should
+be a live cell and \py{False} elsewhere.  Then \py{astype} converts the boolean
+array to an array of integers.
 
-\py{self.fig} is a reference to the \py{matplotlib} figure, and {\tt
-  self.pcolor} is a reference to the {\bf pseudocolor plot} created by
-\py{update}:
-\index{pseudocolor plot}
+This version is faster, but we can simplify it slightly by modifying the
+kernel:
 
 \begin{code}
-    def update(self):
-        if self.pcolor:
-            self.pcolor.remove()
+kernel = np.array([[1, 1, 1],
+                   [1,10, 1],
+                   [1, 1, 1]])
 
-        a = self.life.array
-        self.pcolor = pyplot.pcolor(a, cmap=self.cmap)
-        self.fig.canvas.draw()
+c = convolve2d(a, kernel, mode='same')
+b = (c==3) | (c==12) | (c==13)
+b = b.astype(np.uint8)
 \end{code}
 
-If there is already a plot, we have to remove it; then we create
-a new one and invoke \py{draw} to update the display.
+This version of the kernel includes the center cell and gives it a 
+weight of 10.  If the center cell is 0, the result is between 0 and 8;
+if the center cell is 1, the result is between 10 and 18.
 
-To run the animation, we need two methods:
+Using this kernel, we can simplify the logical operations, selecting
+only cells with the values 3, 12, and 13.  This version is not
+substantially better than the previous one, but it allows one more
+simplification: with this kernel, we can use a table to look up 
+cell values, as we did in Section~\ref{tables}.
 
 \begin{code}
-    def animate(self, steps=10):
-        self.steps = steps
-        self.fig.canvas.manager.window.after(1000, self.animate_callback)
-        pyplot.show()
-
-    def animate_callback(self):
-        for i in range(self.steps):
-            self.life.step()
-            self.update()
+table = np.zeros(20, dtype=np.uint8)
+table[[3, 12, 13]] = 1
+c = convolve2d(a, kernel, mode='same')
+b = table[c]
 \end{code}
 
-\py{animate} gets the animation started.  It invokes \py{pyplot.show},
-which sets up the GUI and waits for user events, but {\em first} it has
-to invoke \py{window.after} to set up a callback, so that
-\py{animate_callback} gets invoked after the window is set up.
-The first argument is the delay in milliseconds.  The second
-argument is a bound method (see Chapter 19 of {\em Think Python}).
-\index{Think Python@{\em Think Python}}
+\py{table} has zeros everywhere except locations 3, 12, and 13.
+When we use \py{c} as an index into \py{table}, NumPy performs elementwise
+lookup; that is, it takes each value from \py{c}, looks it up in
+\py{table}, and puts the result into \py{b}.
 
-\py{animate_callback} invokes \py{step} to update the \py{Life}
-object and \py{update} to update the display.
+This version is faster and more concise than the others; the only
+drawback is that it takes more explaining.
 
-\begin{exercise}
-
-Download my implementation of GoL from \url{thinkcomplex.com/Life.py}.
-
-Start the CA in a random state and run it until it stabilizes.
-What stable patterns can you identify?
-
-\end{exercise}
-
+\py{Life.py}, which is included in the repository for this book,
+provides a \py{Life} class that encapsulates this implementation of
+the rules.  If you run \py{Life.py}, you should see an animation
+of a ``puffer train'', which is a spaceship that leaves a trail of
+detritus in its wake.
 
 
 
 \section{Exercises}
+
+\begin{exercise}
+
+The code for this chapter is in the Jupyter notebook {\tt chap06.ipynb}
+in the repository for this book.  Open this notebook, read the code,
+and run the cells.  You can use this notebook to work on the
+exercises in this chapter.  My solutions are in {\tt chap06soln.ipynb}.
+
+\end{exercise}
+
+
+\begin{exercise}
+
+Start GoL in a random state and run it until it stabilizes.
+What stable patterns can you identify?
+
+\end{exercise}
+
 
 \begin{exercise}
 
@@ -5060,8 +5060,11 @@ the grid.
 
 \begin{exercise}
 
-One of the longest-lived small patterns is rabbits, which starts
-with 9 live cells and takes 17 331 steps to stabilize.
+One of the longest-lived small patterns is ``rabbits'', which starts with
+9 live cells and takes 17 331 steps to stabilize.  You can get the
+initial configuration in various formats from
+\url{http://www.conwaylife.com/wiki/Rabbits}.  Load this configuration
+and run it.
 
 \end{exercise}
 
@@ -5073,24 +5076,28 @@ add a read-write head to a 2-D CA, the result is a
 cellular automaton called a Turmite.  It is named after a
 termite because of the way the read-write head moves, but
 spelled wrong as an homage to Alan Turing.
+
 \index{turmite}
 \index{Turing, Alan}
 
 The most famous Turmite is Langton's Ant, discovered by Chris Langton
 in 1986.  See \url{http://en.wikipedia.org/wiki/Langton_ant}.
+
 \index{Langton's Ant}
 \index{Langton, Chris}
 
 The ant is a read-write head with
 four states, which you can think of as facing north, south,
 east or west.  The cells have two states, black and white.
+
 \index{read-write head}
 
 The rules are simple.  During each time step, the ant checks the color
-of the cell is it on.  If it is black, the ant turns to the right,
+of the cell it is on.  If black, the ant turns to the right,
 changes the cell to white, and moves forward one space.  If the cell
 is white, the ant turns left, changes the cell to black, and moves
 forward.
+
 \index{simple rules}
 
 Given a simple world, a simple set of rules, and only one moving part,
@@ -5100,14 +5107,9 @@ moves in a seemingly random pattern for more than 10 000 steps
 before it enters a cycle with a period of 104 steps.  After
 each cycle, the ant is translated diagonally, so it leaves
 a trail called the ``highway''.
+
 \index{complex behavior}
 \index{period}
-
-If you start with multiple Turmites, they interact with each
-other in seemingly complex ways.  If one Turmite is on the
-highway, another can follow it, overtake it, and cause it to
-reverse its pattern, moving back up the highway and leaving
-only white cells behind.
 
 Write an implementation of Langton's Ant.
 
@@ -5331,7 +5333,7 @@ the top and bottom row of the grid.
 \index{grid}
 
 To model the porosity of the material, it is common to define
-a parameter, $p$, which the probability that any cell (or bond)
+a parameter, $p$, which is the probability that any cell (or bond)
 is porous.  For a given value of $p$, you can estimate
 $R(p)$, which is the probability that there is a spanning cluster,
 by generating a large number of random grids and computing the
@@ -5352,8 +5354,7 @@ increases quickly from near 0 to near 1.
 The paper ``Efficient Monte Carlo Algorithm and High-Precision Results
 for Percolation'', by Newman and Ziff, presents an efficient algorithm
 for checking whether there is a path through a grid.  You can download
-this paper from \url{http://arxiv.org/abs/cond-mat/0005264}.
-Read it
+this paper from \url{http://arxiv.org/abs/cond-mat/0005264}.  Read the
 paper, implement their algorithm, and see if you can reproduce their
 Figure 2(a).
 
@@ -5365,6 +5366,7 @@ Figure 2(a).
     these terms in statistical mechanics at
     \url{http://en.wikipedia.org/wiki/Statistical_mechanics}.  Which one is
   easier to estimate by Monte Carlo simulation?
+
 \index{microcanonical ensemble}
 \index{canonical ensemble}
 
