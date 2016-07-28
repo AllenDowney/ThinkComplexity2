@@ -26,28 +26,27 @@ ffmpeg.  On Ubuntu and Linux Mint, the following should work.
 """
 
 class Life:
-    """Implements Conway's Game of Life.
+    """Implements Conway's Game of Life."""
 
-    n:     the number of rows and columns
-    """
+    kernel = np.array([[1, 1, 1],
+                       [1,10, 1],
+                       [1, 1, 1]])
+
     table = np.zeros(20, dtype=np.uint8)
     table[[3, 12, 13]] = 1
 
     def __init__(self, n, m=None):
-        """Attributes:
-        n:      number of rows and columns
+        """Initializes the attributes.
+
+        n: number of rows
+        m: number of columns
         """
         m = n if m is None else m
-        self.n = n
-        self.m = m
         self.array = np.zeros((n, m), np.uint8)
-        self.kernel = np.array([[1, 1, 1],
-                                [1,10, 1],
-                                [1, 1, 1]])
 
     def add_cells(self, row, col, *strings):
         """Adds cells at the given location.
-        
+
         row: top row index
         col: left col index
         strings: list of strings of 0s and 1s
@@ -62,89 +61,111 @@ class Life:
 
 
 class LifeViewer:
-    """Generates an animated view of the grid."""
-    def __init__(self, life):
-        self.life = life
+    """Generates an animated view of an array image."""
+
+    cmap = plt.get_cmap('Greens')
+
+    def __init__(self, viewee):
+        self.viewee = viewee
         self.im = None
-    
+        self.hlines = None
+        self.vlines = None
+
+    def step(self):
+        """Advances the viewee one step."""
+        self.viewee.step()
+
     def draw(self, grid=False):
         """Updates the display with the state of the grid."""
-        a = self.life.array
-        cmap = plt.get_cmap('Greens')
-        self.im = plt.imshow(a, cmap=cmap, interpolation='none')
+        self.draw_array()
         if grid:
-            n, m = self.life.n, self.life.m
-            lw = 2 if m < 10 else 1
-            rows = np.arange(n-1) + 0.5 - lw/200 
-            plt.hlines(rows, -0.5, m-0.5, color='white', linewidth=lw)
+            self.draw_grid()
 
-            cols = np.arange(m-1) + 0.5 - lw/200
-            plt.vlines(cols, -0.5, n-0.5, color='white', linewidth=lw)
-
+    def draw_array(self):
+        """Draws the cells."""
+        a = self.viewee.array
+        n, m = a.shape
+        plt.axis([0, m, 0, n])
         plt.xticks([])
         plt.yticks([])
 
+        self.im = plt.imshow(a, cmap=self.cmap,
+                             interpolation='none',
+                             vmin=0, vmax=1,
+                             extent=[0, m, 0, n])
+
+    def draw_grid(self):
+        """Draws the grid."""
+        a = self.viewee.array
+        n, m = a.shape
+        lw = 2 if m < 10 else 1
+        options = dict(color='white', linewidth=lw)
+
+        rows = np.arange(1, n)
+        self.hlines = plt.hlines(rows, 0, m, **options)
+
+        cols = np.arange(1, m)
+        self.vlines = plt.vlines(cols, 0, n, **options)
+
     def animate(self, frames=20, interval=200, grid=False):
         """Creates an animation.
-        
+
         frames: number of frames to draw
         interval: time between frames in ms
         """
         fig = plt.figure()
         self.draw(grid)
-        anim = animation.FuncAnimation(fig, self.animate_func, 
+        anim = animation.FuncAnimation(fig, self.animate_func,
+                                       init_func=self.init_func,
                                        frames=frames, interval=interval)
         return anim
 
+    def init_func(self):
+        """Called at the beginning of an animation."""
+        pass
+
     def animate_func(self, i):
         """Draws one frame of the animation."""
-        if i > 0:
-            self.life.step()
-        a = self.life.array
+        self.viewee.step()
+        a = self.viewee.array
         self.im.set_array(a)
         return (self.im,)
 
-glider_gun = [
-    '000000000000000000000000100000000000',
-    '000000000000000000000010100000000000',
-    '000000000000110000001100000000000011',
-    '000000000001000100001100000000000011',
-    '110000000010000010001100000000000000',
-    '110000000010001011000010100000000000',
-    '000000000010000010000000100000000000',
-    '000000000001000100000000000000000000',
-    '000000000000110000000000000000000000'
-]
-
-lwss = [
-    '0001',
-    '00001',
-    '10001',
-    '01111'
-]
-
-bhep = [
-    '1',
-    '011',
-    '001',
-    '001',
-    '01'
-]
 
 def main(script, *args):
-    n = 200
-    m = 1000
+    """Constructs a puffer train.
+
+    Uses the entities in this file:
+    http://www.radicaleye.com/lifepage/patterns/puftrain.lif
+    """
+
+    lwss = [
+        '0001',
+        '00001',
+        '10001',
+        '01111'
+    ]
+
+    bhep = [
+        '1',
+        '011',
+        '001',
+        '001',
+        '01'
+    ]
+
+    n = 400
+    m = 600
     life = Life(n, m)
-    #life.add_cells(n//2, n//2, '11101', '1', '00011', '01101', '10101')
-    #life.add_cells(n//2, n//2, *glider_gun)
-    x = 100
-    life.add_cells(x, n//2-8, *lwss)
-    life.add_cells(x, n//2+6, *lwss)
-    life.add_cells(x, n//2-1, *bhep)
+    col = 120
+    life.add_cells(n//2+12, col, *lwss)
+    life.add_cells(n//2+26, col, *lwss)
+    life.add_cells(n//2+19, col, *bhep)
     viewer = LifeViewer(life)
     anim = viewer.animate(frames=100, interval=0)
     plt.subplots_adjust(left=0.01, right=0.99, bottom=0.01, top=0.99)
     plt.show()
+
 
 if __name__ == '__main__':
     main(*sys.argv)
