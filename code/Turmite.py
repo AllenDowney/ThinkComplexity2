@@ -15,7 +15,7 @@ import matplotlib.pyplot as plt
 
 from matplotlib.patches import RegularPolygon
 
-from Life import LifeViewer
+from Cell2D import Cell2DViewer
 
 """
 For animation to work, you might have to install
@@ -69,13 +69,13 @@ class Turmite:
         self.loc = self.loc[0] + move[0], self.loc[1] + move[1]
 
 
-class TurmiteViewer(LifeViewer):
+class TurmiteViewer(Cell2DViewer):
     """Generates an animated view of the grid."""
 
     cmap = plt.get_cmap('Oranges')
 
     def __init__(self, viewee):
-        LifeViewer.__init__(self, viewee)
+        Cell2DViewer.__init__(self, viewee)
         self.viewee = viewee
         self.arrow = None
 
