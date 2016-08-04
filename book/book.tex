@@ -21,7 +21,7 @@
 \newcommand{\thetitle}{Think Complexity}
 \newcommand{\thesubtitle}{Exploring Complexity Science in Python}
 \newcommand{\theauthors}{Allen B. Downey}
-\newcommand{\theversion}{2.0.6}
+\newcommand{\theversion}{2.0.7}
 
 %%%% Both LATEX and PLASTEX
 
@@ -989,6 +989,7 @@ chapter again.
 
 
 \chapter{Graphs}
+\label{graphs}
 
 \newcommand{\Erdos}{Erd\H{o}s}
 \newcommand{\Renyi}{R\'{e}nyi}
@@ -1227,6 +1228,7 @@ can be any hashable type.
 
 
 \section{Random graphs}
+\label{randomgraphs}
 
 A random graph is just what it sounds like: a graph with nodes and edges
 generated at random.  Of course, there are many random processes that
@@ -3557,6 +3559,7 @@ CAs, but I will not address them here.
 
 
 \section{Wolfram's experiment}
+\label{onedim}
 
 The CA in the previous section had only one cell, so we can think of
 it as zero-dimensional, and it wasn't very interesting.  In the rest
@@ -4224,15 +4227,15 @@ Inside \py{step} we loop through the elements of row \py{i}.  Each
 element is the sum of three elements from the previous row, mod 2.
 
 
-\section{Convolution}
-\label{convolution}
+\section{Cross-correlation}
+\label{cross-correlation}
 
 The \py{step} function in the previous section is simple, but it is
 not very fast.  In general, we can speed up operations like this
 if we can replace \py{for} loops with NumPy operations, because 
 \py{for} loops incur a lot of overhead in the Python interpreter.
 In this section I'll show how we can speed up \py{step} using the
-NumPy function \py{convolve}.
+NumPy function \py{correlate}.
 
 First, instead of using a slice operator to select a neighborhood,
 we can use array multiplication.  Specifically,
@@ -4285,23 +4288,22 @@ beginning, but that doesn't affect this function).
 
 \py{step2} yields the same results as \py{step}.  It is still not
 very fast, but it is a step in the right direction because the
-operation we just performed is {\bf convolution}.
-
-This operation---multiplying by a window, summing
+operation we just performed---multiplying by a window, summing
 the result, shifting the window, and repeating---is used for a
-variety of applications, so NumPy provides
-a function called \py{convolve} that computes it.
+variety of applications.  It is called {\bf cross-correlation},
+and NumPy provides
+a function called \py{correlate} that computes it.
 
 We can use it to write faster, simpler version of \py{step}:
 
 \begin{code}
 def step3(array, i):
     window = np.array([1, 1, 1])
-    array[i] = np.convolve(array[i-1], window, mode='same') % 2
+    array[i] = np.correlate(array[i-1], window, mode='same') % 2
 \end{code}
 
 When we use
-\py{np.convolve}, the window does not have to be the same size as
+\py{np.correlate}, the window does not have to be the same size as
 \py{array}, so making the window is a little simpler.
 
 The \py{mode} parameter determines the size of the result.  You can
@@ -4317,23 +4319,23 @@ works if the CA rule only depends on the sum of the neighbors, but
 most rules also depend on which neighbors are on and off.  For
 example, \py{100} and \py{001} might yield different results.
 
-We can make \py{step} more general using a window with
-elements \py{[1, 2, 4]}, which interprets the neighborhood as a binary
-number.  For example, the neighborhood \py{100} yields 1; \py{010} yields 2,
-and \py{001} yields 4.
-Then we can take these results and look them up in the rule table.
+We can make \py{step} more general using a window with elements
+\py{[4, 2, 1]}, which interprets the neighborhood as a binary number.
+For example, the neighborhood \py{100} yields 4; \py{010} yields 2,
+and \py{001} yields 1.  Then we can take these results and look them
+up in the rule table.
 
 Here's the more general version of \py{step}:
 
 \begin{code}
 def step4(array, i):
-    window = np.array([1, 2, 4])
-    convolved = np.convolve(array[i-1], window, mode='same')
-    array[i] = table[convolved]
+    window = np.array([4, 2, 1])
+    corr = np.correlate(array[i-1], window, mode='same')
+    array[i] = table[corr]
 \end{code}
 
 The first two lines are almost the same.  The last line looks
-up each element from \py{convolved} in \py{table} and assigns the
+up each element from \py{corr} in \py{table} and assigns the
 results to \py{array[i]}.
 
 Finally, here's the function that computes the table:
@@ -4506,13 +4508,13 @@ Rule 110, GoL turns out to be universal; that is, it can compute
 any computable function, at least in theory.
 
 Complex behavior in GoL raises issues in the philosophy of
-science, in particular scientific realism and instrumentalism.
+science, particularly related to scientific realism and instrumentalism.
 I discuss these issues and suggest additional reading.
 
-At the end of the chapter, I present several ways to implement
+At the end of the chapter, I demonstrate ways to implement
 GoL efficiently in Python.
 
-The code for this chapter is in {\tt chap05.ipynb} in the repository
+The code for this chapter is in {\tt chap06.ipynb} in the repository
 for this book.  More information about working with the code is
 in Section~\ref{???}.
 
@@ -4549,11 +4551,10 @@ is sometimes called a ``Moore neighborhood''.
 Like the 1-D CAs in the previous chapters, the Game of Life evolves
 over time according to rules, which are like simple laws of physics.
 
-In GoL, the next state of each cell depends on its current state
-and its number of live neighbors.
-If a cell is alive, it survives if it has 2 or 3 neighbors, and
-dies if it has more or fewer.  If a cell is dead, it stays dead
-unless it has exactly 3 neighbors.
+In GoL, the next state of each cell depends on its current state and
+its number of live neighbors.  If a cell is alive, it survives if it
+has 2 or 3 neighbors and dies otherwise.  If a cell is
+dead, it stays dead unless it has exactly 3 neighbors.
 
 The following table summarizes the rules:
 
@@ -4591,17 +4592,17 @@ spaceships in Wolfram's Rule 110 CA.
 \index{Turing complete}
 \index{universal}
 
-\item Conway posed an intriguing conjecture---that there is
+\item Another factor that generated interest was Conway's
+conjecture---that there is
 no initial condition that yields unbounded growth in the number
-of live cells---and offered \$50 to anyone who could prove
+of live cells---and the \$50 bounty he offered to anyone who could prove
 or disprove it.
 
 \index{unbounded}
 
-\item The increasing availability of computers makes it possible
-to automate the computation and display the results graphically.
-That turns out to be more fun than Conway's original implementation
-using a checkerboard.
+\item Finally, the increasing availability of computers made it
+  possible to automate the computation and display the results
+  graphically.
 
 \end{itemize}
 
@@ -4633,15 +4634,15 @@ these patterns and given them names.
 
 \index{Game of Life patterns}
 
-For example, Figure~\ref{chap06-1} shows a pattern called a
-``beehive'' that is stable.  Every cell in the beehive
+For example, Figure~\ref{chap06-1} shows a stable pattern called a
+``beehive''.  Every cell in the beehive
 has 2 or 3 neighbors, so they all survive, and none of the dead
-cells adjacent to the beehive have 3 neighbors, so no new cells
+cells adjacent to the beehive has 3 neighbors, so no new cells
 are born.
 
 Other patterns ``oscillate''; that is, they change over time but
-eventually return to their starting configuration, provided that
-they don't collide with another pattern.  For example,
+eventually return to their starting configuration (provided
+they don't collide with another pattern).  For example,
 Figure~\ref{chap06-2} shows a pattern called a ``toad'', which
 is an oscillator that alternates between two states.  The
 ``period'' of this oscillator is 2.
@@ -4650,9 +4651,9 @@ is an oscillator that alternates between two states.  The
 
 Finally, some patterns oscillate and return to the starting
 configuration, but shifted in space.  Because these patterns 
-seem to move through space, they are called ``spaceships''.
+seem to move, they are called ``spaceships''.
 
-Figure~\ref{chap06-3} shows a particular spaceship called a
+Figure~\ref{chap06-3} shows a spaceship called a
 ``glider''.  After a period of 4 steps, the glider is back in the
 starting configuration, shifted one unit down and to the right.
 
@@ -4666,6 +4667,8 @@ move horizontally and vertically.
 People have spent embarrassing
 amounts of time finding and naming these patterns.  If you search
 the web, you will find many collections.
+
+\section{Conway's conjecture}
 
 From most initial conditions, GoL quickly reaches a stable
 state where the number of live cells is nearly constant
@@ -4697,16 +4700,14 @@ gliders, 8 blocks, 4 blinkers, 4 beehives, 1 boat, 1 ship, and 1 loaf.
 \index{r-pentomino}
 
 
-\section{Conway's conjecture}
-
 \begin{figure}
 \centerline{\includegraphics[height=1.75in]{figs/chap06-5.pdf}}
 \caption{Gosper's glider gun, which produces a stream of gliders.}
 \label{chap06-5}
 \end{figure}
 
-The existence of long-lived patterns brings us back to Conway's
-question: are there initial patterns that never stabilize?  Conway
+The existence of long-lived patterns prompted Conway to wonder if
+there are initial patterns that never stabilize.  He
 conjectured that there were not, but he described two kinds of pattern
 that would prove him wrong, a ``gun'' and a ``puffer train''.  A gun
 is a stable pattern that periodically produces a spaceship---as the
@@ -4727,14 +4728,14 @@ Gosper also discovered the first puffer train.
 There are many patterns of both types, but they are not easy to
 design or find.  That is not a coincidence.  Conway chose the
 rules of GoL so that his conjecture would not be obviously
-true or false.  Of all the possible rules for a 2-D CA, most
+true or false.  Of all possible rules for a 2-D CA, most
 yield simple behavior: most initial conditions stabilize quickly
 or grow unboundedly.  By avoiding uninteresting CAs, Conway
 was also avoiding Wolfram's Class 1 and Class 2 behavior, and
 probably Class 3 as well.
 
 If we believe Wolfram's Principle of Computational Equivalence, we
-expect GoL to be in Class 4.  And it is.  The Game of Life was proved
+expect GoL to be in Class 4, and it is.  The Game of Life was proved
 Turing complete in 1982 (and again, independently, in 1983).
 Since then, several people have constructed GoL patterns that implement
 a Turing machine or another machine known to be Turing complete.
@@ -4754,6 +4755,7 @@ they are not even made up of the same cells over time.  So these
 patterns are like constellations of stars.  We perceive them because
 we are good at seeing patterns, or because we have active
 imaginations, but they are not real.
+
 \index{realism}
 
 Right?
@@ -4789,11 +4791,14 @@ scene.
 {\bf Scientific realism} pertains to scientific theories and the
 entities they postulate.
 A theory postulates an entity if it is
-expressed in terms of the properties and behavior of the entity.  For
-example, Mendelian genetics postulates a ``gene'' as a unit that
-controls a heritable characteristic.  Eventually we discovered that
-genes are encoded in DNA, but for about 50 years, a gene was just a
-postulated entity.  See \url{http://en.wikipedia.org/wiki/Gene}.
+expressed in terms of the properties and behavior of the entity.  
+For example, theories about electromagnetism are expressed in
+terms of electrical and magnetic fields.  Some theories about economics
+are expressed in terms of supply, demand, and market forces.
+And theories about biology are expressed in terms of genes.
+
+But are these entities real?  That is, do they exist in the world
+independent of us and our theories?
 
 \index{gene}
 \index{postulated entity}
@@ -4866,10 +4871,10 @@ the following statements:
 \index{Superego}
 
 \begin{quote}
-``Electrons are postulated entities in our best theories of
-electro-magnetism, but they aren't real.  We could construct
-other theories, without postulating electrons, that would be
-just as useful.''
+``Electric and magnetic fields are postulated entities in our best
+  theories of electromagnetism, but they aren't real.  We could
+  construct other theories, without postulating fields, that would be
+  just as useful.''
 \end{quote}
 
 \index{electron}
@@ -4910,9 +4915,15 @@ For more on instrumentalism, see
 
 \section{Implementing Life}
 
-To represent an array of cells, I'll use a NumPy array with type {\tt
-  uint8}, which is an 8-bit unsigned integer.  As an example, I'll
-start with random cells:
+The exercises at the end of this chapter ask you to experiment
+with and modify the Game of Life, and implement other 2-D cellular
+automata.  This section explains my implementation of GoL, which
+you can use as a starting place for your experiments.
+
+To represent the state of the cells, I use a NumPy array with type {\tt
+  uint8}, which is an 8-bit unsigned integer.  As an example, the
+following line creates a 10 by 10 array initialized with random
+values of 0 and 1.
 
 \begin{code}
 a = np.random.randint(2, size=(10, 10)).astype(np.uint8)
@@ -4938,37 +4949,37 @@ for i in range(1, rows-1):
                 b[i, j] = 1
 \end{code}
 
-Initially, \py{b} is an array of zeros with the same size as \py{a}.  Each
-time through the loop, \py{state} is the condition of the center cell and
-\py{neighbors} is the 3x3 neighborhood.  \py{k} is the number of neighbors
-(not including the center cell).
-The nested \py{if} statements evaluate the GoL rules and turn on cells
-in \py{b} accordingly.
+Initially, \py{b} is an array of zeros with the same size as \py{a}.
+Each time through the loop, \py{state} is the condition of the center
+cell and \py{neighbors} is the 3x3 neighborhood.  \py{k} is the number
+of live neighbors (not including the center cell).  The nested \py{if}
+statements evaluate the GoL rules and turn on cells in \py{b}
+accordingly.
 
 This implementation is a straightforward translation of the rules, but
-it is verbose and slow.  We can do better using convolution, as we saw
-in Section~\ref{convolution}.  There, we used \py{np.convolve} to compute
-a 1-D convolution.  Now, to perform 2-D convolution, we'll use
-\py{convolve2d} from \py{scipy.signal}, a SciPy module that provides
-functions related to signal processing:
+it is verbose and slow.  We can do better using cross-correlation, as
+we saw in Section~\ref{cross-correlation}.  There, we used
+\py{np.correlate} to compute a 1-D correlation.  Now, to perform 2-D
+correlation, we'll use \py{correlate2d} from \py{scipy.signal}, a
+SciPy module that provides functions related to signal processing:
 
 \begin{code}
-from scipy.signal import convolve2d
+from scipy.signal import correlate2d
 
 kernel = np.array([[1, 1, 1],
                    [1, 0, 1],
                    [1, 1, 1]])
 
-c = convolve2d(a, kernel, mode='same')
+c = correlate2d(a, kernel, mode='same')
 \end{code}
 
-What we called a ``window'' in the context of 1-D convolution is
-called a ``kernel'' in the context of 2-D convolution, but the idea
-is the same:  \py{convolve2d} multiplies the kernel and the array to
+What we called a ``window'' in the context of 1-D correlation is
+called a ``kernel'' in the context of 2-D correlation, but the idea
+is the same:  \py{correlate2d} multiplies the kernel and the array to
 select a neighborhood, then adds up the result.  This kernel selects
 the 8 neighbors that surround the center cell.
 
-\py{convolve2d} applies the kernel to each location in the array; with
+\py{correlate2d} applies the kernel to each location in the array.  With
 \py{mode='same'}, the result has the same size as \py{a}.
 
 Now we can use logical operators to compute the rules:
@@ -4978,11 +4989,12 @@ b = (c==3) | (c==2) & a
 b = b.astype(np.uint8)
 \end{code}
 
-The first line computes a boolean array with \py{True} where there should
-be a live cell and \py{False} elsewhere.  Then \py{astype} converts the boolean
-array to an array of integers.
+The first line computes a boolean array with \py{True} where there
+should be a live cell and \py{False} elsewhere.  Then \py{astype}
+converts the boolean array to an array of integers.
 
-This version is faster, but we can simplify it slightly by modifying the
+This version is faster, and probably good enough,
+but we can simplify it slightly by modifying the
 kernel:
 
 \begin{code}
@@ -4990,7 +5002,7 @@ kernel = np.array([[1, 1, 1],
                    [1,10, 1],
                    [1, 1, 1]])
 
-c = convolve2d(a, kernel, mode='same')
+c = correlate2d(a, kernel, mode='same')
 b = (c==3) | (c==12) | (c==13)
 b = b.astype(np.uint8)
 \end{code}
@@ -4998,22 +5010,22 @@ b = b.astype(np.uint8)
 This version of the kernel includes the center cell and gives it a 
 weight of 10.  If the center cell is 0, the result is between 0 and 8;
 if the center cell is 1, the result is between 10 and 18.
-
 Using this kernel, we can simplify the logical operations, selecting
-only cells with the values 3, 12, and 13.  This version is not
-substantially better than the previous one, but it allows one more
+only cells with the values 3, 12, and 13.  
+
+That might not seem like a big improvement, but it allows one more
 simplification: with this kernel, we can use a table to look up 
 cell values, as we did in Section~\ref{tables}.
 
 \begin{code}
 table = np.zeros(20, dtype=np.uint8)
 table[[3, 12, 13]] = 1
-c = convolve2d(a, kernel, mode='same')
+c = correlate2d(a, kernel, mode='same')
 b = table[c]
 \end{code}
 
-\py{table} has zeros everywhere except locations 3, 12, and 13.
-When we use \py{c} as an index into \py{table}, NumPy performs elementwise
+\py{table} has zeros everywhere except locations 3, 12, and 13.  When
+we use \py{c} as an index into \py{table}, NumPy performs element-wise
 lookup; that is, it takes each value from \py{c}, looks it up in
 \py{table}, and puts the result into \py{b}.
 
@@ -5071,6 +5083,29 @@ and run it.
 
 \begin{exercise}
 
+In my implementation, the \py{Life} class is based on a parent class
+called \py{Cell2D}, and \py{LifeViewer} is based on \py{Cell2DViewer}.  You can
+use these base classes to implement other 2-D cellular automatons.
+
+For example, one variation of GoL, called ``Highlife'', has the
+same rules as GoL, plus one additional rule: a dead cell with 6
+neighbors comes to life.
+
+Write a class named \py{Highlife} that inherits from \py{Cell2D} and implements
+this version of the rules.  Also write a class named \py{HighlifeViewer}
+that inherits from \py{Cell2DViewer} and try different ways
+to visualize the results.  As a simple example, use a different
+color map.
+
+One of the more interesting patterns in Highlife is the replicator.
+Use \py{add_cells} to initialize Highlife with a replicator and see what it
+does.
+
+\end{exercise}
+
+
+\begin{exercise}
+
 If you generalize the Turing machine to two dimensions, or
 add a read-write head to a 2-D CA, the result is a
 cellular automaton called a Turmite.  It is named after a
@@ -5118,126 +5153,590 @@ Write an implementation of Langton's Ant.
 
 
 
-\chapter{Fractals}
-\label{fractals}
+\chapter{Physical modeling}
+\label{modeling}
 
-To understand fractals, we have to start with dimensions.  The
-dimension of a space is the number of coordinates we need to specify a
-point in a space.  A number line takes one coordinate, a Euclidean
-plane takes 2, a solid takes 3, etc.  See
-\url{http://en.wikipedia.org/wiki/Dimension}.
-\index{fractals}
-\index{dimension}
-\index{geometric objects}
+The cellular automatons we have seen so far are not physical models;
+that is, they are not intended to describe systems in the real world.
+But some CAs are intended as physical models.
+
+In this chapter we consider a CA that models chemicals that diffuse (spread
+out) and react with each other, which is a process Alan Turing proposed
+to explain how some animal patterns develop.
+
+And we'll experiment with a CA that models percolation of liquid
+through porous material, like water through coffee grounds.  This
+model is the first of several models that exhibit {\bf phase change}
+behavior and {\bf fractal geometry}, and I'll explain what both of
+those mean.
+
+The code for this chapter is in {\tt chap07.ipynb} in the repository
+for this book.  More information about working with the code is
+in Section~\ref{???}.
+
+
+\section{Diffusion}
+
+In 1952 Alan Turing published a paper called ``The chemical basis
+of morphogenesis'', which describes the behavior of systems involving
+two chemicals that diffuse in space and react with each other.  He
+showed that these systems produce a wide range of patterns, depending
+on the diffusion and reaction rates, and conjectured that systems
+like this might be an important mechanism in biological growth processes,
+particularly the development of animal coloration patterns.
+
+Turing's model is based on differential equations, but it can also
+be implemented using a cellular automaton.
+
+But before we get to Turing's model, we'll start with something simpler:
+a diffusion system with just one chemical.  We'll use a 2-D CA where the
+state of each cell is a continuous quantity (usually between 0 and 1)
+that represents the concentration of the chemical.
+
+We'll model the diffusion process by comparing each cell with the
+average of its neighbors.  If the concentration of the center cell
+exceeds the neighborhood average, the chemical flows from the center
+to the neighbors.  If the concentration of the center cell is lower,
+the chemical flows the other way.
+
+The following kernel computes the difference between each cell
+and the average of its neighbors:
+
+\begin{code}
+    kernel = np.array([[0, 1, 0],
+                       [1,-4, 1],
+                       [0, 1, 0]])
+\end{code}
+
+Using \py{np.correlate2d}, we can apply this kernel to each cell
+in an array:
+
+\begin{code}
+    c = correlate2d(array, kernel, mode='same')
+\end{code}
+
+We'll use a diffusion constant, \py{r}, that relates the difference
+in concentration to the rate of flow:
+
+\begin{code}
+    array += r * c
+\end{code}
+
+\begin{figure}
+\centerline{\includegraphics[height=2in]{figs/chap07-1.pdf}}
+\caption{A simple diffusion model after 0, 5, and 10 steps.}
+\label{chap07-1}
+\end{figure}
+
+Figure~\ref{chap07-1} show results for a CA with \py{n=9}, \py{r=0.1}
+and initial concentration 0 everywhere except for an ``island'' in the
+middle.  The figure shows the starting configuration and the state of
+the CA after 5 and 10 steps.  The chemical spreads from the center
+outward, continuing until the concentration is the same everywhere.
+
+
+\section{Reaction-diffusion}
+
+Now let's add a second chemical.  I'll define a new object,
+\py{ReactionDiffusion}, that contains two arrays, one for each
+chemical:
+
+\begin{code}
+class ReactionDiffusion(Cell2D):
+
+   def __init__(self, n, m, params):
+        self.params = params
+        self.array = np.ones((n, m), dtype=float)
+        self.array2 = np.zeros((n, m), dtype=float)
+        island(self.array2, val=0.1, noise=0.1)
+\end{code}
+
+\py{n} and \py{m} are the number of rows and columns in the array.
+\py{params} is a tuple of parameters, which I explain below.
+
+\py{array} represents the concentration of the first chemical, \py{A},
+which is initially 1 everywhere.
+
+\py{array2} represents the concentration of \py{B}, which is initially
+0 everywhere except an island in the middle, which is initialized
+by \py{island}:
+
+\begin{code}
+def island(a, val, noise):
+    n, m = a.shape
+    r = min(n, m) // 20
+    a[n//2-r:n//2+r, m//2-r:m//2+r] = val
+    a += noise * np.random.random((n, m))
+\end{code}
+
+The radius of the island, \py{r}, is one twentieth of \py{n} or \py{m},
+whichever is smaller.  The height of the island is \py{val}, which is 0.1
+in the example.  Also, random uniform noise, with values from 0 to
+\py{noise}, is added to the entire array.
+
+And here is the \py{step} function that updates the arrays:
+
+\begin{code}
+    def step(self):
+        """Executes one time step."""
+        A = self.array
+        B = self.array2
+        ra, rb, f, k = self.params
+        
+        cA = correlate2d(A, self.kernel, **self.options)
+        cB = correlate2d(B, self.kernel, **self.options)
+
+        reaction = A * B**2
+        self.array += ra * cA - reaction + f * (1-A) 
+        self.array2 += rb * cB + reaction - (f+k) * B
+\end{code}
+
+The parameters are
+
+\begin{description}
+
+\item[\py{ra}:] The diffusion rate of \py{A} (analogous to \py{r} in the
+previous section).
+
+\item[\py{rb}:] The diffusion rate of \py{B}.  In most versions of
+this model, \py{rb} is about half of \py{ra}.
+
+\item[\py{f}:] The ``feed'' rate, which controls how quickly \py{A} is
+added to the system.
+
+\item[\py{k}:] The ``kill'' rate, which controls how quickly \py{B} is
+removed from the system.
+
+\end{description}
+
+Now let's look more closely at the update statements:
+
+\begin{code}
+        reaction = A * B**2
+        self.array += ra * cA - reaction + f * (1-A) 
+        self.array2 += rb * cB + reaction - (f+k) * B
+\end{code}
+
+The arrays \py{cA} and \py{cB} are the result of applying a diffusion
+kernel to \py{A} and \py{B}.  Multiplying by \py{ra} and \py{rb} yields
+the rate of diffusion into or out of each cell.
+
+The term \py{A * B**2} represents the rate that \py{A} and \py{B}
+react with each other.  Assuming that the reaction consumes \py{A} and
+produces \py{B}, we subtract this term in the first equation and add
+it in the second.
+
+The term \py{f * (1-A)} determines the rate that \py{A} is added to
+the system.  Where \py{A} is near 0, the maximum feed rate is \py{f}.
+Where \py{A} approaches 1, the feed rate drops off to zero.
+
+Finally, the term \py{(f+k) * B} determines the rate the \py{B} is
+removed from the system.  As \py{B} approaches 0, this rate goes
+to zero.
+
+As long as the rate parameters are not too high, the values of
+\py{A} and \py{B} usually stay between 0 and 1.
+
+\begin{figure}
+\centerline{\includegraphics[height=2in]{figs/chap07-2.pdf}}
+\caption{Reaction-diffusion model with parameters \py{f=0.035} and
+  \py{k=0.057} after 1000, 2000, and 4000 steps.}
+\label{chap07-2}
+\end{figure}
+
+With different parameters, this model can produce patterns similar
+to the stripes and spots on a variety of animals.  In some cases,
+the similarity is striking, especially when the feed and
+kill parameters vary in space.
+
+For all simulations in this section, \py{ra=0.5} and \py{rb=0.25}.
+
+Figure~\ref{chap07-2} shows results with \py{f=0.035} and
+\py{k=0.057}, with the concentration of \py{B} shown in darker colors.
+With these parameters, the system evolves toward a stable configuration
+with light spots of \py{A} on a dark background of \py{B}.
+
+\begin{figure}
+\centerline{\includegraphics[height=2in]{figs/chap07-3.pdf}}
+\caption{Reaction-diffusion model with parameters \py{f=0.055} and
+  \py{k=0.062} after 1000, 2000, and 4000 steps.}
+\label{chap07-3}
+\end{figure}
+
+Figure~\ref{chap07-3} shows results with \py{f=0.055} and
+\py{k=0.062} which yields a coral-like pattern of \py{B} on a background
+of \py{A}.
+
+\begin{figure}
+\centerline{\includegraphics[height=2in]{figs/chap07-4.pdf}}
+\caption{A reaction-diffusion model with parameters \py{f=0.039} and
+  \py{k=0.065} after 1000, 2000, and 4000 steps.}
+\label{chap07-4}
+\end{figure}
+
+Figure~\ref{chap07-4} shows results with \py{f=0.039} and
+\py{k=0.065}.  These parameters produce spots of \py{B} that grow and
+divide in a process that resembles mitosis, ending with a stable pattern
+of equally-spaced spots.
+
+Since 1952, observations and experiments have provides some support
+for Turing's conjecture.  At this point it seems likely, but not yet
+proven, that many animal patterns are actually formed by
+reaction-diffusion processes of some kind.
+
+
+\section{Percolation}
+
+Percolation is a process in which a fluid flows through a semi-porous
+material.  Examples include oil in rock formations, water in paper,
+and hydrogen gas in micropores.  Percolation models are also used to
+study systems that are not literally percolation, including epidemics
+and networks of electrical resistors.  See
+\url{http://en.wikipedia.org/wiki/Percolation_theory}.
+
+\index{percolation}
+
+Percolation models are often represented using random graphs like the
+ones we saw in Chapter~\ref{graphs}, but they can also be represented
+using cellular automatons.  In the next few sections we'll explore
+a 2-D CA that simulates percolation.
+
+In this model:
+
+\begin{itemize}
+
+\item Initially, each cell is either ``porous'' with probability \py{p} or
+``non-porous'', and all cells are considered ``dry'' except the top
+row, which is ``wet''.
+
+\item During each time step, if a porous cell has at least one wet neighbor,
+it becomes wet.  Non-porous cells stay dry.
+
+\item The simulation runs until it reaches a ``fixed point'' where no
+more cells change state.
+
+\end{itemize}
+
+If there is a path of wet cells from the top to the bottom row, we say
+that the CA has a ``percolating cluster''.
+
+One of the primary questions of interest regarding percolation is the
+probability of finding a percolating cluster and how it depends on
+\py{p}.  This question might remind you of Section~\ref{randomgraphs},
+where we computed the probability that a random \Erdos-\Renyi~graph is
+connected.  We will see several connections between that model and
+this one.
+
+I define a new class to represent a percolation model:
+
+\begin{code}
+class Percolation(Cell2D):
+
+    def __init__(self, n, m, p):
+        self.p = p
+        self.array = np.random.choice([0, 1], (n, m), p=[1-p, p])
+        self.array[0] = 5
+\end{code}
+
+\py{n} and \py{m} are the number of rows and columns in the CA.  \py{p}
+is the probability that a cell is porous.
+
+The state of the CA is stored in \py{array}, which is initialized
+using \py{np.random.choice} to choose 1 (porous) with probability
+\py{p}, and 0 (non-porous) with probability \py{1-p}.
+The state of the top row is set to 5, which represents a wet cell.
+
+During each time step, we check whether any porous cell has a wet
+neighbor, using a 4-cell neighborhood (not including the diagonals).
+Here is the kernel:
+
+\begin{code}
+    kernel = np.array([[0, 1, 0],
+                       [1, 0, 1],
+                       [0, 1, 0]])
+\end{code}
+
+And here is the \py{step} function:
+
+
+\begin{code}
+    def step(self):
+        a = self.array
+        c = correlate2d(a, self.kernel, mode='same')
+        self.array[(a==1) & (c>=5)] = 5
+\end{code}
+
+\py{correlate2d} adds up the state of the neighbors, which can only
+exceed 5 if at least one neighbor is wet.  The last line finds cells
+that are porous, \py{a==1}, with at least one wet neighbor, \py{c>=5},
+and sets their state to 5, which is wet.
+
+\begin{figure}
+\centerline{\includegraphics[height=2in]{figs/chap07-5.pdf}}
+\caption{The first three steps of a percolation model with \py{n=10} and
+\py{p=0.5}.}
+\label{chap07-5}
+\end{figure}
+
+Figure~\ref{chap07-5} shows the first few steps of a percolation model
+with \py{n=10} and \py{p=0.5}.  Non-porous cells are white, porous cells
+are lightly shaded, and wet cells are dark.
+
+
+\section{Phase change}
+
+Now let's test whether a CA contains a percolating cluster:
+
+\begin{code}
+def test_perc(perc):
+    num_wet = perc.num_wet()
+
+    num_steps = 0
+    while True:
+        perc.step()
+        num_steps += 1
+
+        if perc.bottom_row_wet():
+            return True, num_steps
+        
+        new_num_wet = perc.num_wet()
+        if new_num_wet == num_wet:
+            return False, num_steps
+
+        num_wet = new_num_wet
+\end{code}
+
+\py{test_perc} takes a \py{Percolation} object as a parameter.  Each
+time through the loop, it advances the CA one time step.  It
+checks the bottom row to see if any cells are wet; if so,
+it returns \py{True}, to indicate that there is a percolating cluster,
+and \py{num_steps}, which is the number of time steps it took to
+get to the bottom.
+
+During each time step, it also computes the number of wet cells and
+checks whether the number increased since the last step.  If not, we
+have reached a fixed point without finding a percolating cluster, so
+we return \py{False}.
+
+To estimate the probability of a percolating cluster, we generate
+many random initial configurations and test them:
+
+\begin{code}
+def estimate_prob_percolating(p=0.5, n=100, iters=100):
+    count = 0
+    for i in range(iters):
+        perc = Percolation(n, p=p)
+        flag, _ = test_perc(perc)
+        if flag:
+            count += 1
+        
+    return count / iters
+\end{code}
+
+\py{estimate_prob_percolating} makes 100 CAs with the given values of
+\py{p} and \py{n} and calls \py{test_perc} to see how many of them
+have a percolating cluster.  The return value is the fraction of CAs
+that do.
+
+When \py{p=0.55}, the probability of a percolating cluster is near 0.
+At \py{p=0.60}, it is about 70\%, and at \py{p=0.65} it is near 1.
+This rapid transition indicates that there is a critical value of 
+\py{p} near 0.6.
+
+We can estimate the critical value more precisely using a random
+walk.  Starting from an initial value of \py{p}, we construct a
+\py{Percolation} object and check whether it has a percolating cluster.
+If so, \py{p} is probably too high, so we decrease it.  If not,
+\py{p} is probably too low, so we increase it.
+
+Here's the code:
+
+\begin{code}
+def find_critical(p=0.6, n=100, iters=100):
+    ps = [p]
+    for i in range(iters):
+        perc = Percolation(n=n, p=p)
+        flag, _ = test_perc(perc)
+        if flag:
+            p -= 0.005
+        else:
+            p += 0.005
+        ps.append(p)
+    return ps
+\end{code}
+
+\py{find_critical} starts with the given value of \py{p} and adjusts
+up and down, returning the list of values.  With \py{n=100} the
+average of \py{ps} is about 0.59, and this critical value seems to
+be the same for values of \py{n} from 50 to 400.
+
+The rapid change in behavior near the critical value is
+called a {\bf phase change} by analogy with phase changes
+in physical systems, like the way water changes from liquid to
+solid at its freezing point.
+
+A wide variety of systems display a common set of behaviors and
+characteristics when they are at or near a critical point.
+These behaviors are known collectively as {\bf critical phenomena}.
+In the next section, we explore one of them: fractal geometry.
+
+
+\section{Fractals}
+
+To understand fractals, we have to start with dimensions.
 
 For simple geometric objects, dimension is defined in terms of scaling
-behavior; that is, how ``size'' depends on length, $l$.  For example,
-the area of a square is $l^2$; the exponent, 2, indicates that a
-square is 2-dimensional.  Similarly, the volume of a cube is $l^3$ and
-a cube is 3-dimensional.  A line has dimension 1 and, if we think of a
-point as infinitesimally small, it has dimension 0.
-\index{line}
-\index{square}
-\index{cube}
+behavior.  For example, if the side of a square has length $l$, its
+area is $l^2$.  The exponent, 2, indicates that a square is
+2-dimensional.  Similarly, if the side of a cube has length $l$, its
+volume is $l^3$, which indicates that a cube is 3-dimensional.
 
-{\bf Fractal dimension} is a more precise and more general extension
-of this definition.  There are several versions; the one I find
-easiest to understand and apply is the {\bf box-counting dimension},
-which is defined for a set, $S$, of points in a $d$-dimensional
-space.  See \url{http://en.wikipedia.org/wiki/Box-counting_dimension}.
+More generally, we can estimate the dimension of an object by
+measuring its ``size'' (by some definition) as a function of
+a linear measure.
+
+As an example, I'll estimate the dimension of a 1-D cellular
+automaton by measuring its area (total number of ``on'' cells)
+as a function of the number of rows.
+
 \index{fractal dimension}
-\index{box-counting dimension}
-
-\newcommand{\veps}{\varepsilon}
-
-To compute the box-counting dimension, we divide the space into a grid
-where the size of each cell is $\veps$.  Then we count $N(\veps)$,
-the number of cells that contain at least one element of $S$.  As
-$\veps$ gets smaller, $N(\veps)$ gets bigger.  For many objects
-the relationship has the form:
-
-\[ N(\veps) \sim \left( 1 / \veps \right)^D \]
-
-The box counting dimension, $D_{box}$, is defined to be the exponent, $D$.
-Taking the log of both sides and rearranging yields:
-
-\[ D_{box} = \frac{log N(\veps)}{log \left( 1 / \veps \right)} \]
-
-More formally, $D_{box}$ is the limit of this ratio as $\veps$ goes
-to zero.
-\index{log-log plot}
-
-
-\section{Fractal CAs}
 
 \begin{figure}
-\centerline{\includegraphics[height=0.7in]{figs/fractal-254-4.pdf}}
-\caption{Rule 254 after 4 timesteps.\label{fig.rule254.1}}
+\centerline{\includegraphics[height=2in]{figs/chap07-7.pdf}}
+\caption{One-dimensional CAs with rules 20, 50, and 18, after 32 time steps.}
+\label{chap07-7}
 \end{figure}
+
+Figure~\ref{chap07-7} shows three 1-D CAs like the ones we saw
+in Section~\ref{onedim}.  Rule 20 (left) generates
+a set of cells that seems linear, so we expect it to be one-dimensional.  Rule 50 (center) produces something like a triangle, so
+we expect it to be 2-D.  Rule 18 (right) also produces something like a
+triangle, but the density is not uniform, so its scaling behavior is
+not obvious.
+
+I'll estimate the dimension of these CAs with the following function,
+which counts the number of on cells after each time step.
+It returns a list of tuples, where each tuple contains $i$ and
+$i^2$, for purposes of comparison, and the total number of cells.
+
+\begin{code}
+def count_cells(rule, n=500):
+    ca = Cell1D(rule, n)
+    ca.start_single()
+    
+    res = []
+    for i in range(1, n):
+        cells = np.sum(ca.array)
+        res.append((i, i**2, cells))
+        ca.step()
+        
+    return res
+\end{code}
 
 \begin{figure}
-\centerline{\includegraphics[height=1.4in]{figs/fractal-254-8.pdf}}
-\caption{Rule 254 after 8 timesteps.\label{fig.rule254.2}}
+\centerline{\includegraphics[height=2in]{figs/chap07-8.pdf}}
+\caption{Number of ``on'' cells versus number of time steps for
+rules 20, 50, and 18.}
+\label{chap07-8}
 \end{figure}
 
-To investigate the behavior of fractal dimension, we'll apply it
-to cellular automatons.  Box-counting for CAs is simple; we
-just count the number of ``on'' cells in each time step and
-add them up.
-\index{fractal cellular automaton}
+Figure~\ref{chap07-8} shows the results plotted on a log-log scale.
 
-As an example, consider Rule 254.  Figure~\ref{fig.rule254.1} shows
-what it looks like after $t=4$ time steps.  And
-Figure~\ref{fig.rule254.2} shows what it looks like after $t=8$ time
-steps.  \index{Rule 254}
+In each figure, the top dashed line shows $y = i^2$.  Taking
+the log of both sides, we have $\log y = 2 \log i$.  Since the
+figure is on a log-log scale, the slope of this line is 2.
 
-As $t$ increases, we can imagine the triangle getting bigger,
-but for purposes of box-counting, it makes more sense to imagine
-the cells getting smaller.  In that case the size of the cells,
-$\veps$, is just $1/t$.
+Similarly, the bottom dashed line shows $y = i$.  On a log-log
+scale, the slope of this line is 1.
 
-After 1 time step, there is 1 black cell.  After 2 time steps, there
-are a total of 4, then 9, then 16, then 25.  As expected, the area
-of the triangle goes up quadratically.  More formally,
-$N(\veps) = \left( 1 / \veps \right)^2$, so $D_{box} = 2$.  And we conclude
-that a triangle is 2-dimensional.
+Rule 20 (left) produces 3 cells every 2 time steps, so the total number
+of cells after $i$ steps is $y = 1.5 i$.  Taking the log of both
+sides, we have $\log y = \log 1.5 + \log i$, so on a log-log
+scale, we expect a line with slope 1.  In fact, the estimated
+slope of the line is 1.01.
+
+Rule 50 (center) produces $i+1$ new cells during the $i$th time step,
+so the total number of cells after $i$ steps is $y = i^2 + i$.  If we
+ignore the second term and take the log of both sides, we have $\log y
+\sim 2 \log i$, so as $i$ gets large, we expect to see a line with
+slope 2.  In fact, the estimated slope is 1.97.
+
+Finally, for Rule 18 (right), the estimated slope is about 1.57, which
+is clearly not 1, 2, or any other integer.  This suggests that the
+pattern generated by Rule 18 has a ``fractional dimension''; that is,
+it is a fractal.
+
+
+\section{Fractals and Percolation Models}
+\label{fracperc}
 
 \begin{figure}
-\centerline{\includegraphics[height=2.5in]{figs/rule-18-64.pdf}}
-\caption{Rule 18 after 64 time steps.\label{fig.rule18.2}}
+\centerline{\includegraphics[height=2in]{figs/chap07-6.pdf}}
+\caption{Percolation models with \py{p=0.6} and \py{n=100},
+\py{200}, and \py{300}.}
+\label{chap07-6}
 \end{figure}
+
+Now let's get back to percolation models.  Figure~\ref{chap-7-6} shows
+clusters of wet cells in percolation simulations with \py{p=0.6} and
+\py{n=100}, \py{200}, and \py{300}.  Informally, they resemble fractal
+patterns seen in nature and in mathematical models.
+
+To estimate their fractal dimension, we can run CAs with
+a range of sizes, count the number of wet cells in each percolating
+cluster, and then see how the cell counts scale as we increase the
+size of the CA.
+
+The following loop runs the simulations:
+
+\begin{code}
+    for size in sizes:
+        perc = Percolation(size, p=p)
+        flag, _ = test_perc(perc)
+        if flag:
+            num_filled = perc.num_wet() - size
+            res.append((size, size**2, num_filled))
+\end{code}
+
+The result is a list of tuples where each tuple contains \py{size}
+and \py{size**2}, for comparison, and the number of cells in the
+percolating cluster (not including the initial wet cells in the top
+row).
 
 \begin{figure}
-\centerline{\includegraphics[width=3.5in]{figs/fractal_dim-18-64.pdf}}
-\caption{$N(\veps)$ versus $1/\veps$ for Rule 18.\label{fig.fractal}}
+\centerline{\includegraphics[height=2in]{figs/chap07-9.pdf}}
+\caption{Number of cells in the percolating cluster versus CA size.}
+\label{chap07-9}
 \end{figure}
 
-Rule 18 is more interesting.  Figure~\ref{fig.rule18.2} shows what it
-looks like after 64 steps.  And Figure~\ref{fig.fractal} shows
-$N(\veps)$ versus $1/\veps$ on a log-log scale.  \index{Rule 18}
+Figure~\ref{chap07-9} shows the results for a range of sizes from 10
+to 100.  The dots show the number of cells in each percolating
+cluster.  The slope of a line fitted to these dots is about 1.85,
+which indicates that the percolating cluster is, in fact, fractal when
+\py{p} is near the critical value.
 
-To estimate $D_{box}$ I fit a line to this curve; its slope is 1.56.
-$D_{box}$ is a non-integer, which means that this set of
-points is a {\bf fractal}.  As $t$ increases, the slope approaches
-$log 3 / log 2$, which is the fractal dimension of Sierpi\'{n}ski's
-triangle.  See \url{http://en.wikipedia.org/wiki/Sierpinski_triangle}.
-\index{fractal}
-\index{Sierpi\'{n}ski's triangle}
+When \py{p} is larger than the critical value, nearly every porous
+cell gets filled, so the number of wet cells is just \py{p * size^2},
+which has dimension 2.
+
+When \py{p} is substantially smaller than the critical value, the number
+of wet cells is proportional to the linear size of the CA, so it has
+dimension 1.
+
+
+\section{Exercises}
+
 
 \begin{exercise}
 
-Write a function that takes a CA object, plots $N(\veps)$ versus
-$1/\veps$, where $\veps = 1/t$, and estimates $D_{box}$.
+In Section~\ref{fracperc} we showed that the Rule 18 CA produces a fractal.
+Can you find other 1-D CAs that produce fractals?
 
-Can you find other CAs with non-integer fractal dimensions?  Be
-careful, you might have to run the CA for a while before
-$D_{box}$ converges.
-
-Here are some functions from \py{numpy} you might find useful:
-\py{cumsum}, \py{log}, and \py{polyfit}.
-\index{NumPy}
-
-You can download my solution from \url{fractal.py}.
+Note: the \py{Cell1D} object in \py{Cell1D.py} does not wrap around
+from the left edge to the right, which creates artifacts at the
+boundaries for some rules.  You might want to use \py{Wrap1D}, which
+is a child class of \py{Cell1D} that wraps around.  It is also defined
+in \py{Cell1D.py}.
 
 \end{exercise}
 
@@ -5267,14 +5766,13 @@ The rules of the CA are:
 
 \end{enumerate}
 
-Read about this model at
-\url{http://en.wikipedia.org/wiki/Forest-fire_model} and write a
-program that implements it.  You might want to start with a copy of
-\url{thinkcomplex.com/Life.py}.
+Write a program that implements this model.  You might want to inherit
+from `Cell2D`.  Typical values for the parameters are $p=0.01$ and
+$f=0.001$, but you might want to experiment with other values.
 
 Starting from a random initial condition, run the CA until it reaches
 a steady state where the number of trees no longer increases or
-decreases consistently.  You might have to tune $p$ and $f$.
+decreases consistently.
 
 In steady state, is the geometry of the forest fractal?
 What is its fractal dimension?
@@ -5282,102 +5780,6 @@ What is its fractal dimension?
 \end{exercise}
 
 
-\section{Percolation}
-
-Many of the CAs we have seen so far are not physical models; that is,
-they are not intended to describe systems in the real world.  But some
-CAs are designed explicitly as physical models.  In this section we
-consider a simple grid-based model of percolation; in the next chapter
-we see examples that model forest fires, avalanches, and earthquakes.
-\index{physical model} \index{forest fire} \index{avalanche}
-\index{earthquake}
-
-Percolation is a process in which a fluid flows through a semi-porous
-material.  Examples include oil in rock formations, water in paper,
-and hydrogen gas in micropores.  Percolation models are also used to
-study systems that are not literally percolation, including epidemics
-and networks of electrical resistors.  See
-\url{http://en.wikipedia.org/wiki/Percolation_theory}.
-\index{percolation}
-
-Percolation processes often exhibit a phase change; that is, an
-abrupt transition from one behavior (low flow) to another
-(high flow) with a small change in a continuous parameter (like
-the porosity of the material).  This transition is sometimes
-called a ``tipping point''.
-\index{tipping point}
-
-There are two common models of these systems: bond percolation
-and site percolation.  Bond percolation is based on a grid
-of sites, where each site is connected to four neighbors by
-a bond.  Each bond is either porous or non-porous.  A set of sites
-that are connected (directly or indirectly) by porous bonds is
-called a cluster.  In the vocabulary of graphs, a site is a vertex,
-a bond is an edge, and a cluster is a connected subgraph.
-\index{bond percolation}
-\index{site percolation}
-
-Site percolation is based on a grid of cells, where each cell
-represents a porous segment of the material or a non-porous segment.
-If two porous cells are adjacent, they are considered connected; a set
-of connected cells is considered a cluster.
-
-The rate of flow in a percolation system is primarily determined by
-whether or not the porous cells form a path all the way through the
-material, so it is useful to know whether a set of cells (or bonds)
-contains a ``spanning cluster''.  There are several
-definitions of a spanning cluster; the choice depends on the system
-you are trying to model. The simplest choice is a cluster that reaches
-the top and bottom row of the grid.
-\index{spanning cluster}
-\index{grid}
-
-To model the porosity of the material, it is common to define
-a parameter, $p$, which is the probability that any cell (or bond)
-is porous.  For a given value of $p$, you can estimate
-$R(p)$, which is the probability that there is a spanning cluster,
-by generating a large number of random grids and computing the
-fraction that contain a spanning cluster.  This way of estimating
-probabilities is called a ``Monte Carlo simulation'' because
-it a similar to a game of chance.
-\index{porosity}
-\index{Monte Carlo simulation}
-
-Percolation models are often used to compute a critical value,
-$p_c$, which is the fraction of porous segments where the phase
-change occurs; that is, where the probability of a spanning cluster
-increases quickly from near 0 to near 1.
-\index{critical value}
-
-\begin{exercise}
-
-The paper ``Efficient Monte Carlo Algorithm and High-Precision Results
-for Percolation'', by Newman and Ziff, presents an efficient algorithm
-for checking whether there is a path through a grid.  You can download
-this paper from \url{http://arxiv.org/abs/cond-mat/0005264}.  Read the
-paper, implement their algorithm, and see if you can reproduce their
-Figure 2(a).
-
-\begin{enumerate}
-
-\item What is the difference between what Newman and Ziff call the
-  ``microcanonical ensemble'' and the ``canonical
-  ensemble''?  You might find it useful to read about the use of
-    these terms in statistical mechanics at
-    \url{http://en.wikipedia.org/wiki/Statistical_mechanics}.  Which one is
-  easier to estimate by Monte Carlo simulation?
-
-\index{microcanonical ensemble}
-\index{canonical ensemble}
-
-\item What algorithm do they use to merge two clusters efficiently?
-
-\item What is the primary reason their algorithm is faster than the
-  simpler alternative?
-
-\end{enumerate}
-
-\end{exercise}
 
 
 
@@ -6377,6 +6779,8 @@ behavior of the flock?  Implement it and see.
 
 \section{Prisoner's Dilemma}
 \label{prisoners}
+
+% NOTE:  Use this: https://github.com/Axelrod-Python/Axelrod 
 
 The Prisoner's Dilemma is a topic of study in game theory, but
 it's not the fun kind of game.  Instead, it is the kind of game
