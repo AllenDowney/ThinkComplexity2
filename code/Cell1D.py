@@ -1,73 +1,84 @@
-""" Code example from Complexity and Computation, a book about
-exploring complexity science with Python.  Available free from
+""" Code from Think Complexity, 2nd Edition, by Allen Downey.
 
-http://greenteapress.com/complexity
+Available from http://greenteapress.com
 
-Copyright 2011 Allen B. Downey.
-Distributed under the GNU General Public License at gnu.org/licenses/gpl.html.
+Copyright 2016 Allen B. Downey.
+MIT License: https://opensource.org/licenses/MIT
 """
 
-import numpy
+import numpy as np
+import matplotlib.pyplot as plt
 
-class CA(object):
-    """A CA is a cellular automaton; the parameters for __init__ are:
+def make_table(rule):
+    """Makes the CA table for a given rule.
 
-    rule:  an integer in the range 0-255 that represents the CA rule
-           using Wolfram's encoding.
-    n:     the number of rows (timesteps) in the result.
-    ratio: the ratio of columns to rows.
+    rule: integer 0-255
+
+    returns: NumPy array of uint8
     """
+    rule = np.array([rule], dtype=np.uint8)
+    table = np.unpackbits(rule)[::-1]
+    return table
 
-    def __init__(self, rule, n=100, ratio=2):
-        """Attributes:
+
+class Cell1D:
+    """Represents a 1-D a cellular automaton"""
+
+    def __init__(self, rule, n, m=None):
+        """Initializes the CA.
+
+        rule: integer
+        n: number of rows
+        m: number of columns
+
+        Attributes:
         table:  rule dictionary that maps from triple to next state.
-        n, m:   are the number of rows, columns.
         array:  the numpy array that contains the data.
         next:   the index of the next empty row.
         """
-        self.table = self.make_table(rule)
+        self.table = make_table(rule)
         self.n = n
-        self.m = ratio*n + 1
-        self.array = numpy.zeros((n, self.m), dtype=numpy.int8)
-        self.next = 0
+        self.m = 2*n + 1 if m is None else m
 
-    def make_table(self, rule):
-        """Returns a table for the given CA rule.  The table is a 
-        dictionary that maps 3-tuples to binary values.
-        """
-        table = {}
-        for i, bit in enumerate(binary(rule, 8)):
-            t = binary(7-i, 3)
-            table[t] = bit
-        return table
+        self.array = np.zeros((n, self.m), dtype=np.int8)
+        self.next = 0
 
     def start_single(self):
         """Starts with one cell in the middle of the top row."""
-        self.array[0, self.m/2] = 1
+        self.array[0, self.m//2] = 1
         self.next += 1
 
     def start_random(self):
         """Start with random values in the top row."""
-        self.array[0] = numpy.random.random([1,self.m]).round()
+        self.array[0] = np.random.random(self.m).round()
+        self.next += 1
+
+    def start_string(self, init):
+        """Start with values from a string of 1s and 0s."""
+        self.array[0] = np.array([int(x) for x in init])
         self.next += 1
 
     def loop(self, steps=1):
         """Executes the given number of time steps."""
-        [self.step() for i in xrange(steps)]
+        for i in range(steps):
+            self.step()
 
     def step(self):
         """Executes one time step by computing the next row of the array."""
+        a = self.array
         i = self.next
+        window = [4, 2, 1]
+        corr = np.correlate(a[i-1], window, mode='same')
+        a[i] = self.table[corr]
         self.next += 1
 
-        a = self.array
-        t = self.table
-        for j in xrange(1,self.m-1):
-            a[i,j] = t[tuple(a[i-1, j-1:j+2])]
-
     def get_array(self, start=0, end=None):
-        """Gets a slice of columns from the CA, with slice indices
-        (start, end).  Avoid copying if possible.
+        """Gets a slice of columns from the CA.
+
+        Avoids copying if possible.
+
+        start: index of first column
+        end: index of the last column plus one
         """
         if start==0 and end==None:
             return self.array
@@ -75,38 +86,118 @@ class CA(object):
             return self.array[:, start:end]
 
 
-def binary(n, digits):
-    """Returns a tuple of (digits) integers representing the
-    integer (n) in binary.  For example, binary(3,3) returns (0, 1, 1)"""
-    t = []
-    for i in range(digits):
-        n, r = divmod(n, 2)
-        t.append(r)
+class Wrap1D(Cell1D):
+    """Implements a 1D cellular automaton with wrapping."""
 
-    return tuple(reversed(t))
+    def step(self):
+        # perform the usual step operation
+        Cell1D.step(self)
+
+        # fix the first and last cells by copying from the other end
+        i = self.next-1
+        row = self.array[i]
+        row[0], row[-1] = row[-2], row[1] 
+
+
+class Cell1DViewer:
+    """Draws a CA object using matplotlib."""
+
+    cmap = plt.get_cmap('Blues')
+    options = dict(alpha=0.7, interpolation='none')
+
+    def __init__(self, ca):
+        self.ca = ca
+
+    def draw(self, start=0, end=None):
+        """Draws the CA using pyplot.imshow.
+        
+        start: index of the first column to be shown 
+        end: index of the last column to be shown
+        """
+        a = self.ca.get_array(start, end)
+        n, m = a.shape
+        plt.axis([0, m, 0, n])
+        plt.xticks([])
+        plt.yticks([])
+
+        self.options['extent'] = [0, m, 0, n]
+        plt.imshow(a, cmap=self.cmap, **self.options)
 
 
 def print_table(table):
     """Prints the rule table in LaTeX format."""
-    t = table.items()
-    t.sort(reverse=True)
+    print('\\beforefig')
+    print('\\centerline{')
+    print('\\begin{tabular}{|c|c|c|c|c|c|c|c|c|}')
+    print('\\hline')
 
-    print '\\beforefig'
-    print '\\centerline{'
-    print '\\begin{tabular}{|c|c|c|c|c|c|c|c|c|}'
-    print '\\hline'
+    res = ['prev'] + ['{0:03b}'.format(i) for i in range(8)]
+    print(' & '.join(res) + ' \\\\ \n\\hline')
 
-    res = ['prev']
-    for k, v in t:
-        s = ''.join([str(x) for x in k])
-        res.append(s)
-    print ' & '.join(res) + ' \\\\ \n\\hline'
+    res = ['next'] + [str(x) for x in table]
+    print(' &   '.join(res) + ' \\\\ \n\\hline')
 
-    res = ['next']
-    for k, v in t:
-        res.append(str(v))
-    print ' &   '.join(res) + ' \\\\ \n\\hline'
-
-    print '\\end{tabular}}'
+    print('\\end{tabular}}')
 
 
+class EPSDrawer:
+    """Draw a CA using encapsulated Postscript (EPS)."""
+
+    def draw(self, ca, start=0, end=None):
+        """Draws the CA using pyplot.pcolor.
+        
+        start: index of the first column to be shown 
+        end: index of the last column to be shown
+        """
+        a = ca.get_array(start, end)
+        self.n, self.m = a.shape
+        
+        self.cells = []
+        for i in xrange(self.n):
+            for j in xrange(self.m):
+                if a[i, j]:
+                    self.cells.append((i, j))
+        
+    def save(self, filename='ca.eps'):
+        """Saves the representation of the CA.
+        
+        filename: string
+        """
+        with open(filename, 'w') as fp:
+            self.print_header(fp)
+            self.print_outline(fp)
+            self.print_cells(fp)
+            self.print_footer(fp)
+
+    def print_header(self, fp, size=0.9, border=2):
+        """Writes the EPS header and defines /c."""
+        fp.write('%!PS-Adobe-3.0 EPSF-3.0\n')
+        fp.write('%%%%BoundingBox: %d %d %d %d\n' % 
+                 (border, border, self.m+border, self.n+border))
+
+        fp.write('1 -1 scale\n')
+        fp.write('0 %d translate\n' % -self.n)
+        fp.write('/c {\n')
+        fp.write('   newpath moveto\n')
+        fp.write('   0 %g rlineto\n' % size)
+        fp.write('   %g 0 rlineto\n' % size)
+        fp.write('   0 -%g rlineto\n' % size)
+        fp.write('   closepath fill\n')
+        fp.write('} def\n')
+
+    def print_outline(self, fp):
+        """Writes the code that draws the outline."""
+        fp.write('newpath 0.1 setlinewidth 0 0 moveto\n')
+        fp.write('0 %d rlineto\n' % self.n)
+        fp.write('%d 0 rlineto\n' % self.m)
+        fp.write('0 -%d rlineto\n' % self.n)
+        fp.write('closepath stroke\n')
+
+    def print_cells(self, fp):
+        """Writes the code that draws the cells."""
+        for i, j in self.cells:
+            fp.write('%d %d c\n' % (j, i))
+
+    def print_footer(self, fp):
+        """Writes the footer code."""
+        fp.write('%%EOF\n')

@@ -89,6 +89,11 @@ class Cell2DViewer:
         self.options['extent'] = [0, m, 0, n]
         self.im = plt.imshow(a, cmap=self.cmap, **self.options)
 
+    def step(self, iters=1):
+        """Advances the viewee the given number of steps."""
+        for i in range(iters):
+            self.viewee.step()
+
     def draw_grid(self):
         """Draws the grid."""
         a = self.viewee.array

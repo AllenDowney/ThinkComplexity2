@@ -25,7 +25,7 @@ ffmpeg.  On Ubuntu and Linux Mint, the following should work.
     sudo apt-get install ffmpeg
 """
 from Cell2D import Cell2D, Cell2DViewer
-from scipy.signal import convolve2d
+from scipy.signal import correlate2d
 
 class Life(Cell2D):
     """Implementation of Conway's Game of Life."""
@@ -38,7 +38,7 @@ class Life(Cell2D):
 
     def step(self):
         """Executes one time step."""
-        c = convolve2d(self.array, self.kernel, mode='same')
+        c = correlate2d(self.array, self.kernel, mode='same')
         self.array = self.table[c]
 
 
