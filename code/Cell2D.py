@@ -71,23 +71,26 @@ class Cell2DViewer:
 
     def draw(self, grid=False):
         """Updates the display with the state of the grid."""
-        self.draw_array()
+        self.draw_array(self.viewee.array)
         if grid:
             self.draw_grid()
 
-    def draw_array(self):
+    def draw_array(self, array, cmap=None, **kwds):
         """Draws the cells."""
         # Note: we have to make a copy because some implementations
         # of step perform updates in place.
-        a = self.viewee.array.copy()
+        a = array.copy()
+        cmap = self.cmap if cmap is None else cmap
+        options = self.options.copy()
+        options.update(kwds)
 
         n, m = a.shape
         plt.axis([0, m, 0, n])
         plt.xticks([])
         plt.yticks([])
 
-        self.options['extent'] = [0, m, 0, n]
-        self.im = plt.imshow(a, cmap=self.cmap, **self.options)
+        options['extent'] = [0, m, 0, n]
+        self.im = plt.imshow(a, cmap, **options)
 
     def step(self, iters=1):
         """Advances the viewee the given number of steps."""
