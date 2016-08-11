@@ -22,7 +22,7 @@ class SandPile(Cell2D):
         level: starting value for all cells
         """
         m = n if m is None else m
-        self.array = np.ones((n, m)) * level
+        self.array = np.ones((n, m), dtype=np.int32) * level
         self.reset()
 
     def reset(self):
@@ -30,24 +30,12 @@ class SandPile(Cell2D):
         """
         self.toppled_seq = []
 
-    def single_source(pile, height=1024):
-        """Adds a tower to the center cell.
-    
-        height: value assigned to the center cell
-        """
-        a = pile.array
-        n, m = a.shape
-        a[:, :] = 0
-        a[n//2, m//2] = height
-
     def step(self, K=3):
         """Executes one time step.
         
         returns: number of cells that toppled
         """
         a = self.array
-        n, m = a.shape
-        
         toppling = a>K
         num_toppled = np.sum(toppling)
         self.toppled_seq.append(num_toppled)
