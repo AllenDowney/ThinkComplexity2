@@ -2989,6 +2989,7 @@ values, are called {\bf heavy-tailed}.
 
 
 \section{Heavy-tailed distributions}
+\label{heavytail}
 
 \begin{figure}
 \centerline{\includegraphics[width=5.5in]{figs/chap04-2.pdf}}
@@ -5582,6 +5583,7 @@ In the next section, we explore one of them: fractal geometry.
 
 
 \section{Fractals}
+\label{fractals}
 
 To understand fractals, we have to start with dimensions.
 
@@ -5767,7 +5769,7 @@ The rules of the CA are:
 \end{enumerate}
 
 Write a program that implements this model.  You might want to inherit
-from `Cell2D`.  Typical values for the parameters are $p=0.01$ and
+from \py{Cell2D}.  Typical values for the parameters are $p=0.01$ and
 $f=0.001$, but you might want to experiment with other values.
 
 Starting from a random initial condition, run the CA until it reaches
@@ -5786,369 +5788,894 @@ What is its fractal dimension?
 
 \chapter{Self-organized criticality}
 \label{soc}
- 
-\section{Sand piles}
 
-In 1987 Bak, Tang and Wiesenfeld published a paper in Physical Review
-Letters, ``Self-organized criticality: an explanation of $1/f$ noise''.
-You can download it from \url{http://prl.aps.org/abstract/PRL/v59/i4/p381_1}.
+In the previous chapter we saw an example of a system with a critical
+point and we explored one of the common properties of critical
+systems, fractal geometry.
 
-The title takes some explaining.  A system is ``critical'' if it is
-in transition between two phases; for example, water at
-its freezing point is a critical system.
-\index{Bak, Per}
-\index{self-organized criticality}
-\index{criticality}
+In this chapter, we explore two other properties of critical systems:
+heavy-tailed distributions, which we saw in Chapter~\ref{heavytail}
+and pink noise, which I'll explain in this chapter.
 
-A variety of critical systems demonstrate common behaviors:
+These properties are interesting in part because they appear
+frequently in nature; that is, many natural systems produce 
+fractal-like geometry, heavy-tailed distributions, and pink noise.
+
+This observation raises a natural question: why do so many natural
+systems have properties of critical systems?  A possible answer is
+{\bf self-organized criticality} (SOC), which is the tendency of some
+systems to evolve toward and stay in a critical state.
+
+In this chapter I'll present a {\bf sand pile model}, which was the
+first system shown to exhibit SOC.
+
+The code for this chapter is in {\tt chap08.ipynb} in the repository
+for this book.  More information about working with the code is
+in Section~\ref{???}.
+
+
+\section{Critical Systems}
+
+Many critical systems demonstrate common behaviors:
 
 \begin{itemize}
 
-\item Long-tailed distributions of some physical quantities: for
-  example, in freezing water the distribution of crystal sizes is
-  characterized by a power law.
-\index{long tail}
-\index{power law}
+\item Fractal geometry: For example, freezing water tends to form
+  fractal patterns, including snowflakes and other crystal
+  structures.  Fractals are characterized by self-similarity; that is,
+  parts of the pattern are similar to scaled copies of the whole.
 
-\item Fractal geometries: freezing water tends to form fractal
-  patterns---the canonical example is a snowflake.  Fractals
-  are characterized by self-similarity; that is, parts of the
-  pattern resemble scaled copies of the whole.
 \index{fractal geometry}
 \index{self-similarity}
 
-\item Variations in time that exhibit pink noise: what we call
-  ``noise'' is a time series with many frequency components.  In
-  ``white'' noise, all of the components have equal power.  In
-  ``pink'' noise, low-frequency components have more power than
-  high-frequency components.  Specifically, the power at frequency $f$
-  is proportional to $1/f$.  Visible light with this power spectrum
-  looks pink, hence the name.
+\item Heavy-tailed distributions of some physical quantities: For
+  example, in freezing water the distribution of crystal sizes is
+  characterized by a power law.
+
+\index{long tail}
+\index{power law}
+
+\item Variations in time that exhibit {\bf pink noise}.  Complex
+  signals can be decomposed into their frequency components.  In pink
+  noise, low-frequency components have more power than high-frequency
+  components.  Specifically, the power at frequency $f$ is
+  proportional to $1/f$.
+
 \index{pink noise}
 \index{1/f noise@$1/f$ noise}
 
 \end{itemize}
 
-Critical systems are usually unstable.  For example, to keep
-water in a partially frozen state requires active control of
-the temperature.  If the system is near the critical
-temperature, a small deviation tends to move the system
-into one phase or the other.
+Critical systems are usually unstable.  For example, to keep water in
+a partially frozen state requires active control of the temperature.
+If the system is near the critical temperature, a small deviation
+tends to move the system into one phase or the other.
+
 \index{unstable}
 
-Many natural systems exhibit characteristic behaviors of
-criticality, but if critical points are unstable, they should
-not be common in nature.  This is the puzzle Bak, Tang and
-Wiesenfeld address.  Their solution is called self-organized
-criticality (SOC), where ``self-organized'' means that from
-any initial condition, the system tends to move toward a
-critical state, and stay there, without external control.
+Many natural systems exhibit characteristic behaviors of criticality,
+but if critical points are unstable, they should not be common in
+nature.  This is the puzzle Bak, Tang and Wiesenfeld address.  Their
+solution is called self-organized criticality (SOC), where
+``self-organized'' means that from any initial condition, the system
+moves toward a critical state, and stays there, without
+external control.
+
 \index{SOC}
 
-As an example, they propose a model of a sand pile.  The model is not
-realistic, but it has become the standard example of self-organized
-criticality.
+\section{Sand Piles}
+
+The sand pile model was proposed by Bak, Tang and Wiesenfeld in 1987.
+It is not meant to be a realistic model of a sand pile, but rather an
+abstraction that models physical systems with (1) a large number of
+elements that (2) interact with their neighbors.
+
 \index{sand pile model}
 \index{abstract model}
 
-The model is a 2-D cellular automaton where the state of each cell,
-$z(i,j)$, represents the slope of a part of a sand pile.  During each
-time step, each cell is checked to see whether it exceeds some
-critical value, $K$.  If so, an ``avalanche'' occurs that transfers
-sand to neighboring cells; specifically, $z(i,j)$ is decreased by 4,
-and each of the 4 neighbors is increased by 1.
-\index{2-D cellular automaton}
-\index{state}
+The sand pile model is a 2-D cellular automaton where the state of
+each cell represents the slope of a part of a sand pile.  During each
+time step, each cell is checked to see whether it exceeds a critical
+value, $K$, which is usually 3.  If so, it ``topples'' and transfers
+sand to four neighboring cells; that is, the slope of the cell is
+decreased by 4, and each of the neighbors is increased by 1.
+At the perimeter of the grid, all cells are kept at slope 0, so the
+excess spills over the edge.
 
-At the perimeter of the grid, all cells are kept at $z=0$, so
-the excess spills over the edge.  To initialize the system,
-Bak et al. start with all $z > K$ and evolve the system until
-it stabilizes.  Then they observe the effect of small perturbations;
-they choose a cell at random, increment its value
-by 1, and evolve the system, again, until it stabilizes.
+\index{2-D cellular automaton} \index{state}
+
+Bak, Tang and Wiesenfeld initialize all cells a level
+level greater than \py{K} and run the model until it stabilizes.
+Then they observe the effect of small perturbations; they choose a
+cell at random, increment its value by 1, and run the model,
+again, until it stabilizes.
+
 \index{grid}
 
-For each perturbation, they measure $D$, the total number
-of cells that are affected by the resulting avalanche.  Most of
-the time, $D$ is small, usually 1.  But occasionally
-a large avalanche affects a substantial fraction
-of the grid.  The distribution of $D$ turns out to be long-tailed,
-which supports the claim that the system is in a critical state.
+For each perturbation, they measure \py{T}, the number of time steps
+the pile takes to stabilize, and \py{S}, the total number of cells
+that topple\footnote{The original paper uses a different definition
+of \py{S}, but most later work uses this definition.}.
+
+Most of the time, dropping an single grain causes no cells to topple,
+so \py{T=1} and \py{S=0}.  But occasionally a single grain can cause an
+{\bf avalanche} that affects a substantial fraction of the grid.  The
+distributions of \py{T} and \py{S} turn out to be heavy-tailed, which
+supports the claim that the system is in a critical state.
+
 \index{avalanche}
 
-\begin{exercise}
+They conclude that the sand pile model exhibits ``self-organized
+criticality'', which means that from the initial condition it evolves
+toward a critical state without the need for external control or
+what they call ``fine tuning'' of any parameters.  And the model
+stays in a critical state as more grains are added.
 
-Read the paper and write a program that implements their CA.
-You might want to start with a copy of
-\url{thinkcomplex.com/Life.py}.
-
-See if you can reproduce their Figure 2(a), which shows the
-distribution of cluster sizes.
-
-After the system has been running for a while, compute its
-fractal dimension.
-\index{fractal dimension}
-
-\end{exercise}
+In the next few sections I replicate their experiments and
+interpret the results.
 
 
-\section{Spectral density}
+\section{Implementing the Sand Pile}
 
-To understand $1/f$ noise, we have to take a detour to understand
-spectral density.  If $h(t)$ is a signal that varies in time, it can
-be described by its power spectral density, $P(f)$, which is a
-function that maps from a frequency, $f$, to the amount of power the
-signal contains at that frequency.
-\index{spectral density}
-\index{power}
-\index{frequency}
-
-This analysis applies to any varying signal, but I use sound as
-an example.  The note we call ``middle A'' corresponds to a frequency
-of 440 cycles per second, or Hertz (Hz).  If you strike a middle A
-tuning fork, it produces a sound that is close to a pure sine wave at
-440 Hz.  But if you play the same note on a piano, what you hear is
-a complex sound that contains components at many different
-frequencies.  The frequency with the most power is 440, which is why
-we perceive the sound as a middle A, but there are also components at
-880, 1320 and many higher frequencies.  These components are called
-``harmonics''.
-\index{pitch}
-\index{Hertz}
-\index{harmonics}
-
-What we identify as the pitch of a sound is usually the dominant
-frequency component.  But if a sound contains many different
-components with roughly the same power, it has no particular pitch.
-To our ears, it sounds like noise.
-\index{noise}
-
-Spectral analysis is the process of taking a signal and computing its
-spectral density\footnote{The presentation here follows Press et al,
-  {\em Numerical Recipes in C}.}.  The first step is to compute the
-  Fourier transform of $h(t)$:
-\index{Fourier transform}
-
-\[ H(\omega) = \int_{-\infty}^{\infty} h(t) e^{i \omega t} dt \]
-
-where $\omega = 2 \pi f$ is the angular frequency in
-radians per second (rather than cycles per second).  The advantage
-of working with angular frequency is that it reduces the number
-of times the term $2 \pi$ appears.
-\index{angular frequency}
-
-$H(\omega)$ is written with a capital letter because it is a complex
-number, which you can think of as a vector with a magnitude,
-$|H(\omega)|$, and an angle.  The power spectral density is related to
-the Fourier transform by the following relation:
-\index{power spectral density}
-
-\[ P(f) = |H(2 \pi f)|^2 \]
-
-Depending on the application, we may not care about the difference
-between $f$ and $-f$.  In that case, we would use the one-sided
-power spectral density:
-
-\[ P(f) = |H(2 \pi f)|^2 + |H(-2 \pi f)|^2 \]
-
-So far we have assumed that $h(t)$ is a continuous function, but
-often it is a series of values at discrete times.  In that
-case we can replace the continuous Fourier transform with
-the discrete Fourier transform (DFT).  Suppose that we have
-$N$ values $h_k$ with $k$ in the range from 0 to $N-1$.  The
-DFT is written $H_n$, where $n$ is an index related to frequency:
-\index{discrete Fourier transform}
-\index{DFT}
-
-\begin{equation}
-\label{dft}
-H_n = \sum_{k=0}^{N-1} h_k e^{2 \pi i k n / N}
-\end{equation}
-
-Each element of this sequence corresponds to a particular frequency.
-If the elements of $h_k$ are equally spaced in time, with time
-step $d$, the frequency that corresponds to $H_n$ is
-
-\[ f_n = \frac{n}{N d} \]
-
-To get the one-sided power spectral density, you can compute $H_n$
-with $n$ in the range $-N/2$ to $N/2$, and
-
-\[ P_n = |H_n|^2 + |H_{-n}|^2 \]
-
-To avoid negative indices, it is conventional to compute
-$H_n$ with $n$ in the range $0$ to $N-1$ and use the relation
-$H_{-n} = H_{N-n}$ to convert.
-
-\begin{exercise}
-
-Write a function named \py{dft} that takes $h$, a sequence of $N$
-values, and returns the sequence $H_n$ with $n$ in the range $0$ to
-$N-1$.
-
-Python provides support for complex numbers as a built-in type.
-The function \py{complex} takes two arguments, a real part
-and an imaginary part, and returns a complex number:
-\index{complex@\py{complex}}
+To implement the sand pile model, I define a class called \py{SandPile}
+that inherits from \py{Cell2D}, which is defined in \py{Cell2D.py}.
 
 \begin{code}
->>> complex(1, 1)
-(1+1j)
+class SandPile(Cell2D):
+
+    def __init__(self, n, m, level=9):
+        self.array = np.ones((n, m)) * level
 \end{code}
 
-The \py{cmath} module provides math functions that support
-complex numbers:
+All values in the array are initialized to \py{level}, which is
+generally greater than the toppling threshold, \py{K}.
+
+Here's the \py{step} method that finds all cells above \py{K} and
+topples them:
 
 \begin{code}
->>> import cmath
->>> i = complex(0, 1)
->>> N = 128
->>> cmath.exp(2 * math.pi * i / N)
-(0.99879545620517241+0.049067674327418015j)
->>> abs(complex(3, 4))
-5.0
+    kernel = np.array([[0, 1, 0],
+                       [1,-4, 1],
+                       [0, 1, 0]], dtype=np.int32)
+
+    def step(self, K=3):
+        toppling = self.array > K
+        c = correlate2d(toppling, self.kernel, mode='same')
+        self.array += c
+        return num_toppled
 \end{code}
 
-What is the order of growth run time of \py{dft}?
+To explain how that works, I'll start with
+a small pile with just two cells ready to topple:
 
-{\bf Hoisting} is a way to speed up code by moving an
-expression that does not change out of a loop.
-See \url{http://en.wikipedia.org/wiki/Loop-invariant_code_motion}.
-You can make your code easier to read and more efficient
-by hoisting:
-\index{hoisting}
+\begin{code}
+pile = SandPile(n=3, m=5, level=0)
+pile.array[1, 1] = 4
+pile.array[1, 3] = 4
+\end{code}
 
-\begin{equation}
-W = e^{2 \pi i / N}
-\end{equation}
-%
-What effect does hoisting have on the order of growth?
-\index{order of growth}
+Initially, \py{pile.array} looks like this:
 
+\begin{code}
+[[0 0 0 0 0]
+ [0 4 0 4 0]
+ [0 0 0 0 0]]
+\end{code}
+
+Now we can select the cells that are above the toppling threshold:
+
+\begin{code}
+toppling = pile.array > K
+\end{code}
+
+The result is an array of booleans, but we can use it as if it were
+an array of integers like this:
+
+\begin{code}
+[[0 0 0 0 0]
+ [0 1 0 1 0]
+ [0 0 0 0 0]]
+\end{code}
+
+If we correlate this array with the kernel, it makes copies of the
+kernel at each location where \py{toppling} is 1.
+
+\begin{code}
+c = correlate2d(toppling, kernel, mode='same')
+\end{code}
+
+And here's the result:
+
+\begin{code}
+[[ 0  1  0  1  0]
+ [ 1 -4  2 -4  1]
+ [ 0  1  0  1  0]]
+\end{code}
+
+Notice that where the copies of the kernel overlap, they add up.
+
+This array contains the change for each cell, which we use
+to update the original array:
+
+\begin{code}
+pile.array += c
+\end{code}
+
+And here's the result.
+
+\begin{code}
+[[0 1 0 1 0]
+ [1 0 2 0 1]
+ [0 1 0 1 0]]
+\end{code}
+
+So that's how \py{step} works.
+
+By default, \py{correlate2d} considers the boundary of the array 
+to be fixed at zero, so any grains of sand that go over the edge
+disappear.
+
+\py{SandPile} also provides \py{run}, which calls step until
+no more cells topple:
+
+\begin{code}
+    def run(self):
+        total = 0
+        for i in itertools.count(1):
+            num_toppled = self.step()
+            total += num_toppled
+            if num_toppled == 0:
+                return i, total
+\end{code}
+
+The return value is a tuple that contains the number of time
+steps and the total number of cells that toppled.
+
+If you are not familiar with \py{itertools.count}, it is an
+infinite generator that counts up from the given initial value,
+so the \py{for} loop runs until \py{step} returns 0.
+
+Finally, the \py{drop} method chooses a random cell and adds a
+grain of sand:
+
+\begin{code}
+    def drop(self):
+        a = self.array
+        n, m = a.shape
+        index = np.random.randint(n), np.random.randint(m)
+        a[index] += 1
+\end{code}
+
+Let's look at a bigger example, with \py{n=20}:
+
+\begin{code}
+pile = SandPile(n=20, level=10)
+pile.run()
+\end{code}
+
+\begin{figure}
+\centerline{\includegraphics[height=3in]{figs/chap08-1.pdf}}
+\caption{}
+\label{chap08-1}
+\end{figure}
+
+With an initial level of \py{10}, this sand pile takes 332 time steps to
+reach equilibrium, with a total of 53,336 topplings.
+Figure~\ref{chap08-1} (left) show the configuration, after this initial
+run.  Notice that it has the repeating elements that
+are characteristic of fractals.  We'll come back to that soon.
+
+Figure~\ref{chap08-1} (middle) shows the configuration of the sand
+pile after dropping 200 grains onto random cells, each time running
+until the pile reaches equilibrium.  The symmetry of the initial
+configuration has been broken; the configuration looks random.
+
+Finally Figure~\ref{chap08-1} (right) shows the configuration 
+after 400 drops.  It looks similar to the configuration after 200
+drops.  In fact, the pile is now in a steady state where its statistical
+properties don't change over time.  I'll explain some of those
+statistical properties in the next section.
+
+
+\section{Heavy-tailed distributions}
+\label{heavysand}
+
+If the sand pile model is in a critical state, we expect to find
+heavy-tailed distributions for quantities like the duration and size
+of avalanches.  So let's take a look.
+
+I'll make a larger sand pile, with \py{n=50}, an initial level of
+\py{30}, and run until equilibrium:
+
+\begin{code}
+pile2 = SandPile(n=50, level=30)
+pile2.run()
+\end{code}
+
+Next, I'll run 100,000 random drops
+
+\begin{code}
+iters = 100000
+res = [pile2.drop_and_run() for _ in range(iters)]
+\end{code}
+
+As the name suggests, \py{drop_and_run} calls \py{drop} and \py{run} and
+returns the duration of the avalanche and total number of cells
+that toppled.
+
+So \py{res} is a list of \py{(T, S)} tuples, where \py{T} is duration,
+in time steps, and \py{S} is cells toppled.  We can use
+\py{np.transpose} to unpack \py{res} into two NumPy arrays:
+
+\begin{code}
+T, S = np.transpose(res)
+\end{code}
+
+A large majority of drops have duration 1 and no toppled cells, so
+we'll filter those out.
+
+\begin{code}
+T = T[T>1]
+S = S[S>0]
+\end{code}
+
+The distributions of \py{T} and \py{S} have many small values and a few
+very large ones.  I'll use the \py{Hist} class from \py{thinkstats2} to
+make a histogram of the values; that is, a map from each value to
+the number of times it occurs.
+
+\begin{code}
+from thinkstats2 import Hist
+
+histT = Hist(T)
+histS = Hist(S)
+\end{code}
+
+\begin{figure}
+\centerline{\includegraphics[height=3in]{figs/chap08-2.pdf}}
+\caption{}
+\label{chap08-2}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[height=3in]{figs/chap08-3.pdf}}
+\caption{}
+\label{chap08-3}
+\end{figure}
+
+Figure~\ref{chap08-2} shows the results for values less than 50.
+But as we saw in Section~\ref{heavytail}, we can get a clearer picture of
+these distributions by plotting them on a log-log scale, as shown
+in Figure~\ref{chap08-3}.
+
+For values between 1 and 100, the distributions are nearly straight
+on a log-log scale, which is indicative of a heavy tail.  The
+gray lines in the figure have slope -1, which suggests that these
+distributions follow a power law with parameter $\alpha=1$.
+
+For values greater than 100, the distributions fall away more quickly
+than the power law model, which means there are fewer very large
+values than the model predicts.  One explanation is that this
+effect is due to the finite size of the sand pile, so we might
+expect larger piles to fit the power law better.
+
+Another possibility,
+which you can explore in one of the exercises at the end of this
+chapter, is that these distributions do not strictly obey a power
+law.  But even if they are not power-law distributions, they are
+still heavy-tailed as we expect for a system in a critical state.
+
+
+\section{Fractals}
+
+Another property of critical systems is fractal geometry.  The
+initial configuration in Figure~\ref{chap08-1} (left) resembles a fractal,
+but you can't always tell by looking.
+A more reliable way to identify a fractal is to estimate its
+fractal dimension, as we saw in Section~\ref{fractals}
+and Section~\ref{fracperc}.
+
+I'll start by making a bigger sand pile, with \py{n=131} and initial
+level \py{22}.
+
+\begin{code}
+pile3 = SandPile(n=131, level=22)
+pile3.run()
+\end{code}
+
+By the way, it takes 28,379 steps for this pile to reach equilibrium,
+with more than 200 million cells toppled.
+
+To see the resulting pattern more clearly, I select cells with
+levels 0, 1, 2, and 3, and plot them separately:
+
+\begin{code}
+def draw_four(viewer, vals=range(4)):
+    thinkplot.preplot(rows=2, cols=2)
+    a = viewer.viewee.array
+    
+    for i, val in enumerate(vals):
+        thinkplot.subplot(i+1)
+        viewer.draw_array(a==vals[i], vmax=1)
+\end{code}
+
+\py{draw_four} takes a \py{SandPileViewer} object, which is defined
+in \py{Sand.py}.  The parameter \py{vals} is the list of values
+we want to plot; the default values are 0, 1, 2, and 3.
+
+Here's how it's used:
+
+\begin{code}
+viewer3 = SandPileViewer(pile3)
+draw_four(viewer3)
+\end{code}
+
+\begin{figure}
+\centerline{\includegraphics[height=3in]{figs/chap08-4.pdf}}
+\caption{}
+\label{chap08-4}
+\end{figure}
+
+Figure~\ref{chap08-4} shows the results.  Now for each of
+these patterns we can estimate the fractal dimension using
+a {\bf box-counting algorithm}: we'll count the number of
+cells in a small box at the center of the pile, and then see
+how the number of cell increases as the box gets bigger.
+Here's my implementation:
+
+\begin{code}
+def count_cells(a):
+    n, m = a.shape
+    end = min(n, m)
+    
+    res = []
+    for i in range(1, end, 2):
+        top = (n-i) // 2
+        left = (m-i) // 2
+        box = a[top:top+i, left:left+i]
+        total = np.sum(box)
+        res.append((i, i**2, total))
+        
+    return np.transpose(res)
+\end{code}
+
+The parameter, \py{a}, is a NumPy array of booleans or 0s and 1s.
+The size of the box is initially 1.  Each time through the
+loop, it increases by 2 until it reaches \py{end}, which is the
+smaller of \py{n} and \py{m}.
+
+Each time through the loop, \py{box} is a set of cells with width
+and height \py{i}, centered in the array.  \py{total} is the number
+of ``on'' cells in the box.
+
+The result is a list of tuples, where each tuple contains
+\py{i} and \py{i**2}, for purposes of comparison, and the number of
+cells in the box.
+
+Finally, we use \py{np.transpose} to make a NumPy array with 3
+rows containing \py{i}, \py{i**2}, and \py{total}.
+
+To estimate the fractal dimension, we extract the rows:
+
+\begin{code}
+steps, steps2, cells = res
+\end{code}
+
+Then we can plot the results:
+
+\begin{code}
+    thinkplot.plot(steps, steps2, linestyle='dashed')
+    thinkplot.plot(steps, cells)
+    thinkplot.plot(steps, steps, linestyle='dashed')
+\end{code}
+
+And use \py{linregress} to fit a line on a log-log scale.
+
+\begin{code}
+from scipy.stats import linregress
+
+params = linregress(np.log(steps), np.log(cells))
+slope = params[0]
+\end{code}
+
+\begin{figure}
+\centerline{\includegraphics[height=3in]{figs/chap08-5.pdf}}
+\caption{}
+\label{chap08-5}
+\end{figure}
+
+Figure~\ref{chap08-5} shows the results.  Notice that only
+\py{val=2} (lower left) starts from box size 1 because the center
+cell has value 2; the other lines start at the first box size
+that contains a nonzero cell count.
+
+On a log-log scale, the cell counts form nearly straight lines,
+which indicates that we are measuring fractal dimension over
+a valid range of box sizes.
+
+And the estimated fractal dimensions are:
+
+\begin{code}
+0  1.871
+1  3.502
+2  1.781
+3  2.084
+\end{code}
+
+The fractal dimension for values 0, 1, and 2 seems to be clearly
+non-integer, which indicates that the image is fractal.
+
+Strictly, the fractal dimension for value 3 is indistinguishable from
+2, but given the results for the other values, the apparent curvature
+of the line, and the appearance of the pattern, it seems likely that
+it is also fractal.
+
+One of the exercises at the end of this chapter asks you to run
+this analysis again with different values of \py{n} and \py{level} to
+see if the estimated dimensions are consistent.
+
+
+\section{Spectral Density}
+
+The title of the original paper that presented the sand pile model
+is ``Self-Organized Criticality: An Explanation of $1/f$ Noise''.
+As the subtitle suggests, Bak, Tang and Wiesenfeld were trying to
+explain why many natural and engineered systems exhibit $1/f$ 
+noise, which is also known as ``flicker noise'' and ``pink noise''.
+
+To understand pink noise, we have to take a detour to understand
+signals, spectral analysis, and noise.
+
+\begin{description}
+
+\item[Signal:] A {\bf signal} is any quantity that varies in time.
+  One example is sound, which is variation in air density.  In this
+  section we'll explore how avalanche durations and sizes vary over
+  time steps.
+
+\item[Spectral analysis:] Any signal can be decomposed into a set of
+  frequency components with different volume or power.  For example,
+  the sound of a violin playing the A above middle C contains a
+  dominant component at frequency 440 Hz, but it also contains less
+  powerful components at 880 Hz, 1320 Hz, and other integer multiples
+  of the fundamental.  {\bf Spectral analysis} is the process of
+  finding the components that make up a signal and their powers,
+  which is called its {\bf spectrum}.
+
+\item[Noise:] In common use, ``noise'' is usually an unwanted sound,
+  but in the context of signal processing, it is a signal that
+  contains many frequency components.  
+
+\end{description}
+
+There are many kinds of noise.  For example, ``white noise'' is a
+signal that has components with equal power over a wide range of
+frequencies.
+
+Other kinds of noise have different relationships between frequency
+and power.  In ``red noise'', the power at frequency $f$ is
+$1/f^2$, which we can write like this:
+
+\[ P(f) = 1/f^2 \]
+
+We can generalize that by replacing the exponent $2$ with
+a parameter $\beta$:
+
+\[ P(f) = 1/f^\beta \]
+
+When $\beta=0$, this equation describes white noise; when $\beta=2$ it
+describes red noise.  When the parameter is near 1, we call the result
+$1/f$ noise.  More generally, noise with any value between 0 and 2
+is called ``pink'', because it's between white and red.
+
+So how does this apply to the sand pile model?  Suppose that every time
+a cell topples, it makes a sound.  If we recorded a sand pile model
+while its running, what would it sound like?
+
+As my implementation of \py{SandPile} runs, it records the number of
+cells that topple during each time step, recording the results in
+a list called \py{toppled_seq}.  For example, after running the model
+in Section~\ref{heavysand}, we can extract the resulting signal:
+
+\begin{code}
+signal = pile2.toppled_seq
+\end{code}
+
+To compute the spectrum of a signal (again, that's the frequencies it
+contains and their powers) we can use the Fast Fourier Transform
+(FFT).
+
+The only problem is that the spectrum of a noise signal tends to
+be noisy.  However, we can smooth it out by breaking a long signal
+into segments, computing the FFT of each segment, and then computing
+the {\em average} power at each frequency.
+
+One version of this algorithm is called ``Welch's method'' and
+SciPy provides an implementation.  We can use it like this:
+
+\begin{code}
+from scipy.signal import welch
+
+nperseg = 2048
+freqs, spectrum = welch(signal, nperseg=nperseg, fs=nperseg)
+\end{code}
+
+\py{nperseg} is the length of the segments the signal is broken into.
+With longer segments we get more frequency components,
+but since there are fewer segments to average, the results are
+noisier.
+
+\py{fs} is the ``sampling frequency'', which is the number of data
+points in the signal per unit of time.  By setting \py{fs=nperseg},
+we get a range of frequencies from 0 to \py{nperseg/2}, but the
+units of time in the model are arbitrary, so the frequencies
+don't mean very much.
+
+The return values, \py{freqs} and \py{powers}, are NumPy arrays containing
+the frequencies of the components and their corresponding powers.
+
+If the signal is pink noise, we expect
+
+\[ P(f) = 1/f^\beta \]
+
+Taking the log of both sides yields
+
+\[ \log P(f) = -\beta \log f \]
+
+So if we plot \py{powers} versus \py{freqs} on a log-log scale, we
+expect a straight line with slope $-\beta$.
+
+\begin{figure}
+\centerline{\includegraphics[height=3in]{figs/chap08-6.pdf}}
+\caption{}
+\label{chap08-6}
+\end{figure}
+
+Figure~\ref{chap08-6} shows the result.  For frequencies between
+10 and 1000 (in arbitrary units), the spectrum falls on a straight
+line.  The gray line has slope $-1.58$, which
+corresponds to the parameter, $\beta=1.58$ reported by Bak,
+Tang, and Wiesenfeld.
+
+This result confirms that the sand pile model generates pink noise.
+
+
+\section{Reductionism and Holism}
+\label{model2}
+ 
+The original paper by Bak, Tang and Wiesenfeld is one of
+the most frequently-cited papers in the last few decades.
+Other systems have been shown to be self-organized critical,
+and the sand-pile model, in particular, has been studied
+in detail.
+\index{sand pile model}
+
+As it turns out, the sand pile model is not a very good model of a
+sand pile.  Sand is dense and not very sticky, so momentum has a
+non-negligible effect on the behavior of avalanches.  As a result,
+there are fewer very large and very small avalanches than the model
+predicts, and the distribution might not be heavy-tailed.
+
+Bak has suggested that this observation misses the point.
+The sand pile model is not meant to be a realistic model of a sand
+pile; it is meant to be a simple model for a broad category of
+systems.
+
+To understand this point, it is useful to think about two
+kinds of models, {\bf reductionist} and {\bf holistic}.  A
+reductionist model describes a system by describing its parts
+and their interactions.  When a reductionist model is used
+as an explanation, it depends on an analogy between the
+components of the model and the components of the system.
+
+\index{reductionist}
+\index{holist}
+
+For example, to explain why the ideal gas law holds, we can model the
+molecules that make up a gas with point masses and model their
+interactions as elastic collisions.  If you simulate or analyze this
+model, you find that it obeys the ideal gas law.  This model is
+satisfactory to the degree that molecules in a gas behave like
+molecules in the model.  The analogy is between the parts of the
+system and the parts of the model.
+
+\index{analogy}
+
+\begin{figure}
+\centerline{\includegraphics[width=5in]{figs/model2.pdf}}
+\caption{The logical structure of a holistic model.\label{fig.model2}}
+\end{figure}
+
+Holistic models are more focused on similarities between systems and
+less interested in analogous parts.  A holistic approach to modeling
+often consists of two steps, not necessarily in this order:
+
+\index{holistic model}
+
+\begin{itemize}
+
+\item Identify a kind of behavior that appears in a variety of
+systems.
+
+\item Find a simple model that demonstrates that behavior.
+
+\end{itemize}
+
+For example, in {\em The Selfish Gene}, Richard Dawkins suggests that
+genetic evolution is just one example of an evolutionary system.  He
+identifies the essential elements of the category---discrete
+replicators, variability, and differential reproduction---and proposes
+that any system with these elements displays similar
+behavior, including complexity without design.
+
+\index{Selfish Gene@{\em The Selfish Gene}}
+\index{Dawkins, Richard}
+\index{evolution}
+
+As another example of an evolutionary system, he proposes ``memes'',
+which are thoughts or behaviors that are replicated by transmission
+from person to person\footnote{This use of ``meme'' is original to
+  Dawkins, and predates the distantly-related use of the word on the
+  Internet by about 20 years.}.  As memes compete for the resource of
+human attention, they evolve in ways that are similar to genetic
+evolution.
+
+\index{meme}
+\index{replicator}
+
+Critics of the meme model have pointed out that
+memes are a poor analogy for genes.  Memes differ from genes in many
+obvious ways.  But Dawkins has argued that these differences are
+beside the point because memes are not {\em supposed} to be analogous
+to genes.  Rather, memes and genes are examples of the same
+category: evolutionary systems.  The differences between them
+emphasize the real point, which is that evolution is a general model
+that applies to many seemingly disparate systems.  The logical
+structure of this argument is shown in Figure~\ref{fig.model2}.
+
+\index{gene}
+\index{genetics}
+
+Bak has made a similar argument that self-organized criticality is a
+general model for a broad category of system:
+
+\begin{quote}
+Since these phenomena appear everywhere, they cannot depend on any
+specific detail whatsoever...  If the physics of a large class of
+problems is the same, this gives [the theorist] the option of selecting
+the {\em simplest} possible [model] belonging to that class for detailed
+study.\footnote{Bak, {\em How Nature Works}, Springer-Verlag 1996, page 43.}
+\end{quote}
+
+\index{Bak, Per}
+
+Many natural systems demonstrate behaviors characteristic of critical
+systems.  Bak's explanation for this prevalence is that these systems
+are examples of the broad category of self-organized criticality.
+There are two ways to support this argument.  One is to build
+a realistic model of a particular system and show that the model
+exhibits SOC.  The second is to show that SOC is a feature of many
+diverse models, and to identify the essential characteristics
+those models have in common.
+
+The first approach, which I characterize as reductionist, can explain
+the behavior of a particular system.  The second, holistic, approach,
+explains the prevalence of criticality in natural systems.  They are
+different models with different purposes.
+
+\index{prevalence}
+
+For reductionist models, realism is the primary virtue, and simplicity
+is secondary.  For holistic models, it is the other way around.
+
+
+\section{SOC, causation and prediction}
+
+If a stock market index drops by a fraction of a percent in a
+day, there is no need for an explanation.  But if it drops 10\%,
+people want to know why.  Pundits
+on television are willing to offer explanations, but the real
+answer may be that there is no explanation.
+
+\index{stock market}
+
+Day-to-day variability in the stock market shows evidence of
+criticality: the distribution of value changes is heavy-tailed
+and the time series exhibits pink noise.
+If the stock market is a critical system, we
+should expect occasional large changes as part of the ordinary
+behavior of the market.
+
+The distribution of earthquake sizes is also heavy-tailed,
+and there are simple models of the dynamics of geological faults
+that might explain this behavior.  If these models are right,
+they imply that large earthquakes are unexceptional; that is,
+they do not require explanation any more than
+small earthquakes do.
+
+\index{earthquake}
+\index{prediction}
+\index{causation}
+
+Similarly, Charles Perrow has suggested that failures in large
+engineered systems, like nuclear power plants, are like avalanches
+in the sand pile model.  Most failures are small, isolated and
+harmless, but occasionally a coincidence of bad fortune yields a
+catastrophe.  When big accidents occur, investigators go looking for
+the cause, but if Perrow's ``normal accident theory'' is correct,
+there may be no special cause of large failures.
+
+\index{normal accident theory}
+\index{Perrow, Charles}
+
+These conclusions are not comforting.  Among other things, they
+imply that large earthquakes and some kinds of accidents are
+fundamentally unpredictable.  It is impossible to look at the
+state of a critical system and say whether a large avalanche
+is ``due''.  If the system is in a critical state, then a large
+avalanche is always possible.  It just depends on the
+next grain of sand.
+
+In a sand pile model, what is the cause of a large avalanche?
+Philosophers sometimes distinguish the {\bf proximate} cause, which is
+most immediately responsible, from the {\bf ultimate} cause, which is,
+for whatever reason, considered the true cause.
+
+\index{proximate cause}
+\index{ultimate cause}
+
+In the sand pile model, the proximate cause of an avalanche is
+a grain of sand, but the grain that causes a large avalanche
+is identical to every other grain, so it offers no special explanation.
+The ultimate cause of a large avalanche is the structure and
+dynamics of the systems as a whole: large avalanches occur because
+they are a property of the system.
+
+Many social phenomena, including wars, revolutions, epidemics,
+inventions and terrorist attacks, are characterized by heavy-tailed
+distributions.  If the reason for these distributions is that
+social systems are critical, that suggests that major historical
+events may be fundamentally unpredictable and unexplainable.
+
+\index{heavy-tailed distributions}
+
+
+\section{Exercises}
+
+The code for this chapter is in \py{chap08.ipynb}, which is a
+Jupyter notebook in the repository for this book.  For more information
+about working with this code, see Section~\ref{???}.
+
+\begin{exercise}
+Launch \py{chap02.ipynb} and run the code.  
+There are a few short
+exercises embedded in the notebook that you might want to try.
 \end{exercise}
 
 
-\section{Fast Fourier Transform}
-
-The Fast Fourier Transform (FFT) is an efficient algorithm for
-computing the DFT.  It is often attributed to Cooley and Tukey,
-but it was independently discovered several times earlier.
-See \url{http://en.wikipedia.org/wiki/Fast_Fourier_transform}.
-\index{Fast Fourier Transform}
-\index{FFT}
-
-The first step toward the FFT is to rewrite Equation~\ref{dft}
-with the substitution $W = e^{2 \pi i/N}$:
-
-\begin{equation}
-H_n = \sum_{k=0}^{N-1} h_k W^{n k}
-\end{equation}
-
-The second step is the Danielson-Lanczos Lemma which states
-\index{Danielson-Lanczos Lemma}
-
-\[ H_n = H^e_n + W^k H^o_n \]
-
-where $H^e$ is the DFT of the even-indexed elements
-of $h$, and $H^o$ is the DFT of the odd-indexed elements.
-This lemma follows naturally from the definition of $H_n$; you can see
-a proof at \url{http://mathworld.wolfram.com/Danielson-LanczosLemma.html}.
-
-This lemma suggests a recursive algorithm for evaluating the DFT
-of a sequence $h$.  If  $h$ has only a single element, then $H=h$.
-Otherwise:
-\index{recursive algorithm}
-
-\begin{enumerate}
-
-\item Split $h$ into $h^e$ and $h^o$.
-
-\item Compute $H^e$ and $H^o$ by making two recursive calls.
-
-\item Use the lemma to combine $H^e$ and $H^o$ to form $H$.
-
-\end{enumerate}
-
-If $H$ has $2N$ elements, $H^e$ and $H^o$ have only $N$.
-In order to merge them, you have to wrap around, but you
-can do that because $H^e_{n+N} = H^e_{n}$.
-
-This recursive algorithm is the Fast Fourier Transform.
+\begin{exercise}
+\end{exercise}
 
 \begin{exercise}
+\end{exercise}
 
-Write a function called \py{fft} that implements
-the Fast Fourier Transform.  To check your function, you
-can compare it to the function \py{fft} provided by
-the module \py{numpy.fft}.
+\begin{exercise}
+\end{exercise}
 
-What is the order of growth run time of your implementation?
-What is the order of growth for the space required?
-
-Most FFT implementations use a clever indexing scheme to avoid copying
-the sequence; instead, they transform the elements in place.  You can
-read \url{http://en.wikipedia.org/wiki/Butterfly_diagram} to get the details.
-\index{indexing}
-
-Once your \py{fft} is working, write a function named
-\py{psd} that takes a sequence, $h$, and returns its
-one-sided power spectral density, $P$.
-
-You can download my solution from \url{thinkcomplex.com/Fourier.py}.
-
+\begin{exercise}
 \end{exercise}
 
 
-\section{Pink noise}
-
-In a followup paper in 1988, Bak, Tang and Wiesenfeld looked
-at a time series $F(t)$, which is the number of cells that
-exceed the threshold during each time step.  If I understand
-their model, they seed avalanches by incrementing the state
-of a random cell at random intervals; for example, there might
-be a fixed probability during each time step that a cell
-is incremented.  In this model (unlike the previous one) there
-may be more than one avalanche at a time.
-\index{pink noise}
-\index{1/f noise@$1/f$ noise}
-
-A plot of $F(t)$ shows that it is noisy, but not completely
-random, which is consistent with pink, or $1/f$ noise.
-As a stronger test, they plot the power spectral density of
-$F$ on a log-log scale.  If $F$ is $1/f$ noise, then
-
-\[ P_n \sim 1 / f_n = \frac{N d}{n} \]
-
-Since the units of time in this model are arbitrary, we
-can choose $d=1$.  Taking the log of both sides yields:
-
-\[ \log P_n \sim \log N - \log n \]
-
-So on a log-log scale, the PSD of $1/f$ noise is a straight
-line with slope -1.
-\index{log-log plot}
 
 \begin{exercise}
 
-Modify your implementation of the sand pile model to increment
-a random cell at random intervals and record the number of cells
-that exceed the threshold during each time step.
-
-To estimate the average PSD, you can divide the time series into
-chunks of 128 to 256 values, compute the PSD of each chunk, and
-average together the PSDs.  Plot the result on a log-log scale
-and estimate the slope.
-
-\end{exercise}
-
-
-\begin{exercise}
-
-In a 1989 paper, ``Self-organized criticality in the 'Game of Life''',
+In a 1989 paper, ``Self-organized criticality in the `Game of Life''',
 Bak, Chen and Creutz present evidence that the Game of Life is a
 self-organized critical system
 (\url{http://www.nature.com/nature/journal/v342/n6251/abs/342780a0.html}).
-\index{Game of Life} \index{self-organized criticality}
+
+\index{Game of Life}
+\index{self-organized criticality}
 
 To replicate their tests, run the GoL CA until it stabilizes,
 then choose a random cell and toggle it.  Run the CA until
@@ -6165,141 +6692,22 @@ at \url{http://zoology.ubc.ca/~rikblok/lib/blok95b.html}.
 \end{exercise}
 
 
-\section{Reductionism and Holism}
-\label{model2}
- 
-The original paper by Bak, Tang and Wiesenfeld is one of
-the most frequently-cited papers in the last few decades.
-Many new systems have been shown to be self-organized critical,
-and the sand-pile model, in particular, has been studied
-in detail.
-\index{sand pile model}
-
-As it turns out, the sand-pile model is not a very good model
-of a sand pile.  Sand is dense and not very sticky, so momentum
-has a non-negligible effect on the behavior of avalanches.  As
-a result, there are fewer very large and very small avalanches
-than the model predicts, and the distribution is not long tailed.
-
-Bak has suggested that this observation misses the point.
-The sand pile model is not meant to be a realistic model of a sand
-pile; it is meant to be a simple example of a broad category of
-models.
-
-To understand this point, it is useful to think about two
-kinds of models, {\bf reductionist} and {\bf holistic}.  A
-reductionist model describes a system by describing its parts
-and their interactions.  When a reductionist model is used
-as an explanation, it depends on an analogy between the
-components of the model and the components of the system.
-\index{reductionist}
-\index{holist}
-
-For example, to explain why the ideal gas law holds, we can model the
-molecules that make up a gas with point masses, and model their
-interactions as elastic collisions.  If you simulate or analyze this
-model you find that it obeys the ideal gas law.  This model is
-satisfactory to the degree that molecules in a gas behave like
-molecules in the model.  The analogy is between the parts of the
-system and the parts of the model.
-\index{analogy}
-
-\begin{figure}
-\centerline{\includegraphics[width=5in]{figs/model2.pdf}}
-\caption{The logical structure of a holistic model.\label{fig.model2}}
-\end{figure}
-
-Holistic models are more focused on similarities between systems and
-less interested in analogous parts.  A holistic approach to modeling
-often consists of two steps, not necessarily in this order:
-\index{holistic model}
-
-\begin{itemize}
-
-\item Identify a kind of behavior that appears in a variety of
-systems.
-
-\item Find the simplest model that demonstrates that behavior.
-
-\end{itemize}
-
-For example, in {\em The Selfish Gene}, Richard Dawkins suggests that
-genetic evolution is just one example of an evolutionary system.  He
-identifies the essential elements of the category---discrete
-replicators, variability and differential reproduction---and proposes
-that any system that has these elements displays similar
-behavior, including complexity without design.
-\index{Selfish Gene@{\em The Selfish Gene}}
-\index{Dawkins, Richard}
-\index{evolution}
-
-As another example of an evolutionary system, he proposes memes, which
-are thoughts or behaviors that are ``replicated'' by transmission from
-person to person.  As memes compete for the resource of human
-attention, they evolve in ways that are similar to genetic evolution.
-\index{meme}
-\index{replicator}
-
-Critics of memetics have pointed out that memes are a poor analogy
-for genes.  Memes differ from genes in many obvious ways.  But
-Dawkins has argued that these differences are beside the point
-because memes are not {\em supposed} to be analogous to genes.
-Rather, memetics and genetics are examples of the same
-category---evolutionary systems.  The differences between them
-emphasize the real point, which is that evolution is a general model
-that applies to many seemingly disparate systems.  The logical
-structure of this argument is shown in Figure~\ref{fig.model2}.
-\index{gene}
-\index{genetics}
-
-Bak has made a similar argument that self-organized criticality is a
-general model for a broad category of systems.  According to
-Wikipedia, ``SOC is typically observed in slowly-driven
-non-equilibrium systems with extended degrees of freedom and a high
-level of nonlinearity.''
-\index{Bak, Per}
-
-Many natural systems demonstrate behaviors characteristic of critical
-systems.  Bak's explanation for this prevalence is that these systems
-are examples of the broad category of self-organized criticality.
-There are two ways to support this argument.  One is to build
-a realistic model of a particular system and show that the model
-exhibits SOC.  The second is to show that SOC is a feature of many
-diverse models, and to identify the essential characteristics
-those models have in common.
-
-The first approach, which I characterize as reductionist,
-can explain the behavior of a particular system.  The
-second, holistic, approach, explains the prevalence of
-criticality in natural systems.  They are different models
-with different purposes.
-\index{prevalence}
-
-For reductionist models, realism is the primary virtue, and
-simplicity is secondary.  For holistic models, it is the other
-way around.
-
-\begin{exercise}
-
-Read \url{http://en.wikipedia.org/wiki/Reductionism}
-and \url{http://en.wikipedia.org/wiki/Holism}.
-
-\end{exercise}
-
-
 \begin{exercise}
 
 In a 1996 paper in Nature, Frette et al report the results of
 experiments with rice piles
 (\url{http://www.nature.com/nature/journal/v379/n6560/abs/379049a0.html}).
 They find that some kinds of rice yield evidence of critical behavior,
-but others do not.  \index{rice pile model}
+but others do not.
+
+\index{rice pile model}
 
 Similarly, Pruessner and Jensen studied large-scale versions of the
 forest fire model (using an algorithm similar to Newman and Ziff's).
 In their 2004 paper, ``Efficient algorithm for the forest fire model'',
 they present evidence that the system is not critical after all
 (\url{http://pre.aps.org/abstract/PRE/v70/i6/e066707}).
+
 \index{forest fire model}
 
 How do these results bear on Bak's claim that SOC explains
@@ -6312,13 +6720,15 @@ the prevalence of critical phenomena in nature?
 
 In {\em The Fractal Geometry of Nature}, Benoit Mandelbrot proposes
 what he calls a ``heretical'' explanation for the prevalence of
-long-tailed distributions in natural systems (page 344).  It may not
+heavy-tailed distributions in natural systems\footnote{}.  It may not
 be, as Bak suggests, that many systems can generate this behavior in
 isolation.  Instead there may be only a few, but there may be
 interactions between systems that cause the behavior to propagate.
+
 \index{Fractal Geometry of Nature@{\em The Fractal Geometry of
-    Nature}} \index{Mandelbrot, Benoit} \index{long-tailed
-  distribution}
+    Nature}} 
+\index{Mandelbrot, Benoit}
+\index{heavy-tailed distribution}
 
 To support this argument, Mandelbrot points out:
 
@@ -6328,7 +6738,7 @@ To support this argument, Mandelbrot points out:
   effect of a fixed underlying 'true distribution' and a highly
   variable 'filter.'"
 
-\item Long-tailed distributions are robust to filtering; that is,
+\item heavy-tailed distributions are robust to filtering; that is,
   ``a wide variety of filters leave their asymptotic behavior
   unchanged.''
 
@@ -6340,80 +6750,17 @@ it as reductionist or holist?
 \end{exercise}
 
 
-\section{SOC, causation and prediction}
 
-If a stock market index drops by a fraction of a percent in a
-day, there is no need for an explanation.  But if it drops 10\%,
-people want to know why.  Pundits
-on television are willing to offer explanations, but the real
-answer may be that there is no explanation.
-\index{stock market}
 
-Day-to-day variability in the stock market shows evidence of
-criticality: the distribution of value changes is long-tailed
-and the time series exhibits $1/f$ noise.
-If the stock market is a self-organized critical system, we
-should expect occasional large changes as part of the ordinary
-behavior of the market.
-\index{1/f noise@$1/f$ noise}
-
-The distribution of earthquake sizes is also long-tailed,
-and there are simple models of the dynamics of geological faults
-that might explain this behavior.  If these models are right,
-they imply that large earthquakes are unexceptional; that is,
-they do not require explanation any more than
-small earthquakes do.
-\index{earthquake}
-\index{prediction}
-\index{causation}
-
-Similarly, Charles Perrow has suggested that failures in large
-engineered systems, like nuclear power plants, are like avalanches
-in the sand pile model.  Most failures are small, isolated and
-harmless, but occasionally a coincidence of bad fortune yields a
-catastrophe.  When big accidents occur, investigators go looking for
-the cause, but if Perrow's ``normal accident theory'' is correct,
-there may be no special cause of large failures.
-\index{normal accident theory}
-\index{Perrow, Charles}
-
-These conclusions are not comforting.  Among other things, they
-imply that large earthquakes and some kinds of accidents are
-fundamentally unpredictable.  It is impossible to look at the
-state of a critical system and say whether a large avalanche
-is ``due''.  If the system is in a critical state, then a large
-avalanche is always possible.  It just depends on the
-next grain of sand.
-
-In a sand-pile model, what is the cause of a large avalanche?
-Philosophers sometimes distinguish the {\bf proximate} cause, which is
-most immediately responsible, from the {\bf ultimate} cause, which is,
-for whatever reason, considered the true cause.
-\index{proximate cause}
-\index{ultimate cause}
-
-In the sand-pile model, the proximate cause of an avalanche is
-a grain of sand, but the grain that causes a large avalanche
-is identical to any other grain, so it offers no special explanation.
-The ultimate cause of a large avalanche is the structure and
-dynamics of the systems as a whole: large avalanches occur because
-they are a property of the system.
-
-Many social phenomena, including wars, revolutions, epidemics,
-inventions and terrorist attacks, are characterized by long-tailed
-distributions.  If the reason for these distributions is that
-social systems are critical, that suggests that major historical
-events may be fundamentally unpredictable and unexplainable.
-\index{long-tailed distributions}
 
 \begin{exercise}
-
 Read about the ``Great Man'' theory of history at
 \url{http://en.wikipedia.org/wiki/Great_man_theory}.  What implication
 does self-organized criticality have for this theory?
-\index{Great Man theory}
 
+\index{Great Man theory}
 \end{exercise}
+
 
 
 \chapter{Agent-based models}
@@ -8119,8 +8466,6 @@ Here are the books:
 \end{document}
 
 
-
-
 \section{Pareto distributions}
 
 The Pareto distribution is named after the economist Vilfredo
@@ -8136,7 +8481,7 @@ and meteorites, forest fires and earthquakes.
 The Pareto distribution is characterized by a CDF with the following
 form:
 
-\[ CDF(x) = 1- \left( \frac{x}{x_m} \right) ^{-\alpha} \]
+\[ CDF(x) = 1 - \left( \frac{x}{x_m} \right) ^{-\alpha} \]
 
 The parameters $x_m$ and $\alpha$ determine the location and shape of
 the distribution.  $x_m$ is the minimum possible quantity.
@@ -8146,26 +8491,25 @@ Values from a Pareto distribution often have these properties:
 
 \begin{description}
 
-\item[Long tail:] Pareto distributions contain many small values
-and a few very large ones.
-\index{long tail}
+\item[Long tail:] Pareto distributions contain many small values and a
+  few very large ones.  
+  \index{long tail}
 
-\item[80/20 rule:] The large values in a Pareto distribution are
-so large that they make up a disproportionate share of the total.
-In the context of wealth, the 80/20 rule says that 20\% of the
-people own 80\% of the wealth.
-\index{80/20 rule}
+\item[80/20 rule:] The large values in a Pareto distribution are so
+  large that they make up a disproportionate share of the total.  In
+  the context of wealth, the 80/20 rule says that 20\% of the people
+  own 80\% of the wealth.  
+  \index{80/20 rule}
 
-\item[Scale free:] Short-tailed distributions are centered around
-a typical size, which is called a ``scale''.  For example, the
-great majority of adult humans are between 100 and 200 cm in height,
-so we could say that the scale of human height is a few hundred
-centimeters.  But for long-tailed distributions, there is no
-similar range (bounded by a factor of two) that contains the
-bulk of the distribution.  So we say that these distributions
-are ``scale-free''.
-\index{scale}
-\index{scale-free}
+\item[Scale free:] Short-tailed distributions are centered around a
+  typical size, which is called a ``scale''.  For example, the great
+  majority of adult humans are between 100 and 200 cm in height, so we
+  could say that the scale of human height is a few hundred
+  centimeters.  But for heavy-tailed distributions, there is no
+  similar range (bounded by a factor of two) that contains the bulk of
+  the distribution.  So we say that these distributions are
+  ``scale-free''.
+  \index{scale-free}
 
 \end{description}
 
@@ -8176,6 +8520,7 @@ distribution of human height were Pareto.
 In Pareto World, the shortest person is 100 cm,
 and the median is 150 cm, so that part of the distribution is not
 very different from ours.
+
 \index{Pareto World}
 
 But if you generate 6 billion values from this distribution
