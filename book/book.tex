@@ -21,7 +21,7 @@
 \newcommand{\thetitle}{Think Complexity}
 \newcommand{\thesubtitle}{Exploring Complexity Science in Python}
 \newcommand{\theauthors}{Allen B. Downey}
-\newcommand{\theversion}{2.0.7}
+\newcommand{\theversion}{2.0.8}
 
 %%%% Both LATEX and PLASTEX
 
@@ -6167,6 +6167,7 @@ still heavy-tailed as we expect for a system in a critical state.
 
 
 \section{Fractals}
+\label{sandfrac}
 
 Another property of critical systems is fractal geometry.  The
 initial configuration in Figure~\ref{chap08-1} (left) resembles a fractal,
@@ -6279,7 +6280,7 @@ slope = params[0]
 \end{code}
 
 \begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap08-5.pdf}}
+\centerline{\includegraphics[height=4in]{figs/chap08-5.pdf}}
 \caption{}
 \label{chap08-5}
 \end{figure}
@@ -6647,71 +6648,76 @@ Jupyter notebook in the repository for this book.  For more information
 about working with this code, see Section~\ref{???}.
 
 \begin{exercise}
-Launch \py{chap02.ipynb} and run the code.  
+
+Launch \py{chap08.ipynb} and run the code.  
 There are a few short
 exercises embedded in the notebook that you might want to try.
+
 \end{exercise}
 
 
 \begin{exercise}
+
+To test whether the distributions of \py{T} and \py{S} are
+heavy-tailed, we plotted their histograms on a log-log scale, which is
+what Bak, Tang and Wiesenfeld show in their paper.  But as we saw in
+Section~\ref{cdf}, this visualization can obscure the shape of the
+distribution.  Using the same data, make a plot that shows the
+cumulative distributions (CDFs) of \py{S} and \py{T}.  What can you
+say about their shape?  Do they follow a power law?  Are they heavy
+tailed?
+
+You might find it helpful to plot the CDFs on a log-x scale and on a
+log-log scale.
+
 \end{exercise}
 
 \begin{exercise}
+
+In Section~\ref{sandfrac} we showed that the initial configuration of
+the sand pile model produces fractal patterns.  But after we drop a
+large number of random grains, the patterns look more random.
+
+Starting with the example in Section~\ref{sandfrac}, run the sand pile
+model for a while and then compute fractal dimensions for each of the
+4 levels.  Is the sand pile model fractal in steady state?
+
 \end{exercise}
 
 \begin{exercise}
+
+Another version of the sand pile model, called the ``single source''
+model, starts from a different initial condition: instead of all cells
+at the same level, all cells are set to 0 except the center cell,
+which is set to a large value.  Write a function that creates a
+\py{SandPile} object, sets up the single source initial condition, and
+runs until the pile reaches equilibrium.  Does the result appear to be
+fractal?
+
+You can read more about this version of the sand pile model at
+\url{http://math.cmu.edu/~wes/sandgallery.html}.
+
 \end{exercise}
 
-\begin{exercise}
-\end{exercise}
-
-
 
 \begin{exercise}
 
-In a 1989 paper, ``Self-organized criticality in the `Game of Life''',
-Bak, Chen and Creutz present evidence that the Game of Life is a
-self-organized critical system
-(\url{http://www.nature.com/nature/journal/v342/n6251/abs/342780a0.html}).
+In a 1989 paper, Bak, Chen and Creutz suggest that the Game of Life is
+an SOC system.\footnote{``Self-organized criticality in the Game of
+  Life'', available from
+  \url{http://www.nature.com/nature/journal/v342/n6251/abs/342780a0.html}.}
 
 \index{Game of Life}
 \index{self-organized criticality}
 
 To replicate their tests, run the GoL CA until it stabilizes,
-then choose a random cell and toggle it.  Run the CA until
-it stabilizes again, keeping track of $t$, the number
-of time steps it takes, and $s$, the number of cells affected.
+then choose a random cell and flip it.  Run the CA until
+it stabilizes again, keeping track of \py{T}, the number
+of time steps it takes, and \py{S}, the number of cells affected.
 Repeat for a large number of trials and plot the distributions
-of $t$ and $s$.  Also, see if you can think of an effective
-experiment to test for $1/f$ noise.
-
-Some later work has called the conclusions of this paper into
-question.  You might want to read Blok, ``Life without bounds'',
-at \url{http://zoology.ubc.ca/~rikblok/lib/blok95b.html}.
-
-\end{exercise}
-
-
-\begin{exercise}
-
-In a 1996 paper in Nature, Frette et al report the results of
-experiments with rice piles
-(\url{http://www.nature.com/nature/journal/v379/n6560/abs/379049a0.html}).
-They find that some kinds of rice yield evidence of critical behavior,
-but others do not.
-
-\index{rice pile model}
-
-Similarly, Pruessner and Jensen studied large-scale versions of the
-forest fire model (using an algorithm similar to Newman and Ziff's).
-In their 2004 paper, ``Efficient algorithm for the forest fire model'',
-they present evidence that the system is not critical after all
-(\url{http://pre.aps.org/abstract/PRE/v70/i6/e066707}).
-
-\index{forest fire model}
-
-How do these results bear on Bak's claim that SOC explains
-the prevalence of critical phenomena in nature?
+of \py{T} and \py{S}.  Also, record the number of cells that change
+state during each time step and see if the resulting time series
+resembles pink noise.
 
 \end{exercise}
 
@@ -6720,13 +6726,11 @@ the prevalence of critical phenomena in nature?
 
 In {\em The Fractal Geometry of Nature}, Benoit Mandelbrot proposes
 what he calls a ``heretical'' explanation for the prevalence of
-heavy-tailed distributions in natural systems\footnote{}.  It may not
+heavy-tailed distributions in natural systems.  It may not
 be, as Bak suggests, that many systems can generate this behavior in
 isolation.  Instead there may be only a few, but there may be
 interactions between systems that cause the behavior to propagate.
 
-\index{Fractal Geometry of Nature@{\em The Fractal Geometry of
-    Nature}} 
 \index{Mandelbrot, Benoit}
 \index{heavy-tailed distribution}
 
@@ -6735,10 +6739,10 @@ To support this argument, Mandelbrot points out:
 \begin{itemize}
 
 \item The distribution of observed data is often ``the joint
-  effect of a fixed underlying 'true distribution' and a highly
-  variable 'filter.'"
+  effect of a fixed underlying {\em true distribution} and a highly
+  variable {\em filter}.''
 
-\item heavy-tailed distributions are robust to filtering; that is,
+\item Heavy-tailed distributions are robust to filtering; that is,
   ``a wide variety of filters leave their asymptotic behavior
   unchanged.''
 
@@ -6750,10 +6754,8 @@ it as reductionist or holist?
 \end{exercise}
 
 
-
-
-
 \begin{exercise}
+
 Read about the ``Great Man'' theory of history at
 \url{http://en.wikipedia.org/wiki/Great_man_theory}.  What implication
 does self-organized criticality have for this theory?
@@ -6765,6 +6767,9 @@ does self-organized criticality have for this theory?
 
 \chapter{Agent-based models}
 \label{agent-based}
+
+% TODO: introduction
+
 
 \section{Thomas Schelling}
 

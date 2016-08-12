@@ -35,8 +35,7 @@ class SandPile(Cell2D):
         
         returns: number of cells that toppled
         """
-        a = self.array
-        toppling = a>K
+        toppling = self.array > K
         num_toppled = np.sum(toppling)
         self.toppled_seq.append(num_toppled)
 
@@ -94,14 +93,26 @@ class SandPileViewer(Cell2DViewer):
             self.viewee.step()
 
 
+def single_source(pile, height=1024):
+    """Adds a tower to the center cell.
+    
+    height: value assigned to the center cell
+    """
+    a = pile.array
+    n, m = a.shape
+    a[:, :] = 0
+    a[n//2, m//2] = height
+
+
 def main():
-    n = 100
+    n = 101
     pile = SandPile(n)
-    tower(pile)
+    single_source(pile, height=2**14)
     viewer = SandPileViewer(pile, drop_flag=False)
     anim = viewer.animate(interval=0)
     plt.subplots_adjust(left=0.01, right=0.99, bottom=0.01, top=0.99)
     plt.show()
+
 
 if __name__ == '__main__':
     main()
