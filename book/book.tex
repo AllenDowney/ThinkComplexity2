@@ -21,7 +21,7 @@
 \newcommand{\thetitle}{Think Complexity}
 \newcommand{\thesubtitle}{Exploring Complexity Science in Python}
 \newcommand{\theauthors}{Allen B. Downey}
-\newcommand{\theversion}{2.0.8}
+\newcommand{\theversion}{2.0.9}
 
 %%%% Both LATEX and PLASTEX
 
@@ -5789,6 +5789,8 @@ What is its fractal dimension?
 \chapter{Self-organized criticality}
 \label{soc}
 
+%TODO: captions for the figures in this chapter
+
 In the previous chapter we saw an example of a system with a critical
 point and we explored one of the common properties of critical
 systems, fractal geometry.
@@ -6768,17 +6770,58 @@ does self-organized criticality have for this theory?
 \chapter{Agent-based models}
 \label{agent-based}
 
-% TODO: introduction
+The models we have seen so far might be characterized as ``rule-based''
+in the sense that they are governed by simple rule.  In this
+and the following chapters, we explore {\bf agent-based models}.
+
+\index{agent-based model}
+
+In this context, and {\bf agent} is a model of a person or other
+entity that gathers information about the world,
+makes decisions, and takes actions.
+
+Since the 1970s, agent-based
+modeling has become an important tool in economics and other
+social sciences, and in some natural sciences.
+
+The characteristics of agent-based models include:
+
+\begin{itemize}
+
+\item Agents that model intelligent behavior, usually with a simple
+  set of rules.
+
+\item The agents are usually situated in space (or in a network), and
+  interact with each other locally.  They usually have imperfect,
+  local information.
+
+\item Often there are differences among agents, unlike previous models
+  where all components are identical.
+
+\item Often there are random elements, either among the agents or in
+  the world.
+
+\end{itemize}
+
+Agent-based models are useful for modeling the dynamics of systems
+that are not in equilibrium (although they are also used to study
+equilibrium).  And they are particularly useful for understanding
+relationships between individual decisions and system behavior.
+
+The code for this chapter is in \py{chap09.ipynb}, which is a
+Jupyter notebook in the repository for this book.  For more information
+about working with this code, see Section~\ref{???}.
 
 
-\section{Thomas Schelling}
+\section{Schelling's Model}
 
 In 1971 Thomas Schelling published ``Dynamic Models of Segregation'',
 which proposes a simple model of racial segregation.  The Schelling
-model of the world is a grid; each cell represents a
-house.  The houses are occupied by two kinds of ``agents'',
+model of the world is a grid; each cell represents a house.  The
+houses are occupied by two kinds of people, called {\bf agents},
 labeled red and blue, in roughly equal numbers.  About 10\% of the
 houses are empty.
+
 \index{Schelling, Thomas}
 
 At any point in time, an agent might be happy or unhappy, depending
@@ -6787,10 +6830,11 @@ The neighborhood of each house is the set of
 eight adjacent cells.
 In one version of the model, agents are happy if they have at least
 two neighbors like themselves, and unhappy if they have one or zero.
+
 \index{agent-based model}
 
 The simulation proceeds by choosing an agent at random and checking
-to see whether it is happy.  If so, then nothing happens; if not,
+to see whether they are happy.  If so, nothing happens; if not,
 the agent chooses one of the unoccupied cells at
 random and moves.
 
@@ -6800,6 +6844,7 @@ quickly, clusters of similar agents appear.  The clusters
 grow and coalesce over time until there are a small number
 of large clusters and most agents live in homogeneous
 neighborhoods.
+
 \index{segregation}
 
 If you did not know the process and only saw the result, you might
@@ -6809,6 +6854,7 @@ not to be greatly outnumbered, they might be considered xenophobic at
 worst.  Of course, these agents are a wild simplification of real
 people, so it may not be appropriate to apply these descriptions at
 all.
+
 \index{racism}
 \index{xenophobia}
 
@@ -6818,34 +6864,309 @@ argument about the relationship between a system and its parts: if you
 observe segregation in a real city, you cannot conclude that
 individual racism is the immediate cause, or even that the people in
 the city are racists.
+
 \index{causation}
 
-But we have to keep in mind the limitations of this argument:
+Of course, we have to keep in mind the limitations of this argument:
 Schelling's model demonstrates a possible cause of segregation, but
 says nothing about actual causes.
 
+
+\section{Implementation of Schelling's model}
+
+To implement Schelling's model, I wrote yet another class that
+inherits from \py{Cell2D}:
+
+\begin{code}
+class Schelling(Cell2D):
+    
+    def __init__(self, n, m=None, p=0.5):
+        self.p = p
+        m = n if m is None else m
+        choices = [0, 1, 2]
+        probs = [0.1, 0.45, 0.45]
+        self.array = np.random.choice(choices, (n, m), p=probs)
+\end{code}
+
+The parameters \py{n} and \py{m} are the dimensions of the grid,
+and \py{p} is the threshold on the fraction of similar neighbors.
+For example, if \py{p=0.5}, an agent will be unhappy if fewer
+than 50\% of their neighbors are the same color.
+
+\py{array} is a NumPy array where each cell is 0 if empty, 1 if
+occupied by a red agent, and 2 if occupied by a blue agent.
+Initially 10\% of the cells are empty, 45\% red, and 45\% blue.
+
+The \py{step} function for Schelling's model is substantially more
+complicated than previous step functions.  If you are not
+interested in the details, you can skip to the next section.
+But if you stick around, you might pick up some NumPy tips.
+
+First, I'll make logical arrays indicating which cells are
+red, blue, and occupied:
+
+\begin{code}
+        a = self.array        
+        red = a==1
+        blue = a==2
+        occupied = a!=0
+\end{code}
+
+I'll use \py{np.correlate2d} to count, for each cell,
+the number of neighboring cells that are red and the number
+that are occupied.
+
+\begin{code}
+    options = dict(mode='same', boundary='wrap')
+
+    kernel = np.array([[1, 1, 1],
+                       [1, 0, 1],
+                       [1, 1, 1]], dtype=np.int8)
+
+    num_red = correlate2d(red, kernel, **options)
+    num_neighbors = correlate2d(occupied, kernel, **options)
+\end{code}
+
+Now for each cell we can compute the fraction of neighbors
+that are red and the fraction that are the same color:
+
+\begin{code}
+    frac_red = num_red / num_neighbors
+    frac_blue = 1 - frac_red
+    frac_same = np.where(red, frac_red, frac_blue)
+\end{code}
+
+\py{frac_red} is just the ratio of \py{num_red} and \py{num_neighbors},
+and \py{frac_blue} is the complement of \py{frac_red}.
+
+\py{frac_same} is a little bit more complicated.  The function
+\py{np.where} is like an element-wise \py{if} expression.  The
+first parameter is a condition that selects elements from
+the second or third parameter.
+
+\index{np.where}
+
+In this case, wherever \py{red} is \py{True}, \py{frac_same} gets
+the corresponding element of \py{frac_red}.  Where \py{red} is
+\py{False}, \py{frac_same} gets the corresponding element of \py{frac_blue}.
+
+Now we can identify the locations of the unhappy agents:
+
+\begin{code}
+    unhappy_locs = locs_where(occupied & (frac_same < self.p))
+\end{code}
+
+The result, \py{unhappy_locs}, is a NumPy array where each row is
+the coordinates of an occupied cell where \py{frac_same} is below
+the threshold \py{p}.
+
+\py{locs_where} is a wrapper function for \py{np.nonzero}:
+
+\begin{code}
+def locs_where(condition):
+    return np.transpose(np.nonzero(condition))
+\end{code}
+
+\py{np.nonzero} takes an array and returns the coordinates of
+all non-zero cells, but the results are in the form of
+two tuples.  \py{np.transpose} converts the results to a more
+useful form, an array where each row is a coordinate pair.
+
+Similarly, \py{empty_locs} is an array that contains the coordinates
+of the empty cells, shuffled:
+
+\begin{code}
+    empty_locs = locs_where(a==0)
+\end{code}
+
+Now we get to the core of the simulation.  We loop through the
+unhappy agents and move them:
+
+\begin{code}
+    for source in unhappy_locs:
+        i = np.random.randint(len(empty_locs))
+        dest = tuple(empty_locs[i])
+        a[dest] = a[tuple(source)]
+        a[tuple(source)] = 0
+        empty_locs[i] = source
+\end{code}
+
+\py{i} is an index used to choose a random empty cell.
+
+\py{dest} is a tuple containing the coordinates of the empty cell.
+
+In order to move an agent, we copy the value from \py{source} to
+\py{dest}, and then set the value of \py{source} to 0 (since it is now
+empty).
+
+Finally, we replace the entry in \py{empty_locs} with \py{source}, so the
+cell that just became empty can be chosen by the next agent.
+
+
+\section{Segregation}
+
+\begin{figure}
+\centerline{\includegraphics[height=3in]{figs/chap09-1.pdf}}
+\caption{Schelling's segregation model with \py{n=100}, initial
+condition (left), after 2 steps (middle) and after 10 steps (right).}
+\label{chap09-1}
+\end{figure}
+
+Now let's see what happens when we run the model.  I'll start
+with \py{n=100} and \py{p=0.3}, and run for 10 steps.
+
+\begin{code}
+grid = Schelling(n=100, p=0.3)
+for i in range(10):
+    grid.step()
+\end{code}
+
+Figure~\ref{chap09-1} shows the initial configuration (left),
+the state of the simulation after 2 steps (middle) and after 10
+steps (right).
+
+Clusters form quickly, with red and blue agents moving into
+segregated clusters separated by boundaries of empty cells.
+
+For each configuration, we can compute the degree of segregation,
+which is the fraction of neighbors who are the same color, averaged
+across cells:
+
+\begin{code}
+    np.sum(frac_same) / np.sum(occupied)
+\end{code}
+
+In Figure~\ref{chap09-1}, the degree average fraction of similar
+neighbors is 55\% in the initial configuration, 71\% after two
+steps, and 80\% after 10 steps!
+
+Remember that when \py{p=0.3} the agents would be happy if 3 of 8
+neighbors were their own color, but they end up living in
+neighborhood where 6 or 7 of their neighbors are their own color,
+typically.
+
+
+\begin{figure}
+\centerline{\includegraphics[height=3in]{figs/chap09-2.pdf}}
+\caption{Degree of segregation in Schelling's model, over time,
+for a range of `p`.}
+\label{chap09-2}
+\end{figure}
+
+Figure~\ref{chap09-2} shows how the degree of segregation increases
+and where it levels off for several values of `p`.  When `p=0.4`,
+the degree of segregation in steady state is about 88\%, and a majority
+of agents have no neighbors with a different color.
+
+These results are surprising to many people, and they make a striking
+example of the complex and unpredictable relationship between
+individual decisions and system behavior.
+
+
+\section{SugarScape}
+
+
+
+
+\section{Emergence}
+
+The examples in this chapter have something in common: emergence.  An
+{\bf emergent property} is a characteristic of a system that results
+from the interaction of its components, not from their properties.
+\index{emergence}
+\index{emergent property}
+
+To clarify what emergence is, it helps to consider what it isn't.  For
+example, a brick wall is hard because bricks and mortar are hard, so
+that's not an emergent property.  As another example, some rigid
+structures are built from flexible components, so that seems like a
+kind of emergence.  But it is at best a weak kind, because structural
+properties follow from well-understood laws of mechanics.
+\index{brick wall}
+
+Emergent properties are surprising: it is hard to predict the behavior
+of the system even if we know all the rules.  That difficulty is not
+an accident; it may be the defining characteristic of emergence.
+
+As Wolfram discusses in {\em A New Kind of Science}, conventional science
+is based on the axiom that if you know the rules that govern a system,
+you can predict its behavior.  What we call ``laws'' are often
+computational shortcuts that allow us to predict the outcome of a
+system without building or observing it.
+\index{New Kind of Science@{\it A New Kind of Science}}
+\index{Wolfram, Stephen}
+\index{natural law}
+
+But many cellular automatons are {\bf computationally irreducible},
+which means that there are no shortcuts.  The only way to get the
+outcome is to implement the system.
+\index{computationally irreducible}
+\index{shortcut}
+
+The same may be true of complex systems in general.  For physical
+systems with more than a few components, there is usually no model
+that yields an analytic solution.  Numerical methods provide a kind of
+computational shortcut, but there is still a qualitative difference.
+Analytic solutions often provide a constant-time algorithm for
+prediction; that is, the run time of the computation does not depend
+on $t$, the time scale of prediction.  But numerical methods,
+simulation, analog computation, and similar methods take time
+proportional to $t$.  And for many systems, there is a bound on $t$
+beyond which we can't compute reliable predictions at all.
+
+These observations suggest that emergent properties are fundamentally
+unpredictable, and that for complex systems we should not expect to
+find natural laws in the form of computational shortcuts.
+
+To some people, ``emergence'' is another name for ignorance; by this
+reckoning, a property is emergent if we don't have a reductionist
+explanation for it, but if we come to understand it better in the
+future, it would no longer be emergent.
+
+The status of emergent properties is a topic of debate, so it is
+appropriate to be skeptical.
+When we see an apparently emergent property,
+we should not assume that there can never be a reductionist explanation.
+But neither should we assume that there has to be one.  The examples
+in this book and the principle of computational
+equivalence give good reasons to believe that at least some
+emergent properties can never be ``explained'' by a
+classical reductionist model.
+
+You can read more about emergence at
+\url{http://en.wikipedia.org/wiki/Emergence}.
+
+
+
 \begin{exercise}
 
-Implement Schelling's model in a grid.  From random initial conditions,
-how does the system evolve?
+In the philosophy of mind, {\em Strong AI} is the position that an
+appropriately-programmed computer could have a mind in the same sense
+that humans have minds.
 
-Define a statistic that measures the degree of segregation, and plot
-this statistic over time.
+John Searle presented a thought experiment called ``The Chinese Room'',
+intended to show that {\em Strong AI} is false.  You can read about
+it at \url{http://en.wikipedia.org/wiki/Chinese_room}.
 
-Experiment with the parameters of the model.  What happens as the agents
-become more tolerant?  What happens if the agents are only happy in
-mixed neighborhoods; that is, if they are unhappy if too many of their
-neighbors are like themselves?
-\index{parameter}
+What is the {\bf system reply} to the Chinese Room argument?
+How does what you have learned about complexity science influence
+your reaction to the system response?
 
 \end{exercise}
 
 
+\section{Exercises}
+
+\begin{exercise}
+Check whether the clusters in Schelling's model are connected.
+\end{exercise}
+
 \begin{exercise}
 
-In a recent book, {\em The Big Sort}, Bill Bishop argues that
+Bill Bishop, author of {\em The Big Sort}, argues that
 American society is increasingly segregated by political
 opinion, as people choose to live among like-minded neighbors.
+
 \index{Big Sort@{\em The Big Sort}}
 \index{Bishop, Bill}
 
@@ -6858,45 +7179,17 @@ Modify your implementation of Schelling's model to simulate
 this kind of behavior and see if it yields similar degrees of
 segregation.
 
+There are several ways you can model Bishop's hypothesis.  In my
+implementation, a random selection of agents moves during each step.
+Each agent considers \py{k} randomly-chosen empty locations and
+chooses the one with the highest fraction of similar neighbors.
+How does the degree of segregation depend on \py{k}?
+
 \end{exercise}
 
 
-\section{Agent-based models}
 
-Schelling's model is one of the first, and one of the most
-famous, agent-based models.  Since the 1970s, agent-based
-modeling has become an important tool in economics and other
-social sciences, and in some natural sciences.
-\index{agent-based model}
-
-The characteristics of agent-based models include:
-
-\begin{itemize}
-
-\item Agents that model intelligent behavior, usually with a simple
-  set of rules.
-
-\item The agents are usually situated in space (or in a network), and
-  interact with each other locally.
-
-\item They usually have imperfect, local information.
-
-\item Often there is variability between agents.
-
-\item Often there are random elements, either among the agents or in
-  the world.
-
-\end{itemize}
-
-Agent-based models are useful for modeling the dynamics of systems
-that are not in equilibrium (although they are also used to study
-equilibrium).  And they are particularly useful for understanding
-relationships between individual decisions and system behavior, or as
-in the title of Schelling's book, {\em Micromotives and Macrobehavior}.
-\index{Micromotives and Macrobehavior@{\em Micromotives and Macrobehavior}}
-
-For more about agent-based modeling, see
-\url{http://en.wikipedia.org/wiki/Agent-based_model}.
+\chapter{Herds, Flocks, and Traffic Jams}
 
 
 \section{Traffic jams}
@@ -7129,6 +7422,81 @@ behavior of the flock?  Implement it and see.
 \end{exercise}
 
 
+\section{Free will}
+\label{free.will}
+
+Many complex systems have properties, as a whole, that their
+components do not:
+
+\begin{itemize}
+
+\item The Rule 30 cellular automaton is deterministic, and the rules
+  that govern its evolution are completely known.  Nevertheless, it
+  generates a sequence that is statistically indistiguishable from
+  random.
+
+\item The agents in Schelling's model are not racist, but the outcome
+  of their interactions is as if they were.
+
+\item Traffic jams move backward even though the cars in them are
+  moving forward.
+
+\item The behavior of flocks and herds emerges from local interactions
+  between their members.
+
+\item As Axelrod says about the iterated prisoner's dilemma: ``The
+  emergence of cooperation can be explained as a consequence of
+  individual[s] pursuing their own interests.''
+
+\end{itemize}
+
+These examples suggest an approach to several old and challenging
+questions, including the problems of consciousness and free will.
+
+Free will is the ability to make choices, but if our bodies and brains
+are governed by deterministic physical laws, our actions would be
+determined.  Arguments about free will are innumerable; I will
+only mention two:
+
+\begin{itemize}
+
+\item William James proposed a two-stage model in which
+  possible actions are generated by a random process and then selected
+  by a deterministic process.  In that case our actions are
+  fundamentally unpredictable because the process that generates them
+  includes a random element.
+
+\item David Hume suggested that our perception of making choices
+  is an illusion; in that case, our actions are deterministic because
+  the system that produces them is deterministic.
+
+\end{itemize}
+
+These arguments reconcile the conflict in opposite ways, but they
+agree that there is a conflict: the system cannot have free will if
+the parts are deterministic.
+
+The complex systems in this book suggest the alternative
+that free will, at the level of options and decisions, is compatible
+with determinism at the level of neurons (or some lower level).  In
+the same way that a traffic jam moves backward while the cars move
+forward, a person can have free will even though neurons don't.
+
+
+\begin{exercise}
+
+Read more about free will at
+\url{http://en.wikipedia.org/wiki/Free_will}.  The view that free will
+is compatible with determinism is called {\bf compatibilism}.  One of
+the strongest challenges to compatibilism is the ``consequence
+argument''.  What is the consequence argument?  What response can you
+give to the consequence argument based on what you have read in this
+book?
+\end{exercise}
+
+
+\chapter{Game Theory}
+
 \section{Prisoner's Dilemma}
 \label{prisoners}
 
@@ -7241,168 +7609,12 @@ of Axelrod's tournament in his book, {\it The Evolution of Cooperation}.
 \end{exercise}
 
 
-\section{Emergence}
-
-The examples in this chapter have something in common: emergence.  An
-{\bf emergent property} is a characteristic of a system that results
-from the interaction of its components, not from their properties.
-\index{emergence}
-\index{emergent property}
-
-To clarify what emergence is, it helps to consider what it isn't.  For
-example, a brick wall is hard because bricks and mortar are hard, so
-that's not an emergent property.  As another example, some rigid
-structures are built from flexible components, so that seems like a
-kind of emergence.  But it is at best a weak kind, because structural
-properties follow from well-understood laws of mechanics.
-\index{brick wall}
-
-Emergent properties are surprising: it is hard to predict the behavior
-of the system even if we know all the rules.  That difficulty is not
-an accident; it may be the defining characteristic of emergence.
-
-As Wolfram discusses in {\em A New Kind of Science}, conventional science
-is based on the axiom that if you know the rules that govern a system,
-you can predict its behavior.  What we call ``laws'' are often
-computational shortcuts that allow us to predict the outcome of a
-system without building or observing it.
-\index{New Kind of Science@{\it A New Kind of Science}}
-\index{Wolfram, Stephen}
-\index{natural law}
-
-But many cellular automatons are {\bf computationally irreducible},
-which means that there are no shortcuts.  The only way to get the
-outcome is to implement the system.
-\index{computationally irreducible}
-\index{shortcut}
-
-The same may be true of complex systems in general.  For physical
-systems with more than a few components, there is usually no model
-that yields an analytic solution.  Numerical methods provide a kind of
-computational shortcut, but there is still a qualitative difference.
-Analytic solutions often provide a constant-time algorithm for
-prediction; that is, the run time of the computation does not depend
-on $t$, the time scale of prediction.  But numerical methods,
-simulation, analog computation, and similar methods take time
-proportional to $t$.  And for many systems, there is a bound on $t$
-beyond which we can't compute reliable predictions at all.
-
-These observations suggest that emergent properties are fundamentally
-unpredictable, and that for complex systems we should not expect to
-find natural laws in the form of computational shortcuts.
-
-To some people, ``emergence'' is another name for ignorance; by this
-reckoning, a property is emergent if we don't have a reductionist
-explanation for it, but if we come to understand it better in the
-future, it would no longer be emergent.
-
-The status of emergent properties is a topic of debate, so it is
-appropriate to be skeptical.
-When we see an apparently emergent property,
-we should not assume that there can never be a reductionist explanation.
-But neither should we assume that there has to be one.  The examples
-in this book and the principle of computational
-equivalence give good reasons to believe that at least some
-emergent properties can never be ``explained'' by a
-classical reductionist model.
-
-You can read more about emergence at
-\url{http://en.wikipedia.org/wiki/Emergence}.
-
-
-\section{Free will}
-\label{free.will}
-
-Many complex systems have properties, as a whole, that their
-components do not:
-
-\begin{itemize}
-
-\item The Rule 30 cellular automaton is deterministic, and the rules
-  that govern its evolution are completely known.  Nevertheless, it
-  generates a sequence that is statistically indistiguishable from
-  random.
-
-\item The agents in Schelling's model are not racist, but the outcome
-  of their interactions is as if they were.
-
-\item Traffic jams move backward even though the cars in them are
-  moving forward.
-
-\item The behavior of flocks and herds emerges from local interactions
-  between their members.
-
-\item As Axelrod says about the iterated prisoner's dilemma: ``The
-  emergence of cooperation can be explained as a consequence of
-  individual[s] pursuing their own interests.''
-
-\end{itemize}
-
-These examples suggest an approach to several old and challenging
-questions, including the problems of consciousness and free will.
-
-Free will is the ability to make choices, but if our bodies and brains
-are governed by deterministic physical laws, our actions would be
-determined.  Arguments about free will are innumerable; I will
-only mention two:
-
-\begin{itemize}
-
-\item William James proposed a two-stage model in which
-  possible actions are generated by a random process and then selected
-  by a deterministic process.  In that case our actions are
-  fundamentally unpredictable because the process that generates them
-  includes a random element.
-
-\item David Hume suggested that our perception of making choices
-  is an illusion; in that case, our actions are deterministic because
-  the system that produces them is deterministic.
-
-\end{itemize}
-
-These arguments reconcile the conflict in opposite ways, but they
-agree that there is a conflict: the system cannot have free will if
-the parts are deterministic.
-
-The complex systems in this book suggest the alternative
-that free will, at the level of options and decisions, is compatible
-with determinism at the level of neurons (or some lower level).  In
-the same way that a traffic jam moves backward while the cars move
-forward, a person can have free will even though neurons don't.
-
-
-\begin{exercise}
-
-Read more about free will at
-\url{http://en.wikipedia.org/wiki/Free_will}.  The view that free will
-is compatible with determinism is called {\bf compatibilism}.  One of
-the strongest challenges to compatibilism is the ``consequence
-argument''.  What is the consequence argument?  What response can you
-give to the consequence argument based on what you have read in this
-book?
-\end{exercise}
-
-
-\begin{exercise}
-
-In the philosophy of mind, {\em Strong AI} is the position that an
-appropriately-programmed computer could have a mind in the same sense
-that humans have minds.
-
-John Searle presented a thought experiment called ``The Chinese Room'',
-intended to show that {\em Strong AI} is false.  You can read about
-it at \url{http://en.wikipedia.org/wiki/Chinese_room}.
-
-What is the {\bf system reply} to the Chinese Room argument?
-How does what you have learned about complexity science influence
-your reaction to the system response?
-
-\end{exercise}
-
 You have reached the end of the book.  Congratulations!  When you
 first read Chapter~\ref{overview}, some of the topics might not have
 made sense.  You might find it helpful to read that chapter again now.
 Then get to work on your case study!  See Appendix~\ref{submissions}.
+
+
 
 
 \appendix
