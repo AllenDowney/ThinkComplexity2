@@ -70,7 +70,10 @@ class Cell2DViewer:
         self.viewee.step()
 
     def draw(self, grid=False):
-        """Updates the display with the state of the grid."""
+        """Draws the array and any other elements.
+
+        grid: boolean, whether to draw grid lines
+        """
         self.draw_array(self.viewee.array)
         if grid:
             self.draw_grid()
@@ -81,15 +84,15 @@ class Cell2DViewer:
         # of step perform updates in place.
         a = array.copy()
         cmap = self.cmap if cmap is None else cmap
-        options = self.options.copy()
-        options.update(kwds)
 
         n, m = a.shape
         plt.axis([0, m, 0, n])
         plt.xticks([])
         plt.yticks([])
 
+        options = self.options.copy()
         options['extent'] = [0, m, 0, n]
+        options.update(kwds)
         self.im = plt.imshow(a, cmap, **options)
 
     def step(self, iters=1):
