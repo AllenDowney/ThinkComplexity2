@@ -3850,7 +3850,8 @@ back to this topic in Section~\ref{free.will}.
 \index{free will}
 
 
-\section{Structures}
+\section{Spaceships}
+\label{spaceships}
 
 \begin{figure}
 \centerline{\includegraphics[height=2.5in]{figs/chap05-5.pdf}}
@@ -4610,6 +4611,7 @@ or disprove it.
 
 
 \section{Life patterns}
+\label{lifepatterns}
 
 \begin{figure}
 \centerline{\includegraphics[height=1.75in]{figs/chap06-1.pdf}}
@@ -6771,37 +6773,25 @@ does self-organized criticality have for this theory?
 \label{agent-based}
 
 The models we have seen so far might be characterized as ``rule-based''
-in the sense that they are governed by simple rule.  In this
+in the sense that they involve systems governed by simple rules.  In this
 and the following chapters, we explore {\bf agent-based models}.
 
 \index{agent-based model}
 
-In this context, and {\bf agent} is a model of a person or other
-entity that gathers information about the world,
-makes decisions, and takes actions.
+Agent-based models include {\bf agents} that are
+intended to model people and other entities that gather
+information about the world, make decisions, and take actions.
 
-Since the 1970s, agent-based
-modeling has become an important tool in economics and other
-social sciences, and in some natural sciences.
+The agents are usually situated in space or in a network, and
+interact with each other locally.  They usually have imperfect,
+local information.
 
-The characteristics of agent-based models include:
+Often there are differences among agents, unlike previous models where
+all components are identical.  And agent-based model often include 
+randomness, either among the agents or in the world.
 
-\begin{itemize}
-
-\item Agents that model intelligent behavior, usually with a simple
-  set of rules.
-
-\item The agents are usually situated in space (or in a network), and
-  interact with each other locally.  They usually have imperfect,
-  local information.
-
-\item Often there are differences among agents, unlike previous models
-  where all components are identical.
-
-\item Often there are random elements, either among the agents or in
-  the world.
-
-\end{itemize}
+Since the 1970s, agent-based modeling has become an important tool in
+economics and other social sciences, and in some natural sciences.
 
 Agent-based models are useful for modeling the dynamics of systems
 that are not in equilibrium (although they are also used to study
@@ -7049,12 +7039,12 @@ typically.
 \begin{figure}
 \centerline{\includegraphics[height=3in]{figs/chap09-2.pdf}}
 \caption{Degree of segregation in Schelling's model, over time,
-for a range of `p`.}
+for a range of \py{p}.}
 \label{chap09-2}
 \end{figure}
 
 Figure~\ref{chap09-2} shows how the degree of segregation increases
-and where it levels off for several values of `p`.  When `p=0.4`,
+and where it levels off for several values of \py{p}.  When \py{p=0.4},
 the degree of segregation in steady state is about 88\%, and a majority
 of agents have no neighbors with a different color.
 
@@ -7065,14 +7055,311 @@ individual decisions and system behavior.
 
 \section{SugarScape}
 
+In 1996 Joshua Epstein and Robert Axtell proposed SugarScape, an
+agent-based model of an ``artificial society'' intended to support
+experiments related to economics and other social sciences.
 
+SugarScape is a versatile model that has been adapted for a wide
+variety of topics.  As examples, I will replicate the
+first few experiments from Epstein and Axtell's book, {\it Growing
+Artificial Societies}.
+
+In its simplest form, SugarScape is a model of a simple economy where
+agents move around on a 2D grid, harvesting and accumulating ``sugar'',
+which represents economic wealth.  Some parts of the grid produce more
+sugar than others, and some agents are better at finding it than
+others.
+
+This version of SugarScape is often used to explore and explain the
+distribution of wealth, in particular the tendency toward inequality.
+
+In the SugarScape grid, each cell has a capacity, which is the maximum
+amount of sugar it can hold.  In the original configuration, there
+are two high-sugar regions, with capacity 4, surrounding by concentric
+rings with capacities 3, 2, and 1.
+
+\begin{figure}
+\centerline{\includegraphics[height=3in]{figs/chap09-3.pdf}}
+\caption{Replication of the original SugarScape model: initial
+configuration (left), after 2 steps (middle) and 100 steps (right).}
+\label{chap09-3}
+\end{figure}
+
+Figure~\ref{chap09-3} (left) shows the initial configuration, with the darkest
+areas indicating cells with the highest capacity, and small circles
+representing the agents.
+
+Initially there are 400 agents placed at random locations.  Each
+agent has three randomly-chosen attributes:
+
+\begin{description}
+
+\item[Sugar:] Each agent starts with an endowment of sugar chosen
+from a uniform distribution between 5 and 25 units.
+
+\item[Metabolism:] Each agent has some amount of sugar they must
+consumer per time step, chosen uniformly between 1 and 4.
+
+\item[Vision:] Each agent can ``see'' the amount
+of sugar in nearby cells and move to the cell with the most, but
+some agents can see farther than others.  The distance agents
+see is chosen uniformly between 1 and 6.
+
+\end{description}
+
+During each time step, agents move one at a time in a random order.
+Each agent follows these rules:
+
+\begin{itemize}
+
+\item The agent surveys \py{k} cells in each of the 4 compass directions,
+where \py{k} is the range of the agent's vision.
+
+\item It chooses the unoccupied cell with the most sugar.  In case
+of a tie, it chooses the closer cell; among cells at the same
+distance, it chooses randomly.
+
+\item The agent moves to the selected cell and harvests the sugar,
+adding the harvest to its accumulated wealth and leaving the cell
+empty.
+
+\item The agent consumes some part of its wealth, depending on its
+metabolism.  If the resulting total is negative, the agent ``starves''
+and is removed.
+
+\end{itemize}
+
+After all agents have executed these steps, the cells grow back
+some sugar, typically 1 unit, but the total sugar in each cell is
+bounded by its capacity.
+
+Figure~\ref{chap09-3} (middle) shows the state of the model after two
+steps.  Most agents are moving toward the areas with the most sugar.
+Agents with high vision also move the fastest; agents with low vision
+tend to get stuck on the plateaus, wandering randomly until they get
+close enough to see the next level.
+
+Agents born in the areas with the least sugar are likely to starve
+unless they also have high vision and a high initial endowment.
+
+Within the high-sugar areas, agents compete with each other to
+find and harvest sugar as it grows back.  Agents with high metabolism
+or low vision are the most likely to starve.
+
+When sugar grows back at 1 unit per time step, there is not enough
+sugar to sustain the 400 agents we started with.  The population
+drops quickly at first, then more slowly, and levels off around 250.
+
+Figure~\ref{chap09-3} (right) shows the state of the model after 100
+time steps, with about 250 agents.  The agents who survive tend to
+be the lucky ones, born with high vision and/or low metabolism.
+Having survived to this point, they are likely to survive forever,
+accumulating unbounded stockpiles of sugar.
+
+
+\section{Wealth inequality}
+
+In its current form, SugarScape models a simple ecology, and could
+be used to explore the relationship between the parameters of the
+model, like the growth rate and the attributes of the agents, and
+the carrying capacity of the system (the number of agents that
+survive in steady state).  And it models a form of natural selection,
+where agents with higher ``fitness'' are more likely to survive.
+
+The model also demonstrates a kind of wealth inequality, with some
+agents accumulating sugar faster than others.  But it would be hard
+to say anything specific about the distribution of wealth because it
+is not ``stationary''; that is, the distribution changes over time and
+does not reach a steady state.
+
+However, if we give the agents finite lifespans, the model produces
+a stationary distribution of wealth.  And then we can run experiments to
+see what effect the parameters and rules have on this distribution.
+
+In this version of the model, agents have an age that gets incremented
+each time step, and a random lifespan that is uniform from 60 to 100.
+If an agent's age exceeds its lifespan, it dies.
+
+When an agent dies, from starvation or old age, it is replaced by
+a new agent with random attributes, so the total population is
+constant.
+
+\begin{figure}
+\centerline{\includegraphics[height=3in]{figs/chap09-3.pdf}}
+\caption{Distribution of sugar (wealth) after 100, 200, 300, and
+400 steps (gray lines) and 500 steps (dark line).  Linear scale (left)
+and log-x scale (right). }
+\label{chap09-3}
+\end{figure}
+
+Starting with 250 agents, which is close to carrying capacity, I ran
+the model for 500 steps.  After each 100 steps, I plot the distribution
+of sugar accumulated by the agents.  Figure~\ref{chap09-4} shows the
+results on a linear scale (left) and a log-x scale (right).
+
+After about 200 steps (which is twice the longest lifespan) the
+distribution doesn't change much.  And it is skewed to the right.
+
+Most agents have little accumulated wealth: the 25th percentile is
+about 10 and the median is about 20.  But a few agents have accumulated
+much more: the 75th percentile is about 40, and the highest value is
+more than 150.
+
+On a log scale the shape of the distribution resembles a Gaussian or
+normal distribution, although the right tail is truncated.  If it were
+actually normal on a log scale, the distribution would be lognormal,
+which is a heavy-tailed distribution.  And in fact, the distribution
+of wealth in practically every country, and in the world, is a
+heavy-tailed distribution.
+
+It would be too much to claim that SugarScape explains why wealth
+distributions are heavy-tailed, but the prevalence of inequality in
+variations of SugarScape suggests that inequality is
+characteristic of many economies, even very simple ones.
+And experiments with rules that model taxation and other income
+transfers suggest that it is not easy to avoid or mitigate.
+
+
+
+\section{Implementing SugarWorld}
+
+SugarWorld is more complicated than the previous models, so I won't
+present the entire implementation here.  I will outline the
+structure of the code and you can see the details in the Jupyter notebook
+for this chapter, {\tt chap09.ipynb}, which is in the repository
+for this book.  And if you are not interested in the details, you
+can skip to the next section.
+
+Here is the \py{Agent} class with the \py{step} method:
+
+\begin{code}
+class Agent:
+
+    def step(self, env):
+        self.loc = env.look_around(self.loc, self.vision)
+        self.sugar += env.harvest(self.loc) - self.metabolism
+        self.age += 1
+\end{code}
+
+During each step, the agent moves, harvests sugar, and increments
+\py{age}.
+
+The parameter \py{env} is a reference to the environment, which
+is a \py{SugarScape} object.  It provides methods \py{look_around} and
+\py{harvest}:
+
+\begin{description}
+
+\item[\py{look_around}] takes the location of the agent, which is a
+tuple of coordinates, and the range of the agent's vision, which is
+an integer.  It returns the agent's new location, which is the
+visible cell with the most sugar.
+
+\item[\py{harvest}] takes the (new) location of the agent, and removes and
+returns the sugar at that location.
+
+\end{description}
+
+And here's the \py{SugarScape} class and its \py{step} method
+(without replacement):
+
+\begin{code}
+class SugarScape(Cell2D):
+
+    def step(self):
+        
+        # loop through the agents in random order
+        random_order = np.random.permutation(self.agents)
+        for agent in random_order:
+            
+            # mark the current cell unoccupied
+            self.occupied.remove(agent.loc)
+            
+            # execute one step
+            agent.step(self)
+
+            # if the agent is dead, remove from the list
+            if agent.is_starving():
+                self.agents.remove(agent)
+            else:
+                # otherwise mark its cell occupied
+                self.occupied.add(agent.loc)
+
+        # grow back some sugar
+        self.grow()
+        return len(self.agents)
+\end{code}
+
+\py{SugarScape} inherits from \py{Cell2D}, so it is similar to the
+other grid-based models we've seen.
+
+The attributes include \py{agents}, which is a list of \py{Agent}
+objects, and \py{occupied}, which is a set of tuples, where each
+tuples contains the coordinates of a cell occupied by an agent.
+
+During each step, the SugarScape loops through the agents in
+random order.  It invokes \py{step} on each agent and then checks whether
+it is dead.  After all agents have moved, some of the sugar grows back.
+
+If you are interested in learning more about NumPy, you might want
+to look more closely at \py{make_visible_locs}, which builds an
+array where each row contains the coordinates of a cell visible
+to an agent, sorted by distance but with cells at the same distance
+appearing in random order.
+
+And you might want to look at \py{SugarScape.make_capacity}, which
+initializes the capacity of the cells.  It demonstrates a use
+of \py{np.meshgrid}, which is often useful but takes some time to
+understand.
+
+
+\section{Migration and Wave Behavior}
+
+Although the purpose of SugarScape is not primarily to explore the
+movement of agents in space, Epstein and Axtell observed some
+interesting patterns when agents migrate.
+
+If we start with all agents in the lower-left corner, they quickly move
+toward the closest ``peak'' of high-capacity cells.  But if there
+are more agents than a single peak can support, they quickly exhaust
+the sugar and agents are forced to move into lower-capacity areas.
+
+The ones with the longest vision range cross the valley between the
+peaks first and propagate toward the northeast in a pattern that
+resembles a wave front.  Because they leave a stripe of empty cells
+behind them, other agents don't follow until the sugar grows back.
+
+The result is a series of discrete waves of migration, where each wave
+resembles a coherent object, like the spaceships we saw in the Rule
+110 CA and Game of Life (see Section~\ref{spaceships} and
+Section~\ref{lifepatterns}).
+
+Figure~\ref{chap09-5} shows the initial condition (left) and the
+state of the model after 6 steps (middle) and 12 steps (right).
+You can see the first two waves reaching and moving through the
+second peak, leaving a stripe of empty cells behind.  You can also
+see an animated version of this model, where the wave patterns are
+more clearly visible.
+
+Although these waves are made up of agents, we can think of them
+as entities of their own, in the same way we think of gliders in
+Game of Life.
+
+An interesting property of these waves is that they
+move diagonally, which might be surprising, because the agents
+themselves only move north or east, never northeast.  Outcomes
+like this -- groups or ``aggregates'' with properties and behaviors
+that the agents don't have -- are common in agent-based models.
+We will see more examples in the next chapter.
 
 
 \section{Emergence}
 
-The examples in this chapter have something in common: emergence.  An
-{\bf emergent property} is a characteristic of a system that results
-from the interaction of its components, not from their properties.
+The examples in this chapter demonstrate one of the most important
+ideas in complexity science: emergence.  An {\bf emergent property} is
+a characteristic of a system that results from the interaction of its
+components, not from their properties.
+
 \index{emergence}
 \index{emergent property}
 
@@ -7081,18 +7368,32 @@ example, a brick wall is hard because bricks and mortar are hard, so
 that's not an emergent property.  As another example, some rigid
 structures are built from flexible components, so that seems like a
 kind of emergence.  But it is at best a weak kind, because structural
-properties follow from well-understood laws of mechanics.
+properties follow from well understood laws of mechanics.
+
 \index{brick wall}
+
+In contrast, the segregation we see in Schelling's model is an emergent
+property because it is not caused by racist agents.  Even when the
+agents are only mildly xenophobic, the outcome of the system is
+substantially different from the intention of the agent's decisions.
+
+The distribution of wealth is SugarScape might be an emergent
+property, but it is a weak example because we could
+reasonably predict it based on the distributions of vision, metabolism,
+and lifespan.  The wave behavior we saw in the last example might
+be a stronger example, since the wave displays a capability -- diagonal
+movement -- that the agents clearly do not have. 
 
 Emergent properties are surprising: it is hard to predict the behavior
 of the system even if we know all the rules.  That difficulty is not
-an accident; it may be the defining characteristic of emergence.
+an accident; in fact, it may be the defining characteristic of emergence.
 
 As Wolfram discusses in {\em A New Kind of Science}, conventional science
 is based on the axiom that if you know the rules that govern a system,
 you can predict its behavior.  What we call ``laws'' are often
 computational shortcuts that allow us to predict the outcome of a
 system without building or observing it.
+
 \index{New Kind of Science@{\it A New Kind of Science}}
 \index{Wolfram, Stephen}
 \index{natural law}
@@ -7100,6 +7401,7 @@ system without building or observing it.
 But many cellular automatons are {\bf computationally irreducible},
 which means that there are no shortcuts.  The only way to get the
 outcome is to implement the system.
+
 \index{computationally irreducible}
 \index{shortcut}
 
@@ -7107,6 +7409,7 @@ The same may be true of complex systems in general.  For physical
 systems with more than a few components, there is usually no model
 that yields an analytic solution.  Numerical methods provide a kind of
 computational shortcut, but there is still a qualitative difference.
+
 Analytic solutions often provide a constant-time algorithm for
 prediction; that is, the run time of the computation does not depend
 on $t$, the time scale of prediction.  But numerical methods,
@@ -7124,42 +7427,20 @@ explanation for it, but if we come to understand it better in the
 future, it would no longer be emergent.
 
 The status of emergent properties is a topic of debate, so it is
-appropriate to be skeptical.
-When we see an apparently emergent property,
-we should not assume that there can never be a reductionist explanation.
-But neither should we assume that there has to be one.  The examples
-in this book and the principle of computational
-equivalence give good reasons to believe that at least some
-emergent properties can never be ``explained'' by a
-classical reductionist model.
+appropriate to be skeptical.  When we see an apparently emergent
+property, we should not assume that there can never be a reductionist
+explanation.  But neither should we assume that there has to be one.
+
+The examples in this book and the principle of computational
+equivalence give good reasons to believe that at least some emergent
+properties can never be ``explained'' by a classical reductionist
+model.
 
 You can read more about emergence at
 \url{http://en.wikipedia.org/wiki/Emergence}.
 
 
-
-\begin{exercise}
-
-In the philosophy of mind, {\em Strong AI} is the position that an
-appropriately-programmed computer could have a mind in the same sense
-that humans have minds.
-
-John Searle presented a thought experiment called ``The Chinese Room'',
-intended to show that {\em Strong AI} is false.  You can read about
-it at \url{http://en.wikipedia.org/wiki/Chinese_room}.
-
-What is the {\bf system reply} to the Chinese Room argument?
-How does what you have learned about complexity science influence
-your reaction to the system response?
-
-\end{exercise}
-
-
 \section{Exercises}
-
-\begin{exercise}
-Check whether the clusters in Schelling's model are connected.
-\end{exercise}
 
 \begin{exercise}
 
@@ -7184,6 +7465,31 @@ implementation, a random selection of agents moves during each step.
 Each agent considers \py{k} randomly-chosen empty locations and
 chooses the one with the highest fraction of similar neighbors.
 How does the degree of segregation depend on \py{k}?
+
+\end{exercise}
+
+
+\begin{exercise}
+
+Add population pressure to SugarScape.  Add genetic inheritance.
+What effect does it have on mean fitness?
+
+\end{exercise}
+
+
+\begin{exercise}
+
+In the philosophy of mind, {\em Strong AI} is the position that an
+appropriately-programmed computer could have a mind in the same sense
+that humans have minds.
+
+John Searle presented a thought experiment called ``The Chinese Room'',
+intended to show that {\em Strong AI} is false.  You can read about
+it at \url{http://en.wikipedia.org/wiki/Chinese_room}.
+
+What is the {\bf system reply} to the Chinese Room argument?
+How does what you have learned about complexity science influence
+your reaction to the system response?
 
 \end{exercise}
 
@@ -7438,6 +7744,9 @@ components do not:
 \item The agents in Schelling's model are not racist, but the outcome
   of their interactions is as if they were.
 
+\item Agents in SugarScape form waves that move diagonally even
+though the agents cannot.
+
 \item Traffic jams move backward even though the cars in them are
   moving forward.
 
@@ -7454,7 +7763,7 @@ These examples suggest an approach to several old and challenging
 questions, including the problems of consciousness and free will.
 
 Free will is the ability to make choices, but if our bodies and brains
-are governed by deterministic physical laws, our actions would be
+are governed by deterministic physical laws, our choices would be
 determined.  Arguments about free will are innumerable; I will
 only mention two:
 
@@ -7492,12 +7801,16 @@ the strongest challenges to compatibilism is the ``consequence
 argument''.  What is the consequence argument?  What response can you
 give to the consequence argument based on what you have read in this
 book?
+
 \end{exercise}
 
 
 \chapter{Game Theory}
 
+\section{The El Farol Problem}
+
 \section{Prisoner's Dilemma}
+
 \label{prisoners}
 
 % NOTE:  Use this: https://github.com/Axelrod-Python/Axelrod 
@@ -7505,6 +7818,7 @@ book?
 The Prisoner's Dilemma is a topic of study in game theory, but
 it's not the fun kind of game.  Instead, it is the kind of game
 that sheds light on human motivation and behavior.
+
 \index{Prisoner's Dilemma}
 
 Here is the presentation of the dilemma from
@@ -8872,5 +9186,18 @@ module to generate 100 values from an exponential distribution.  Plot
 the CCDF on a log-$y$ scale and see if it falls on a straight line.
 \index{random module@\py{random} module}
 
+\end{exercise}
+
+
+Leftover exercises:
+
+Connecting grids and networks:
+
+\begin{exercise}
+Implement percolation on a network.
+\end{exercise}
+
+\begin{exercise}
+Check whether the clusters in Schelling's model are connected.
 \end{exercise}
 
