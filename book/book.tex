@@ -6787,7 +6787,7 @@ interact with each other locally.  They usually have imperfect,
 local information.
 
 Often there are differences among agents, unlike previous models where
-all components are identical.  And agent-based model often include 
+all components are identical.  And agent-based models often include 
 randomness, either among the agents or in the world.
 
 Since the 1970s, agent-based modeling has become an important tool in
@@ -7053,34 +7053,39 @@ example of the complex and unpredictable relationship between
 individual decisions and system behavior.
 
 
-\section{SugarScape}
+\section{Sugarscape}
 
-In 1996 Joshua Epstein and Robert Axtell proposed SugarScape, an
+% cjw: I think Epstein and Axtell use lower case for the second s.
+% I've replaced all references except in code (\py{SugarScape}),
+% where I think it's fine (or at least consistent with the notebooks,
+% which I haven't looked at).
+
+In 1996 Joshua Epstein and Robert Axtell proposed Sugarscape, an
 agent-based model of an ``artificial society'' intended to support
 experiments related to economics and other social sciences.
 
-SugarScape is a versatile model that has been adapted for a wide
+Sugarscape is a versatile model that has been adapted for a wide
 variety of topics.  As examples, I will replicate the
 first few experiments from Epstein and Axtell's book, {\it Growing
 Artificial Societies}.
 
-In its simplest form, SugarScape is a model of a simple economy where
+In its simplest form, Sugarscape is a model of a simple economy where
 agents move around on a 2D grid, harvesting and accumulating ``sugar'',
 which represents economic wealth.  Some parts of the grid produce more
 sugar than others, and some agents are better at finding it than
 others.
 
-This version of SugarScape is often used to explore and explain the
+This version of Sugarscape is often used to explore and explain the
 distribution of wealth, in particular the tendency toward inequality.
 
-In the SugarScape grid, each cell has a capacity, which is the maximum
+In the Sugarscape grid, each cell has a capacity, which is the maximum
 amount of sugar it can hold.  In the original configuration, there
 are two high-sugar regions, with capacity 4, surrounding by concentric
 rings with capacities 3, 2, and 1.
 
 \begin{figure}
 \centerline{\includegraphics[height=3in]{figs/chap09-3.pdf}}
-\caption{Replication of the original SugarScape model: initial
+\caption{Replication of the original Sugarscape model: initial
 configuration (left), after 2 steps (middle) and 100 steps (right).}
 \label{chap09-3}
 \end{figure}
@@ -7159,7 +7164,7 @@ accumulating unbounded stockpiles of sugar.
 
 \section{Wealth inequality}
 
-In its current form, SugarScape models a simple ecology, and could
+In its current form, Sugarscape models a simple ecology, and could
 be used to explore the relationship between the parameters of the
 model, like the growth rate and the attributes of the agents, and
 the carrying capacity of the system (the number of agents that
@@ -7212,9 +7217,9 @@ which is a heavy-tailed distribution.  And in fact, the distribution
 of wealth in practically every country, and in the world, is a
 heavy-tailed distribution.
 
-It would be too much to claim that SugarScape explains why wealth
+It would be too much to claim that Sugarscape explains why wealth
 distributions are heavy-tailed, but the prevalence of inequality in
-variations of SugarScape suggests that inequality is
+variations of Sugarscape suggests that inequality is
 characteristic of many economies, even very simple ones.
 And experiments with rules that model taxation and other income
 transfers suggest that it is not easy to avoid or mitigate.
@@ -7222,6 +7227,9 @@ transfers suggest that it is not easy to avoid or mitigate.
 
 
 \section{Implementing SugarWorld}
+
+% cjw: maybe add some context here -- what is SugarWorld, and
+% how does it relate to Sugarscape?
 
 SugarWorld is more complicated than the previous models, so I won't
 present the entire implementation here.  I will outline the
@@ -7297,7 +7305,7 @@ The attributes include \py{agents}, which is a list of \py{Agent}
 objects, and \py{occupied}, which is a set of tuples, where each
 tuples contains the coordinates of a cell occupied by an agent.
 
-During each step, the SugarScape loops through the agents in
+During each step, the \py{SugarScape} loops through the agents in
 random order.  It invokes \py{step} on each agent and then checks whether
 it is dead.  After all agents have moved, some of the sugar grows back.
 
@@ -7315,7 +7323,7 @@ understand.
 
 \section{Migration and Wave Behavior}
 
-Although the purpose of SugarScape is not primarily to explore the
+Although the purpose of Sugarscape is not primarily to explore the
 movement of agents in space, Epstein and Axtell observed some
 interesting patterns when agents migrate.
 
@@ -7377,7 +7385,7 @@ property because it is not caused by racist agents.  Even when the
 agents are only mildly xenophobic, the outcome of the system is
 substantially different from the intention of the agent's decisions.
 
-The distribution of wealth is SugarScape might be an emergent
+The distribution of wealth in Sugarscape might be an emergent
 property, but it is a weak example because we could
 reasonably predict it based on the distributions of vision, metabolism,
 and lifespan.  The wave behavior we saw in the last example might
@@ -7471,7 +7479,7 @@ How does the degree of segregation depend on \py{k}?
 
 \begin{exercise}
 
-Add population pressure to SugarScape.  Add genetic inheritance.
+Add population pressure to Sugarscape.  Add genetic inheritance.
 What effect does it have on mean fitness?
 
 \end{exercise}
@@ -7744,7 +7752,7 @@ components do not:
 \item The agents in Schelling's model are not racist, but the outcome
   of their interactions is as if they were.
 
-\item Agents in SugarScape form waves that move diagonally even
+\item Agents in Sugarscape form waves that move diagonally even
 though the agents cannot.
 
 \item Traffic jams move backward even though the cars in them are
