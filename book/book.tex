@@ -7185,11 +7185,11 @@ a new agent with random attributes, so the total population is
 constant.
 
 \begin{figure}
-\centerline{\includegraphics[height=3in]{figs/chap09-3.pdf}}
+\centerline{\includegraphics[height=3in]{figs/chap09-4.pdf}}
 \caption{Distribution of sugar (wealth) after 100, 200, 300, and
 400 steps (gray lines) and 500 steps (dark line).  Linear scale (left)
 and log-x scale (right). }
-\label{chap09-3}
+\label{chap09-4}
 \end{figure}
 
 Starting with 250 agents, which is close to carrying capacity, I ran
@@ -7248,17 +7248,17 @@ The parameter \py{env} is a reference to the environment, which
 is a \py{SugarScape} object.  It provides methods \py{look_around} and
 \py{harvest}:
 
-\begin{description}
+\begin{itemize}
 
-\item[\py{look_around}] takes the location of the agent, which is a
+\item \py{look_around} takes the location of the agent, which is a
 tuple of coordinates, and the range of the agent's vision, which is
 an integer.  It returns the agent's new location, which is the
 visible cell with the most sugar.
 
-\item[\py{harvest}] takes the (new) location of the agent, and removes and
+\item py{harvest} takes the (new) location of the agent, and removes and
 returns the sugar at that location.
 
-\end{description}
+\end{itemize}
 
 And here's the \py{SugarScape} class and its \py{step} method
 (without replacement):
@@ -7314,6 +7314,13 @@ understand.
 
 
 \section{Migration and Wave Behavior}
+
+\begin{figure}
+\centerline{\includegraphics[height=3in]{figs/chap09-5.pdf}}
+\caption{Wave behavior in SugarScape: initial configuration (left),
+after 6 steps (middle) and after 12 steps (right). }
+\label{chap09-5}
+\end{figure}
 
 Although the purpose of SugarScape is not primarily to explore the
 movement of agents in space, Epstein and Axtell observed some
@@ -7471,15 +7478,26 @@ How does the degree of segregation depend on \py{k}?
 
 \begin{exercise}
 
-Add population pressure to SugarScape.  Add genetic inheritance.
-What effect does it have on mean fitness?
+In the first version of SugarScape, we never add agents, so once the
+population falls, it never recovers.  In the second version, we only
+replace agents when they die, so the population is constant.  Now
+let's see what happens if we add some ``population pressure''.
+
+Write a version of SugarScape that adds a new agent at the end of
+every step.  Add code to compute the average vision and the average
+metabolism of the agents at the end of each step.  Run the model for a
+few hundred steps and plot the population over time, as well as the
+average vision and average metabolism.
+
+You should be able to implement this model by inheriting from
+\py{SugarScape} and overriding \py{__init__} and \py{step}.
 
 \end{exercise}
 
 
 \begin{exercise}
 
-In the philosophy of mind, {\em Strong AI} is the position that an
+In the philosophy of mind, {\em Strong AI} is the theory that an
 appropriately-programmed computer could have a mind in the same sense
 that humans have minds.
 
@@ -7488,7 +7506,7 @@ intended to show that {\em Strong AI} is false.  You can read about
 it at \url{http://en.wikipedia.org/wiki/Chinese_room}.
 
 What is the {\bf system reply} to the Chinese Room argument?
-How does what you have learned about complexity science influence
+How does what you have learned about emergence influence
 your reaction to the system response?
 
 \end{exercise}
