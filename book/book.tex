@@ -21,7 +21,7 @@
 \newcommand{\thetitle}{Think Complexity}
 \newcommand{\thesubtitle}{Exploring Complexity Science in Python}
 \newcommand{\theauthors}{Allen B. Downey}
-\newcommand{\theversion}{2.0.9}
+\newcommand{\theversion}{2.0.10}
 
 %%%% Both LATEX and PLASTEX
 
@@ -237,120 +237,258 @@ available at \url{http://creativecommons.org/licenses/by-nc-sa/4.0/}.
 \chapter{Preface}
 \label{preface}
 
-\section{Why I wrote this book}
+%TODO: Re-write this preface to provide a more explicit explanation
+% of who the book is for and what they will get out of it.
 
-This book is inspired by boredom and fascination: boredom with the
-usual presentation of data structures and algorithms, and
-fascination with complex systems.  The problem with data structures
-is that they are often taught without a motivating context; the
-problem with complexity science is that it is usually not taught at
-all.
-
-In 2005 I developed a new class at Olin College where students read
-about topics in complexity, implemented experiments in Python, and learned
-about algorithms and data structures.  I wrote the first draft of this
-book when I taught the class again in 2008.
-
-For the third offering, in 2011, I prepared the book for publication
-and invited the students to submit their work, in the form of case
-studies, for inclusion in the book.  I recruited 9 professors at Olin
-to serve as a program committee and choose the reports that were ready
-for publication.  The case studies that met the standard are included
-in this book.  For the next edition, we invite additional submissions
-from readers (see Appendix~\ref{submissions}).
-
-\section{Suggestions for teachers}
-
-This book is intended as a scaffold for an intermediate-level college
-class in Python programming and algorithms.  My class uses the following
-structure:
+This book is primarily about complexity science, but it is also
+about data structures and algorithms, intermediate
+programming in Python, computational modeling, and the philosophy of
+science:
 
 \begin{description}
 
-\item[Reading] Complexity science is a collection of diverse topics.
-  There are many interconnections, but it takes time to see them.  To
-  help students see the big picture, I give them readings from
-  popular presentations of work in the field.  My reading
-  list, and suggestions on how to use it, are in
-  Appendix~\ref{reading}.
+\item [Complexity science] Complexity is an interdisciplinary
+  field---at the intersection of mathematics, computer science and
+  natural science---that focuses on discrete models of physical and
+  social systems.  In particular, it focuses on {\bf complex systems},
+  which are systems with many interacting components.
 
-\item[Exercises] This book presents a series of exercises; many of
-  them ask students to reimplement seminal experiments and extend
-  them.  One of the attractions of complexity is that the
-  research frontier is accessible with moderate programming skills and
-  undergraduate mathematics.
+\index{complexity science}
+\index{complex systems}
 
-\item[Discussion] The topics in this book raise questions in the
-  philosophy of science; these topics lend themselves to further
-  reading and classroom discussion.
+\item[Data structures:] A data structure is a
+  collection of data elements organized in a way that supports
+  particular operations.  For example, a Python dictionary organizes
+  key-value pairs in a way that provides fast mapping from keys to
+  values, but mapping from values to keys is slower.
 
-\item[Case studies] In my class, we spend almost half the semester on
-  case studies.  Students participate in an idea generation process,
-  form teams, and work for 6-7 weeks on a series of experiments, then
-  present them in the form of a publishable 4-6 page report.
+\index{data structure}
+
+\item[Algorithms:] An algorithm is a process for performing a
+  computation.  Designing efficient programs often involves the
+  co-evolution of data structures and the algorithms that use them.
+  For example, in the first few chapters I present graphs, data
+  structures that implement graphs, and graph algorithms based on
+  those data structures.
+
+\index{algorithm}
+
+\item[Computational modeling:] A model is a simplified
+  description of a system used for simulation or analysis.
+  Computational models are designed to take advantage of cheap, fast
+  computation.
+
+\index{modeling}
+
+\item[Philosophy of science:] The experiments and results in this book
+  raise questions relevant to the philosophy of science,
+  including the nature of scientific laws, theory choice, realism and
+  instrumentalism, holism and reductionism, and epistemology.
+
+\index{philosophy}
 
 \end{description}
 
-An outline of the course and my notes are available at
-\url{https://sites.google.com/site/compmodolin}.
+Complex systems include networks and graphs, cellular automatons,
+agent-based models and swarms, fractals and self-organizing
+systems, chaotic systems and cybernetic systems.  These terms
+might not mean much to you at this point.  We will get to them
+soon, but you can get a preview at
+\url{http://en.wikipedia.org/wiki/Complex_systems}.
 
-
-\section{Suggestions for autodidacts}
-
-In 2009-10 I was a Visiting Scientist at Google, working in their
-Cambridge office.  One of the things that impressed me about the
-software engineers I worked with was their broad intellectual
-curiosity and drive to expand their knowledge and skills.
-
-I hope this book helps people like them explore a set of topics
+I hope this book helps readers explore a set of topics
 and ideas they might not encounter otherwise, practice programming
 skills in Python, and learn more about data structures and
 algorithms (or review material that might have been less engaging
 the first time around).
 
-Some features of this book intended for autodidacts are:
+Features of this book include:
 
 \begin{description}
 
-\item[Technical depth] There are many books about complex systems,
+\item[Technical details] There are many books about complex systems,
   but most are written for a popular audience.  They usually skip the
   technical details, which is frustrating for people who can handle
-  it.  This book presents the mathematics and other technical content
-  you need to really understand this work.
+  it.  This book presents the mathematics, the code, and the other
+  material you need to really understand this work.
 
 \item[Further reading] Throughout the book, I include pointers to
   further reading, including original papers (most of which are
-  available electronically) and related articles from
-  Wikipedia\footnote{Some professors have an allergic reaction to
-    Wikipedia, on the grounds that students depend too heavily on an
-    unreliable source.  Since many of my references are Wikipedia
-    articles, I want to explain my thinking.  First, the articles on
-    complexity science and related topics tend to be very good;
-    second, they are written at a level that is accessible after you
-    have read this book (but sometimes not before); and finally, they
-    are freely available to readers all over the world.  If there is a
-    danger in sending readers to these references, it is not that they
-    are unreliable, but that the readers won't come back!  (see
-    \url{http://xkcd.com/903}).} and other sources.
+  available electronically) and related articles from Wikipedia and
+  other sources.  Some professors have an allergic reaction to
+  Wikipedia, on the grounds that students depend too heavily on a
+  suppposedly unreliable source.  Since many of my references are
+  Wikipedia articles, I want to explain my thinking.  First, the
+  articles on complexity science and related topics tend to be good;
+  second, they are written at a level that is accessible after you
+  have read this book (but sometimes not before); and finally, they
+  are freely available to readers all over the world.  If there is a
+  danger in sending readers to these references, it is not that the
+  material is unreliable, but that the readers won't come back!
 
-\item[Exercises and (some) solutions] For many of the exercises, I
-  provide code to get you started, and solutions if you get stuck or
-  want to compare your code to mine.
+\item[Jupyter notebooks] For each chapter I provide a Jupyter notebook
+  that includes the code from the chapter, additional examples (and
+  especially animations), and suggestions for experiments you can run
+  with small changes in the code.
 
-\item[Opportunity to contribute] If you explore a topic not covered in
-  this book, reimplement an interesting experiment, or perform one of
-  your own, I invite you to submit a case study for possible inclusion
-  in the next edition of the book.  See Appendix~\ref{submissions} for
-  details.
+\item[Exercises and solutions] At the end of each chapter I suggest
+  exercises you might want to work on, and I include solutions.
 
 \end{description}
 
 
-\section{Prerequisites}
+\section{Who is this book for?}
+
+The examples and supporting code for this book are in Python.  You
+should know core Python and you should be
+familiar with object-oriented features, at least using objects if not
+defining your own.
+
+If you are not already familiar with Python, you might want to start
+with my other book, {\it Think Python}, which is an introduction to
+Python for people who have never programmed, or Mark
+Lutz's {\it Learning Python}, which might be better for people with
+programming experience.
+
+I use NumPy and SciPy extensively.  If you are familiar with them
+already, that's great, but I will also explain the functions
+and data structures I use.
+
+I assume that the reader knows basic mathematics, including complex
+numbers.  You don't need much calculus; if you understand the concepts
+of integration and differentiation, that will do.
+I use some linear algebra, but I will explain it as we
+go along.
 
 
 \section{Using the code}
+\label{code}
 
+All code used in this book is available from
+\url{https://github.com/AllenDowney/ThinkComplexity2}.  
+If you are not familiar with Git, it is a 
+version control system that allows you to keep track of the files that
+make up a project.  A collection of files under Git's control is
+called a ``repository''.  GitHub is a hosting service that provides
+storage for Git repositories and a convenient web interface.
+
+\index{repository} \index{Git} \index{GitHub}
+
+The GitHub homepage for my repository provides several ways to
+work with the code:
+
+\begin{itemize}
+
+\item You can create a copy of my repository
+on GitHub by pressing the {\sf Fork} button.  If you don't already
+have a GitHub account, you'll need to create one.  After forking, you'll
+have your own repository on GitHub that you can use to keep track
+of code you write while working on this book.  Then you can
+clone the repo, which means that you copy the files
+to your computer.
+
+\index{fork}
+
+\item Or you can clone my repository.  You don't need a GitHub account
+  to do this, but you won't be able to write your changes back to
+  GitHub.
+
+\index{clone}
+
+\item If you don't want to use Git at all, you can download the files
+  in a Zip file using the green button that says ``Clone or download''.
+
+\end{itemize}
+
+All of the code is written to work in both Python 2 and Python 3
+with no translation.
+
+I developed this book using Anaconda from Continuum Analytics, which
+is a free Python distribution that includes all the packages you'll
+need to run the code (and lots more).  I found Anaconda easy to
+install.  By default it does a user-level installation, not
+system-level, so you don't need administrative privileges.  And it
+supports both Python 2 and Python 3.  You can download Anaconda from
+\url{http://continuum.io/downloads}.
+
+\index{Anaconda}
+
+If you don't want to use Anaconda, you will need the following
+packages:
+
+\begin{itemize}
+
+\item NumPy for basic numerical computation, \url{http://www.numpy.org/};
+\index{NumPy}
+
+\item SciPy for scientific computation,
+  \url{http://www.scipy.org/};
+\index{SciPy}
+
+\item matplotlib for visualization, \url{http://matplotlib.org/}.
+\index{matplotlib}
+
+\end{itemize}
+
+Although these are commonly used packages, they are not included with
+all Python installations, and they can be hard to install in some
+environments.  If you have trouble installing them, I
+recommend using Anaconda or one of the other Python distributions
+that include these packages.
+
+\index{installation}
+
+The repository includes Python scripts and several Jupyter
+notebooks.  If you have not used Jupyter before, you can read about
+it at \url{http://jupyter.org}.
+
+\index{Jupyter}
+
+There are three ways you can work with the Jupyter notebooks:
+
+\begin{description}
+
+\item[Run Jupyter on your computer]
+
+If you installed Anaconda, you probably got Jupyter by default.  To
+check, start the server from the command line, like this:
+
+\begin{verbatim}
+$ jupyter notebook
+\end{verbatim}
+
+If it's not installed, you can install it using \py{conda}, which is
+the package manager used by Anaconda:
+
+\begin{verbatim}
+$ conda install jupyter
+\end{verbatim}
+
+When you start the server, it should launch your default web browser
+or create a new tab in an open browser window.
+
+\item[Run Jupyter on Binder]
+
+Binder is a service that runs Jupyter in a virtual machine.  If you
+follow this link, \url{http://mybinder.org/repo/AllenDowney/ThinkComplexity2},
+you should get a Jupyter home page with the notebooks for this book
+and the supporting data and scripts.
+
+You can run the scripts and modify them to run your own code, but the
+virtual machine you run them in is temporary.  Any changes you make will
+disappear, along with the virtual machine, if you leave it idle for
+more than about an hour.
+
+\item[View notebooks on GitHub]
+
+GitHub provides a view of the notebooks you can
+can use to read the notebooks and see the results I
+generated, but you won't be able to modify or run the code.
+And in the later chapters you won't see the animations move.
+
+\end{description}
+
+Good luck, and have fun!
 
 
 \begin{flushleft}
@@ -380,125 +518,71 @@ Thanks!
 
 \begin{itemize}
 
-\item Richard Hollands pointed out several typos.
-
 \item John Harley, Jeff Stanton, Colden Rouleau and
 Keerthik Omanakuttan are Computational Modeling students who
 pointed out typos.
 
-\item Muhammad Najmi bin Ahmad Zabidi caught some typos.
+\item Jose Oscar Mur-Miranda found several typos.
 
 \item Phillip Loh, Corey Dolphin, Noam Rubin and Julian Ceipek
 found typos and made helpful suggestions.
 
-\item Jose Oscar Mur-Miranda found several typos.
+%\item I am grateful to the program committee that read and selected
+%the case studies included in this book: 
+%Sarah Spence Adams,
+%John Geddes,
+%Stephen Holt,
+%Vincent Manno,
+%Robert Martello,
+%Amon Millner,
+%Jos\'{e} Oscar Mur-Miranda,
+%Mark Somerville, and
+%Ursula Wolz.
 
-\item I am grateful to the program committee that read and selected
-the case studies included in this book: 
-Sarah Spence Adams,
-John Geddes,
-Stephen Holt,
-Vincent Manno,
-Robert Martello,
-Amon Millner,
-Jos\'{e} Oscar Mur-Miranda,
-Mark Somerville, and
-Ursula Wolz.
-
-\item Sebastian Sch\"{o}ner sent two pages of typos!
-
-\item Jonathan Harford found a code error.
+\item Sebastian Sch\"{o}ner sent two pages of corrections!
 
 \item Philipp Marek sent a number of corrections.
 
-\item Alex Hantman found a missing word.
+% TODO: Add Jason
 
 % ENDCONTRIB
 
 \end{itemize}
 
+Other people who reported errors include 
+Richard Hollands,
+Muhammad Najmi bin Ahmad Zabidi,
+Alex Hantman, and 
+Jonathan Harford.
+
+
+
+
 \normalsize
+
+
 
 \mainmatter
 
 \chapter{Complexity Science}
 \label{overview}
 
-\section{What is this book about?}
+The thesis of this book is that complexity science is a ``new
+kind of science'', a phrase I'm borrowing from Stephen Wolfram.
 
-This book is about data structures and algorithms, intermediate
-programming in Python, computational modeling and the philosophy of
-science:
-
-\begin{description}
-
-\item[Data structures and algorithms:] A data structure is a
-  collection of data elements organized in a way that supports
-  particular operations.  For example, a Python dictionary organizes
-  key-value pairs in a way that provides fast mapping from keys to
-  values, but mapping from values to keys is slower.
-\index{data structure}
-\index{algorithm}
-
-An algorithm is a mechanical process for performing a computation.
-Designing efficient programs often involves the co-evolution of data
-structures and the algorithms that use them.  For example, in the
-first few chapters I present graphs, data structures that
-implement graphs, and graph algorithms based on those data structures.
-\index{graph algorithm}
-
-\item[Python programming:] This book picks up where {\em Think Python}
-  leaves off.  I assume that you have read that book or have
-  equivalent knowledge of Python.  I try to emphasize fundamental ideas
-  that apply to programming in many languages, but along the way you
-  will learn some useful features that are specific to Python.
-\index{Think Python@{\em Think Python}}
-
-\item[Computational modeling:] A model is a simplified
-  description of a system used for simulation or analysis.
-  Computational models are designed to take advantage of cheap, fast
-  computation.
-\index{modeling}
-
-\item[Philosophy of science:] The experiments and results in this book
-  raise questions relevant to the philosophy of science,
-  including the nature of scientific laws, theory choice, realism and
-  instrumentalism, holism and reductionism, and epistemology.
-\index{philosophy}
-
-\end{description}
-
-This book is also about {\bf complexity science}, which is an
-interdisciplinary field---at the intersection of mathematics, computer
-science and natural science---that focuses on discrete models of
-physical systems.  \index{complexity science}
-In particular, it focuses on {\bf complex systems}, which are
-systems with many interacting components.  
-\index{complexity science}
-\index{complex systems}
-
-Complex systems include networks and graphs, cellular automatons,
-agent-based models and swarms, fractals and self-organizing
-systems, chaotic systems and cybernetic systems.  These terms
-might not mean much to you at this point.  We will get to them
-soon, but you can get a preview at
-\url{http://en.wikipedia.org/wiki/Complex_systems}.
-
-
-\section{A new kind of science}
-
-In 2002 Stephen Wolfram published {\em A New Kind of Science} where he
+In 2002 Wolfram published {\em A New Kind of Science}, where he
 presents his and others' work on cellular automatons and describes a
 scientific approach to the study of computational systems.  We'll get
-back to Wolfram in Chapter~\ref{automatons}, but I want to borrow his
-title for something a little broader.
+back to Wolfram in Chapter~\ref{automatons}, but for now I want
+to use his title for something a little broader.
+
 \index{Wolfram, Stephen}
 \index{New Kind of Science@{\it A New Kind of Science}}
 
-I think complexity is a ``new kind of science'' not because
+I think complexity is new not because
 it applies the tools of science to a new subject, but because it
 uses different tools, allows different kinds of work, and ultimately
-changes what we mean by ``science.''
+changes what we mean by ``science''.
 
 To demonstrate the difference, I'll start with an example of classical
 science: suppose someone asked you why planetary orbits are
@@ -506,6 +590,7 @@ elliptical.  You might invoke Newton's law of universal
 gravitation and use it to write a differential equation that describes
 planetary motion.  Then you could solve the differential equation and
 show that the solution is an ellipse.  QED!
+
 \index{gravitation}
 \index{planetary motion}
 
@@ -513,6 +598,7 @@ Most people find this kind of explanation satisfying.  It includes a
 mathematical derivation---so it has some of the rigor of a proof---and
 it explains a specific observation, elliptical orbits, by appealing to
 a general principle, gravitation.
+
 \index{proof}
 \index{natural law}
 
@@ -520,25 +606,28 @@ Let me contrast that with a different kind of explanation.  Suppose
 you move to a city like Detroit that is racially segregated, and you
 want to know why it's like that.  If you do some research, you might
 find a paper by Thomas Schelling called ``Dynamic Models of
-Segregation'', which proposes a simple model of racial segregation
-(a copy is available from \url{http://statistics.berkeley.edu/~aldous/157/Papers/Schelling_Seg_Models.pdf}).
+Segregation'', which proposes a simple model of racial segregation:
+
 \index{Schelling}
 \index{segregation}
 \index{Detroit}
 
-Here is a summary of the paper (from Chapter~\ref{agent-based}):
+Here is my description of the model, from Chapter~\ref{agent-based}:
 
 \begin{quote}
 The Schelling model of the city is an array of cells where each cell
 represents a house.  The houses are occupied by two kinds of
 ``agents'', labeled red and blue, in roughly equal numbers.  About
-10\% of the houses are empty.  \index{Schelling, Thomas}
+10\% of the houses are empty.
+
+\index{Schelling, Thomas}
 \index{agent}
 
 At any point in time, an agent might be happy or unhappy, depending
 on the other agents in the neighborhood.
 In one version of the model, agents are happy if they have at least
 two neighbors like themselves, and unhappy if they have one or zero.
+
 \index{agent-based model}
 
 The simulation proceeds by choosing an agent at random and checking
@@ -551,27 +640,34 @@ If you start with a simulated city that is entirely unsegregated and
 run the model for a short time, clusters of similar agents appear.  As
 time passes, the clusters grow and coalesce until there are a small
 number of large clusters and most agents live in homogeneous
-neighborhoods. \index{segregation}
+neighborhoods.
+
+\index{segregation}
 
 The degree of segregation in the model is surprising, and it suggests
 an explanation of segregation in real cities.  Maybe Detroit is
 segregated because people prefer not to be greatly outnumbered and
 will move if the composition of their neighborhoods makes them
-unhappy.  \index{racism} \index{xenophobia}
+unhappy.
+
+\index{racism}
+\index{xenophobia}
 
 Is this explanation satisfying in the same way as the explanation of
-planetary motion?  Most people would say not, but why?
+planetary motion?  Many people would say not, but why?
 
 Most obviously, the Schelling model is highly abstract, which is to
 say not realistic.  It is tempting to say that people are more complicated
 than planets, but when you think about it, planets are just as complicated
 as people (especially the ones that {\em have} people).
+
 \index{abstract model}
 
 Both systems are complicated, and both models are based on
 simplifications; for example, in the model of planetary motion we
 include forces between the planet and its sun, and ignore interactions
 between planets.
+
 \index{simplification}
 
 The important difference is that, for planetary motion, we can defend
@@ -579,6 +675,7 @@ the model by showing that the forces we ignore are smaller than the
 ones we include.  And we can extend the model to include other
 interactions and show that the effect is small.  For Schelling's model
 it is harder to justify the simplifications.
+
 \index{justification}
 
 To make matters worse, Schelling's model doesn't appeal to any
@@ -588,6 +685,7 @@ science, and many people find them less compelling, at least at first.
 But as I will try to demonstrate, these models do useful work,
 including prediction, explanation, and design.  One of the goals of
 this book is to explain how.
+
 \index{modeling}
 
 
@@ -595,6 +693,7 @@ this book is to explain how.
 
 When I describe this book to people, I am often asked if this new kind
 of science is a paradigm shift.  I don't think so, and here's why.
+
 \index{paradigm shift}
 
 Thomas Kuhn introduced the term ``paradigm shift'' in {\em The
@@ -604,6 +703,7 @@ change, or where one theory is replaced by another.
 He presents as examples the Copernican revolution, the displacement
 of phlogiston by the oxygen model of combustion, and the emergence
 of relativity.
+
 \index{Kuhn, Thomas}
 \index{Structure of Scientific Revolutions@{\it The Structure of Scientific Revolutions}}
 
@@ -611,6 +711,7 @@ The development of complexity science is not the replacement of
 an older model, but (in my opinion) a gradual shift in the criteria
 models are judged by, and in the kinds of models that are considered
 acceptable.
+
 \index{complexity science}
 
 For example, classical models tend to be law-based, expressed in the
@@ -622,6 +723,7 @@ Not everyone finds these models satisfactory.  For example, in
 {\em Sync}, Steven Strogatz writes about his model of spontaneous
 synchronization in some species of fireflies.  He presents a
 simulation that demonstrates the phenomenon, but then writes:
+
 \index{Strogatz, Steven}
 \index{Sync@{\it Sync}}
 \index{fireflies}
@@ -641,6 +743,7 @@ understandable, but his proof doesn't address what is, to me, the
 most interesting part the phenomenon.  In order to prove that ``sync
 was inevitable'', Strogatz makes several simplifying assumptions, in
 particular that each firefly can see all the others.
+
 \index{proof}
 
 In my opinion, it is more interesting to explain how an entire valley
@@ -654,14 +757,16 @@ synchronization.
 
 I am a computer scientist, so my enthusiasm for computational models
 is probably no surprise.  I don't mean to say that Strogatz is wrong,
-but rather that people disagree about what questions to ask and what
-tools to use to answer them.  These decisions are based on value
-judgments, so there is no reason to expect agreement.
+but rather that people have different opinions about what questions to
+ask and what tools to use to answer them.  These opinions are based
+on value judgments, so there is no reason to expect agreement.
+
 \index{computational model}
 
 Nevertheless, there is rough consensus among scientists
 about which models are considered good science, and which others
 are fringe science, pseudoscience, or not science at all.
+
 \index{fringe science}
 \index{pseudoscience}
 
@@ -677,6 +782,7 @@ I have described classical models as based on physical laws, expressed
 in the form of equations, and solved by mathematical analysis;
 conversely, models of complexity systems are often based on simple
 rules and implemented as computations.
+
 \index{criteria for models}
 
 We can think of this trend as a shift over time along two axes:
@@ -700,6 +806,7 @@ book.
   based on continuous mathematics, like calculus; models of complex
   systems are often based on discrete mathematics, including graphs and
   cellular automatons.
+
 \index{continuous}
 \index{discrete}
 
@@ -708,6 +815,7 @@ book.
   complexity science is more friendly to non-linear models.  One example
   is chaos theory\footnote{Chaos is not covered in this book, but you can
   read about it at \url{http://en.wikipedia.org/wiki/Chaos}.}.
+
 \index{linear}
 \index{non-linear}
 
@@ -715,6 +823,7 @@ book.
   usually deterministic, which may reflect underlying philosophical
   determinism, discussed in Chapter~\ref{automatons}; complex models
   often feature randomness.
+
 \index{deterministic}
 \index{stochastic}
 
@@ -723,6 +832,7 @@ book.
   spherical (see \url{http://en.wikipedia.org/wiki/Spherical_cow}).
   Simplifications like these are often necessary for analysis,
   but computational models can be more realistic.
+
 \index{spherical cow}
 \index{cow, spherical}
 
@@ -731,26 +841,27 @@ book.
   cannot.  Where classical models are often limited to
   small numbers of interacting elements, complexity science works with
   larger complexes (which is where the name comes from).
+
 \index{one, two, many}
 
 \item[Homogeneous $\rightarrow$ composite] In classical models, the
   elements tend to be interchangeable; complex models more often
   include heterogeneity.
+
 \index{homogeneous}
 \index{composite}
 
 \end{description}
 
-These are generalizations, so we should not take them
-too seriously.  And I don't mean to deprecate
-classical science.  A more complicated model is not necessarily better;
-in fact, it is usually worse.
+These are generalizations, so we should not take them too seriously.
+And I don't mean to deprecate classical science.  A more complicated
+model is not necessarily better; in fact, it is usually worse.
 
 Also, I don't mean to say that these changes are abrupt or complete.
 Rather, there is a gradual migration in the frontier of what is
-considered acceptable, respectable work.  Some tools that used
-to be regarded with suspicion are now common, and some 
-models that were widely accepted are now regarded with scrutiny.
+considered acceptable, respectable work.  Some tools that used to be
+regarded with suspicion are now common, and some models that were
+widely accepted are now regarded with scrutiny.
 
 For example, when Appel and Haken proved the four-color theorem in
 1976, they used a computer to enumerate 1,936 special cases that were,
@@ -758,6 +869,7 @@ in some sense, lemmas of their proof.  At the time, many
 mathematicians did not consider the theorem truly proved.  Now
 computer-assisted proofs are common and generally (but not
 universally) accepted.
+
 \index{Appel, Kenneth}
 \index{Hacken, Wolfgang}
 \index{four-color theorem}
@@ -769,14 +881,17 @@ highly regarded for several decades, especially if it involved
 mathematical virtuosity.  More recently, this model is treated with
 skepticism, and models that include imperfect information and
 bounded rationality are hot topics.
+
 \index{economic man}
 \index{Homo economicus}
 \index{economics}
+
 
 \section{A new kind of model}
 
 Complex models are often appropriate for different purposes and
 interpretations:
+
 \index{complex model}
 
 \begin{description}
@@ -786,6 +901,7 @@ of segregation might shed light on a complex social phenomenon, but
 it is not useful for prediction.  On the other hand, a simple model
 of celestial mechanics can predict solar eclipses, down to the second,
 years in the future.
+
 \index{predictive model}
 \index{explanatory model}
 
@@ -795,6 +911,7 @@ years in the future.
   is the view that models can be useful even if the entities they
   postulate don't exist.  George Box wrote what might be the motto of
   instrumentalism: ``All models are wrong, but some are useful."
+
 \index{realism}
 \index{instrumentalism}
 
@@ -802,10 +919,11 @@ years in the future.
   the behavior of a system can be explained by understanding its
   components.  For example, the periodic table of the elements is a
   triumph of reductionism, because it explains the chemical behavior
-  of elements with a simple model of the electrons in an atom.  Holism
+  of elements with a simple model of electrons in atoms.  Holism
   is the view that some phenomena that appear at the system level do
   not exist at the level of components, and cannot be explained in
   component-level terms.
+
 \index{reductionism}
 \index{holism}
 
@@ -821,6 +939,7 @@ I have been talking about complex systems in the context of science,
 but complexity is also a cause, and effect, of
 changes in engineering and the organization of social
 systems:
+
 \index{engineering}
 
 \begin{description}
@@ -832,6 +951,7 @@ systems:
   service is unavailable.  In peer-to-peer networks, every node is
   both a client and a server.  To take down the service, you have to
   take down {\em every} node.
+
 \index{centralized}
 \index{decentralized}
 \index{client-server architecture}
@@ -843,6 +963,7 @@ systems:
   principle; nevertheless, the availability of cheap computation makes
   it increasingly feasible to design systems with complex interactions
   between components.
+
 \index{isolation}
 \index{interaction}
 
@@ -850,6 +971,7 @@ systems:
   systems, broadcast services are being augmented, and sometimes
   replaced, by services that allow users to communicate with each
   other and create, share, and modify content.  
+
 \index{broadcast service}
 
 \item[Top-down $\rightarrow$ bottom-up] In social, political and
@@ -857,6 +979,7 @@ systems:
   organized now operate as grassroots movements.  Even armies, which
   are the canonical example of hierarchical structure, are moving
   toward devolved command and control.
+
 \index{top-down}
 \index{bottom-up}
 \index{grassroots}
@@ -869,6 +992,7 @@ systems:
   design and analysis make it possible to build almost anything that
   can be imagined.  Frank Gehry's Guggenheim Museum Bilbao is my
   favorite example.
+
 \index{analysis}
 \index{computation}
 \index{Eiffel Tower}
@@ -883,6 +1007,7 @@ systems:
   solutions human engineers would not imagine (or like).  The ultimate
   genetic algorithm, evolution, notoriously generates designs that
   violate the rules of human engineering.
+
 \index{design}
 \index{search}
 
@@ -894,6 +1019,7 @@ systems:
 We are getting farther afield now, but the shifts I am postulating
 in the criteria of scientific modeling are related to 20th Century
 developments in logic and epistemology.
+
 \index{logic}
 \index{epistemology}
 
@@ -907,6 +1033,7 @@ developments in logic and epistemology.
   indeterminacy, vagueness, and uncertainty.  Bart
   Kosko discusses some of these systems in {\em Fuzzy
     Thinking}.
+
 \index{Aristotelian logic}
 \index{many-valued logic}
 \index{Kosko, Bart}
@@ -919,6 +1046,7 @@ developments in logic and epistemology.
   and the reluctant acceptance of subjectivity
   in probabilistic claims.  Sharon Bertsch McGrayne presents this
   history in {\em The Theory That Would Not Die}.
+
 \index{frequentist}
 \index{Bayesian}
 \index{McGrayne, Sharon Bertsch}
@@ -932,6 +1060,7 @@ developments in logic and epistemology.
   called attention to seemingly unavoidable subjectivity in
   even ``hard sciences'' and mathematics.  Rebecca Goldstein presents
   the historical context of G\"{o}del's proof in {\it Incompleteness}.
+
 \index{objective}
 \index{subjective}
 \index{Kuhn, Thomas}
@@ -947,6 +1076,7 @@ developments in logic and epistemology.
   believe that it is objectively true and immutable; people who use
   ``theory'' concede that it is subject to revision; and ``model''
   concedes that it is based on simplification and approximation.
+
 \index{physical law}
 \index{theory}
 \index{model}
@@ -955,13 +1085,14 @@ developments in logic and epistemology.
   definitions; others are, in effect, the assertion that a model
   predicts or explains the behavior of a system particularly well.
   We come back to the nature of physical laws 
-  in Sections~\ref{model1}, ~\ref{model3} and \ref{model2}.
+  in Section~\ref{model1}, Section~\ref{model3} and Section~\ref{model2}.
 
 \item[Determinism $\rightarrow$ indeterminism] Determinism is the view
   that all events are caused, inevitably, by prior events.  Forms of
   indeterminism include randomness, probabilistic causation, and
   fundamental uncertainty.  We come back to this
-  topic in Section~\ref{determinism} and \ref{free.will}
+  topic in Section~\ref{determinism} and Section~\ref{freewill}
+
 \index{determinism}
 \index{indeterminism}
 \index{free will}
@@ -973,6 +1104,7 @@ opinion is shifting along these axes.  As evidence, consider the
 reaction to Thomas Kuhn's {\em The Structure of Scientific
   Revolutions}, which was reviled when it was published and
 now considered almost uncontroversial.
+
 \index{Kuhn, Thomas}
 \index{Structure of Scientific Revolutions@{\it The Structure of Scientific Revolutions}}
 
@@ -1007,7 +1139,7 @@ real-world systems.
 
 The code for this chapter is in {\tt chap02.ipynb} in the repository
 for this book.  More information about working with the code is
-in Section~\ref{???}.
+in Section~\ref{code}.
 
 
 \section{What is a graph?}
@@ -1667,7 +1799,7 @@ is $n(n-1)/2$, which is in $O(\V^2)$.  So for a complete graph,
 
 The code for this chapter is in \py{chap02.ipynb}, which is a
 Jupyter notebook in the repository for this book.  For more information
-about working with this code, see Section~\ref{???}.
+about working with this code, see Section~\ref{code}.
 
 \begin{exercise}
 Launch \py{chap02.ipynb} and run the code.  There are a few short
@@ -1754,7 +1886,7 @@ path between nodes in a graph.
 
 The code for this chapter is in {\tt chap03.ipynb} in the repository
 for this book.  More information about working with the code is
-in Section~\ref{???}.
+in Section~\ref{code}.
 
 \section{Stanley Milgram}
 
@@ -2697,7 +2829,7 @@ models for small world networks.
 
 The code for this chapter is in {\tt chap04.ipynb} in the respository
 for this book.  More information about working with the code is
-in Section~\ref{???}.
+in Section~\ref{code}.
 
 
 \section{Social network data}
@@ -3517,7 +3649,7 @@ chapter I suggest methods for implementing CAs efficiently in Python.
 
 The code for this chapter is in {\tt chap05.ipynb} in the repository
 for this book.  More information about working with the code is
-in Section~\ref{???}.
+in Section~\ref{code}.
 
 
 \section{A simple CA}
@@ -3846,7 +3978,8 @@ So far I have focused on scientific challenges to determinism, but the
 longest-standing objection is the conflict between
 determinism and human free will.  Complexity science provides
 a possible resolution of this apparent conflict; I'll come
-back to this topic in Section~\ref{free.will}.
+back to this topic in Section~\ref{freewill}.
+
 \index{free will}
 
 
@@ -4518,7 +4651,7 @@ GoL efficiently in Python.
 
 The code for this chapter is in {\tt chap06.ipynb} in the repository
 for this book.  More information about working with the code is
-in Section~\ref{???}.
+in Section~\ref{code}.
 
 
 \section{Conway's GoL}
@@ -5175,7 +5308,7 @@ those mean.
 
 The code for this chapter is in {\tt chap07.ipynb} in the repository
 for this book.  More information about working with the code is
-in Section~\ref{???}.
+in Section~\ref{code}.
 
 
 \section{Diffusion}
@@ -5815,7 +5948,7 @@ first system shown to exhibit SOC.
 
 The code for this chapter is in {\tt chap08.ipynb} in the repository
 for this book.  More information about working with the code is
-in Section~\ref{???}.
+in Section~\ref{code}.
 
 
 \section{Critical Systems}
@@ -6649,7 +6782,7 @@ events may be fundamentally unpredictable and unexplainable.
 
 The code for this chapter is in \py{chap08.ipynb}, which is a
 Jupyter notebook in the repository for this book.  For more information
-about working with this code, see Section~\ref{???}.
+about working with this code, see Section~\ref{code}.
 
 \begin{exercise}
 
@@ -6800,7 +6933,7 @@ relationships between individual decisions and system behavior.
 
 The code for this chapter is in \py{chap09.ipynb}, which is a
 Jupyter notebook in the repository for this book.  For more information
-about working with this code, see Section~\ref{???}.
+about working with this code, see Section~\ref{code}.
 
 
 \section{Schelling's Model}
@@ -7520,6 +7653,12 @@ your reaction to the system response?
 
 \chapter{Herds, Flocks, and Traffic Jams}
 
+NOTE: THIS CHAPTER IS NOT DONE!
+
+The code for this chapter is in \py{chap10.ipynb}, which is a
+Jupyter notebook in the repository for this book.  For more information
+about working with this code, see Section~\ref{code}.
+
 
 \section{Traffic jams}
 
@@ -7532,67 +7671,199 @@ apparent reason.
 Agent-based models can help explain spontaneous traffic jams.
 As an example, I implemented a simple highway simulation, based on
 a model in Resnick, {\em Turtles, Termites and Traffic Jams}.
+
 \index{Turtles, Termites and Traffic Jams@{\em Turtles, Termites and Traffic Jams}}
 \index{Resnick, Mitchell}
 
-You can download my program from \url{thinkcomplex.com/Highway.py}.
-It uses \py{TurtleWorld}, which is part of Swampy.
-See \url{thinkpython.com/swampy}.
-\index{Swampy}
-
-This module defines two classes: \py{Highway}, which inherits from
-TurtleWorld, and \py{Driver}, which inherits from Turtle.
-
-The Highway is a one-lane road that forms a circle, but it is displayed
-as a series of rows that spiral down the canvas.
-
-Each driver starts with a random position and speed.  At each time
-step, each Driver accelerates or brakes based on the distance between
-it and the Driver in front.  Here is an example:
+Here's the class that represents the ``highway'':
 
 \begin{code}
-    def choose_acceleration(self, dist):
-        if dist < self.safe_distance:
-            return -1
-        else:
-            return 0.3
+class Highway:
+    
+    def __init__(self, n=10, length=1000, eps=0):
+        self.length = length
+        self.eps = eps
+
+        # create the drivers
+        locs = np.linspace(0, length, n, endpoint=False)
+        self.drivers = [Driver(loc) for loc in locs]
+        
+        # and link them up
+        for i in range(n):
+            j = (i+1) % n
+            self.drivers[i].next = self.drivers[j]
 \end{code}
 
-If the following distance is too short, the \py{Driver} brakes;
-otherwise it accelerates.  \py{Highway.py} enforces two other
-constraints: there is a speed limit for each driver, and if the
-current speed would cause a collision, the \py{Driver} comes to a
-complete stop.
+\py{n} is the number of cars.
 
-If you run \py{Highway.py} you will probably see a traffic jam,
-and the natural question is, ``Why?''  There is nothing about the
-\py{Highway} or \py{Driver} behavior that obviously causes
-traffic jams.
+\py{length} is the length of the
+highway, which is 1000 by default (in arbitrary units).
 
-\begin{exercise}
+\py{eps} is the amount of
+random noise we'll add to the system.
 
-Experiment with the parameters of the system to identify the factors
-that are necessary and sufficient to cause traffic jams.  Some of
-the factors to explore are:
-\index{parameter}
+\py{locs} contains the locations of the drivers; initially
+they are equally spaced along the highway.
 
-\begin{description}
+Finally, we link the drivers so that each driver contains a reference
+to the next driver in front.  The highway is circular, so the
+last driver contains a reference to the first.
 
-\item[Density:] What happens as the number of drivers increases (or
-the length of the highway decreases)?
+The \py{step} method is simple; it just moves each of the drivers:
 
-\item[Acceleration and braking:]  What happens if drivers accelerate
-faster or brake more gently?
+\begin{code}
+    def step(self):
+        for driver in self.drivers:
+            self.move(driver)
+\end{code}
 
-\item[Safe distance:] What happens as the safe distance between drivers
-changes?
+And here's the \py{move} method:
 
-\item[Heterogeneity:] What if all drivers are not the same; for
-example, if they have different speed limits or following distances?
+\begin{code}
+    def move(self, driver):
+        d = self.distance(driver)
 
-\end{description}
+        # let the driver choose acceleration
+        acc = driver.choose_acceleration(d)
+        acc = min(acc, self.max_acc)
+        acc = max(acc, self.min_acc)
+        speed = driver.speed + acc
+            
+        # add random noise to speed
+        speed *= np.random.uniform(1-self.eps, 1+self.eps)
+        
+        # keep it nonnegative and under the speed limit
+        speed = max(speed, 0)
+        speed = min(speed, self.speed_limit)
+        
+        # if current speed would collide, stop
+        if speed > d:
+            speed = 0
+            
+        # update speed and loc
+        driver.speed = speed
+        driver.loc += speed
+\end{code}
 
-\end{exercise}
+\py{d} is the distance between \py{driver} and the next driver ahead.
+This distance is passed to \py{choose_acceleration}, which
+specifies the behavior of the driver.  This is the only decision the
+driver gets to make; everything else is determined by the ``physics''
+of the simulation.
+
+\begin{itemize}
+
+\item \py{acc} is acceleration, which limited by \py{min_acc} and
+  \py{max_acc}.  In my implementation, cars can accelerate with
+  \py{max_acc=1} and brake with \py{min_acc=-10}.
+
+\item \py{speed} is the old speed plus the requested acceleration, but
+then we make some adjustments.  First, we add random noise to
+\py{speed}, because the world is not perfect.  \py{eps} determines the magnitude
+of the noise, which is a percentage applied to \py{speed}; for example, if
+\py{eps} is 0.02, \py{speed} is muliplied by a random number between 98\%
+and 102\%.
+
+\item Then speed is bounded between 0 and \py{speed_limit}, which is
+40 in my implementation, so cars are not allowed to go backward or speed.
+
+\item If the requested speed would cause a collision with the next car,
+\py{speed} is set to 0.
+
+\item Finally, we update the \py{speed} and \py{loc}
+attributes of \py{driver}.
+
+\end{itemize}
+
+Here's the definition for the \py{Driver} class:
+
+\begin{code}
+class Driver:
+    
+    def __init__(self, loc, speed=0):
+        self.loc = loc
+        self.speed = speed
+        
+    def choose_acceleration(self, d):
+        return 1
+\end{code}
+
+The attributes \py{loc} and \py{speed} are the location and speed of the
+driver.
+
+This implementation of \py{choose_acceleration} is very simple:
+it always accelerates at the maximum rate.
+
+Since the cars start out equally spaced, we expect them all to
+accelerate until they reach the speed limit, or until their speed
+exceeds the space between them.  At that point, at least one
+``collision'' will occur, causing some cars to stop.
+
+\begin{figure}
+\centerline{\includegraphics[height=3in]{figs/chap10-1.pdf}}
+\caption{}
+\label{chap10-1}
+\end{figure}
+
+Figure~\ref{chap10-1} shows a few steps in this process, starting with
+30 cars and \py{eps=0.02}.  On the left is the configuration after
+16 time steps, with the cars arranged in a circle.  
+Because of random noise, some cars are going faster
+than others, and the spacing has become uneven.
+
+During the next time step (center) two cars collide, indicated
+by the \py{x} marks.  
+
+During the next time step (right) two cars collide with the stopped
+cars, and we can see the initial formation of a traffic jam.  Once
+a jam forms, it tends to persist, with additional cars approaching from
+behind and colliding, and with the cars in the front accelerating
+away.
+
+Under some conditions, the jam itself propagates backwards, as you
+can see if you watch the animations in the notebook for this chapter.
+
+
+
+\section{Random Noise}
+
+\begin{figure}
+\centerline{\includegraphics[height=3in]{figs/chap10-2.pdf}}
+\caption{}
+\label{chap10-2}
+\end{figure}
+
+As the number of cars increases, traffic jams become more severe.
+Figure~\ref{chap10-2} shows the average speed cars are able to
+achieve, as a function of the number of cars.
+
+The top line shows results with \py{eps=0}; that is, with no random
+variation in speed.  With 25 or fewer cars, the spacing between
+cars is greater than 40, which allows cars to reach and maintain
+the maximum speed, which is 40.  With more than 25 cars, traffic
+jams form and the average speed drops quickly.
+
+This effect is a direct result of the physics of the simulation,
+so it should not be surprising.  If the length of the road is
+1000, the spacing between \py{n} cars is \py{1000/n}.  And since cars
+can't move faster than the space in front of them, the highest
+average speed we expect is \py{1000/n} or 40, whichever is less.
+
+But that's the best case scenario.  With just a small amount of
+randomness, things get much worse.
+
+Figure~\ref{chap10-2} also shows results with \py{eps=0.001} and
+\py{eps=0.01}, which correspond to errors in speed of 0.1\% and 1\%.
+
+With even a small amount of noise, the capacity of the highway
+drops from 25 to 20 (by ``capacity'' I mean the maximum number
+of cars that can reach and sustain the speed limit).  And
+with 1\% errors, the capacity drops to 10.  Ugh.
+
+As one of the exercises at the end of this chapter, you'll have a
+chance to design a better driver; that is, you will experiment with
+different strategies in \py{choose_acceleration} and see if you can
+find driver behaviors that improve average speed.
 
 
 \section{Boids}
@@ -7601,34 +7872,38 @@ In 1987 Craig Reynolds published ``Flocks, herds and
 schools: A distributed behavioral model'', which describes an
 agent-based model of herd behavior.  You can download his
 paper from \url{http://www.red3d.com/cwr/papers/1987/boids.html}.
+
 \index{Reynolds, Craig}
 
 Agents in this models are called ``boids'', which is both a
 contraction of ``bird-oid'' and an accented pronunciation of ``bird''
 (although boids are also used to model fish and herding land animals).
+
 \index{boid}
 
 Each agent simulates three behaviors:
 
 \begin{description}
 
-\item[Collision avoidance:] avoid obstacles, including other birds.
+\item[Collision avoidance:] Avoid obstacles, including other birds.
 
-\item[Flock centering:] move toward the center of the flock.
+\item[Flock centering:] Move toward the center of the flock.
 
-\item[Velocity matching:] align velocity with neighboring birds.
+\item[Velocity matching:] Align velocity with neighboring birds.
 
 \end{description}
 
 Boids make decisions based on local information only; each boid
 only sees (or pays attention to) other boids in its field of
 vision and range.
+
 \index{local information}
 
 The \py{Visual} package, also known as VPython, is well-suited
 for implementing boids.  It provides simple 3-D graphics as
 well as vector objects and operations that are useful for the
 computations.
+
 \index{Visual package}
 \index{VPython}
 
@@ -7720,7 +7995,7 @@ attitude of the boid:
 
 The new velocity is the weighted sum of the old velocity
 and the goal.  The parameter \py{mu} determines how quickly
-the birds can change speed and direction.  The time step, \py{dt}
+the birds can change speed and direction.  The time step, \py{dt},
 determines how far the boids move.
 \index{weighted sum}
 
@@ -7733,26 +8008,10 @@ maintain a flock and the patterns of motion and organization in the
 flock.  For some settings, the boids resemble a flock of birds; other
 settings resemble a school of fish or a cloud flying insects.
 
-\begin{exercise}
-
-% sudo apt-get install python-visual libgtkglextmm-x11-1.2-dev
-
-Run my implementation of the boid algorithm and experiment with
-different parameters.  What happens if you ``turn off'' one
-of the behaviors by setting the weight to 0?
-\index{parameter}
-
-To generate more bird-like behavior, Flake suggests adding a fourth
-behavior to maintain a clear line of sight; in other words, if there
-is another bird directly ahead, the boid should move away
-laterally.  What effect do you expect this rule to have on the
-behavior of the flock?  Implement it and see.
-
-\end{exercise}
-
 
 \section{Free will}
-\label{free.will}
+
+\label{freewill}
 
 Many complex systems have properties, as a whole, that their
 components do not:
@@ -7775,10 +8034,6 @@ though the agents cannot.
 
 \item The behavior of flocks and herds emerges from local interactions
   between their members.
-
-\item As Axelrod says about the iterated prisoner's dilemma: ``The
-  emergence of cooperation can be explained as a consequence of
-  individual[s] pursuing their own interests.''
 
 \end{itemize}
 
@@ -7815,6 +8070,41 @@ the same way that a traffic jam moves backward while the cars move
 forward, a person can have free will even though neurons don't.
 
 
+\section{Exercises}
+
+\begin{exercise}
+
+In the traffic jam simulation, define a class, \py{BetterDriver},
+that inherits from \py{Driver} and overrides \py{choose_acceleration}.
+See if you can define driving rules that do better than the basic
+implementation in \py{Driver}.  You might try to achieve higher
+average speed, or a lower number of collisions.
+
+% TODO: Add a crash counter.  Maybe pass the Highway object to
+% choose_acceleration
+
+\end{exercise}
+
+
+
+\begin{exercise}
+
+% sudo apt-get install python-visual libgtkglextmm-x11-1.2-dev
+
+Run my implementation of the boid algorithm and experiment with
+different parameters.  What happens if you ``turn off'' one
+of the behaviors by setting the weight to 0?
+\index{parameter}
+
+To generate more bird-like behavior, Flake suggests adding a fourth
+behavior to maintain a clear line of sight; in other words, if there
+is another bird directly ahead, the boid should move away
+laterally.  What effect do you expect this rule to have on the
+behavior of the flock?  Implement it and see.
+
+\end{exercise}
+
+
 \begin{exercise}
 
 Read more about free will at
@@ -7829,6 +8119,8 @@ book?
 
 
 \chapter{Game Theory}
+
+NOTE: THIS CHAPTER IS NOT DONE!
 
 \section{The El Farol Problem}
 
@@ -7881,6 +8173,7 @@ Either way, Bob is better off defecting.  And from her point of view,
 Alice reaches the same conclusion.  So if both players do the math,
 and no other factors come into play, we expect them to defect and be
 worse off for it.
+
 \index{game theory}
 
 This result is saddening because it is an example of how good intentions
@@ -7890,22 +8183,37 @@ scenarios in real life, not just hypothetical prisoners.
 But in real scenarios, the game is often iterated; that is, the same
 players face each other over and over, so they have the opportunity
 to learn, react, and communicate, at least implicitly.
+
 \index{iterated Prisoner's dilemma}
 
 The iterated version of the game is not as easy to analyze; it
 is not obvious what the optimal strategy is or even whether one
 exists.
+
 \index{strategy}
 
 So in the late 1970s Robert Axelrod organized a tournament to compare
 strategies.  He invited participants to submit strategies in the
 form of computer programs, then played the programs against each other
 and kept score.
+
 \index{Axelrod, Robert}
 
 I won't tell you the outcome, and if you don't know you should resist
 the temptation to look it up.  Instead, I encourage you to run your
-own tournament.  I'll provide the referee; you provide the players.
+own tournament.  
+
+
+\section{Game Theory}
+
+NOT DONE.
+
+You have reached the end of the book.  Congratulations!  When you
+first read Chapter~\ref{overview}, some of the topics might not have
+made sense.  You might find it helpful to read that chapter again now.
+Then get to work on your case study!  See Appendix~\ref{submissions}.
+
+\section{Exercises}
 
 \begin{exercise}
 
@@ -7944,13 +8252,6 @@ Run \py{Referee.py} and see how your strategy does.
 After you run your own tournament, you can read about the results
 of Axelrod's tournament in his book, {\it The Evolution of Cooperation}.
 \end{exercise}
-
-
-You have reached the end of the book.  Congratulations!  When you
-first read Chapter~\ref{overview}, some of the topics might not have
-made sense.  You might find it helpful to read that chapter again now.
-Then get to work on your case study!  See Appendix~\ref{submissions}.
-
 
 
 
