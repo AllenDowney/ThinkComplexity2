@@ -65,9 +65,11 @@ class Cell2DViewer:
         self.hlines = None
         self.vlines = None
 
-    def step(self):
-        """Advances the viewee one step."""
-        self.viewee.step()
+    # TODO: should this really take iters?
+    def step(self, iters=1):
+        """Advances the viewee the given number of steps."""
+        for i in range(iters):
+            self.viewee.step()
 
     def draw(self, grid=False):
         """Draws the array and any other elements.
@@ -94,11 +96,6 @@ class Cell2DViewer:
         options['extent'] = [0, m, 0, n]
         options.update(kwds)
         self.im = plt.imshow(a, cmap, **options)
-
-    def step(self, iters=1):
-        """Advances the viewee the given number of steps."""
-        for i in range(iters):
-            self.viewee.step()
 
     def draw_grid(self):
         """Draws the grid."""

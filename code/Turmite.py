@@ -90,7 +90,7 @@ class TurmiteViewer(Cell2DViewer):
         """Draws the arrow."""
         center, angle = self.arrow_specs()
         self.arrow = RegularPolygon(center, 3, color='orange',
-                                        radius=0.4, orientation=angle)
+                                    radius=0.4, orientation=angle)
         ax = plt.gca()
         ax.add_patch(self.arrow)
 
