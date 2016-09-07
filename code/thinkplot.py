@@ -745,7 +745,7 @@ def SaveFormat(root, fmt='eps', **options):
     pyplot.savefig(filename, format=fmt, **options)
 
 
-# provide aliases for calling functons with lower-case names
+# provide aliases for calling functions with lower-case names
 preplot = PrePlot
 subplot = SubPlot
 clf = Clf
