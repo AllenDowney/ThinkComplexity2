@@ -81,7 +81,7 @@ class TurmiteViewer(Cell2DViewer):
 
     def draw(self, grid=False):
         """Updates the display with the state of the grid."""
-        self.draw_array()
+        self.draw_array(self.viewee.array)
         self.draw_arrow()
         if grid:
             self.draw_grid()
