@@ -80,10 +80,12 @@ class Cell2DViewer:
         if grid:
             self.draw_grid()
 
-    def draw_array(self, array, cmap=None, **kwds):
+    def draw_array(self, array=None, cmap=None, **kwds):
         """Draws the cells."""
         # Note: we have to make a copy because some implementations
         # of step perform updates in place.
+        if array is None:
+            array = self.viewee.array
         a = array.copy()
         cmap = self.cmap if cmap is None else cmap
 
