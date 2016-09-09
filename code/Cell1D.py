@@ -96,7 +96,7 @@ class Wrap1D(Cell1D):
         # fix the first and last cells by copying from the other end
         i = self.next-1
         row = self.array[i]
-        row[0], row[-1] = row[-2], row[1] 
+        row[0], row[-1] = row[-2], row[1]
 
 
 class Cell1DViewer:
@@ -110,8 +110,8 @@ class Cell1DViewer:
 
     def draw(self, start=0, end=None):
         """Draws the CA using pyplot.imshow.
-        
-        start: index of the first column to be shown 
+
+        start: index of the first column to be shown
         end: index of the last column to be shown
         """
         a = self.ca.get_array(start, end)
@@ -145,22 +145,22 @@ class EPSDrawer:
 
     def draw(self, ca, start=0, end=None):
         """Draws the CA using pyplot.pcolor.
-        
-        start: index of the first column to be shown 
+
+        start: index of the first column to be shown
         end: index of the last column to be shown
         """
         a = ca.get_array(start, end)
         self.n, self.m = a.shape
-        
+
         self.cells = []
         for i in xrange(self.n):
             for j in xrange(self.m):
                 if a[i, j]:
                     self.cells.append((i, j))
-        
+
     def save(self, filename='ca.eps'):
         """Saves the representation of the CA.
-        
+
         filename: string
         """
         with open(filename, 'w') as fp:
@@ -172,7 +172,7 @@ class EPSDrawer:
     def print_header(self, fp, size=0.9, border=2):
         """Writes the EPS header and defines /c."""
         fp.write('%!PS-Adobe-3.0 EPSF-3.0\n')
-        fp.write('%%%%BoundingBox: %d %d %d %d\n' % 
+        fp.write('%%%%BoundingBox: %d %d %d %d\n' %
                  (border, border, self.m+border, self.n+border))
 
         fp.write('1 -1 scale\n')
