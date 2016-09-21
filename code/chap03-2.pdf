@@ -1,19 +1,20 @@
 %PDF-1.4
 %¬Ü «º
 1 0 obj
-<< /Pages 2 0 R /Type /Catalog >>
+<< /Type /Catalog /Pages 2 0 R >>
 endobj
 8 0 obj
-<< /Pattern 5 0 R /XObject 7 0 R /Font 3 0 R /ExtGState 4 0 R
-/ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ] /Shading 6 0 R >>
+<< /ExtGState 4 0 R /Pattern 5 0 R
+/ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ] /Shading 6 0 R /Font 3 0 R
+/XObject 7 0 R >>
 endobj
 10 0 obj
-<< /Parent 2 0 R /Contents 9 0 R /MediaBox [ 0 0 864 432 ]
-/Group << /CS /DeviceRGB /Type /Group /S /Transparency >> /Annots [ ]
-/Resources 8 0 R /Type /Page >>
+<< /Annots [ ] /Type /Page
+/Group << /Type /Group /CS /DeviceRGB /S /Transparency >> /Contents 9 0 R
+/Parent 2 0 R /MediaBox [ 0 0 864 432 ] /Resources 8 0 R >>
 endobj
 9 0 obj
-<< /Length 11 0 R /Filter /FlateDecode >>
+<< /Filter /FlateDecode /Length 11 0 R >>
 stream
 xœTËÛ0¼ë+ôñŠ-Ë×b\›öĞÒ´A·ÅnîïWñÆ±,“´œƒá‡fF#š°öl½¤ëİ‚İ§ël\z{11Pºÿîä1=¹Ûı‡1ßÍkZDßD‹1ZßwÙ·“ıf'‰KºŞÓúŞ>=Ÿşı<¾ì?Ùã_ƒ”8ˆM›ä¡óMmğ`ÁC}l;Jâæë†#»ØôØùÈÀ25É•Â ªAë0Àc7zˆ¢™‘(@÷äC¿ ğjQ’ÿ£¬%/öƒâ­ÚŠåW‚¦ÏeáïôJPæµì5–¯v§Ä÷à—ÔM$ŠÒ¼šJy5{°Ú$_£àí<éñ£ùxH|°ã‹}úììóŸûÚâÇ9bK¶?ÑN¿ÌS;rÈs˜¶O‚€{Lx‘İªJnk·æk¸fûµ3(u8¤à½ş§­ÑÛâ4@ê»Öº^Š^A­Ì¡æ[’¢d¦æP#ŞÏÌgÙàEó,Q&c%…W{ˆ¢T‰W{ŒâC¿¼B=lú^ÖRP»n“€ßHW–(ò.ü’ÚfE16F¯6Ë5á;ÍÎ°%|¡"|a-|"\úÉ¶¸<…-áá+á[jH×ğm»°9|#Lız'…Â†”ÏŞl‰Pš7a£²ùrXG½Ô£]:…¥<‚DÉ<—!%Ræaò1yŸê/)…™uåZ3JıyŸj1+(eÏH”¬à
 k`Q¥éU?&ëM-¦DQ<«ÍoMàN³3än	\¬\\Ü…—x²-.CqKàbEàâJà–’ÄÁ˜ÿLœIs
@@ -35,39 +36,36 @@ endobj
 << >>
 endobj
 7 0 obj
-<< /P2 14 0 R /P0 12 0 R /P1 13 0 R >>
+<< /P0 12 0 R /P1 13 0 R /P2 14 0 R >>
 endobj
 12 0 obj
-<< /Length 139 /Subtype /Form /Filter /FlateDecode
-/BBox [ -4.1622776602 -4.1622776602 4.1622776602 4.1622776602 ]
-/Type /XObject >>
+<< /Filter /FlateDecode /Length 139 /Type /XObject /Subtype /Form
+/BBox [ -4.1622776602 -4.1622776602 4.1622776602 4.1622776602 ] >>
 stream
 xœmA1E÷œ¢ø„ÒÄ­K¯1câı·S£Åš²ièŞjy’”;õ«©^¼¼HØ›Ûf“XÙ¶&{—”]¯âEY›‰ù[ùF$¢>jHÒ;~Ÿ‘Œ@2š’ŸêŒáA‰;2',ó`;!Yëië©‘ú`ZïAt£·,X
 endstream
 endobj
 13 0 obj
-<< /Length 139 /Subtype /Form /Filter /FlateDecode
-/BBox [ -4.1622776602 -4.1622776602 4.1622776602 4.1622776602 ]
-/Type /XObject >>
+<< /Filter /FlateDecode /Length 139 /Type /XObject /Subtype /Form
+/BBox [ -4.1622776602 -4.1622776602 4.1622776602 4.1622776602 ] >>
 stream
 xœmA1E÷œ¢ø„ÒÄ­K¯1câı·S£Åš²ièŞjy’”;õ«©^¼¼HØ›Ûf“XÙ¶&{—”]¯âEY›‰ù[ùF$¢>jHÒ;~Ÿ‘Œ@2š’ŸêŒáA‰;2',ó`;!Yëië©‘ú`ZïAt£·,X
 endstream
 endobj
 14 0 obj
-<< /Length 139 /Subtype /Form /Filter /FlateDecode
-/BBox [ -4.1622776602 -4.1622776602 4.1622776602 4.1622776602 ]
-/Type /XObject >>
+<< /Filter /FlateDecode /Length 139 /Type /XObject /Subtype /Form
+/BBox [ -4.1622776602 -4.1622776602 4.1622776602 4.1622776602 ] >>
 stream
 xœmA1E÷œ¢ø„ÒÄ­K¯1câı·S£Åš²ièŞjy’”;õ«©^¼¼HØ›Ûf“XÙ¶&{—”]¯âEY›‰ù[ùF$¢>jHÒ;~Ÿ‘Œ@2š’ŸêŒáA‰;2',ó`;!Yëië©‘ú`ZïAt£·,X
 endstream
 endobj
 2 0 obj
-<< /Kids [ 10 0 R ] /Type /Pages /Count 1 >>
+<< /Type /Pages /Kids [ 10 0 R ] /Count 1 >>
 endobj
 15 0 obj
-<< /Producer (matplotlib pdf backend)
+<< /CreationDate (D:20160921000013-04'00')
 /Creator (matplotlib 1.5.2, http://matplotlib.org)
-/CreationDate (D:20160913093414-04'00') >>
+/Producer (matplotlib pdf backend) >>
 endobj
 xref
 0 16
@@ -88,7 +86,7 @@ xref
 0000001847 00000 n 
 0000002213 00000 n 
 trailer
-<< /Info 15 0 R /Size 16 /Root 1 0 R >>
+<< /Root 1 0 R /Info 15 0 R /Size 16 >>
 startxref
 2361
 %%EOF
