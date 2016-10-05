@@ -1,0 +1,7 @@
+!Name: Rabbits
+!Author: Andrew Trevorrow
+!A methuselah with lifespan 17331.
+!http://www.conwaylife.com/wiki/index.php?title=Rabbits
+O...OOO
+OOO..O
+.O
