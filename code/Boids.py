@@ -12,10 +12,8 @@ Copyright 2011 Allen B. Downey.
 Distributed under the GNU General Public License at gnu.org/licenses/gpl.html.
 """
 
-import math
-
 import visual
-import numpy
+import numpy as np
 
 # size of the boids
 b_radius = 0.03
@@ -27,7 +25,7 @@ r_center = 1.0
 r_copy = 0.5
 
 # viewing angle for different rules, in radians
-a_avoid = 2*math.pi
+a_avoid = 2*np.pi
 a_center = 2
 a_copy = 2
 
@@ -43,7 +41,7 @@ dt = 0.1
 
 def random_vector(a, b):
     """Create a vector with each element uniformly distributed in [a, b)."""
-    t = [numpy.random.uniform(a,b) for i in range(3)]
+    t = [np.random.uniform(a,b) for i in range(3)]
     return visual.vector(t)
 
 
@@ -58,7 +56,7 @@ null_vector = visual.vector(0,0,0)
 
 
 class Boid(visual.cone):
-    """A Boid is a VPython cone with a velocity"""
+    """A Boid is a Visual cone with a velocity"""
 
     def __init__(self, radius=b_radius, length=b_length):
         pos = random_vector(0, 1)
@@ -94,7 +92,7 @@ class Boid(visual.cone):
         close = self.get_neighbors(others, r_avoid, a_avoid)
         t = [other.pos for other in close]
         if t:
-            center = numpy.sum(t)/len(t)
+            center = np.sum(t)/len(t)
             away = visual.vector(self.pos - center)
             away.mag = r_avoid / away.mag
             return limit_vector(away)
@@ -107,18 +105,22 @@ class Boid(visual.cone):
         close = self.get_neighbors(others, r_center, a_center)
         t = [other.pos for other in close]
         if t:
-            center = numpy.sum(t)/len(t)
+            center = np.sum(t)/len(t)
             toward = visual.vector(center - self.pos)
             return limit_vector(toward)
         else:
             return null_vector
 
     def copy(self, others):
-        """Return the average heading of other boids in range."""
+        """Return the average heading of other boids in range.
+        
+        others: list of Boids
+        """
         close = self.get_neighbors(others, r_copy, a_copy)
         t = [other.vel for other in close]
         if t:
-            center = numpy.sum(t)/len(t)
+            # TODO: replace this with mean
+            center = np.sum(t)/len(t)
             away = visual.vector(self.pos - center)
             return limit_vector(away)
         else:
