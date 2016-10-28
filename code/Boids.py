@@ -1,13 +1,9 @@
 """ Code example from Complexity and Computation, a book about
 exploring complexity science with Python.  Available free from
-
 http://greenteapress.com/complexity
-
 Original code by Matt Aasted, modified by Allen Downey.
-
 Based on Reynolds, "Flocks, Herds and Schools" and
 Flake, "The Computational Beauty of Nature."
-
 Copyright 2011 Allen B. Downey.
 Distributed under the GNU General Public License at gnu.org/licenses/gpl.html.
 """
@@ -30,7 +26,7 @@ a_center = 2
 a_copy = 2
 
 # weights for various rules
-w_avoid = 4
+w_avoid = 0
 w_center = 3
 w_copy = 2
 w_love = 10
@@ -153,7 +149,6 @@ class Boid(visual.cone):
 class World(object):
     def __init__(self, n=10):
         """Create n Boids and one carrot.
-
         tracking: indicates whether the carrot follows the mouse
         """
         self.boids = [Boid() for i in range(n)]
