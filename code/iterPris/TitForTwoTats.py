@@ -7,5 +7,5 @@ class TitForTwoTats():
         	action = 1
         else:
         	#If last two rounds weren't both defections, doesn't defect.
-            action = history[self.order^1][round - 1] and history[self.order^1][round - 2]
+            action = int(history[self.order^1][round - 1] or history[self.order^1][round - 2])
         return action
