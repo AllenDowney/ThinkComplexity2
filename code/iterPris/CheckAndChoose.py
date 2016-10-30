@@ -1,7 +1,7 @@
 import numpy as np
 
 class CheckAndChoose():
-    ''' CheckAndChoose will cooperate 5 time, defect 5 times, then choose which had the best average score. '''
+    ''' CheckAndChoose will cooperate 5 times, defect 5 times, then choose which had the best average score. '''
     def step(self, history, round):
         if round < 5:
             action = 1 # Cooperate
