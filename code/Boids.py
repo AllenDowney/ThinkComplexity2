@@ -1,13 +1,9 @@
 """ Code example from Complexity and Computation, a book about
 exploring complexity science with Python.  Available free from
-
 http://greenteapress.com/complexity
-
 Original code by Matt Aasted, modified by Allen Downey.
-
 Based on Reynolds, "Flocks, Herds and Schools" and
 Flake, "The Computational Beauty of Nature."
-
 Copyright 2011 Allen B. Downey.
 Distributed under the GNU General Public License at gnu.org/licenses/gpl.html.
 """
@@ -30,9 +26,16 @@ a_center = 2
 a_copy = 2
 
 # weights for various rules
-w_avoid = 4
-w_center = 3
-w_copy = 2
+#if this is too high then birds will randomly disperse  
+w_avoid = 1
+#if this is too high then birds will converge on a trajectory and maintain 
+#that trajectory
+w_center = 1
+#because the birds that a single bird will copy come and go so quickly
+#making this parameter too high will result in seemingly random movement
+w_copy = 1
+#raising this parameter will of course result in the chaotically
+#birds crowding around the carrot
 w_love = 10
 
 # time step
@@ -126,6 +129,7 @@ class Boid(visual.cone):
         else:
             return null_vector
 
+
     def love(self, carrot):
         """Returns a vector pointing toward the carrot."""
         toward = carrot.pos - self.pos
@@ -153,7 +157,6 @@ class Boid(visual.cone):
 class World(object):
     def __init__(self, n=10):
         """Create n Boids and one carrot.
-
         tracking: indicates whether the carrot follows the mouse
         """
         self.boids = [Boid() for i in range(n)]
