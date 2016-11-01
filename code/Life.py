@@ -42,6 +42,7 @@ class Life(Cell2D):
         self.array = self.table[c]
 
 
+
 class LifeViewer(Cell2DViewer):
     """Viewer for Game of Life."""
 
