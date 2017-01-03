@@ -365,8 +365,8 @@ go along.
 \label{code}
 
 All code used in this book is available from
-\url{https://github.com/AllenDowney/ThinkComplexity2}.  
-If you are not familiar with Git, it is a 
+\url{https://github.com/AllenDowney/ThinkComplexity2}.
+If you are not familiar with Git, it is a
 version control system that allows you to keep track of the files that
 make up a project.  A collection of files under Git's control is
 called a ``repository''.  GitHub is a hosting service that provides
@@ -528,7 +528,7 @@ pointed out typos.
 found typos and made helpful suggestions.
 
 %\item I am grateful to the program committee that read and selected
-%the case studies included in this book: 
+%the case studies included in this book:
 %Sarah Spence Adams,
 %John Geddes,
 %Stephen Holt,
@@ -549,10 +549,10 @@ found typos and made helpful suggestions.
 
 \end{itemize}
 
-Other people who reported errors include 
+Other people who reported errors include
 Richard Hollands,
 Muhammad Najmi bin Ahmad Zabidi,
-Alex Hantman, and 
+Alex Hantman, and
 Jonathan Harford.
 
 
@@ -956,7 +956,7 @@ systems:
 \index{decentralized}
 \index{client-server architecture}
 \index{peer-to-peer architecture}
-  
+
 \item[Isolation $\rightarrow$ interaction] In classical engineering,
   the complexity of large systems is managed by isolating components
   and minimizing interactions.  This is still an important engineering
@@ -970,7 +970,7 @@ systems:
 \item[One-to-many $\rightarrow$ many-to-many] In many communication
   systems, broadcast services are being augmented, and sometimes
   replaced, by services that allow users to communicate with each
-  other and create, share, and modify content.  
+  other and create, share, and modify content.
 
 \index{broadcast service}
 
@@ -1084,7 +1084,7 @@ developments in logic and epistemology.
   Some concepts that are called ``physical laws'' are really
   definitions; others are, in effect, the assertion that a model
   predicts or explains the behavior of a system particularly well.
-  We come back to the nature of physical laws 
+  We come back to the nature of physical laws
   in Section~\ref{model1}, Section~\ref{model3} and Section~\ref{model2}.
 
 \item[Determinism $\rightarrow$ indeterminism] Determinism is the view
@@ -1269,7 +1269,7 @@ And we can use \py{edges} to get the list of edges:
 
 \begin{code}
 >>> G.edges()
-[('Alice', 'Bob'), ('Alice', 'Chuck'), 
+[('Alice', 'Bob'), ('Alice', 'Chuck'),
  ('Bob', 'Alice'), ('Bob', 'Chuck')]
 \end{code}
 
@@ -1278,9 +1278,9 @@ NetworkX provides several functions for drawing graphs;
 with edges:
 
 \begin{code}
-nx.draw_circular(G, 
-                 node_color=COLORS[0], 
-                 node_size=2000, 
+nx.draw_circular(G,
+                 node_color=COLORS[0],
+                 node_size=2000,
                  with_labels=True)
 \end{code}
 
@@ -1329,15 +1329,15 @@ Now I can use \py{add_edges_from}, which iterates the keys of
 G.add_edges_from(drive_times)
 \end{code}
 
-Now instead of \py{draw_circular}, which arranges the nodes in 
+Now instead of \py{draw_circular}, which arranges the nodes in
 a circle, I'll use \py{draw}, which takes \py{pos} as the second
 parameter:
 
 \begin{code}
-nx.draw(G, pos, 
-        node_color=COLORS[1], 
-        node_shape='s', 
-        node_size=2500, 
+nx.draw(G, pos,
+        node_color=COLORS[1],
+        node_shape='s',
+        node_size=2500,
         with_labels=True)
 \end{code}
 
@@ -1347,7 +1347,7 @@ nx.draw(G, pos,
 To add the edge labels, we use \py{draw_networkx_edge_labels}:
 
 \begin{code}
-nx.draw_networkx_edge_labels(G, pos, 
+nx.draw_networkx_edge_labels(G, pos,
                              edge_labels=drive_times)
 \end{code}
 
@@ -1446,9 +1446,9 @@ The following code makes a complete graph with 10 nodes and draws it.
 
 \begin{code}
 complete = make_complete_graph(10)
-nx.draw_circular(complete, 
-                 node_color=COLORS[2], 
-                 node_size=1000, 
+nx.draw_circular(complete,
+                 node_color=COLORS[2],
+                 node_size=1000,
                  with_labels=True)
 \end{code}
 
@@ -1461,7 +1461,7 @@ we'll develop functions to check whether a graph is connected.
 \label{connected}
 
 A graph is {\bf connected} if there is a path from every node to every
-other node.  
+other node.
 See \url{http://en.wikipedia.org/wiki/Connectivity_(graph_theory)}.
 \index{connected graph}
 \index{path}
@@ -1545,7 +1545,7 @@ neighbors of node 0).
 
 The next time through the loop, \py{pop} returns the last element
 in the stack, which is node 9.  So node 9 gets added to \py{seen}
-and its neighbors get added to the stack.  
+and its neighbors get added to the stack.
 
 Notice that the same node can appear more than once in the stack;
 in fact, a node with $k$ neighbors will be added to the stack
@@ -1616,7 +1616,7 @@ def flip(p):
     return random() < p
 \end{code}
 
-Finally, \py{make_random_graph} generates and returns the 
+Finally, \py{make_random_graph} generates and returns the
 ER graph $G(n, p)$.
 
 \begin{code}
@@ -2144,7 +2144,7 @@ have to choose a replacement for \py{v}, called \py{new_v}.
 To compute the possible choices,
 we start with \py{nodes}, which is a set,
 and subtract off \py{u} and its neighbors, which avoids self
-loops and multiple edges.  
+loops and multiple edges.
 
 Then we choose \py{new_v} from \py{choices}, remove the existing
 edge from \py{u} to \py{v}, and add a new edge from \py{u} to
@@ -2158,7 +2158,7 @@ This function does not consider the edges in the order specified
 by Watts and Strogatz, but it doesn't seem to affect
 the results.
 
-Figure~\ref{chap03-2} shows WS graphs with $n=20$, $k=4$, and 
+Figure~\ref{chap03-2} shows WS graphs with $n=20$, $k=4$, and
 a range of values of $p$.  When $p=0$, the graph is a ring lattice.
 When $p=1$, it is completely random.  As we'll see, the interesting
 things happen in between.
@@ -2182,7 +2182,7 @@ a ``coefficient'' because it is always between 0 and 1.
 If we compute the average of $C_u$ over all nodes, we get the
 ``network average clustering coefficient'', denoted $\bar{C}$.
 
-Here is a function that computes it. 
+Here is a function that computes it.
 
 \begin{code}
 def node_clustering(G, u):
@@ -2190,9 +2190,9 @@ def node_clustering(G, u):
     k = len(neighbors)
     if k < 2:
         return 0
-        
+
     total = k * (k-1) / 2
-    exist = 0    
+    exist = 0
     for v, w in all_pairs(neighbors):
         if G.has_edge(v, w):
             exist +=1
@@ -2209,7 +2209,7 @@ Otherwise we compute the number of possible edges among the neighbors,
 exist.  The result is the fraction of all edges that exist.
 
 We can test the function like this:
-   
+
 \begin{code}
 >>> lattice = make_ring_lattice(10, 4)
 >>> node_clustering(lattice, 1)
@@ -2221,7 +2221,7 @@ is 0.5 (if you are not convinced, take another look at
 Figure~\ref{chap03-1}).
 
 Now we can compute the network average clustering coefficient like this:
-   
+
 \begin{code}
 def clustering_coefficient(G):
     cc = np.mean([node_clustering(G, node) for node in G])
@@ -2306,7 +2306,7 @@ mean path length, \py{mpl}, and clustering coefficient \py{cc}:
 
 \begin{code}
 def run_one_graph(n, k, p):
-    ws = make_ws_graph(n, k, p)    
+    ws = make_ws_graph(n, k, p)
     mpl = characteristic_path_length(ws)
     cc = clustering_coefficient(ws)
     print(mpl, cc)
@@ -2584,7 +2584,7 @@ problem'', which means that it finds the minimum distance from a given
 connected node).
 
 \index{shortest path}
-\index{single source shortest path} 
+\index{single source shortest path}
 \index{Dijkstra's algorithm}
 
 We start with a simplified version of the algorithm that
@@ -2607,7 +2607,7 @@ def shortest_path_dijkstra(G, start):
         neighbors = set(G[node]) - set(dist)
         for n in neighbors:
             dist[n] = new_dist
-        
+
         queue.extend(neighbors)
     return dist
 \end{code}
@@ -2907,7 +2907,7 @@ this:
     from networkx.algorithms.approximation import average_clustering
     average_clustering(G, trials=1000)
 \end{code}
-    
+
 The following function does something similar for path lengths.
 
 \begin{code}
@@ -2918,7 +2918,7 @@ def random_path_lengths(G, nodes=None, trials=1000):
         nodes = list(nodes)
 
     pairs = np.random.choice(nodes, (trials, 2))
-    lengths = [nx.shortest_path_length(G, *pair) 
+    lengths = [nx.shortest_path_length(G, *pair)
                for pair in pairs]
     return lengths
 \end{code}
@@ -2936,7 +2936,7 @@ The result is a list of path lengths.
 
 \py{estimate_path_length} generates a list of random path lengths and
 returns their mean:
-    
+
 \begin{code}
 def estimate_path_length(G, nodes=None, trials=1000):
     return np.mean(random_path_lengths(G, nodes, trials))
@@ -3042,7 +3042,7 @@ What's going on here?  To get a better view, we have to look at the
 {\bf distribution} of degrees, not just the mean and standard deviation.
 
 I'll represent the distribution of degrees with a \py{Pmf} object,
-which is defined in the \py{thinkstats2} module.  
+which is defined in the \py{thinkstats2} module.
 \py{Pmf} stands for ``probability mass function'';
 if you are not familiar with this concept,
 you might want to read Chapter 3 of {\it Think Stats, 2nd edition}
@@ -3110,14 +3110,14 @@ thinkplot.Pdf(pmf_ws, label='WS graph')
 
 Figure~\ref{chap04-1} shows the two distributions.  They are
 very different.
-  
+
 In the WS model, most users have about 44 friends; the minimum is 38
 and the maximum is 50.  That's not much variation.
 In the dataset, there are many users with only 1 or 2 friends,
 but one has more than 1000!
 
 Distributions like this, with many small values and a few very large
-values, are called {\bf heavy-tailed}.  
+values, are called {\bf heavy-tailed}.
 
 
 \section{Heavy-tailed distributions}
@@ -3279,9 +3279,9 @@ models intended to capture all of these characteristics.
 \centering
 \begin{tabular}{lrrr}
 \hline
-            & \textbf{Facebook} & \textbf{WS model} & \textbf{BA model} \\ 
+            & \textbf{Facebook} & \textbf{WS model} & \textbf{BA model} \\
 \hline
-C           & 0.61             & 0.63             & 0.037             \\ 
+C           & 0.61             & 0.63             & 0.037             \\
 L           & 3.69              & 3.23              & 2.51              \\
 mean degree & 43.7              & 44                & 43.7              \\
 std degree  & 52.4              & 1.5               & 40.1              \\
@@ -3447,7 +3447,7 @@ The {\bf complementary CDF} (CCDF) is defined
 
 \[ \CCDF(x) = 1 - \CDF(x) \]
 
-If is useful because if the PMF follows a power law, the CCDF 
+If is useful because if the PMF follows a power law, the CCDF
 also follows a power law:
 
 \[ \CCDF(x) = \left( \frac{x}{x_m} \right)^{-\alpha} \]
@@ -3568,7 +3568,7 @@ that would provide evidence in favor of one model over the other?
 
 Choosing among competing models is the topic of Thomas Kuhn's
 essay, ``Objectivity, Value Judgment, and Theory Choice'', which
-you can read at 
+you can read at
 \url{https://github.com/AllenDowney/ThinkComplexity2/blob/master/papers/kuhn.pdf}.
 \index{Kuhn, Thomas}
 \index{theory choice}
@@ -3813,7 +3813,7 @@ of itself.  Rule 18 makes the nested structure even clearer;
 Figure~\ref{chap05-3} shows what it looks like after 64 steps.
 
 \index{Rule 18}
- 
+
 \newcommand{\Sierpinski}{Sierpi\'{n}ski}
 
 This pattern resembles the \Sierpinski triangle, which
@@ -4290,7 +4290,7 @@ the results.  In the next few sections I explain how they work.
 
 To store the state of the CA, I use a NumPy array, which is a
 multi-dimensional data structure whose elements are all the same type.
-It is similar to a nested list, but usually smaller and faster.  
+It is similar to a nested list, but usually smaller and faster.
 Figure~\ref{fig.array} shows why.
 The diagram on the left shows a list of lists of integers; each
 dot represents a reference, which takes up 4--8 bytes.  To access
@@ -4367,7 +4367,7 @@ element is the sum of three elements from the previous row, mod 2.
 
 The \py{step} function in the previous section is simple, but it is
 not very fast.  In general, we can speed up operations like this
-if we can replace \py{for} loops with NumPy operations, because 
+if we can replace \py{for} loops with NumPy operations, because
 \py{for} loops incur a lot of overhead in the Python interpreter.
 In this section I'll show how we can speed up \py{step} using the
 NumPy function \py{correlate}.
@@ -4419,7 +4419,7 @@ def step2(array, i):
 \end{code}
 
 \py{roll} shifts the window to the right (it also wraps it around to the
-beginning, but that doesn't affect this function).  
+beginning, but that doesn't affect this function).
 
 \py{step2} yields the same results as \py{step}.  It is still not
 very fast, but it is a step in the right direction because the
@@ -4514,8 +4514,8 @@ exercises in this chapter.  My solutions are in {\tt chap05soln.ipynb}.
 
 \begin{exercise}
 
-This exercise asks you to experiment with Rule 110 and 
-some of its spaceships.  
+This exercise asks you to experiment with Rule 110 and
+some of its spaceships.
 
 \begin{enumerate}
 
@@ -4570,8 +4570,8 @@ see \url{http://mathworld.wolfram.com/TuringMachine.html}.
 \begin{exercise}
 
 This exercise asks you to implement and test several PRNGs.
-For testing, you will need to install 
-\py{DieHarder}, which you can download from 
+For testing, you will need to install
+\py{DieHarder}, which you can download from
 \url{https://www.phy.duke.edu/~rgb/General/dieharder.php}, or it
 might be available as a package for your operating system.
 \index{DieHarder}
@@ -4786,14 +4786,14 @@ is an oscillator that alternates between two states.  The
 \index{oscillator}
 
 Finally, some patterns oscillate and return to the starting
-configuration, but shifted in space.  Because these patterns 
+configuration, but shifted in space.  Because these patterns
 seem to move, they are called ``spaceships''.
 
 Figure~\ref{chap06-3} shows a spaceship called a
 ``glider''.  After a period of 4 steps, the glider is back in the
 starting configuration, shifted one unit down and to the right.
 
-\index{glider} 
+\index{glider}
 \index{spaceship}
 
 Depending on the starting orientation, gliders can move along any
@@ -4927,7 +4927,7 @@ scene.
 {\bf Scientific realism} pertains to scientific theories and the
 entities they postulate.
 A theory postulates an entity if it is
-expressed in terms of the properties and behavior of the entity.  
+expressed in terms of the properties and behavior of the entity.
 For example, theories about electromagnetism are expressed in
 terms of electrical and magnetic fields.  Some theories about economics
 are expressed in terms of supply, demand, and market forces.
@@ -5143,14 +5143,14 @@ b = (c==3) | (c==12) | (c==13)
 b = b.astype(np.uint8)
 \end{code}
 
-This version of the kernel includes the center cell and gives it a 
+This version of the kernel includes the center cell and gives it a
 weight of 10.  If the center cell is 0, the result is between 0 and 8;
 if the center cell is 1, the result is between 10 and 18.
 Using this kernel, we can simplify the logical operations, selecting
-only cells with the values 3, 12, and 13.  
+only cells with the values 3, 12, and 13.
 
 That might not seem like a big improvement, but it allows one more
-simplification: with this kernel, we can use a table to look up 
+simplification: with this kernel, we can use a table to look up
 cell values, as we did in Section~\ref{tables}.
 
 \begin{code}
@@ -5418,12 +5418,12 @@ And here is the \py{step} function that updates the arrays:
         A = self.array
         B = self.array2
         ra, rb, f, k = self.params
-        
+
         cA = correlate2d(A, self.kernel, **self.options)
         cB = correlate2d(B, self.kernel, **self.options)
 
         reaction = A * B**2
-        self.array += ra * cA - reaction + f * (1-A) 
+        self.array += ra * cA - reaction + f * (1-A)
         self.array2 += rb * cB + reaction - (f+k) * B
 \end{code}
 
@@ -5449,7 +5449,7 @@ Now let's look more closely at the update statements:
 
 \begin{code}
         reaction = A * B**2
-        self.array += ra * cA - reaction + f * (1-A) 
+        self.array += ra * cA - reaction + f * (1-A)
         self.array2 += rb * cB + reaction - (f+k) * B
 \end{code}
 
@@ -5634,7 +5634,7 @@ def test_perc(perc):
 
         if perc.bottom_row_wet():
             return True, num_steps
-        
+
         new_num_wet = perc.num_wet()
         if new_num_wet == num_wet:
             return False, num_steps
@@ -5665,7 +5665,7 @@ def estimate_prob_percolating(p=0.5, n=100, iters=100):
         flag, _ = test_perc(perc)
         if flag:
             count += 1
-        
+
     return count / iters
 \end{code}
 
@@ -5676,7 +5676,7 @@ that do.
 
 When \py{p=0.55}, the probability of a percolating cluster is near 0.
 At \py{p=0.60}, it is about 70\%, and at \py{p=0.65} it is near 1.
-This rapid transition indicates that there is a critical value of 
+This rapid transition indicates that there is a critical value of
 \py{p} near 0.6.
 
 We can estimate the critical value more precisely using a random
@@ -5760,13 +5760,13 @@ $i^2$, for purposes of comparison, and the total number of cells.
 def count_cells(rule, n=500):
     ca = Cell1D(rule, n)
     ca.start_single()
-    
+
     res = []
     for i in range(1, n):
         cells = np.sum(ca.array)
         res.append((i, i**2, cells))
         ca.step()
-        
+
     return res
 \end{code}
 
@@ -5935,7 +5935,7 @@ heavy-tailed distributions, which we saw in Chapter~\ref{heavytail}
 and pink noise, which I'll explain in this chapter.
 
 These properties are interesting in part because they appear
-frequently in nature; that is, many natural systems produce 
+frequently in nature; that is, many natural systems produce
 fractal-like geometry, heavy-tailed distributions, and pink noise.
 
 This observation raises a natural question: why do so many natural
@@ -6148,7 +6148,7 @@ And here's the result.
 
 So that's how \py{step} works.
 
-By default, \py{correlate2d} considers the boundary of the array 
+By default, \py{correlate2d} considers the boundary of the array
 to be fixed at zero, so any grains of sand that go over the edge
 disappear.
 
@@ -6207,7 +6207,7 @@ pile after dropping 200 grains onto random cells, each time running
 until the pile reaches equilibrium.  The symmetry of the initial
 configuration has been broken; the configuration looks random.
 
-Finally Figure~\ref{chap08-1} (right) shows the configuration 
+Finally Figure~\ref{chap08-1} (right) shows the configuration
 after 400 drops.  It looks similar to the configuration after 200
 drops.  In fact, the pile is now in a steady state where its statistical
 properties don't change over time.  I'll explain some of those
@@ -6331,7 +6331,7 @@ levels 0, 1, 2, and 3, and plot them separately:
 def draw_four(viewer, vals=range(4)):
     thinkplot.preplot(rows=2, cols=2)
     a = viewer.viewee.array
-    
+
     for i, val in enumerate(vals):
         thinkplot.subplot(i+1)
         viewer.draw_array(a==vals[i], vmax=1)
@@ -6365,7 +6365,7 @@ Here's my implementation:
 def count_cells(a):
     n, m = a.shape
     end = min(n, m)
-    
+
     res = []
     for i in range(1, end, 2):
         top = (n-i) // 2
@@ -6373,7 +6373,7 @@ def count_cells(a):
         box = a[top:top+i, left:left+i]
         total = np.sum(box)
         res.append((i, i**2, total))
-        
+
     return np.transpose(res)
 \end{code}
 
@@ -6458,7 +6458,7 @@ see if the estimated dimensions are consistent.
 The title of the original paper that presented the sand pile model
 is ``Self-Organized Criticality: An Explanation of $1/f$ Noise''.
 As the subtitle suggests, Bak, Tang and Wiesenfeld were trying to
-explain why many natural and engineered systems exhibit $1/f$ 
+explain why many natural and engineered systems exhibit $1/f$
 noise, which is also known as ``flicker noise'' and ``pink noise''.
 
 To understand pink noise, we have to take a detour to understand
@@ -6482,7 +6482,7 @@ signals, spectral analysis, and noise.
 
 \item[Noise:] In common use, ``noise'' is usually an unwanted sound,
   but in the context of signal processing, it is a signal that
-  contains many frequency components.  
+  contains many frequency components.
 
 \end{description}
 
@@ -6580,7 +6580,7 @@ This result confirms that the sand pile model generates pink noise.
 
 \section{Reductionism and Holism}
 \label{model2}
- 
+
 The original paper by Bak, Tang and Wiesenfeld is one of
 the most frequently-cited papers in the last few decades.
 Other systems have been shown to be self-organized critical,
@@ -6786,7 +6786,7 @@ about working with this code, see Section~\ref{code}.
 
 \begin{exercise}
 
-Launch \py{chap08.ipynb} and run the code.  
+Launch \py{chap08.ipynb} and run the code.
 There are a few short
 exercises embedded in the notebook that you might want to try.
 
@@ -6920,7 +6920,7 @@ interact with each other locally.  They usually have imperfect,
 local information.
 
 Often there are differences among agents, unlike previous models where
-all components are identical.  And agent-based models often include 
+all components are identical.  And agent-based models often include
 randomness, either among the agents or in the world.
 
 Since the 1970s, agent-based modeling has become an important tool in
@@ -7002,7 +7002,7 @@ inherits from \py{Cell2D}:
 
 \begin{code}
 class Schelling(Cell2D):
-    
+
     def __init__(self, n, m=None, p=0.5):
         self.p = p
         m = n if m is None else m
@@ -7029,7 +7029,7 @@ First, I'll make logical arrays indicating which cells are
 red, blue, and occupied:
 
 \begin{code}
-        a = self.array        
+        a = self.array
         red = a==1
         blue = a==2
         occupied = a!=0
@@ -7405,14 +7405,14 @@ And here's the \py{Sugarscape} class and its \py{step} method
 class Sugarscape(Cell2D):
 
     def step(self):
-        
+
         # loop through the agents in random order
         random_order = np.random.permutation(self.agents)
         for agent in random_order:
-            
+
             # mark the current cell unoccupied
             self.occupied.remove(agent.loc)
-            
+
             # execute one step
             agent.step(self)
 
@@ -7527,7 +7527,7 @@ property, but it is a weak example because we could
 reasonably predict it based on the distributions of vision, metabolism,
 and lifespan.  The wave behavior we saw in the last example might
 be a stronger example, since the wave displays a capability -- diagonal
-movement -- that the agents clearly do not have. 
+movement -- that the agents clearly do not have.
 
 Emergent properties are surprising: it is hard to predict the behavior
 of the system even if we know all the rules.  That difficulty is not
@@ -7679,7 +7679,7 @@ Here's the class that represents the ``highway'':
 
 \begin{code}
 class Highway:
-    
+
     def __init__(self, n=10, length=1000, eps=0):
         self.length = length
         self.eps = eps
@@ -7687,7 +7687,7 @@ class Highway:
         # create the drivers
         locs = np.linspace(0, length, n, endpoint=False)
         self.drivers = [Driver(loc) for loc in locs]
-        
+
         # and link them up
         for i in range(n):
             j = (i+1) % n
@@ -7728,18 +7728,18 @@ And here's the \py{move} method:
         acc = min(acc, self.max_acc)
         acc = max(acc, self.min_acc)
         speed = driver.speed + acc
-            
+
         # add random noise to speed
         speed *= np.random.uniform(1-self.eps, 1+self.eps)
-        
+
         # keep it nonnegative and under the speed limit
         speed = max(speed, 0)
         speed = min(speed, self.speed_limit)
-        
+
         # if current speed would collide, stop
         if speed > d:
             speed = 0
-            
+
         # update speed and loc
         driver.speed = speed
         driver.loc += speed
@@ -7779,11 +7779,11 @@ Here's the definition for the \py{Driver} class:
 
 \begin{code}
 class Driver:
-    
+
     def __init__(self, loc, speed=0):
         self.loc = loc
         self.speed = speed
-        
+
     def choose_acceleration(self, d):
         return 1
 \end{code}
@@ -7807,12 +7807,12 @@ exceeds the space between them.  At that point, at least one
 
 Figure~\ref{chap10-1} shows a few steps in this process, starting with
 30 cars and \py{eps=0.02}.  On the left is the configuration after
-16 time steps, with the cars arranged in a circle.  
+16 time steps, with the cars arranged in a circle.
 Because of random noise, some cars are going faster
 than others, and the spacing has become uneven.
 
 During the next time step (center) two cars collide, indicated
-by the \py{x} marks.  
+by the \py{x} marks.
 
 During the next time step (right) two cars collide with the stopped
 cars, and we can see the initial formation of a traffic jam.  Once
@@ -8128,7 +8128,7 @@ NOTE: THIS CHAPTER IS NOT DONE!
 
 \label{prisoners}
 
-% NOTE:  Use this: https://github.com/Axelrod-Python/Axelrod 
+% NOTE:  Use this: https://github.com/Axelrod-Python/Axelrod
 
 The Prisoner's Dilemma is a topic of study in game theory, but
 it's not the fun kind of game.  Instead, it is the kind of game
@@ -8201,7 +8201,7 @@ and kept score.
 
 I won't tell you the outcome, and if you don't know you should resist
 the temptation to look it up.  Instead, I encourage you to run your
-own tournament.  
+own tournament.
 
 
 \section{Game Theory}
@@ -8965,7 +8965,7 @@ in \py{resize}.
 
 \begin{exercise}
 
-A drawbacks of hashtables is that the elements have to be hashable,
+A drawback of hashtables is that the elements have to be hashable,
 which usually means they have to be immutable.  That's why, in Python,
 you can use tuples but not lists as keys in a dictionary.  An
 alternative is to use a tree-based map.
@@ -9347,13 +9347,13 @@ Values from a Pareto distribution often have these properties:
 \begin{description}
 
 \item[Long tail:] Pareto distributions contain many small values and a
-  few very large ones.  
+  few very large ones.
   \index{long tail}
 
 \item[80/20 rule:] The large values in a Pareto distribution are so
   large that they make up a disproportionate share of the total.  In
   the context of wealth, the 80/20 rule says that 20\% of the people
-  own 80\% of the wealth.  
+  own 80\% of the wealth.
   \index{80/20 rule}
 
 \item[Scale free:] Short-tailed distributions are centered around a
@@ -9524,4 +9524,3 @@ Implement percolation on a network.
 \begin{exercise}
 Check whether the clusters in Schelling's model are connected.
 \end{exercise}
-
