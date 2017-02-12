@@ -3343,7 +3343,7 @@ Each time through the loop, we add edges from the source to
 each node in \py{targets}.  Then we update \py{repeated_nodes} by
 adding each target once and the new node \py{k} times.
 
-Finally, we choose a subject of the nodes to be targets for the
+Finally, we choose a subset of the nodes to be targets for the
 next iteration.  Here's the definition of \py{_random_subset}:
 
 \begin{code}
@@ -3392,7 +3392,7 @@ def cumulative_prob(pmf, x):
 \end{code}
 
 For example, given the degree distribution in the dataset,
-\py{pmf_pf}, we can compute the fraction of users with 25 or fewer
+\py{pmf_fb}, we can compute the fraction of users with 25 or fewer
 friends:
 
 \begin{code}
