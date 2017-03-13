@@ -1,1 +1,0 @@
-/home/downey/thinkstats/trunk/workspace/Cdf.py
