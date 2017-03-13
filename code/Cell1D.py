@@ -103,7 +103,7 @@ class Cell1DViewer:
     """Draws a CA object using matplotlib."""
 
     cmap = plt.get_cmap('Blues')
-    options = dict(alpha=0.7, interpolation='none')
+    options = dict(alpha=0.7, interpolation='nearest')
 
     def __init__(self, ca):
         self.ca = ca

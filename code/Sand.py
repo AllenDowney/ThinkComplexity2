@@ -74,7 +74,7 @@ class SandPile(Cell2D):
 
 class SandPileViewer(Cell2DViewer):
     cmap = plt.get_cmap('YlOrRd')
-    options = dict(interpolation='none', alpha=0.8,
+    options = dict(interpolation='nearest', alpha=0.8,
                    vmin=0, vmax=5)
     
     def __init__(self, viewee, drop_flag=True):

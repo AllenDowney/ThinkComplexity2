@@ -7,8 +7,8 @@ Copyright 2011 Allen B. Downey.
 Distributed under the GNU General Public License at gnu.org/licenses/gpl.html.
 """
 
-import numpy
-
+import numpy as np
+import matplotlib.pyplot as plt
 
 class UnimplementedMethodException(Exception):
     """Used to indicate that a child class has not implemented an
@@ -55,35 +55,29 @@ class Drawer(object):
 
 class PyplotDrawer(Drawer):
     """Implementation of Drawer using matplotlib."""
-
-    def __init__(self):
-        # we only need to import pyplot if a PyplotDrawer
-        # gets instantiated
-        global pyplot
-        import matplotlib.pyplot as pyplot
-
+        
     def draw(self, ca, start=0, end=None):
         """Draws the CA using pyplot.pcolor."""
-        pyplot.gray()
+        plt.gray()
         a = ca.get_array(start, end)
         rows, cols = a.shape
 
         # flipud puts the first row at the top; 
         # negating it makes the non-zero cells black.
-        pyplot.pcolor(-numpy.flipud(a))
-        pyplot.axis([0, cols, 0, rows])
+        plt.pcolor(-np.flipud(a))
+        plt.axis([0, cols, 0, rows])
 
         # empty lists draw no ticks
-        pyplot.xticks([])
-        pyplot.yticks([])
+        plt.xticks([])
+        plt.yticks([])
 
     def show(self):
         """display the pseudocolor representation of the CA"""
-        pyplot.show()
+        plt.show()
 
     def save(self, filename='ca.png'):
         """save the pseudocolor representation of the CA in (filename)."""
-        pyplot.savefig(filename)
+        plt.savefig(filename)
     
 
 class PILDrawer(Drawer):
@@ -113,7 +107,7 @@ class PILDrawer(Drawer):
 
         self.image = Image.new(mode='1', size=size, color='white')
         self.drawable = ImageDraw.Draw(self.image)
-        self.draw_array(numpy.flipud(a))
+        self.draw_array(np.flipud(a))
 
     def draw_cell(self, i, j):
         size = self.csize

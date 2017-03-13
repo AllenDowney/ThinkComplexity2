@@ -52,7 +52,6 @@ def main(script, *args):
     Uses the entities in this file:
     http://www.radicaleye.com/lifepage/patterns/puftrain.lif
     """
-
     lwss = [
         '0001',
         '00001',
@@ -71,6 +70,7 @@ def main(script, *args):
     n = 400
     m = 600
     life = Life(n, m)
+
     col = 120
     life.add_cells(n//2+12, col, *lwss)
     life.add_cells(n//2+26, col, *lwss)

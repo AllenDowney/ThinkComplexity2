@@ -59,7 +59,7 @@ add_cells(x, n//2-1, *bhep)
 # draw the initial state
 fig = plt.figure()
 cmap = plt.get_cmap('Greens')
-im = plt.imshow(a, cmap=cmap, interpolation='none')
+im = plt.imshow(a, cmap=cmap, interpolation='nearest')
 plt.xticks([])
 plt.yticks([])
 
