@@ -54,13 +54,23 @@ When you start your server, you might get a different URL.
 Whatever it is, if you paste it into a browser, you should should see a home page with a list of the
 notebooks in the repository.
 
-Click on `chap01.ipynb`.  It should open the notebook for Chapter 1.
+Click on `chap06.ipynb`.  It should open the notebook for Chapter 6.
 
 Select the cell with the import statements and press "Shift-Enter" to run the code in the cell.
 If it works and you get no error messages, **you are all set**.  
 
 If you get error messages about missing packages, you can install the packages you need using your
 package manager, or try Option 1B and install Anaconda.
+
+For the animations in this notebook to work, you might have to install ffmpeg. On Ubuntu and Linux Mint, 
+the following should do it:
+
+```
+    sudo add-apt-repository ppa:mc3man/trusty-media
+    sudo apt-get update
+    sudo apt-get install ffmpeg
+```
+If you have instructions for other operating systems, please let me know and I will add them here.
 
 
 ### Option 1B: If you don't already have Jupyter.
