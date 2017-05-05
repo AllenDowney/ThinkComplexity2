@@ -780,8 +780,13 @@ these criteria.
 
 I have described classical models as based on physical laws, expressed
 in the form of equations, and solved by mathematical analysis;
-conversely, models of complexity systems are often based on simple
+conversely, models used in complexity science are often based on simple
 rules and implemented as computations.
+
+As a note, I will use ``complexity models'' as shorthand for models
+used in complexity science, as constrasted with classical models.
+It is an awkward term, and not widely used, but it's the best of
+the alternatives I considered.
 
 \index{criteria for models}
 
@@ -795,7 +800,7 @@ We can think of this trend as a shift over time along two axes:
 
 \end{description}
 
-The new kind of science is different in several other
+Complexity science is different in several other
 ways.  I present them here so you know what's coming, but some of them
 might not make sense until you have seen the examples later in the
 book.
@@ -803,9 +808,9 @@ book.
 \begin{description}
 
 \item[Continuous $\rightarrow$ discrete] Classical models tend to be
-  based on continuous mathematics, like calculus; models of complex
-  systems are often based on discrete mathematics, including graphs and
-  cellular automatons.
+  based on continuous mathematics, like calculus; complexity models are
+  often based on discrete mathematics, including graphs and cellular
+  automatons.
 
 \index{continuous}
 \index{discrete}
@@ -814,14 +819,14 @@ book.
   linear, or use linear approximations to non-linear systems;
   complexity science is more friendly to non-linear models.  One example
   is chaos theory\footnote{Chaos is not covered in this book, but you can
-  read about it at \url{http://en.wikipedia.org/wiki/Chaos}.}.
+  read about it at \url{http://en.wikipedia.org/wiki/Chaos_theory}.}.
 
 \index{linear}
 \index{non-linear}
 
 \item[Deterministic $\rightarrow$ stochastic] Classical models are
   usually deterministic, which may reflect underlying philosophical
-  determinism, discussed in Chapter~\ref{automatons}; complex models
+  determinism, discussed in Chapter~\ref{automatons}; complexity models
   often feature randomness.
 
 \index{deterministic}
@@ -845,7 +850,7 @@ book.
 \index{one, two, many}
 
 \item[Homogeneous $\rightarrow$ composite] In classical models, the
-  elements tend to be interchangeable; complex models more often
+  elements tend to be interchangeable; complexity models more often
   include heterogeneity.
 
 \index{homogeneous}
@@ -889,10 +894,10 @@ bounded rationality are hot topics.
 
 \section{A new kind of model}
 
-Complex models are often appropriate for different purposes and
+Complexity models are often appropriate for different purposes and
 interpretations:
 
-\index{complex model}
+\index{complexity model}
 
 \begin{description}
 
@@ -1241,7 +1246,7 @@ G = nx.DiGraph()
 
 It is conventional to import NetworkX as \py{nx}.  At this
 point, \py{G} is a \py{DiGraph} object that contains no nodes
-and no edges.  We can add nodes using the \py{add_node}method:
+and no edges.  We can add nodes using the \py{add_node} method:
 
 \begin{code}
 G.add_node('Alice')
@@ -1274,7 +1279,7 @@ And we can use \py{edges} to get the list of edges:
 \end{code}
 
 NetworkX provides several functions for drawing graphs;
-\py{draw_circular}arranges the nodes in a circle and connects them
+\py{draw_circular} arranges the nodes in a circle and connects them
 with edges:
 
 \begin{code}
@@ -1285,7 +1290,7 @@ nx.draw_circular(G,
 \end{code}
 
 And that's the code I use to generate Figure~\ref{chap02-1}.
-The option \py{with_labels}causes the nodes to be labeled;
+The option \py{with_labels} causes the nodes to be labeled;
 in the next example we'll see how to label the edges.
 
 To generate Figure~\ref{chap02-2}, I start with a dictionary
@@ -1305,7 +1310,7 @@ Since this is an undirected graph, I instantiate \py{nx.Graph}:
 G = nx.Graph()
 \end{code}
 
-Then I can use \py{add_nodes_from}to iterate the keys of
+Then I can use \py{add_nodes_from} to iterate the keys of
 \py{pos} and add them as nodes:
 
 \begin{code}
@@ -1723,11 +1728,11 @@ These experiments are consistent with the results \Erdos~and
 \section{Analysis of graph algorithms}
 \label{graphanalysis}
 
-I think chapter I presented an algorithm for checking whether
-a graph is connected; in the next few chapters, we will see
-a few more graph algorithms.  And we will want to analyze the
-performance of those algorithms, figuring out how their run times
-grow as the size of the graphs increases.
+In Section~\ref{connected} I presented an algorithm for checking
+whether a graph is connected; in the next few chapters, we will see a
+few more graph algorithms.  And we will want to analyze the
+performance of those algorithms, figuring out how their run times grow
+as the size of the graphs increases.
 
 If you are not already familiar with analysis of algorithms,
 you should read Appendix~\ref{alganalysis} before you continue.
@@ -1915,7 +1920,7 @@ likely to know the target person.
 \index{Sharon, Massachusetts}
 
 Many of the letters were never delivered, but for the ones that
-were the average path length---the number of
+were, the average path length---the number of
 times the letters were forwarded---was about six.  This result
 was taken to confirm previous observations (and speculations) that
 the typical distance between any two people in a social network
@@ -2200,10 +2205,10 @@ def node_clustering(G, u):
 \end{code}
 
 Again I use \py{G[u]}, which returns a dictionary
-with the neighbors of \py{node} as keys.  If a node has fewer than 2
-neighbors, the clustering coefficient is undefined, but for simplicity
-\py{node_clustering} returns 0.
+with the neighbors of \py{node} as keys.
 
+If a node has fewer than 2 neighbors, the clustering coefficient is
+undefined, but for simplicity \py{node_clustering} returns 0.
 Otherwise we compute the number of possible edges among the neighbors,
 \py{total}, and then count the number of those edges that actually
 exist.  The result is the fraction of all edges that exist.
@@ -2216,7 +2221,7 @@ We can test the function like this:
 0.5
 \end{code}
 
-In a ring lattice with $k=4$, the clusting coefficient for each node
+In a ring lattice with $k=4$, the clustering coefficient for each node
 is 0.5 (if you are not convinced, take another look at
 Figure~\ref{chap03-1}).
 
@@ -2356,7 +2361,7 @@ for p, t in sorted(res.items()):
 \end{code}
 
 Each time through the loop, we get a value of $p$ and a list of
-\py{(mpl, cc)} pairs.  We use \py{zip} to extracts two lists, \py{mpls} and
+\py{(mpl, cc)} pairs.  We use \py{zip} to extract two lists, \py{mpls} and
 \py{ccs}, then compute their means and append them to \py{L} and \py{C}, which
 are lists of path lengths and clustering coefficients.
 
@@ -2437,7 +2442,7 @@ more like an example.
 Many of the models in this book are like the Watts and Strogatz model:
 abstract, simulation-based and (at least superficially) less formal
 than conventional mathematical models.  One of the goals of this book
-it to consider the questions these models raise:
+is to consider the questions these models raise:
 
 \index{simulation-based model}
 
@@ -2812,7 +2817,7 @@ use?
 
 \newcommand{\Barabasi}{Barab\'{a}si}
 
-In this chapter, we'll data from an online social network, and use a
+In this chapter, we'll work with data from an online social network, and use a
 Watts-Strogatz graph to model it.  The WS model has characteristics of
 a small world network, like the data, but it has low
 variability in the number of neighbors from node to node,
@@ -2844,7 +2849,7 @@ high connectivity and low path lengths characteristic of small world
 graphs.
 
 In this section we'll perform the same analysis with a different
-dataset, a set Facebook users and their friends.  If you are not
+dataset, a set of Facebook users and their friends.  If you are not
 familiar with Facebook, users who are connected to each other are
 called ``friends'', regardless of the nature of their relationship in
 the real world.
@@ -3214,7 +3219,7 @@ the growth patterns of some real-world networks.
 \end{description}
 
 Finally, they show that graphs generated by the \Barabasi-Albert (BA)
-model model have a distribution of degrees that obeys a power law.
+model have a distribution of degrees that obeys a power law.
 
 Graphs with this property are sometimes called {\bf scale-free networks},
 for reasons I won't explain; if you are curious, you can read more
@@ -3328,11 +3333,11 @@ initialize two variables:
 
 \begin{description}
 
-\item[\py{targets}:] The list of \py{k} nodes that will be connected
+\item[targets:] The list of \py{k} nodes that will be connected
 to the next node.  Initially \py{targets} contains the original
 \py{k} nodes; later it will contain a random subset of nodes.
 
-\item[\py{repeated_nodes}:] A list of existing nodes where each
+\item[repeated\_nodes:] A list of existing nodes where each
 node appears once for every edge it is connected to.  When we
 select from \py{repeated_nodes}, the probability of selecting any
 node is proportional to the number of edges it has.
@@ -3424,7 +3429,7 @@ cumulative distribution functions.
 thinkplot.Cdf(cdf_fb)
 \end{code}
 
-Figure~\ref{chap04-04} shows the degree CDF for the Facebook dataset
+Figure~\ref{chap04-4} shows the degree CDF for the Facebook dataset
 along with the WS model (left) and the BA model (right).  The x-axis
 is on a log scale.
 
@@ -3483,18 +3488,21 @@ The WS model does not.
 We started the discussion of networks with Milgram's Small World
 Experiment, which shows that path lengths in social
 networks are surprisingly small; hence, ``six degrees of separation''.
+
 \index{six degrees}
+\index{explanatory model}
 
 When we see something surprising, it is natural to ask ``Why?''  but
 sometimes it's not clear what kind of answer we are looking for.  One
 kind of answer is an {\bf explanatory model} (see
 Figure~\ref{fig.model}).  The logical structure of an explanatory
-model is: \index{explanatory model}
+model is: 
 
 \begin{enumerate}
 
 \item In a system, S, we see something observable, O, that warrants
   explanation.
+
 \index{system}
 \index{observable}
 
@@ -3618,12 +3626,15 @@ def read_actor_network(filename, n=None):
 \end{code}
 
 Compute the number of actors in the graph and the average degree.
+Check whether this graph has the small world properties, high
+clustering and low path length.  
+
 Plot the PMF of degree on a log-log scale.  Also plot the CDF of
 degree on a log-x scale, to see the general shape of the distribution,
 and on a log-log scale, to see whether the tail follows a power law.
 
 Note: The actor network is not connected, so you might want to use
-\py{nx.connected_component_subgraphs} to find connected subsets of the
+\py{nx.connected_components} to find connected subsets of the
 nodes.
 
 \end{exercise}
@@ -3770,7 +3781,7 @@ time step; it starts with one cell ``on'' and the rest ``off''.
 The second row shows the state of the system during the
 next time step, and so on.
 
-The triangular shape in the figure is typical of these CAs; is it a
+The triangular shape in the figure is typical of these CAs; it is a
 consequence of the shape of the neighborhood.  In one time step, each
 cell influences the state of one neighbor in either direction.  During
 the next time step, that influence can propagate one more cell in each
@@ -3816,7 +3827,7 @@ Figure~\ref{chap05-3} shows what it looks like after 64 steps.
  
 \newcommand{\Sierpinski}{Sierpi\'{n}ski}
 
-This pattern resembles the \Sierpinski triangle, which
+This pattern resembles the \Sierpinski~triangle, which
 you can read about at \url{http://en.wikipedia.org/wiki/Sierpinski_triangle}.
 \index{Sierpi\'{n}ski triangle}
 
@@ -3878,7 +3889,7 @@ truly random because:
 \end{itemize}
 
 Modern PRNGs produce sequences that are statistically
-indistinguishable from random, and they can be implemented with with
+indistinguishable from random, and they can be implemented with
 periods so long that the universe will collapse before they repeat.
 The existence of these generators raises the question of whether there
 is any real difference between a good quality pseudo-random sequence
@@ -4332,7 +4343,7 @@ print(ca)
 \begin{code}
 import matplotlib.pyplot as plt
 
-def plot_ca(ca, rows, cols):
+def plot_ca(array):
     cmap = plt.get_cmap('Blues')
     plt.imshow(array, interpolation='none', cmap=cmap)
 \end{code}
@@ -4816,7 +4827,7 @@ state where the number of live cells is nearly constant
 \label{chap06-4}
 \end{figure}
 
-But there are a some simple starting conditions that take a
+But there are some simple starting conditions that take a
 long time to settle down and yield a surprising
 number of live cells.  These patterns are called ``Methuselahs''
 because they are so long-lived.
@@ -5364,7 +5375,7 @@ in concentration to the rate of flow:
 \label{chap07-1}
 \end{figure}
 
-Figure~\ref{chap07-1} show results for a CA with \py{n=9}, \py{r=0.1}
+Figure~\ref{chap07-1} shows results for a CA with \py{n=9}, \py{r=0.1}
 and initial concentration 0 everywhere except for an ``island'' in the
 middle.  The figure shows the starting configuration and the state of
 the CA after 5 and 10 steps.  The chemical spreads from the center
@@ -5431,16 +5442,16 @@ The parameters are
 
 \begin{description}
 
-\item[\py{ra}:] The diffusion rate of \py{A} (analogous to \py{r} in the
+\item[ra:] The diffusion rate of \py{A} (analogous to \py{r} in the
 previous section).
 
-\item[\py{rb}:] The diffusion rate of \py{B}.  In most versions of
+\item[rb:] The diffusion rate of \py{B}.  In most versions of
 this model, \py{rb} is about half of \py{ra}.
 
-\item[\py{f}:] The ``feed'' rate, which controls how quickly \py{A} is
+\item[f:] The ``feed'' rate, which controls how quickly \py{A} is
 added to the system.
 
-\item[\py{k}:] The ``kill'' rate, which controls how quickly \py{B} is
+\item[k:] The ``kill'' rate, which controls how quickly \py{B} is
 removed from the system.
 
 \end{description}
@@ -5515,7 +5526,7 @@ Figure~\ref{chap07-4} shows results with \py{f=0.039} and
 divide in a process that resembles mitosis, ending with a stable pattern
 of equally-spaced spots.
 
-Since 1952, observations and experiments have provides some support
+Since 1952, observations and experiments provide some support
 for Turing's conjecture.  At this point it seems likely, but not yet
 proven, that many animal patterns are actually formed by
 reaction-diffusion processes of some kind.
@@ -5814,7 +5825,7 @@ it is a fractal.
 \label{chap07-6}
 \end{figure}
 
-Now let's get back to percolation models.  Figure~\ref{chap-7-6} shows
+Now let's get back to percolation models.  Figure~\ref{chap07-6} shows
 clusters of wet cells in percolation simulations with \py{p=0.6} and
 \py{n=100}, \py{200}, and \py{300}.  Informally, they resemble fractal
 patterns seen in nature and in mathematical models.
@@ -6021,7 +6032,7 @@ excess spills over the edge.
 
 \index{2-D cellular automaton} \index{state}
 
-Bak, Tang and Wiesenfeld initialize all cells a level
+Bak, Tang and Wiesenfeld initialize all cells to a
 level greater than \py{K} and run the model until it stabilizes.
 Then they observe the effect of small perturbations; they choose a
 cell at random, increment its value by 1, and run the model,
@@ -6034,7 +6045,7 @@ the pile takes to stabilize, and \py{S}, the total number of cells
 that topple\footnote{The original paper uses a different definition
 of \py{S}, but most later work uses this definition.}.
 
-Most of the time, dropping an single grain causes no cells to topple,
+Most of the time, dropping a single grain causes no cells to topple,
 so \py{T=1} and \py{S=0}.  But occasionally a single grain can cause an
 {\bf avalanche} that affects a substantial fraction of the grid.  The
 distributions of \py{T} and \py{S} turn out to be heavy-tailed, which
@@ -6443,10 +6454,10 @@ And the estimated fractal dimensions are:
 The fractal dimension for values 0, 1, and 2 seems to be clearly
 non-integer, which indicates that the image is fractal.
 
-Strictly, the fractal dimension for value 3 is indistinguishable from
-2, but given the results for the other values, the apparent curvature
-of the line, and the appearance of the pattern, it seems likely that
-it is also fractal.
+The fractal dimension for value 3 is so close to 2 that it might not
+be fractal at all, but given the results for the other values, the
+apparent curvature of the line, and the appearance of the pattern, it
+seems likely that it is also fractal.
 
 One of the exercises at the end of this chapter asks you to run
 this analysis again with different values of \py{n} and \py{level} to
@@ -7393,7 +7404,7 @@ tuple of coordinates, and the range of the agent's vision, which is
 an integer.  It returns the agent's new location, which is the
 visible cell with the most sugar.
 
-\item py{harvest} takes the (new) location of the agent, and removes and
+\item \py{harvest} takes the (new) location of the agent, and removes and
 returns the sugar at that location.
 
 \end{itemize}
@@ -7662,6 +7673,9 @@ about working with this code, see Section~\ref{code}.
 
 \section{Traffic jams}
 
+% Video about traffic and a possible driving strategy
+% https://www.youtube.com/watch?v=iHzzSao6ypE
+
 What causes traffic jams?  In some cases there is an obvious cause,
 like an accident, a speed trap, or something else that disturbs
 the flow of traffic.  But other times traffic jams appear for no
@@ -7899,18 +7913,17 @@ vision and range.
 
 \index{local information}
 
-The \py{Visual} package, also known as VPython, is well-suited
-for implementing boids.  It provides simple 3-D graphics as
-well as vector objects and operations that are useful for the
-computations.
+%The \py{Visual} package, also known as VPython, is well-suited
+%for implementing boids.  It provides simple 3-D graphics as
+%well as vector objects and operations that are useful for the
+%computations.
 
-\index{Visual package}
-\index{VPython}
+%\index{Visual package}
+%\index{VPython}
 
-You can download my implementation from
-\url{thinkcomplex.com/Boids.py}.  It is based in part
-on the description of boids in Flake, {\em The Computational
-Beauty of Nature}.
+You can download my implementation of Boids from [stand by for more
+  information].  It is based in part on the description of boids in
+Flake, {\em The Computational Beauty of Nature}.
 
 The program defines two classes: \py{Boid}, which implements the boid
 algorithm, and \py{World}, which contains a list of Boids and a
@@ -8073,6 +8086,11 @@ forward, a person can have free will even though neurons don't.
 \section{Exercises}
 
 \begin{exercise}
+\url{http://www.mirekw.com/ca/rullex_spec.html}
+\end{exercise}
+
+
+\begin{exercise}
 
 In the traffic jam simulation, define a class, \py{BetterDriver},
 that inherits from \py{Driver} and overrides \py{choose_acceleration}.
@@ -8084,6 +8102,8 @@ average speed, or a lower number of collisions.
 % choose_acceleration
 
 \end{exercise}
+
+
 
 
 
