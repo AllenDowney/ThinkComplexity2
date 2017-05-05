@@ -99,7 +99,7 @@ You can run my notebook in a virtual machine on Binder. To launch the VM, press 
 
 You should see a home page with a list of the notebooks in the repository.
 
-If you want to try the exercises, open 'chap01.ipynb`. If you just want to see the answers, open `chap01soln.ipynb`.
+If you want to try the exercises, open `chap01.ipynb`. If you just want to see the answers, open `chap01soln.ipynb`.
 Either way, you should be able to run the notebooks in your browser and try out the examples.  
 
 However, be aware that the virtual machine you are running is temporary.
