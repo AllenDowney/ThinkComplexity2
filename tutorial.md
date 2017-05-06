@@ -31,6 +31,8 @@ $ cd code/
 $ jupyter notebook
 ```
 
+This will create a `conda` environment in which all of the dependencies (Jupyter, `numpy`, `matplotlib`, `scipy`, `networkx`, and `ffmpeg`) are installed in the environment.
+
 <!-- Contribution end. -->
 
 ### Option 1A: If you already have Jupyter installed.
