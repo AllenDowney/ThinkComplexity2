@@ -8,4 +8,5 @@ dependencies:
 - matplotlib
 - networkx
 - numpy
-
+- jupyter
+- ipykernel
