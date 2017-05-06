@@ -31,9 +31,13 @@ a_copy = 2
 
 # weights for various rules
 w_avoid = 4
+#w_avoid = 10
 w_center = 3
+#w_center = 10
 w_copy = 2
-w_love = 10
+#w_copy = 10
+#w_love = 10
+w_love = 3
 
 # time step
 dt = 0.1
