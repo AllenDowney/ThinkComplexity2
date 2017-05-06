@@ -10,3 +10,6 @@ dependencies:
 - numpy
 - jupyter
 - ipykernel
+- scipy
+- pandas
+- ffmpeg
