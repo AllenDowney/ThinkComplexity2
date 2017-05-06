@@ -1,0 +1,15 @@
+name: complexity
+channels:
+- defaults
+- conda-forge
+- ericmjl
+dependencies:
+- python=2.7
+- matplotlib
+- networkx
+- numpy
+- jupyter
+- ipykernel
+- scipy
+- pandas
+- ffmpeg

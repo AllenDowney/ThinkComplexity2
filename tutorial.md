@@ -21,6 +21,18 @@ the wireless network will fail and no one will be able to do the hands-on part o
 
 So, I strongly encourage you to try Option 1 and only resort to Option 2 if you can't get Option 1 working.
 
+<!-- Allen, please feel free to move my following paragraph somewhere else. Contribution begin: -->
+If you have the Anaconda distribution of Python setup, please run the following in your terminal:
+
+```bash
+$ conda env create -f environment.yml
+$ source activate complexity
+$ cd code/
+$ jupyter notebook
+```
+
+<!-- Contribution end. -->
+
 ### Option 1A: If you already have Jupyter installed.
 
 To do the exercises, you need Python 2 or 3 with NumPy, SciPy, and matplotlib.
