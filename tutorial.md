@@ -10,30 +10,20 @@ on material from a class we teach at Olin College.
 
 ### Installation instructions
 
-To prepare for this tutorial, you have two options:
+To prepare for this tutorial, you have three options:
 
 1. Install Jupyter on your laptop and download my code from Git.
 
 2. Run the Jupyter notebook on a virtual machine on Binder.
+
+3. If you have a Mac, you could try out a new system called Launchbot, which uses Docker.
 
 I'll provide instructions for both, but here's the catch: if everyone chooses Option 2,
 the wireless network will fail and no one will be able to do the hands-on part of the workshop.
 
 So, I strongly encourage you to try Option 1 and only resort to Option 2 if you can't get Option 1 working.
 
-<!-- Allen, please feel free to move my following paragraph somewhere else. Contribution begin: -->
-If you have the Anaconda distribution of Python setup, please run the following in your terminal:
 
-```bash
-$ conda env create -f environment.yml
-$ source activate complexity
-$ cd code/
-$ jupyter notebook
-```
-
-This will create a `conda` environment in which all of the dependencies (Jupyter, `numpy`, `matplotlib`, `scipy`, `networkx`, and `ffmpeg`) are installed in the environment.
-
-<!-- Contribution end. -->
 
 ### Option 1A: If you already have Jupyter installed.
 
@@ -57,11 +47,13 @@ To start Jupyter, run:
 Jupyter should launch your default browser or open a tab in an existing browser window.
 If not, the Jupyter server should print a URL you can use.  For example, when I launch Jupyter, I get
 
+```
     ~/ThinkComplexity2$ jupyter notebook
     [I 10:03:20.115 NotebookApp] Serving notebooks from local directory: /home/downey/ThinkComplexity2
     [I 10:03:20.115 NotebookApp] 0 active kernels
     [I 10:03:20.115 NotebookApp] The Jupyter Notebook is running at: http://localhost:8888/
     [I 10:03:20.115 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+```
 
 In this case, the URL is [http://localhost:8888](http://localhost:8888).  
 When you start your server, you might get a different URL.
@@ -76,8 +68,22 @@ If it works and you get no error messages, **you are all set**.
 If you get error messages about missing packages, you can install the packages you need using your
 package manager, or try Option 1B and install Anaconda.
 
-For the animations in this notebook to work, you might have to install ffmpeg. On Ubuntu and Linux Mint,
-the following should do it:
+If are using Anaconda, you can use the following commands to create a `conda` environment with the packages you need (Jupyter, NumPy, Matplotlib, SciPy, NetworkX, and ffmpeg):
+
+```bash
+$ conda env create -f environment.yml
+$ source activate complexity
+$ cd code/
+$ jupyter notebook
+```
+
+To get the animations to work, you might have to install `ffmpeg`.  If you are using Anaconda, try
+
+```bash
+conda install -c conda-forge ffmpeg
+```
+
+On Ubuntu and Linux Mint, try:
 
 ```
     sudo add-apt-repository ppa:mc3man/trusty-media
