@@ -31,7 +31,7 @@ def main(script, *args):
     life = Life(n, m)
     life.add_cells(n//2, m//2, *rabbits)
     viewer = LifeViewer(life)
-    anim = viewer.animate(frames=100, interval=0)
+    anim = viewer.animate(frames=100, interval=1)
     plt.subplots_adjust(left=0.01, right=0.99, bottom=0.01, top=0.99)
     plt.show()
 
