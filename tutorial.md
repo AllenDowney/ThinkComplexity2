@@ -1,6 +1,6 @@
 ## Tutorial: Complexity Science
 
-Allen Downey and Jason Woodard
+Allen Downey
 
 This is a half-day tutorial that uses Python to introduce topics from Complexity
 Science, including small world graphs and scale-free networks, cellular automata,
