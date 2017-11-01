@@ -21,7 +21,7 @@
 \newcommand{\thetitle}{Think Complexity}
 \newcommand{\thesubtitle}{Exploring Complexity Science in Python}
 \newcommand{\theauthors}{Allen B. Downey}
-\newcommand{\theversion}{2.0.10}
+\newcommand{\theversion}{2.2.0}
 
 %%%% Both LATEX and PLASTEX
 
@@ -51,6 +51,14 @@
   {}            % custom head
 \theoremstyle{exercise}
 \newtheorem{exercise}{Exercise}[chapter]
+
+\usepackage{afterpage}
+
+\newcommand\blankpage{%
+    \null
+    \thispagestyle{empty}%
+    \addtocounter{page}{-1}%
+    \newpage}
 
 \newif\ifplastex
 \plastexfalse
@@ -123,8 +131,8 @@ Version \theversion
 
 %--verso------------------------------------------------------
 
-\newpage
-\newpage
+\afterpage{\blankpage}
+
 %\clearemptydoublepage
 %\pagebreak
 %\thispagestyle{empty}
@@ -1128,12 +1136,11 @@ chapter again.
 
 The first three chapters of this book are about models that describe
 systems that are made up of components and connections between components.
-For example, in an ecological food web, the components are species
-and the connections represent predator-prey relationships.
+For example, in a social network, the components are people and connections represent friendships, business relationships, etc.  In an ecological food web, the components are species and the connections represent predator-prey relationships.
 
 In this chapter, I introduce NetworkX, a Python package for building
 and studying these models.  We start with the \Erdos-\Renyi~model,
-which has some interesting mathematical properties.  In the next
+which has interesting mathematical properties.  In the next
 chapter we move on to models that are more useful for explaining
 real-world systems.
 
@@ -1150,7 +1157,7 @@ in Section~\ref{code}.
 \label{chap02-1}
 \end{figure}
 
-To most people a graph is a visual representation of a data set, like
+To most people a ``graph" is a visual representation of data, like
 a bar chart or a plot of stock prices over time.  That's not what this
 chapter is about.  \index{graph}
 
@@ -1181,7 +1188,7 @@ the relationships they represent are asymmetric or symmetric.  In a
 road map, you might represent a one-way street with a directed edge
 and a two-way street with an undirected edge.  In some social
 networks, like Facebook, friendship is symmetric: if $A$ is friends
-with $B$ then $B$ is friends with $A$.  But in Twitter, for example,
+with $B$ then $B$ is friends with $A$.  But on Twitter, for example,
 the ``follows'' relationship is not symmetric; if $A$ follows $B$,
 that doesn't imply that $B$ follows $A$.  So you might use undirected
 edges to represent a Facebook network and directed edges for Twitter.
@@ -1203,14 +1210,14 @@ with an edge between each consecutive pair.
 
 Graphs are usually drawn with squares or circles for nodes and lines
 for edges.  For example, the directed graph in Figure~\ref{chap02-1}
-might represent three people who ``follow'' each other on Twitter.
+might represent three people who follow each other on Twitter.
 The thick part of the line indicates edge direction.
 In this example, Alice and Bob follow each other and both follow
 Chuck, but Chuck follows no one.
 \index{representing graphs}
 
 The undirected graph in Figure~\ref{chap02-2} shows four cities
-in the northeast United States; the labels on the edges
+in the north-east United States; the labels on the edges
 indicate driving time in hours.
 In this example the placement of the nodes corresponds
 roughly to the geography of the cities, but in general the layout
@@ -1231,7 +1238,7 @@ which is the most commonly used network library in Python.
 You can read more about it at \url{https://networkx.github.io/},
 but I'll explain it as we go along.
 
-We can create a directed graph by importing NetworkX and instantiating
+We can create a directed graph by importing NetworkX (usually imported as \py{nx}) and instantiating
 \py{nx.DiGraph}:
 
 \begin{code}
@@ -1239,9 +1246,8 @@ import networkx as nx
 G = nx.DiGraph()
 \end{code}
 
-It is conventional to import NetworkX as \py{nx}.  At this
-point, \py{G} is a \py{DiGraph} object that contains no nodes
-and no edges.  We can add nodes using the \py{add_node}method:
+At this point, \py{G} is a \py{DiGraph} object that contains no nodes
+and no edges.  We can add nodes using the \py{add_node} method:
 
 \begin{code}
 G.add_node('Alice')
@@ -1274,7 +1280,7 @@ And we can use \py{edges} to get the list of edges:
 \end{code}
 
 NetworkX provides several functions for drawing graphs;
-\py{draw_circular}arranges the nodes in a circle and connects them
+\py{draw_circular} arranges the nodes in a circle and connects them
 with edges:
 
 \begin{code}
@@ -1285,7 +1291,7 @@ nx.draw_circular(G,
 \end{code}
 
 And that's the code I use to generate Figure~\ref{chap02-1}.
-The option \py{with_labels}causes the nodes to be labeled;
+The option \py{with_labels} causes the nodes to be labeled;
 in the next example we'll see how to label the edges.
 
 To generate Figure~\ref{chap02-2}, I start with a dictionary
@@ -1305,7 +1311,7 @@ Since this is an undirected graph, I instantiate \py{nx.Graph}:
 G = nx.Graph()
 \end{code}
 
-Then I can use \py{add_nodes_from}to iterate the keys of
+Then I can use \py{add_nodes_from} to iterate the keys of
 \py{pos} and add them as nodes:
 
 \begin{code}
@@ -1357,6 +1363,7 @@ And that's how I generated Figure~\ref{chap02-2}.
 
 In both of these examples, the nodes are strings, but in general they
 can be any hashable type.
+\index{hashable}
 
 
 \section{Random graphs}
@@ -1417,7 +1424,7 @@ where every node is connected to every other.
 
 Here's a generator function that takes a list of nodes and enumerates
 all distinct pairs.  If you are not familiar with generator functions,
-you might want to read Appendix~\ref{???} and then come back.
+you can read about them at \url{http://intermediatepythonista.com/python-generators}.
 
 \begin{code}
 def all_pairs(nodes):
@@ -1461,14 +1468,11 @@ we'll develop functions to check whether a graph is connected.
 \label{connected}
 
 A graph is {\bf connected} if there is a path from every node to every
-other node.  
-See \url{http://en.wikipedia.org/wiki/Connectivity_(graph_theory)}.
+other node (see \url{http://en.wikipedia.org/wiki/Connectivity_(graph_theory)}).
 \index{connected graph}
 \index{path}
 
-For many applications involving graphs, it is useful to
-check whether a graph is connected.  Fortunately, there is a
-simple algorithm that does it.
+For many applications involving graphs, it is useful to check whether a graph is connected.  Fortunately, there is a simple algorithm that does it.
 
 You can start at any node and check whether you can reach all
 other nodes.  If you can reach a node, $v$, you can reach any
@@ -1487,7 +1491,7 @@ example, in the complete graph we generated in the previous section:
 Suppose we start at node $s$.  We can mark $s$ as ``seen'',
 then we can mark its neighbors.
 Then we mark the neighbor's neighbors, and so
-on, until you can't reach any more nodes.  If all nodes are
+on, until we can't reach any more nodes.  If all nodes are
 seen, the graph is connected.
 
 Here's what that looks like in Python:
@@ -1616,8 +1620,7 @@ def flip(p):
     return random() < p
 \end{code}
 
-Finally, \py{make_random_graph} generates and returns the 
-ER graph $G(n, p)$.
+Finally, \py{make_random_graph} generates and returns the ER graph $G(n, p)$.
 
 \begin{code}
 def make_random_graph(n, p):
@@ -1644,7 +1647,7 @@ $p=0.3$ are connected.  In the next section, we'll see how many.
 
 
 
-\section{The probability of connectivity}
+\section{Probability of connectivity}
 
 \begin{figure}
 \centerline{\includegraphics[width=3.5in]{figs/chap02-5.pdf}}
@@ -1675,7 +1678,7 @@ def prob_connected(n, p, iters=100):
 \end{code}
 
 \py{iters} is the number of random graphs we generate.  As we
-increase \py{iters}, the estimated probability gets more precise.
+increase \py{iters}, the estimated probability gets more precise\footnote{Since \py{count} and \py{iters} are integers, this function won't work correctly in Python 2 unless you import \py{division} from \py{__future__}.  See \url{https://www.python.org/dev/peps/pep-0238/}}.
 
 \begin{code}
 >>> prob_connected(10, 0.3, iters=10000)
@@ -1683,9 +1686,7 @@ increase \py{iters}, the estimated probability gets more precise.
 \end{code}
 
 Out of 10000 ER graphs with these parameters, 6498 are connected, so
-we estimate that 65\% of them are connected.  So $0.3$ is near the
-critical value where the probability of connectivity goes from near 0
-to near 1.  According to \Erdos~and \Renyi, $p^* = \ln n / n = 0.23$.
+we estimate that 65\% of them are connected.  I chose $0.3$ because it is close to the critical value where the probability of connectivity goes from near 0 to near 1.  According to \Erdos~and \Renyi, $p^* = \ln n / n = 0.23$.
 
 We can get a clearer view of the transition by estimating the probability
 of connectivity for a range of values of $p$:
@@ -1700,7 +1701,7 @@ ys = [prob_connected(n, p) for p in ps]
 
 This is the first example we've seen using NumPy.  Following convention,
 I import NumPy as {\tt np}.  The function \py{logspace} returns an
-array of 11 values from $10^{-2.5}$ to $10^0 = 1$, equally spaced
+{\bf array} of 11 values from $10^{-2.5}$ to $10^0 = 1$, equally spaced
 on a logarithmic scale.
 
 To compute \py{ys}, I use a list comprehension that iterates the
@@ -1709,7 +1710,7 @@ graph with each value of \py{p} is connected.
 
 Figure~\ref{chap02-5} shows the results, with
 a vertical line at $p^*$.  The transition from 0 to 1
-occurs near the predicted critical value.  With $p$ on a log scale,
+occurs near the predicted critical value, 0.23.  With $p$ on a log scale,
 the transition is roughly symmetric.
 
 Figure~\ref{chap02-6} shows
@@ -1723,9 +1724,9 @@ These experiments are consistent with the results \Erdos~and
 \section{Analysis of graph algorithms}
 \label{graphanalysis}
 
-I think chapter I presented an algorithm for checking whether
+In this chapter I presented an algorithm for checking whether
 a graph is connected; in the next few chapters, we will see
-a few more graph algorithms.  And we will want to analyze the
+other graph algorithms.  And we will analyze the
 performance of those algorithms, figuring out how their run times
 grow as the size of the graphs increases.
 
@@ -1785,8 +1786,8 @@ doubled because we consider every edge twice.
 
 Therefore, the order of growth for this function is $O(\V + \E)$,
 which is a convenient way to say that the run time grows in proportion
-to either $\V$ or $\E$, whichever is ``bigger.''  \index{breadth first
-  search} \index{BFS}
+to either $\V$ or $\E$, whichever is bigger.
+\index{breadth first search} \index{BFS}
 
 If we know the relationship between $\V$ and $\E$, we can simplify
 this expression.  For example, in a complete graph the number of edges
@@ -2355,7 +2356,7 @@ for p, t in sorted(res.items()):
     C.append(cc)
 \end{code}
 
-Each time through the loop, we get a value of $p$ and a list of
+Each time through the loop, we get a value of \py{p} and a list of
 \py{(mpl, cc)} pairs.  We use \py{zip} to extracts two lists, \py{mpls} and
 \py{ccs}, then compute their means and append them to \py{L} and \py{C}, which
 are lists of path lengths and clustering coefficients.
@@ -3816,7 +3817,7 @@ Figure~\ref{chap05-3} shows what it looks like after 64 steps.
  
 \newcommand{\Sierpinski}{Sierpi\'{n}ski}
 
-This pattern resembles the \Sierpinski triangle, which
+This pattern resembles the \Sierpinski~triangle, which
 you can read about at \url{http://en.wikipedia.org/wiki/Sierpinski_triangle}.
 \index{Sierpi\'{n}ski triangle}
 
@@ -4230,9 +4231,7 @@ cells, chemical signals, protein interaction networks).
 \index{cone snail}
 \index{abstract model}
 
-For conventional physical models, being realistic is a virtue, at
-least up to a point.  If the elements of a model correspond to the
-elements of a physical system, there is an obvious analogy between the
+For conventional physical models, being realistic is a virtue.  If the elements of a model correspond to the elements of a physical system, there is an obvious analogy between the
 model and the system.  In general, we expect a model that is more
 realistic to make better predictions and to provide more believable
 explanations.
@@ -4367,7 +4366,7 @@ element is the sum of three elements from the previous row, mod 2.
 
 The \py{step} function in the previous section is simple, but it is
 not very fast.  In general, we can speed up operations like this
-if we can replace \py{for} loops with NumPy operations, because 
+if we replace \py{for} loops with NumPy operations, because 
 \py{for} loops incur a lot of overhead in the Python interpreter.
 In this section I'll show how we can speed up \py{step} using the
 NumPy function \py{correlate}.
@@ -6917,7 +6916,7 @@ information about the world, make decisions, and take actions.
 
 The agents are usually situated in space or in a network, and
 interact with each other locally.  They usually have imperfect,
-local information.
+incomplete information about the world.
 
 Often there are differences among agents, unlike previous models where
 all components are identical.  And agent-based models often include 
@@ -6941,16 +6940,15 @@ about working with this code, see Section~\ref{code}.
 In 1971 Thomas Schelling published ``Dynamic Models of Segregation'',
 which proposes a simple model of racial segregation.  The Schelling
 model of the world is a grid; each cell represents a house.  The
-houses are occupied by two kinds of people, called {\bf agents},
+houses are occupied by two kinds of agents,
 labeled red and blue, in roughly equal numbers.  About 10\% of the
 houses are empty.
 
 \index{Schelling, Thomas}
 
 At any point in time, an agent might be happy or unhappy, depending
-on the other agents in the neighborhood.
-The neighborhood of each house is the set of
-eight adjacent cells.
+on the other agents in the neighborhood, where the
+``neighborhood" of each house is the set of eight adjacent cells.
 In one version of the model, agents are happy if they have at least
 two neighbors like themselves, and unhappy if they have one or zero.
 
@@ -6958,8 +6956,7 @@ two neighbors like themselves, and unhappy if they have one or zero.
 
 The simulation proceeds by choosing an agent at random and checking
 to see whether they are happy.  If so, nothing happens; if not,
-the agent chooses one of the unoccupied cells at
-random and moves.
+the agent chooses one of the unoccupied cells at random and moves.
 
 You might not be surprised to hear that this model leads to some
 segregation, but you might be surprised by the degree.  Fairly
@@ -7049,6 +7046,8 @@ that are occupied.
     num_red = correlate2d(red, kernel, **options)
     num_neighbors = correlate2d(occupied, kernel, **options)
 \end{code}
+
+%TODO: Update this code.
 
 Now for each cell we can compute the fraction of neighbors
 that are red and the fraction that are the same color:
@@ -7393,7 +7392,7 @@ tuple of coordinates, and the range of the agent's vision, which is
 an integer.  It returns the agent's new location, which is the
 visible cell with the most sugar.
 
-\item py{harvest} takes the (new) location of the agent, and removes and
+\item \py{harvest} takes the (new) location of the agent, and removes and
 returns the sugar at that location.
 
 \end{itemize}
@@ -8118,6 +8117,462 @@ book?
 \end{exercise}
 
 
+
+
+
+\chapter{Evolution}
+
+The most important idea in biology, and possibly all of science, is the {\bf theory of evolution by natural selection}, which claims that new species are created, and existing species change over time, due to natural selection.  Natural selection is a process in which heritable differences between individuals cause differences in survival or reproduction (or both).
+
+Among people who know something about biology, the theory of evolution is widely regarded as a fact, which is to say that it close enough to the truth that if it is corrected in the future, the amendments will leave the central ideas substantially intact.
+
+Nevertheless, many people do not believe in evolution.  In a survey run by the Pew Research Center, survey respondents were asked which of the following claims is closer to their view:
+
+\begin{enumerate}
+
+\item Humans and other living things have evolved over time.
+
+\item Humans and other living things have existed in their present form since the beginning of time.
+
+\end{enumerate}
+
+About 34\% of Americans chose the second (\see \url{http://www.thearda.com/Archive/Files/Codebooks/RELLAND14_CB.asp}).
+
+Even among the ones who believe that living things have evolved, barely more than half believe that the cause of evolution is natural selection.  In other words, only about 33\% of Americans believe that the theory of evolution is true.
+
+How is this possible?  In my opinion, contributing factors include:
+
+\begin{itemize}
+
+\item Some people think that there is a conflict between evolution and their religious beliefs and, feeling like they have to reject one, they reject evolution.
+
+\item Others have been actively misinformed, often by members of the first group, so that much of what they know about evolution is false.
+
+\item And many people simply don't know anything about evolution.
+
+\end{itemize}
+
+There's probably not much I can do about the first group, but I think I can help the others.  Empirically, the theory of evolution is hard for people to understand.  At the same time, it is profoundly simple: for many people, once they understand it, it seems both obvious and irrefutable.
+
+To help people make this transition from confusion to clarity, the most powerful tool I have found is computation.  Ideas that are hard to understand in theory can be easy to understand when we see them happening in simulation.  
+That is the goal of this chapter.
+
+%TODO: The code for...
+
+\section{Simulating evolution}
+
+I will start with a simple model that demonstrates a basic form of evolution.  According to the theory, the following features are sufficient to produce evolution:
+
+\begin{itemize}
+
+\item Replicators:  We need a population of agents that can reproduce in some way.  We'll start with replicators that make perfect copies of themselves.  Later we'll add imperfect copying, that is, mutation.
+
+\item Variation:  We also need some variability in the population, that is, differences between individuals.
+
+\item Differential survival or reproduction:  The differences between individuals have to affect their ability to survive or reproduce.
+
+\end{itemize}
+
+To simulate these features, we'll define a population of {\bf agents} that represent individual organisms.  Each agent has genetic information, called its {\bf genotype}, which is the information that gets copied when the agent replicates.  In our model, a genotype is represented by a sequence of \py{N} binary digits (zeros and ones), where \py{N} is a parameter we can choose.
+
+To generate a population with variation, we choose initial genotypes at random; later we will explore mechanisms that generate or increase variation.
+
+Finally, to generate differential survival and reproduction, we define a function that maps from each genotype to a {\bf fitness}, where fitness is a quantity related to the ability of an agent to survive or reproduce.
+
+\section{Fitness landscape}
+
+The function that maps from genotype to fitness is called a {\bf fitness landscape}.  In the landscape metaphor, each genotype corresponds to a location in an \py{N}-dimensional space, and fitness corresponds to the ``height" of the landscape at that location.  For visualizations that might clarify this metaphor, see \url{https://en.wikipedia.org/wiki/Fitness_landscape}.
+
+In biological terms, the fitness landscape represents information about how the genotype of an organism is related to its physical form and capabilities, called its {\bf phenotype}, and how the phenotype interacts with its {\bf environment}.
+
+In the real world, fitness landscapes are complicated, but we don't need to build a realistic model.  To induce evolution, we need {\em some} relationship between genotype and fitness, but it turns out that it can be {\em any} relationship.  To demonstrate this point, we'll generate the fitness function at random.
+
+Here is the definition for a class that represents a fitness landscape:
+
+\begin{code}
+class FitnessLandscape:
+    def __init__(self, N):
+        self.N = N
+        self.one_values = np.random.random(N)
+        self.zero_values = np.random.random(N)
+        
+    def fitness(self, loc):
+        fs = np.where(loc, self.one_values, 
+                           self.zero_values)
+        return fs.mean()
+\end{code}
+
+The genotype of an agent, which corresponds to its location in the fitness landscape, is represented by a NumPy array of zeros and ones, called \py{loc}.
+The fitness of a given genotype is the mean of \py{N} {\bf fitness contributions}, one for each element of \py{loc}.
+
+To compute the fitness of a genotype, \py{FitnessLandscape} uses two arrays:
+\py{one_values}, which contains the fitness contributions of having a \py{1} in each element of \py{loc}, and \py{zero_values}, which contains the fitness contributions of having a \py{0}.
+
+The \py{fitness} method uses \py{np.where} to select a value from \py{one_values} where \py{loc} has a \py{1}, and a value from \py{zero_values} where \py{loc} has a \py{0}.
+
+As an example, suppose \py{N=3} and
+
+\begin{code}
+one_values =  [0.1, 0.2, 0.3]
+zero_values = [0.4, 0.7, 0.9]
+\end{code}
+
+In that case, the fitness of \py{loc = [0, 1, 0]} would be the mean of \py{[0.4, 0.2, 0.9]}, which is \py{0.5}.
+
+
+\section{Agents}
+
+Next we need agents.  Here's the class definition:
+
+\begin{code}
+class Agent:
+    
+    def __init__(self, loc, fit_land):
+        self.loc = loc
+        self.fit_land = fit_land
+        self.fitness = fit_land.fitness(self.loc)
+        
+    def copy(self):
+        return Agent(self.loc, self.fit_land)
+\end{code}
+
+The attributes of an \py{Agent} are:
+
+\begin{itemize}
+
+\item \py{loc}: The location of the \py{Agent} in the fitness landscape.
+
+\item \py{fit_land}: A reference to a \py{FitnessLandscape} object.
+
+\item \py{fitness}: The fitness of this \py{Agent} in the \py{FitnessLandscape}, represented as a number between 0 and 1.
+
+\end{itemize}
+
+This definition of \py{Agent} provides a simple \py{copy} method that copies the genotype exactly; later, we will see a version that copies with mutation, but mutation is not necessary for evolution.
+
+
+\section{Simulation}
+
+Now that we have agents and a fitness landscape, I'll define a class called \py{Simulation} that simulates the creation, reproduction, and death of the agents.  To avoid getting bogged down, I'll present a simplified version of the code here; you can see the details in the notebook for this chapter.
+
+Here's the definition of \py{Simulation}:
+
+\begin{code}
+class Simulation:
+    
+    def __init__(self, fit_land, agents):
+        self.fit_land = fit_land
+        self.agents = agents
+\end{code}
+
+The attributes of a \py{Simulation} are:
+
+\begin{itemize}
+
+\item \py{fit_land}: A reference to a \py{FitnessLandscape} object.
+
+\item \py{agents}: An array of \py{Agent} objects.
+
+\end{itemize}
+
+The most important function in \py{Simulation} is \py{step}, which simulates one time step:
+
+\begin{code}
+# class Simulation:
+    
+    def step(self):
+        n = len(self.agents)
+        fits = self.get_fitnesses()
+        
+        # see who dies
+        index_dead = self.choose_dead(fits)
+        num_dead = len(index_dead)
+        
+        # replace the dead with copies of the living
+        replacements = self.choose_replacements(num_dead, fits)
+        self.agents[index_dead] = replacements
+\end{code}
+
+\py{step} uses three other methods:
+
+\begin{itemize}
+
+\item \py{get_fitnesses} returns an array containing the fitness of each agent in the order they appear in the agent array.
+
+\item \py{choose_dead} decides which agents die during this timestep, and returns an array that contains the indices of the dead agents.
+
+\item \py{choose_replacements} decides which agents reproduce during this timestep, invokes \py{copy} on each one, and returns an array of new \py{Agent} objects.
+
+\end{itemize}
+
+In this version of the simulation, the number of new agents during each timestep equals the number of dead agents, so the number of live agents is constant.
+
+
+\section{No differentiation}
+
+Before we run the simulation, we have to specify the behavior of \py{choose_dead} and \py{choose_replacements}.  We'll start with simple versions of these functions that don't depend on fitness:
+
+\begin{code}
+# class Simulation
+
+     def choose_dead(self, fits):
+        n = len(self.agents)
+        is_dead = np.random.random(n) < 0.1
+        index_dead = np.nonzero(is_dead)[0]
+        return index_dead
+        
+    def choose_replacements(self, n, fits):
+        agents = np.random.choice(self.agents, size=n, replace=True)
+        replacements = [agent.copy() for agent in agents]
+        return replacements
+\end{code}
+
+In \py{choose_dead}, \py{n} is the number of agents; \py{is_dead} is a boolean array that contains \py{True} for the agents who die during this time step.  In this version, every agents has the same chance of dying, 10\%.
+
+\py{choose_dead} uses \py{np.nonzero} to find the indices of the non-zero elements of \py{is_dead} (\py{True} is considered non-zero).
+
+In \py{choose_replacements}, \py{n} is the number of agents who reproduce during this time step.  It uses \py{np.random.choice} to choose \py{n} agents, with replacement.  Then it invokes \py{copy} on each one and returns a list of new \py{Agent} objects.
+
+These methods don't depend on fitness, so this simulation does not have differential survival or reproduction.  As a result, we should not expect to see evolution.  But how can we tell?
+
+\section{Evidence of evolution}
+
+The most inclusive definition of evolution is a change in the distribution of genotypes in a population.  So evolution is an aggregate effect: in other words, individuals don't evolve; populations do.  
+
+In this simulation, genotypes are locations in a high-dimensional space, so it is hard to visualize changes in their distribution.  However, if the genotypes change, we expect their fitness to change as well.  So we will use changes in the distribution of fitness as evidence of evolution.  In particular, we'll look at the mean and standard deviation of fitness across the population.
+
+Before we run the simulation, we have to add an \py{Instrument}, which is an object that gets updated after each time step, computes some statistic of interest, and stores the result in a sequence we can plot later.
+
+Here is the parent class for all instruments:
+
+\begin{code}
+class Instrument:
+    def __init__(self):
+        self.metrics = []
+\end{code}
+
+And here's the definition for \py{MeanFitness}, an instrument that computes the mean fitness of the population at each time step:
+
+\begin{code}
+class MeanFitness(Instrument):
+    def update(self, sim):
+        mean = np.mean(sim.get_fitnesses())
+        self.metrics.append(mean)
+\end{code}
+
+Now we're ready to run the simulation.  To minimize the effect of random changes in the starting population, we'll start every simulation with the same set of agents.  And to make sure we explore the entire fitness landscape, we'll start with one agent at every location.  Here's the code that creates the \py{Simulation}:
+
+\begin{code}
+N = 8
+fit_land = FitnessLandscape(N)
+agents = make_all_agents(fit_land, Agent)
+sim = Simulation(fit_land, agents)
+\end{code}
+
+\py{make_all_agents} creates one \py{Agent} for every location; the implementation is in the notebook for this chapter.
+
+Now we can create and add a \py{MeanFitness} instrument, run the simulation, and plot the results:
+
+\begin{code}
+instrument = MeanFitness()
+sim.add_instrument(instrument)
+sim.run()
+sim.plot(0)
+\end{code}
+
+The \py{Simulation} keeps a list of \py{Instrument} objects.  After each timestep it invokes \py{update} on each \py{Instrument} in the list.
+
+After the simulation runs, we plot the results using \py{Simulation.plot}, which takes an index as a parameter, uses the index to select an \py{Instrument} from the list, and plots the results.  In this example, there is only one \py{Instrument}, so the index is 0.
+
+\begin{figure}
+\centerline{\includegraphics[height=3in]{figs/chap11-1.pdf}}
+\caption{Mean fitness over time for 10 simulations with no differential survival or reproduction.}
+\label{chap11-1}
+\end{figure}
+
+Figure~\ref{chap11-1} shows the results of running this simulation, with the \py{MeanFitness} instrument, 10 times.
+
+The mean fitness of the population drifts up or down, due to chance.  Since the distribution of fitness changes over time, we infer that the distribution of phenotypes is also changing.  By the most inclusive definition, this {\bf random walk} is a kind of evolution.  But it is not a particularly interesting kind.
+
+In particular, this kind of evolution does not explain how biological species change over time, or how new species appear.  The theory of evolution is powerful because it explains phenomena we see in the natural world that seem inexplicable:
+
+\begin{itemize}
+
+\item Adaptation: Species interact with their environments in ways that seem too complex, too intricate, and too clever to happen by chance.  Many features of natural systems seem as if they were designed.
+
+\item Increasing diversity: Over time the number of species on earth has generally increased (despite several periods of mass extinction).
+
+\item Increasing complexity: The history of life on earth starts with relatively simple life forms, with more complex organisms appearing later in the geological record.
+
+\end{itemize}
+
+These are the phenomena we want to explain.  So far, our model doesn't do the job.
+
+
+\section{Differential survival}
+
+So let's add one more ingredient, differential survival.  Here's the definition for a class that extends \py{Simulation} and overrides \py{choose_dead}:
+
+\begin{code}
+class SimWithDiffSurvival(Simulation):
+    
+    def choose_dead(self, fits):
+        n = len(self.agents)
+        is_dead = np.random.random(n) > fits
+        index_dead = np.nonzero(is_dead)[0]
+        return index_dead
+\end{code}
+
+Now the probability of survival depends on fitness; in fact, in this version, the probability that an agent survives each time step {\em is} its fitness.
+
+Since agents with low fitness are more likely to die, agents with high fitness are more likely to survive long enough to reproduce.  So we expect the number of low-fitness agents to decrease, and the number of high-fitness agents to increase.  If we plot the mean fitness over time, we expect it to increase.
+
+\begin{figure}
+\centerline{\includegraphics[height=3in]{figs/chap11-2.pdf}}
+\caption{Mean fitness over time for 10 simulations with differential survival.}
+\label{chap11-2}
+\end{figure}
+
+Figure~\ref{chap11-2} shows the results of 10 simulations with differential survival.  Mean fitness increases quickly at first, but then levels off.
+
+You can probably figure out why it levels off: if there is only one agent at a particular location and it dies, it leaves that location unoccupied.  And without mutation, there is no way for it to be occupied again.
+
+With \py{N=8}, this simulation starts with 256 agents occupying all possible locations.  Over time, the number of unique locations decreases; if the simulation runs long enough, eventually all agents will occupy the same location.
+
+So this simulation starts to explain adaptation: increasing fitness means that the species is getting better at surviving in its environment.  But with a decreasing number of locations, it does not explain increasing diversity at all.
+
+In the notebook for this chapter, you will see the effect of differential reproduction.  As you might expect, differential reproduction also increases mean fitness.  But without mutation, we still don't see increasing diversity.
+
+\section{Mutation}
+
+In the simulations so far, we start with the maximum possible diversity --- one agent at every location in the landscape --- and end (eventually) with the minimum possible diversity, all agents at one location.
+
+That's almost the opposite of what happened in the natural world, which apparently began with a single species that branched, over time, into the millions, or possibly billions, of species on Earth today (see \url{https://en.wikipedia.org/wiki/Global_biodiversity}).
+
+With perfect copying in our model, we never see increasing diversity.  But if we add mutation, along with differential survival and reproduction, we get a step closer to understanding evolution in nature.
+
+Here is a class definition that extends \py{Agent} and overrides \py{copy}:
+
+\begin{code}
+class Mutant(Agent):
+    
+    prob_mutate = 0.05
+    
+    def copy(self):
+        if np.random.random() > self.prob_mutate:
+            loc = self.loc.copy()
+        else:
+            direction = np.random.randint(self.fit_land.N)
+            loc = self.mutate(direction)
+        return Mutant(loc, self.fit_land)
+\end{code}
+
+In this model of mutation, every time we call \py{copy}, there is a 5\% chance of mutation.  In case of mutation, we choose a random direction from the current location --- that is, a random bit in the genotype --- and flip it.  Here's \py{mutate}:
+
+\begin{code}
+    def mutate(self, direction):
+        new_loc = self.loc.copy()
+        new_loc[direction] ^= 1
+        return new_loc
+\end{code}
+
+Now that we have mutation, we don't have to start with an agent at every location.  Instead, we can start with the minimum variability: all agents at the same location.
+
+\begin{figure}
+\centerline{\includegraphics[height=3in]{figs/chap11-3.pdf}}
+\caption{Mean fitness over time for 10 simulations with mutation and differential survival and reproduction.}
+\label{chap11-3}
+\end{figure}
+
+Figure~\ref{chap11-3} shows the results of 10 simulations with mutation and differential survival and reproduction.  In every case, the population evolves toward the location with maximum fitness.
+
+\begin{figure}
+\centerline{\includegraphics[height=3in]{figs/chap11-4.pdf}}
+\caption{Number of occupied locations over time for 10 simulations with mutation and differential survival and reproduction.}
+\label{chap11-4}
+\end{figure}
+
+To measure diversity in the population, we can plot the number of occupied locations after each timestep.  Figure~\ref{chap11-4} shows the results.  We start with 100 agents, all at the same location.  As mutations occur, the number of occupied locations increases quickly. 
+
+When an agent discovers a high-fitness location, it is more likely to survive and reproduce.  Agents at lower-fitness locations eventually die out.  Over time, the population migrates through the landscape until most agents are at the location with the highest fitness.
+
+At that point, the system reaches an equilibrium where mutation occupies new locations at the same rate that differential survival causes lower-fitness locations to be left empty.
+
+The number of occupied locations in equilibrium depends on the mutation rate and the degree of differential survival.  In these simulations the number of unique occupied locations at any point is typically 5--15.
+
+It is important to remember that the agents in this model don't move, just as the genotype of an organism doesn't change.  When an agent dies, it can leave a location unoccupied.  And when a mutation occurs, it can occupy a new location.
+
+As agents disappear from some locations and appear in others, the population migrates across the landscape, like a glider in Game of Life.  But organisms don't evolve; populations do.
+
+
+\section{Speciation}
+
+The theory of evolution says that natural selection changes existing species and creates new ones.  In our model, we have seen changes, but we have not seen a new species.  It's not even clear, in the model, what a new species would look like.
+
+Among species that reproduce sexually, two organisms are considered the same species if they can breed and produce fertile offspring.  But the agents in the model don't reproduce sexually, so this definition doesn't apply.
+
+Among organisms that reproduce asexually, like bacteria, the definition of species is not as clear-cut.  Generally, a population is considered a species if their genotypes form a cluster, that is, if the genetic differences within the population are small compared to the differences between populations.
+
+\begin{figure}
+\centerline{\includegraphics[height=3in]{figs/chap11-5.pdf}}
+\caption{Mean distance between agents over time.}
+\label{chap11-5}
+\end{figure}
+
+So before we can model new species, we need the ability to identify clusters of agents in the landscape, which means we need a definition of {\bf distance} between locations.  Since locations are represented with strings of binary digits, we'll define distance as the number of bit in the genotype that differ.  \py{FitnessLandscape} provides a \py{distance} method:
+
+\begin{code}
+# class FitnessLandscape
+
+    def distance(self, loc1, loc2):
+        return np.sum(np.logical_xor(loc1, loc2))
+\end{code}
+
+The \py{logical_xor} function is \py{True} for the elements of the locations that differ, and \py{False} for the elements that are the same.
+
+To quantify the dispersion of a population, we can compute the mean of the distances between every pair of agents.  In the notebook for this chapter, you'll see the \py{MeanDistance} instrument, which computes this metric after each time step.
+
+Figure~\ref{chap11-5} shows mean distance between agents over time.  Because we start with identical mutants, the initial distances are 0.  As mutations occur, mean distance increases, reaching a maximum while the population migrates across the landscape.
+
+Once the agents discover the optimal location, mean distance decreases until the population reaches an equilibrium where increasing distance due to mutation is balanced by decreasing distance as agents far from the optimal location are more likely to die.  In these simulations, the mean distance in equilibrium is near 1.5; that is, most agents are only 1--2 mutations away from optimal.
+
+Now we are ready to look for new species.  To model a simple kind of speciation, suppose a population evolves in an unchanging environment until it reaches steady state (like some species we find in nature that seem to have changed very little over long periods of time).
+
+Now suppose we either change the environment or transport the population to a new environment.  Some features that increased fitness in the old environment might decrease it in the new environment, and vice versa.
+
+We can model these scenarios by running a simulation until the population reaches steady state, then changing the fitness landscape, and then resuming the simulation until the population reaches steady state again.
+
+\begin{figure}
+\centerline{\includegraphics[height=3in]{figs/chap11-6.pdf}}
+\caption{Mean fitness over time.  After 500 timesteps, we change the fitness landscape.}
+\label{chap11-6}
+\end{figure}
+
+Figure~\ref{chap11-6} shows results from a simulation like that.  Again, we start with 100 identical mutants at a random location, and run the simulation for 500 timesteps.  At that point, many agents are at the optimal location, which has fitness near 0.65, in this example.  And the genotypes of the agents form a cluster, with the mean distance between agents near 1.
+
+After 500 steps, we run \py{FitnessLandscape.set_values}, which changes the mapping from genotype to fitness; then we resume the simulation.  Mean fitness drops immediately, because the optimal location and its neighbors in the old landscape are no better than random locations in the new landscape.
+
+However, mean fitness increases quickly as the population migrates across the new landscape, eventually finding the new optimal location, which has fitness near 0.75 (which happens to be higher in this example, but needn't be).
+
+Once the population reaches steady state, it forms a new cluster, with mean distance between agents near 1 again.
+
+Now if we compute the distance between the agents' locations before and after the change, they differ by more than 6, on average.  The distances between clusters are much bigger than the distances between agents in each cluster, so we can interpret these clusters as distinct species. 
+
+
+\section{Summary}
+
+We have seen that mutation, along with differential survival and reproduction, is sufficient to cause increasing fitness, increasing diversity, and a simple form of speciation.  This model is not meant to be realistic; evolution in natural systems is much more complicated than this.  Rather, it is meant to be a ``sufficiency theorem"; that is, a demonstration that the features of the model are sufficient to produce the behavior we are trying to explain (see \url{https://en.wikipedia.org/wiki/Necessity_and_sufficiency}).
+
+Logically, this ``theorem" doesn't prove that evolution in nature is caused by these mechanisms alone.  But since these mechanisms do appear, in many forms, in biological systems, it is reasonable to think that they at least contribute to natural evolution.
+
+Likewise, the model does not prove that these mechanisms always cause evolution.  But the results we see here turns out to be robust: in almost any model that includes these features --- imperfect replicators, variability, and differential reproduction --- evolution happens.
+
+I hope this observation helps to demystify evolution.  When we look at natural systems, evolution seems complicated.  And because we primarily see the results of evolution, with only glimpses of the process, it can be hard to imagine and sometimes hard to believe.
+
+But in simulation, we can see the whole process, not just the results.  And by including only the minimal set of features to produce evolution --- temporarily ignoring the vast complexity of biological life --- we can see evolution as the surprisingly simple, inevitable idea that it is.
+
+
+
 \chapter{Game Theory}
 
 NOTE: THIS CHAPTER IS NOT DONE!
@@ -8211,7 +8666,7 @@ NOT DONE.
 You have reached the end of the book.  Congratulations!  When you
 first read Chapter~\ref{overview}, some of the topics might not have
 made sense.  You might find it helpful to read that chapter again now.
-Then get to work on your case study!  See Appendix~\ref{submissions}.
+Then get to work on your case study!
 
 \section{Exercises}
 
@@ -8252,6 +8707,13 @@ Run \py{Referee.py} and see how your strategy does.
 After you run your own tournament, you can read about the results
 of Axelrod's tournament in his book, {\it The Evolution of Cooperation}.
 \end{exercise}
+
+
+
+
+
+
+
 
 
 
@@ -9113,7 +9575,7 @@ implementation of \py{sum} is quadratic.
 \index{quadratic}
 
 
-\section{\py{pyplot}}
+\section{pyplot}
 \index{pyplot@\py{pyplot}}
 \label{pyplot}
 
@@ -9172,92 +9634,12 @@ enough to run quickly.
 
 
 
-\chapter{Call for submissions}
-\label{submissions}
-
-The case studies in this book were written by students at Olin
-College, and edited by Lisa Downey and Allen Downey.  They
-were reviewed by a program committee of faculty at Olin College
-who chose the ones that met the criteria of interest and quality.
-I am grateful to the program committee and the students.
-
-I invite readers to submit additional case studies.  Reports
-that meet the criteria will be published in an online supplement
-to this book, and the best of them will be included in future
-print editions.
-
-The criteria are:
-
-\begin{itemize}
-
-\item The case study should be relevant to complexity.  For an
-  overview of possible topics, see
-  \url{http://en.wikipedia.org/wiki/Complexity} and
-  \url{http://en.wikipedia.org/wiki/Complex_systems}.  Topics
-  not already covered in the book are particularly welcome.
-
-\item A good case study might present a seminal paper, reimplement
-  an important experiment, discuss the results, and explain their
-  context.  Original research is not necessary, and might not
-  be appropriate for this format, but you could extend existing
-  results.
-
-\item A good case study should invite the reader to participate
-  by including exercises, references to further reading, and
-  topics for discussion.
-
-\item The case study should present enough technical detail that
-   reader could implement the model in a language like Python.
-
-\item If you use an algorithm or data structure that deserves comment,
-  you should discuss it.  Topics not covered in the book, including
-  tree algorithms and dynamic programming, are particularly welcome.
-
-\item If you use a feature of Python or a module that you think
-  will interest readers, you should discuss it.  But you should
-  stick to modules that are in widespread use and either included
-  in Python distributions or easy to install.
-
-\end{itemize}
-
-For more details, see \url{thinkcomplex.com/case_studies}.
-
-
 \chapter{Reading list}
 \label{reading}
 
-In my class we start the semester by reading popular books about
-complexity science.  They provide a pleasant way to get a big picture
-of the field and start to see connections between topics.
-
-One problem with these books is that
-they are written for a non-technical audience, so after a while
-the students get frustrated by the vagueness and hand-waving.
-That's what {\em this} book is for.
-
-The other problem is that students can't read 30 books in a week, or
-even a semester.  Instead, I provide
-one copy of each book and ask the students to pick one, read
-the first chapter, write a summary, and post it on the class web page.
-
-During the next class session, the students swap books.  Each student
-reads the summary written by the previous student, then reads the
-next chapter, and writes a summary.
-
-After a few iterations, we have a class discussion where students
-report what they have read so far and we look for connections.  For
-example, one student might present a topic, then another student
-suggests a related topic and explains the relationship.  I draw the
-topics and the relationships between them on the board (see
-\url{http://en.wikipedia.org/wiki/Concept_map}).
-
-We repeat this exercise until we have seen what there is to see, or we
-are impatient to get down to business.
-
-You can see the list of books, and read the summaries my students
-wrote, at \url{https://sites.google.com/site/compmodolin}.
-
-Here are the books:
+The following are selected books that provide an introduction to
+complexity science, and a pleasant way to get a big picture
+of the field.
 
 \begin{itemize}
 
@@ -9317,6 +9699,9 @@ Here are the books:
 
 \backmatter
 \printindex
+
+\afterpage{\blankpage}
+
 
 \end{document}
 
