@@ -21,7 +21,7 @@
 \newcommand{\thetitle}{Think Complexity}
 \newcommand{\thesubtitle}{Exploring Complexity Science in Python}
 \newcommand{\theauthors}{Allen B. Downey}
-\newcommand{\theversion}{2.2.2}
+\newcommand{\theversion}{2.3}
 
 %%%% Both LATEX and PLASTEX
 
@@ -1731,7 +1731,7 @@ performance of those algorithms, figuring out how their run times
 grow as the size of the graphs increases.
 
 If you are not already familiar with analysis of algorithms,
-you should read Appendix~\ref{alganalysis} before you continue.
+you should read Appendix~\ref{algorithms} before you continue.
 
 \newcommand{\V}{n}
 \newcommand{\E}{m}
@@ -2463,6 +2463,7 @@ and reach your own conclusions.
 
 
 \section{Breadth-First Search}
+\label{bfs}
 
 When we computed shortest paths, we used a function provided by
 NetworkX, but I have not explained how it works.  To do that, I'll
@@ -3425,7 +3426,7 @@ cumulative distribution functions.
 thinkplot.Cdf(cdf_fb)
 \end{code}
 
-Figure~\ref{chap04-04} shows the degree CDF for the Facebook dataset
+Figure~\ref{chap04-5} shows the degree CDF for the Facebook dataset
 along with the WS model (left) and the BA model (right).  The x-axis
 is on a log scale.
 
@@ -5813,7 +5814,7 @@ it is a fractal.
 \label{chap07-6}
 \end{figure}
 
-Now let's get back to percolation models.  Figure~\ref{chap-7-6} shows
+Now let's get back to percolation models.  Figure~\ref{chap07-6} shows
 clusters of wet cells in percolation simulations with \py{p=0.6} and
 \py{n=100}, \py{200}, and \py{300}.  Informally, they resemble fractal
 patterns seen in nature and in mathematical models.
@@ -8009,8 +8010,11 @@ settings resemble a school of fish or a cloud flying insects.
 
 
 \section{Free will}
-
 \label{freewill}
+
+
+%TODO: expand this based on class discussion
+
 
 Many complex systems have properties, as a whole, that their
 components do not:
@@ -8087,6 +8091,8 @@ average speed, or a lower number of collisions.
 
 
 \begin{exercise}
+
+%TODO: VPython installation help.
 
 % sudo apt-get install python-visual libgtkglextmm-x11-1.2-dev
 
@@ -8331,7 +8337,7 @@ Before we run the simulation, we have to specify the behavior of \py{choose_dead
         return replacements
 \end{code}
 
-In \py{choose_dead}, \py{n} is the number of agents; \py{is_dead} is a boolean array that contains \py{True} for the agents who die during this time step.  In this version, every agents has the same chance of dying, 10\%.
+In \py{choose_dead}, \py{n} is the number of agents; \py{is_dead} is a boolean array that contains \py{True} for the agents who die during this time step.  In this version, every agents has the same chance of dying: 10\%.
 
 \py{choose_dead} uses \py{np.nonzero} to find the indices of the non-zero elements of \py{is_dead} (\py{True} is considered non-zero).
 
@@ -8361,7 +8367,7 @@ And here's the definition for \py{MeanFitness}, an instrument that computes the 
 \begin{code}
 class MeanFitness(Instrument):
     def update(self, sim):
-        mean = np.mean(sim.get_fitnesses())
+        mean = np.nanmean(sim.get_fitnesses())
         self.metrics.append(mean)
 \end{code}
 
@@ -8395,9 +8401,7 @@ After the simulation runs, we plot the results using \py{Simulation.plot}, which
 \label{chap11-1}
 \end{figure}
 
-Figure~\ref{chap11-1} shows the results of running this simulation, with the \py{MeanFitness} instrument, 10 times.
-
-The mean fitness of the population drifts up or down, due to chance.  Since the distribution of fitness changes over time, we infer that the distribution of phenotypes is also changing.  By the most inclusive definition, this {\bf random walk} is a kind of evolution.  But it is not a particularly interesting kind.
+Figure~\ref{chap11-1} shows the results of running this simulation with the \py{MeanFitness} instrument 10 times.  The mean fitness of the population drifts up or down, due to chance.  Since the distribution of fitness changes over time, we infer that the distribution of phenotypes is also changing.  By the most inclusive definition, this {\bf random walk} is a kind of evolution.  But it is not a particularly interesting kind.
 
 In particular, this kind of evolution does not explain how biological species change over time, or how new species appear.  The theory of evolution is powerful because it explains phenomena we see in the natural world that seem inexplicable:
 
@@ -8443,7 +8447,7 @@ Figure~\ref{chap11-2} shows the results of 10 simulations with differential surv
 
 You can probably figure out why it levels off: if there is only one agent at a particular location and it dies, it leaves that location unoccupied.  And without mutation, there is no way for it to be occupied again.
 
-With \py{N=8}, this simulation starts with 256 agents occupying all possible locations.  Over time, the number of unique locations decreases; if the simulation runs long enough, eventually all agents will occupy the same location.
+With \py{N=8}, this simulation starts with 256 agents occupying all possible locations.  Over time, the number of occupied locations decreases; if the simulation runs long enough, eventually all agents will occupy the same location.
 
 So this simulation starts to explain adaptation: increasing fitness means that the species is getting better at surviving in its environment.  But with a decreasing number of locations, it does not explain increasing diversity at all.
 
@@ -8481,6 +8485,8 @@ In this model of mutation, every time we call \py{copy}, there is a 5\% chance o
         new_loc[direction] ^= 1
         return new_loc
 \end{code}
+
+The operator \py{^=} computes ``exclusive OR", which has the effect of flipping a bit (see \url{https://en.wikipedia.org/wiki/Exclusive_or#Bitwise_operation}).
 
 Now that we have mutation, we don't have to start with an agent at every location.  Instead, we can start with the minimum variability: all agents at the same location.
 
@@ -8534,7 +8540,7 @@ So before we can model new species, we need the ability to identify clusters of 
 \label{chap11-5}
 \end{figure}
 
-The \py{logical_xor} function is \py{True} for the elements of the locations that differ, and \py{False} for the elements that are the same.
+The \py{logical_xor} function computes ``exclusive OR", which is \py{True} for the elements of the locations that differ, and \py{False} for the elements that are the same.
 
 To quantify the dispersion of a population, we can compute the mean of the distances between every pair of agents.  In the notebook for this chapter, you'll see the \py{MeanDistance} instrument, which computes this metric after each time step.
 
@@ -8571,12 +8577,13 @@ We have seen that mutation, along with differential survival and reproduction, i
 
 Logically, this ``theorem" doesn't prove that evolution in nature is caused by these mechanisms alone.  But since these mechanisms do appear, in many forms, in biological systems, it is reasonable to think that they at least contribute to natural evolution.
 
-Likewise, the model does not prove that these mechanisms always cause evolution.  But the results we see here turns out to be robust: in almost any model that includes these features --- imperfect replicators, variability, and differential reproduction --- evolution happens.
+Likewise, the model does not prove that these mechanisms always cause evolution.  But the results we see here turn out to be robust: in almost any model that includes these features --- imperfect replicators, variability, and differential reproduction --- evolution happens.
 
 I hope this observation helps to demystify evolution.  When we look at natural systems, evolution seems complicated.  And because we primarily see the results of evolution, with only glimpses of the process, it can be hard to imagine and sometimes hard to believe.
 
 But in simulation, we see the whole process, not just the results.  And by including the minimal set of features to produce evolution --- temporarily ignoring the vast complexity of biological life --- we can see evolution as the surprisingly simple, inevitable idea that it is.
 
+%TODO: exercises in the chapters?  or just the notebooks?
 
 
 \chapter{Game Theory}
@@ -8591,69 +8598,37 @@ In this final chapter, I modestly take on two questions, one from biology and on
 
 \end{itemize}
 
-The tools we will use to address these questions are agent based simulation, again, and game theory, which is a set of abstract models meant to describe various ways agents interact.  Specifically, the game we will consider is the Prisoner's Dilemma.
+The tools we will use to address these questions are agent based simulation (again) and game theory, which is a set of abstract models meant to describe various ways agents interact.  Specifically, the game we will consider is the Prisoner's Dilemma.
 
 The code for this chapter is in \py{chap12.ipynb}, which is a
 Jupyter notebook in the repository for this book.  For more information
 about working with this code, see Section~\ref{code}.
 
-% outline the scenario, reference to the game theory treatment
-
-% present IPD and the results from Axelrod's tournaments.  Conclusions?
-
-% best strategy is often nice, retributive, and ??
-
-% but it depends on the opponents
-
-% so the question is what strategies are evolvable, which means that
-
-% they sweep through at least some initial populations when they
-
-% appear, and resist being swept by other strategies
-
-% Maybe skip the tournament, which is really about designed strategies,
-
-% and get to an evolution simulation where the genotype encodes the
-
-% strategy, based on results from previous rounds.
-
-% Reference to the spatial version, in which local regions behave
-% like isolated niches, and then see how they interact.
-
-% Refer to the ongoing debate about group selection.
-
-% NOTE:  Use this: https://github.com/Axelrod-Python/Axelrod 
-
 
 \section{Prisoner's Dilemma}
 \label{prisoners}
 
-The Prisoner's Dilemma is a topic of study in game theory, but it's not the fun kind of game.  Instead, it is the kind of game that sheds light on human motivation and behavior.
-
+The Prisoner's Dilemma is a topic in game theory, but it's not the fun kind of game.  Instead, it is the kind of game that sheds light on human motivation and behavior.  Here is the presentation of the dilemma from \url{http://en.wikipedia.org/wiki/Prisoner's_dilemma}:
 \index{Prisoner's Dilemma}
 
-Here is the presentation of the dilemma from \url{http://en.wikipedia.org/wiki/Prisoner's_dilemma}:
-
 \begin{quote}
-Two members of a criminal gang are arrested and imprisoned. Each prisoner is in solitary confinement with no means of communicating with the other. The prosecutors lack sufficient evidence to convict the pair on the principal charge. They hope to get both sentenced to a year in prison on a lesser charge. Simultaneously, the prosecutors offer each prisoner a bargain. Each prisoner is given the opportunity either to: betray the other by testifying that the other committed the crime, or to cooperate with the other by remaining silent. The offer is:
+Two members of a criminal gang are arrested and imprisoned. Each prisoner is in solitary confinement with no means of communicating with the other. The prosecutors lack sufficient evidence to convict the pair on the principal charge. They hope to get both sentenced to a year in prison on a lesser charge. Simultaneously, the prosecutors offer each prisoner a bargain. Each prisoner is given the opportunity to either: (1) betray the other by testifying that the other committed the crime, or (2) cooperate with the other by remaining silent. The offer is:
 
 \begin{itemize}
 
-\item If A and B each betray the other, each of them serves 2 years in prison
+\item If A and B each betray the other, each of them serves 2 years in prison.
 
-\item If A betrays B but B remains silent, A will be set free and B will serve 3 years in prison (and vice versa)
+\item If A betrays B but B remains silent, A will be set free and B will serve 3 years in prison (and vice versa).
 
-\item If A and B both remain silent, both of them will only serve 1 year in prison (on the lesser charge)
+\item If A and B both remain silent, both of them will only serve 1 year in prison (on the lesser charge).
 
 \end{itemize}
 
 \end{quote}
 
-Obviously, this scenario is contrived, but it is meant to represent a variety of interactions where agents have to choose whether to ``cooperate" with each other or ``defect", and where the reward (or punishment) for each agent depends on what the other agent chose.
+Obviously, this scenario is contrived, but it is meant to represent a variety of interactions where agents have to choose whether to ``cooperate" with each other or ``defect", and where the reward (or punishment) for each agent depends on what the other agent chooses.
 
-With this set of punishments, it is tempting to say that the players should cooperate, that is, that both should remain silent.
-
-But neither agent knows what the other will do, so each has to consider two possible outcomes.  First, looking at it from A's point of view:
+With this set of punishments, it is tempting to say that the players should cooperate, that is, that both should remain silent.  But neither agent knows what the other will do, so each has to consider two possible outcomes.  First, looking at it from A's point of view:
 
 \begin{itemize}
 
@@ -8667,41 +8642,41 @@ And because the game is symmetric, this analysis is the same from B's point of v
 
 In the simplest version of this game, we assume that A and B have no other considerations to take into account.  They can't communicate with each other, so they can't negotiate, make promises, or threaten each other.  And they consider only the immediate goal of minimizing their sentences; they don't take into account any other factors.
 
-Under those assumptions, the rational choice for both agents is to defect.  That might be a good thing, at least for purposes of criminal justice.  But for the prisoners, it is frustrating because there is, apparently, nothing they can do to achieve the outcome they both want.  And this model applies to other scenarios in real life where cooperation would be better for the greater good, as well as the players.
+Under those assumptions, the rational choice for both agents is to defect.  That might be a good thing, at least for purposes of criminal justice.  But for the prisoners, it is frustrating because there is, apparently, nothing they can do to achieve the outcome they both want.  And this model applies to other scenarios in real life where cooperation would be better for the greater good as well as for the players.
 
-Studying those scenarios, and ways to escape from the dilemma, is the focus of people who study game theory, but it is not the focus of this chapter.  I am going to take the Prisoner's Dilemma in a different direction.
+Studying those scenarios, and ways to escape from the dilemma, is the focus of people who study game theory, but it is not the focus of this chapter.  We are headed in a different direction.
 
 
 \section{The problem of nice}
 
-Since the Prisoner's Dilemma was first discussed in the 1950s, it has been a popular topic of study in social psychology.  Based on the analysis in the previous section, we can say what a perfectly rational agent {\em should} do; it is much harder to predict what real people actually do.  Fortunately, the experiment has been done.  Many times\footnote{Here's one recent report with references to previous experiments:
-Barreda-Tarrazona, Jaramillo-Gutiérrez, Pavan, and Sabater-Grande,
+Since the Prisoner's Dilemma was first discussed in the 1950s, it has been a popular topic of study in social psychology.  Based on the analysis in the previous section, we can say what a perfectly rational agent {\em should} do; it is harder to predict what real people actually do.  Fortunately, the experiment has been done.  Many times\footnote{Here's one recent report with references to previous experiments:
+Barreda-Tarrazona, Jaramillo-Guti\'{e}rrez, Pavan, and Sabater-Grande,
 ``Individual Characteristics vs. Experience: An Experimental Study on Cooperation in Prisoner's Dilemma", Frontiers in Psychology, 2017; 8: 596.
 \url{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5397528/}.}.
 
-If we assume that people are smart enough to do the analysis (or understand it when explained), and that they generally act in their own interest, we would expect them to defect pretty much all the time.  But they don't.  The results depend on the details of the experiment, but in general the subjects cooperate much more than the rational agent model predicts\footnote{For an excellent video summarizing what we have discussed so far, see \url{https://www.youtube.com/watch?v=t9Lo2fgxWHw}.}.
+If we assume that people are smart enough to do the analysis (or understand it when explained), and that they generally act in their own interest, we would expect them to defect pretty much all the time.  But they don't.  The results depend on the details of the experiment, but in general subjects cooperate much more than the rational agent model predicts\footnote{For an excellent video summarizing what we have discussed so far, see \url{https://www.youtube.com/watch?v=t9Lo2fgxWHw}.}.
 
 The most obvious explanation of this result is that people are not rational agents, which should not be a surprise to anyone.  But why not?  Is it because they are not smart enough to understand the scenario or because they are knowingly acting contrary to their own interest?
 
-Based on experimental results, it seems that at least part of the explanation is just altruism: many people are willing to incur a cost to themselves in order to benefit another person.  Now, before you nominate that conclusion for publication in the {\it Journal of Obvious Results}, let's keep asking why:
+Based on experimental results, it seems that at least part of the explanation is just plain altruism: many people are willing to incur a cost to themselves in order to benefit another person.  Now, before you nominate that conclusion for publication in the {\it Journal of Obvious Results}, let's keep asking why:
 
 \begin{itemize}
 
 \item Why do people help other people, even at a cost to themselves?  At least part of the reason is that they want to; it makes them feel good about themselves and the world.
 
-\item And why does being nice make people feel good?  It might be tempting to say that they were raised right, or more generally trained by society to want to do good things.  But there is little doubt\footnote{I hope you'll forgive my use of ``little doubt" here in place of references to relevant experiments.  I am trying to cover some ground in this chapter without getting too bogged down.} that at least a substantial part of altruism is innate; to varying degrees, the desire to do good things is a common result of normal brain development.
+\item And why does being nice make people feel good?  It might be tempting to say that they were raised right, or more generally trained by society to want to do good things.  But there is little doubt\footnote{I hope you'll forgive my use of ``little doubt" here in place of references to relevant experiments.  I am trying to cover some ground in this chapter without getting too bogged down.} that at least a substantial part of altruism is innate; to varying degrees, a proclivity for altruism is a common result of normal brain development.
 
-\item Well, why is that?  The innate parts of brain development, and the personal characteristics that follow, are the result of genetic information.  The relationship between genes and altruism is probably complicated.  It is unlikely that there is one, or even a few, genes that cause altruism, and much more likely that there are many genes that interact with each other, and with environmental factors, to cause people to be more or less altruistic in different circumstances.  Nevertheless, there are almost certainly genes that cause people to be altruistic.
+\item Well, why is that?  The innate parts of brain development, and the personal characteristics that follow, are the result of genetic information.  Of course, the relationship between genes and altruism is probably complicated;  there are probably many genes that interact with each other, and with environmental factors, to cause people to be more or less altruistic in different circumstances.  Nevertheless, there are almost certainly genes that cause people to be altruistic.
 
 \item Finally, why is that?  If, under natural selection, animals are in constant competition with each other to survive and reproduce, it seems obvious that altruism would be counterproductive.  In a population where some people help others, even to their own detriment, and others are purely selfish, it seems like the selfish ones would benefit, the altruistic ones would suffer, and the genes for altruism would be driven to extinction.
 
 \end{itemize}
 
-This apparent contradiction is the ``problem of altruism": why haven't the genes for altruism died out.
+This apparent contradiction is the ``problem of altruism": why haven't the genes for altruism died out?
 
 Among biologists, there are many possible explanations, including reciprocal altruism, sexual selection, kin selection, and group selection.  And among non-scientists, there are even more explanations.  I leave it to you to explore the alternatives; for now I want to focus one just one explanation, arguably the simplest one: maybe altruism is actually adaptive.  In other words, maybe genes for altruism actually make people more likely to survive and reproduce.
 
-And it turns out that the Prisoner's Dilemma, which raised the problem of altruism, might also help up resolve it. 
+And it turns out that the Prisoner's Dilemma, which raises the problem of altruism, might also help resolve it. 
 
 
 \section{Prisoner's dilemma tournaments}
@@ -8711,19 +8686,17 @@ In the late 1970s Robert Axelrod, a political scientist at the University of Mic
 
 He invited participants to submit strategies in the form of computer programs, then played the programs against each other and kept score.  Specifically, they played the iterated version of PD, in which the agents play multiple rounds against the same opponent, so their decisions can be based on history.
 
-Across many tournaments, with many variations in the rules, one strategy that consistently did well, and often won, was called ``tit for tat", or TFT.
-
-TFT always cooperates during the first round of an iterated match; after that, it copies whatever the opponent did during the previous round.  If the opponent keeps cooperating, TFT keeps cooperating.  If the opponent defects at any point, TFT defects in the next round.  But if the opponent goes back to cooperating, so does TFT.
+Across many tournaments, with many variations in the rules, one strategy that consistently did well, and often won, was called ``tit for tat", or TFT.  TFT always cooperates during the first round of an iterated match; after that, it copies whatever the opponent did during the previous round.  If the opponent keeps cooperating, TFT keeps cooperating.  If the opponent defects at any point, TFT defects in the next round.  But if the opponent goes back to cooperating, so does TFT.
 
 For more information about these tournaments, and an explanation of why TFT does so well, see this video: \url{https://www.youtube.com/watch?v=BOvAbjfJ0x0}.
 
-Looking at the strategies that did well in these tournaments, Alexrod indentified the characteristic they tended to share:
+Looking at the strategies that did well in these tournaments, Alexrod identified the characteristics they tended to share:
 
 \begin{itemize}
 
 \item Nice: The strategies that do well cooperate during the first round, and generally cooperate as often as they defect in subsequent rounds.
 
-\item Retaliating: Strategies that cooperate all the time did not do as well as strategies that would retaliate if the opponent defected.
+\item Retaliating: Strategies that cooperate all the time did not do as well as strategies that retaliate if the opponent defects.
 
 \item Forgiving: But strategies that were too vindictive tended to punish themselves as well as their opponents.
 
@@ -8740,9 +8713,9 @@ But the strategies in Axelrod's tournaments were designed by people; they didn't
 
 \section{Simulating evolution of cooperation}
 
-{\em Evolution of Cooperation} is the title of the first book where Axelrod presented results from Prisoner's Dilemma tournaments and discussed the implications for the problem of altruism.  Since then, he and other researchers have explored the evolutionary dynamics of PD tournaments, that is, how the distribution of strategies changes over time in a population of PD contestants.  In the rest of this chapter, I implement a version of those experiments and present the results.  The code for this chapter is in \py{chap12.ipynb} in the repository for this book.
+{\em Evolution of Cooperation} is the title of the first book where Axelrod presented results from Prisoner's Dilemma tournaments and discussed the implications for the problem of altruism.  Since then, he and other researchers have explored the evolutionary dynamics of PD tournaments, that is, how the distribution of strategies changes over time in a population of PD contestants.    In the rest of this chapter, I run a version of those experiments and present the results.
 
-First, we'll need a way to encode a PD strategy as a genotype.  For this experiment, I will consider only strategies where the agent's choice in each round depends only on the opponent's choice in the previous two rounds.  I represent a strategy using a dictionary that maps from the opponent's previous two choices to the agent's next choice.
+First, we'll need a way to encode a PD strategy as a genotype.  For this experiment, I consider strategies where the agent's choice in each round depends only on the opponent's choice in the previous two rounds.  I represent a strategy using a dictionary that maps from the opponent's previous two choices to the agent's next choice.
 
 Here is the class definition for these agents:
 
@@ -8763,9 +8736,11 @@ class Agent:
         self.fitness = fitness
 \end{code}
 
-\py{keys} is the sequence of keys in each agent's dictionary, where the tuple \py{('C', 'C')} means that the opponent cooperated in the previous two rounds; \py{(None, 'C')} means that only one round has been played, and the opponent cooperated; and \py{(None, None)} means that no rounds have been played.
+\py{keys} is the sequence of keys in each agent's dictionary, where the tuple \py{('C', 'C')} means that the opponent cooperated in the previous two rounds; \py{(None, 'C')} means that only one round has been played and the opponent cooperated; and \py{(None, None)} means that no rounds have been played.
 
 In the \py{__init__} method, \py{values} is a sequence of choices, either \py{'C'} or \py{'D'}, that correspond to \py{keys}.  So if the first element of \py{values} is \py{'C'}, that means that this agent will cooperate in the first round.  If the last element of \py{values} is \py{'D'}, this agent will defect if the opponent defected in the previous two rounds.
+
+In this implementation, the genotype for an agent that always defects is \py{'DDDDDDD'}; the genotype for always cooperate is \py{'CCCCCCC'}, and the genotype for ``tit for tat" is \py{'CCDCDCD'}.
 
 The \py{Agent} class provides \py{copy}, which makes another agent with the same genotype, but with some probability of mutation:
 
@@ -8790,7 +8765,7 @@ Mutation works by choosing a random value in the genotype and flipping from \py{
         return values
 \end{code}
 
-In this implementation, the genotype for an agent that always defects is \py{'DDDDDDD'}; the genotype for always cooperate is \py{'CCCCCCC'}, and the genotype for ``tit for tat" is \py{'CCDCDCD'}.
+
 
 \section{The Tournament}
 
@@ -8820,7 +8795,7 @@ The \py{Tournament} class encapsulates the details of the PD competition:
         return agent1.score, agent2.score
 \end{code}
 
-\py{payoffs} is a dictionary that maps from the agent's choices to their rewards.  For example, if both agents cooperate, they each get 3 points.  If one defects and the other cooperates, the defector gets 5 and the cooperator gets 0.  If they both defect, they each get 1.  These are the payoffs Axelrod used in his tournaments.
+\py{payoffs} is a dictionary that maps from the agents' choices to their rewards.  For example, if both agents cooperate, they each get 3 points.  If one defects and the other cooperates, the defector gets 5 and the cooperator gets 0.  If they both defect, each gets 1.  These are the payoffs Axelrod used in his tournaments.
 
 \py{play} runs several rounds of the PD game.  It uses the following methods from the \py{Agent} class:
 
@@ -8856,22 +8831,24 @@ After the given number of rounds, \py{play} returns the total score for each age
             totals[j] += score2
             
         for i in i_row:
-            agents[i].fitness = totals[i] / 2
+            agents[i].fitness = totals[i] / self.num_rounds / 2
 \end{code}
 
 \py{melee} takes a list of agents and a boolean, \py{randomize}, that determines whether each agent fights the same neighbors every time, or whether the pairings are randomized.
 
-\py{i_row} and \py{j_row} contain the indices of pairings.  \py{totals} contains the total score of each agent.
+\py{i_row} and \py{j_row} contain the indices of the pairings.  \py{totals} contains the total score of each agent.
 
-At the end, we divide the total score by 2 to get the average of the two matches, and store the results in the \py{fitness} attribute of each agent.
+Inside the loop, we select two agents, invoke \py{play}, and update \py{totals}.  At the end, we compute the average number of points each agent got, per round and per opponent, and store the results in the \py{fitness} attribute of each agent.
 
 \section{The Simulation}
 
-The \py{Simulation} class for this chapter is similar to the one in Section~\ref{evosim}; the only differences are in \py{__init__} and \py{step}.
+The \py{Simulation} class for this chapter is based on the one in Section~\ref{evosim}; the only differences are in \py{__init__} and \py{step}.
 
 Here's the \py{__init__} method:
 
 \begin{code}
+class PDSimulation(Simulation):
+
     def __init__(self, tournament, agents):
         self.tournament = tournament
         self.agents = np.asarray(agents)
@@ -8885,47 +8862,178 @@ And here's \py{step}:
 \begin{code}
     def step(self):
         self.tournament.melee(self.agents)
+        Simulation.step(self)
+\end{code}
+
+This version of \py{step} uses \py{Tournament.melee}, which sets the \py{fitness} attribute for each agent; then it calls the \py{step} method from the parent class, from Section~\ref{evosim}:
+
+\begin{code}
+# class Simulation
+
+    def step(self):
+        n = len(self.agents)
         fits = self.get_fitnesses()
-        ps = prob_survive(fits)
         
         # see who dies
-        index_dead = self.choose_dead(ps)
+        index_dead = self.choose_dead(fits)
         num_dead = len(index_dead)
         
         # replace the dead with copies of the living
-        replacements = self.choose_replacements(num_dead, ps)
+        replacements = self.choose_replacements(num_dead, fits)
         self.agents[index_dead] = replacements
 
         # update any instruments
         self.update_instruments()
 \end{code}
 
-This version of \py{step} uses \py{Tournament.melee}, which sets the \py{fitness} attribute for each agent; it uses \py{get_fitnesses} to collect the agents' fitnesses in an array; then it uses \py{prob_survive}, which computes a logistic function to map from fitness to probability of survival (you can see the details in the notebook).
 
-The rest of \py{step} is the same as in Section~\ref{evosim}; it uses \py{choose_dead} to decide which agents die, and \py{choose_replacements} to decide which agents reproduce.
+\py{Simulation.step} collects the agents' fitnesses in an array; then it calls \py{choose_dead} to decide which agents die and \py{choose_replacements} to decide which agents reproduce.
 
-My simulation includes differential survival, as in Section~\ref{diffsurv}, but just random reproduction.  As one of the exercises at the end of this chapter, you will have a chance to explore the effect of differential reproduction.
+My simulation includes differential survival, as in Section~\ref{diffsurv}, but just random reproduction.  You can see the details in the notebook for this chapter.  As one of the exercises, you will have a chance to explore the effect of differential reproduction.
 
-%TODO: make that true
 
 \section{Results}
 
+Suppose we start with a population of three agents: one always cooperates, one always defects, and one plays the TFT strategy.  If we run \py{Tournament.melee} with this population, the cooperator gets 1.5 points per round, the TFT agent gets 1.9, and the defector gets 3.33.  This result suggests that ``always defect" should quickly become the dominant strategy.
+
+But ``always defect" contains the seeds of its own destruction.  If nicer strategies are driven to extinction, the defectors have no one to take advantage of.  Their fitness drops, and they become vulnerable to invasion by cooperators.
+
+Based on this analysis, it is not easy to predict how the system will behave: will it find a stable equilibrium, or oscillate between various points in the genotype landscape?  Let's run the simulation and find out!
+
+I start with 100 identical agents who always defect, and run the simulation for 5000 steps:
+
+\begin{code}
+tour = Tournament()
+agents = make_identical_agents(100, list('DDDDDDD'))
+sim = PDSimulation(tour, agents)
+\end{code}
 
 
+\begin{figure}
+\centerline{\includegraphics[height=3in]{figs/chap12-1.pdf}}
+\caption{Average fitness (points scored per round of Prisoner's Dilemma). }
+\label{chap12-1}
+\end{figure}
+
+Figure~\ref{chap12-1} shows mean fitness over time (using the \py{MeanFitness} instrument from Section~\ref{instrument}).  Initially mean fitness is 1, because when defectors face each other, they get only 1 point each per round.
+
+After about 500 time steps increases to nearly 3, which is what cooperators get when they face each other.  However, as we suspected, this situation in unstable.  Over the next 500 steps, mean fitness drops below 2, climbs back toward 3, and continues to oscillate.
+
+The rest of the simulation is highly variable, but with the exception of one big drop, mean fitness is usually between 2 and 3, with the long-term mean close to 2.5.
+
+And that's not bad!  It's not quite a utopia of cooperation, which would average 3 points per round, but it's a long way from the dystopia of perpetual defection.  And it's a lot better than what we might expect from the natural selection of self-interested agents.
+
+To get some insight into this level of fitness, let's look at a few more instruments.  \py{Niceness} measures the fraction of cooperation in the genotypes of the agents after each time step:
+
+\begin{code}
+class Niceness(Instrument):
+    
+    def update(self, sim):
+        responses = np.array([agent.values 
+                              for agent in sim.agents])
+        metric = np.mean(responses == 'C')
+        self.metrics.append(metric)
+\end{code}
 
 
+\begin{figure}
+\centerline{\includegraphics[height=3in,width=7in]{figs/chap12-2.pdf}}
+\caption{Average niceness across all genomes in the population (left), and fraction of population that cooperates in the first round (right).}
+\label{chap12-2}
+\end{figure}
+
+Figure~\ref{chap12-2} (left) shows the results: starting from 0, average niceness increases quickly to 0.75, then oscillates between 0.4 and 0.85, with a long-term mean near 0.65.  Again, that's a lot of niceness!
+
+Looking specifically at the opening move, we can track the fraction of agents that cooperate in the first round.  Here's the instrument:
+
+\begin{code}
+class Opening(Instrument):
+    
+    def update(self, sim):
+        responses = np.array([agent.values[0]
+                              for agent in sim.agents])
+        metric = np.mean(responses == 'C')
+        self.metrics.append(metric)
+\end{code}
+
+Figure~\ref{chap12-2} (right) shows the results, which are highly variables.  The fraction of agents who cooperate in the first round is often near 1, and occasionally near 0.  The long-term average is close to 0.65, similar to overall niceness.
+
+These results are consistent with Axelrod's tournaments; in general, nice strategies do well.  The other characteristics Axelrod identifies in successful strategies are retaliation and forgiveness.  To measure retaliation, I define this instrument:
+
+\begin{code}
+class Retaliating(Instrument):
+    
+    def update(self, sim):
+        after_d = np.array([agent.values[2::2] 
+                            for agent in sim.agents])
+        after_c = np.array([agent.values[1::2]
+                            for agent in sim.agents])
+        metric = np.mean(after_d=='D') - np.mean(after_c=='D')
+        self.metrics.append(metric)
+\end{code}
+
+\py{Retaliating} compares the number of elements in all genomes where an agent defects after the opponent defects (elements 2, 4, and 6) with the number of places where an agents defects after the opponent cooperates.  As you might expect by now, the results vary substantially (you can see the graph in the notebook).  On average the difference between these fractions is less than 0.1, so if agents defect 30\% of the time after the opponent cooperates, they might defect 40\% of the time after a defection.
+
+This result provides weak support for the claim that successful strategies retaliate.  Maybe it's not necessary for all agents, or even many, to be retaliatory; if there is at least some tendency toward retaliation in the population as a whole, that might be enough to prevent high-defection strategies from gaining ground.
+
+To measure forgiveness, I defined one more instrument to see whether agent's might be more likely to cooperate after D-C in the previous two rounds, compared to C-D.  In my simulations, there is no evidence for this particular kind of forgiveness.  On the other hand, the strategies in these simulations are forgiving, in some sense, because they consider only the previous two rounds of history.
 
 
-\section{Outro}
+\section{Conclusions}
 
-You have reached the end of the book.  Congratulations!  When you
-first read Chapter~\ref{overview}, some of the topics might not have
-made sense.  You might find it helpful to read that chapter again now.
-Then get to work on your case study!
+Axelrod's tournaments suggest a possible resolution to the problem of altruism: maybe being nice, but not {\em too} nice, is adaptive.  But the strategies in the original tournaments were designed by people, not evolution, and the distribution of strategies did not change over the course of the tournaments.
+
+So that raises a natural objection: strategies like TFT might do well in a fixed population of human-designed strategies, but can they evolve?  Could they appear in a population through mutation, compete successfully with their ancestors, and resist invasion by their descendants?
+
+The simulations in this chapter suggest:
+
+\begin{itemize}
+
+\item Populations of defectors are vulnerable to invasion by nicer strategies.
+
+\item Populations that are too nice are vulnerable to invasion by defectors.
+
+\item As a result, the average level of niceness oscillates, but the average amount of niceness is generally high, and the average level of fitness is generally closer to the cooperative utopia than to the dystopia of defection.
+
+\item TFT, which is a prevalent strategy in Alexrod's tournaments, does not see to be a specially optimal strategy in an evolving population.  In fact, there is probably no stable optimal strategy.
+
+\item It's possible that TFT doesn't prevail in my simulations because it's not necessary for all agents to retaliate.  If there is enough retaliation in the population as a whole, that might be enough to prevent invasion by defectors\footnote{And that introduces a whole new topic in game theory, the free-rider problem (see \url{https://en.wikipedia.org/wiki/Free-rider_problem})}. 
+
+\end{itemize}
+
+Obviously, the agents in these simulations are simple, and the Prisoner's Dilemma is a highly abstract model of a limited range of social interactions.  Nevertheless, the results in this chapter provide some insight into human nature.  Maybe our inclinations toward cooperation, retaliation, and forgiveness are innate, at least in part.  These characteristics are a result of how our brains are wired, which is controlled by our genes, at least in part.  And maybe our genes build our brains that way because over the history of human evolution, genes for less altruistic brains were less likely to propagate.  
+
+So maybe that's why selfish genes build altruistic brains.
+
 
 \section{Exercises}
 
 \begin{exercise}
+
+The simulations in this chapter depend on conditions and parameters I chose arbitrarily. As an exercise, I encourage you to explore other conditions to see what effect they have on the results. Here are some suggestions:
+
+\begin{enumerate}
+
+\item Vary the initial conditions: instead of starting with all defectors, see what happens if you start with all cooperators, all TFT, or random agents.
+
+\item In \py{Tournament.melee}, I shuffle the agents at the beginning of each time step, so each agent plays against two randomly-chosen agents. What happens if you don't shuffle? In that case, each agent would play against the same neighbors repeatedly. That might make it easier for a minority strategy to invade a majority, by taking advantage of locality.
+
+\item Since each agent only plays against two other agents, the outcome of each round is highly variable: an agent that would do well against most other agents might get unlucky during any given round, or the other way around. What happens if you increase the number of opponents each agent plays against during each round? Or what if an agent's fitness at the end of each step is the average of its current score and its fitness at the end of the previous round?
+
+\item The function I chose for \py{prob_survival} varies from 0.7 to 0.9, so the least fit agent, with \py{p=0.7}, lives for 3.33 timesteps, on average, and the most fit agent lives for 10 timesteps. What happens if you make \py{prob_survival} more or less "aggressive".
+
+\item I chose \py{num_rounds=6} so that each element of the genome has roughly the same impact on the outcome of a match. But that is substantially shorter than what Alexrod used in his tournaments. What happens if you increase \py{num_rounds}?  Note: if you explore the effect of this parameter, you might want to modify \py{Niceness} to measure the niceness of the last 4 elements of the genome, which will be under more selective pressure as \py{num_rounds} increases.
+
+\item My implementation has differential survival but just random reproduction. What happens if you add differential reproduction?
+
+\end{enumerate}
+
+\end{exercise}
+
+\begin{exercise}
+
+In my simulations, the population never converges to a state where a majority share the same, presumably optimal, genotype. There are two possible explanations for this outcome: one is that there is no optimal strategy, because whenever the population is dominated by a majority genotype, that condition creates an opportunity for a minority to invade; the other possibility is that the mutation rate is high enough to maintain a diversity of genotypes even if the majority is non-optimal. To distinguish between these explanations, try lowering the mutation rate to see what happens. Alternatively, start with a random population and run without mutation until only one genotype survives. Or run with mutation until the system reaches something like a steady state; then turn off mutation and run until there is only one surviving genotype. What are the characteristics of the genotypes that prevail in these conditions?
+
 \end{exercise}
 
 
@@ -8933,13 +9041,25 @@ Then get to work on your case study!
 
 
 
+\chapter{Outro}
 
+You have reached the end of the book.  Congratulations!  When you
+first read Chapter~\ref{overview}, some of the topics might not have
+made sense.  You might find it helpful to read that chapter again now.
+Then get to work on your case study!
+
+More to say, coming soon.
+
+% Instrumentalism and particle-wave duality
+
+% Problem of free will, and what complexity has to say about it
 
 
 
 \appendix
 
 \chapter{Analysis of algorithms}
+\label{algorithms}
 
 Analysis of algorithms is the branch of computer science that studies
 the performance of algorithms, especially their run time and space
