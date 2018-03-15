@@ -6021,7 +6021,7 @@ excess spills over the edge.
 
 \index{2-D cellular automaton} \index{state}
 
-Bak, Tang and Wiesenfeld initialize all cells a level
+Bak, Tang and Wiesenfeld initialize all cells at a
 level greater than \py{K} and run the model until it stabilizes.
 Then they observe the effect of small perturbations; they choose a
 cell at random, increment its value by 1, and run the model,
@@ -6034,7 +6034,7 @@ the pile takes to stabilize, and \py{S}, the total number of cells
 that topple\footnote{The original paper uses a different definition
 of \py{S}, but most later work uses this definition.}.
 
-Most of the time, dropping an single grain causes no cells to topple,
+Most of the time, dropping a single grain causes no cells to topple,
 so \py{T=1} and \py{S=0}.  But occasionally a single grain can cause an
 {\bf avalanche} that affects a substantial fraction of the grid.  The
 distributions of \py{T} and \py{S} turn out to be heavy-tailed, which
