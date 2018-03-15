@@ -6077,6 +6077,7 @@ topples them:
 
     def step(self, K=3):
         toppling = self.array > K
+        num_toppled = np.sum(toppling)
         c = correlate2d(toppling, self.kernel, mode='same')
         self.array += c
         return num_toppled
