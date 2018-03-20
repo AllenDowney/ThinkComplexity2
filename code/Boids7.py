@@ -1,7 +1,4 @@
-""" Code example from Complexity and Computation, a book about
-exploring complexity science with Python.  Available free from
-
-http://greenteapress.com/complexity
+""" Code example from Think Complexity, by Allen Downey.
 
 Original code by Matt Aasted, modified by Allen Downey.
 
@@ -12,11 +9,9 @@ Copyright 2011 Allen B. Downey.
 Distributed under the GNU General Public License at gnu.org/licenses/gpl.html.
 """
 
-
 from vpython import *
 
 import numpy as np
-
 
 # size of the boids
 b_radius = 0.03
@@ -41,6 +36,7 @@ w_love = 10
 # time step
 dt = 0.1
 
+null_vector = vector(0,0,0)
 
 
 def random_vector(a, b):
@@ -56,13 +52,8 @@ def limit_vector(vect):
     return vect
 
 
-null_vector = vector(0,0,0)
-
-
-
-
 class Boid(cone):
-    """A Boid is a VPython cone with a velocity"""
+    """A Boid is a VPython cone with a velocity and an axis."""
 
     def __init__(self, radius=b_radius, length=b_length):
         pos = random_vector(0, 1)
@@ -76,9 +67,9 @@ class Boid(cone):
         for other in others:
             if other is self: continue
             offset = other.pos - self.pos
-            
+
             # if not in range, skip it
-            if offset.mag > radius: 
+            if offset.mag > radius:
                 continue
 
             # if not within viewing angle, skip it
@@ -87,12 +78,12 @@ class Boid(cone):
 
             # otherwise add it to the list
             boids.append(other)
-            
+
         return boids
 
     def avoid(self, others, carrot):
         """Find the center of mass of all objects in range and
-        returns a vector in the opposite direction, with magnitude
+        return a vector in the opposite direction, with magnitude
         proportional to the inverse of the distance (up to a limit)."""
         others = others + [carrot]
         close = self.get_neighbors(others, r_avoid, a_avoid)
@@ -107,7 +98,7 @@ class Boid(cone):
 
     def center(self, others):
         """Find the center of mass of other boids in range and
-        returns a vector pointing toward it."""
+        return a vector pointing toward it."""
         close = self.get_neighbors(others, r_center, a_center)
         t = [other.pos for other in close]
         if t:
@@ -119,7 +110,7 @@ class Boid(cone):
 
     def copy(self, others):
         """Return the average heading of other boids in range.
-        
+
         others: list of Boids
         """
         close = self.get_neighbors(others, r_copy, a_copy)
@@ -138,12 +129,12 @@ class Boid(cone):
 
     def set_goal(self, boids, carrot):
         """Sets the goal to be the weighted sum of the goal vectors."""
-        self.goal = (w_avoid * self.avoid(boids, carrot) + 
+        self.goal = (w_avoid * self.avoid(boids, carrot) +
                      w_center * self.center(boids) +
-                     w_copy * self.copy(boids) + 
+                     w_copy * self.copy(boids) +
                      w_love * self.love(carrot))
         self.goal.mag = 1
-        
+
     def move(self, mu=0.1):
         """Update the velocity, position and axis vectors.
         mu controls how fast the boids can turn (maneuverability)."""
@@ -155,21 +146,19 @@ class Boid(cone):
         self.axis = b_length * self.vel.norm()
 
 
-
-
 class World(object):
-    
+
     def __init__(self, n=10):
         """Create n Boids and one carrot.
 
         tracking: indicates whether the carrot follows the mouse
         """
         self.boids = [Boid() for i in range(n)]
-        self.carrot = sphere(pos=vector(1,0,0), 
-                             radius=0.1, 
+        self.carrot = sphere(pos=vector(1,0,0),
+                             radius=0.1,
                              color=vector(1,0,0))
         self.tracking = False
-        
+
     def step(self):
         """Compute one time step."""
         # move the boids
@@ -182,7 +171,6 @@ class World(object):
             self.carrot.pos = scene.mouse.pos
 
 
-
 n = 20
 size = 5
 
@@ -191,12 +179,14 @@ scene.center = world.carrot.pos
 scene.autoscale = False
 
 def toggle_tracking(evt):
+    """If we're currently tracking, turn it off, and vice versa.
+    """
     world.tracking = not world.tracking
 
+# when the user clicks, toggle tracking.
 scene.bind('click', toggle_tracking)
 
 while 1:
     # update the screen once per time step
     rate(1/dt)
     world.step()
-
