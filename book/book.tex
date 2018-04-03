@@ -333,6 +333,7 @@ Finally, all supporting software has been updated to Python 3 (but also runs unm
 \section{Using the code}
 \label{code}
 
+
 All code used in this book is available from a Git repository on GitHub:
 \url{https://github.com/AllenDowney/ThinkComplexity2}.  
 If you are not familiar with Git, it is a 
@@ -470,7 +471,7 @@ pointed out typos.
 found typos and made helpful suggestions.
 
 %\item I am grateful to the program committee that read and selected
-%the case studies included in this book: 
+%the case studies included in this book:
 %Sarah Spence Adams,
 %John Geddes,
 %Stephen Holt,
@@ -492,10 +493,10 @@ found typos and made helpful suggestions.
 
 \end{itemize}
 
-Other people who reported errors include 
+Other people who reported errors include
 Richard Hollands,
 Muhammad Najmi bin Ahmad Zabidi,
-Alex Hantman, and 
+Alex Hantman, and
 Jonathan Harford.
 
 
@@ -683,7 +684,7 @@ clarify {\em why} it was inevitable.
 
 Strogatz is a mathematician, so his enthusiasm for proofs is
 understandable, but his proof doesn't address what is, to me, the
-most interesting part the phenomenon.  In order to prove that ``sync
+most interesting part of the phenomenon.  In order to prove that ``sync
 was inevitable'', Strogatz makes several simplifying assumptions, in
 particular that each firefly can see all the others.
 
@@ -899,7 +900,7 @@ systems:
 \index{decentralized}
 \index{client-server architecture}
 \index{peer-to-peer architecture}
-  
+
 \item[Isolation $\rightarrow$ interaction] In classical engineering,
   the complexity of large systems is managed by isolating components
   and minimizing interactions.  This is still an important engineering
@@ -913,7 +914,7 @@ systems:
 \item[One-to-many $\rightarrow$ many-to-many] In many communication
   systems, broadcast services are being augmented, and sometimes
   replaced, by services that allow users to communicate with each
-  other and create, share, and modify content.  
+  other and create, share, and modify content.
 
 \index{broadcast service}
 
@@ -1027,7 +1028,7 @@ developments in logic and epistemology.
   Some concepts that are called ``physical laws'' are really
   definitions; others are, in effect, the assertion that a model
   predicts or explains the behavior of a system particularly well.
-  We come back to the nature of physical laws 
+  We come back to the nature of physical laws
   in Section~\ref{model1}, Section~\ref{model3} and Section~\ref{model2}.
 
 \item[Determinism $\rightarrow$ indeterminism] Determinism is the view
@@ -1210,7 +1211,7 @@ And we can use \py{edges} to get the list of edges:
 
 \begin{code}
 >>> G.edges()
-[('Alice', 'Bob'), ('Alice', 'Chuck'), 
+[('Alice', 'Bob'), ('Alice', 'Chuck'),
  ('Bob', 'Alice'), ('Bob', 'Chuck')]
 \end{code}
 
@@ -1219,9 +1220,9 @@ NetworkX provides several functions for drawing graphs;
 with edges:
 
 \begin{code}
-nx.draw_circular(G, 
-                 node_color=COLORS[0], 
-                 node_size=2000, 
+nx.draw_circular(G,
+                 node_color=COLORS[0],
+                 node_size=2000,
                  with_labels=True)
 \end{code}
 
@@ -1270,15 +1271,15 @@ Now I can use \py{add_edges_from}, which iterates the keys of
 G.add_edges_from(drive_times)
 \end{code}
 
-Now instead of \py{draw_circular}, which arranges the nodes in 
+Now instead of \py{draw_circular}, which arranges the nodes in
 a circle, I'll use \py{draw}, which takes \py{pos} as the second
 parameter:
 
 \begin{code}
-nx.draw(G, pos, 
-        node_color=COLORS[1], 
-        node_shape='s', 
-        node_size=2500, 
+nx.draw(G, pos,
+        node_color=COLORS[1],
+        node_shape='s',
+        node_size=2500,
         with_labels=True)
 \end{code}
 
@@ -1288,7 +1289,7 @@ nx.draw(G, pos,
 To add the edge labels, we use \py{draw_networkx_edge_labels}:
 
 \begin{code}
-nx.draw_networkx_edge_labels(G, pos, 
+nx.draw_networkx_edge_labels(G, pos,
                              edge_labels=drive_times)
 \end{code}
 
@@ -1388,9 +1389,9 @@ The following code makes a complete graph with 10 nodes and draws it.
 
 \begin{code}
 complete = make_complete_graph(10)
-nx.draw_circular(complete, 
-                 node_color=COLORS[2], 
-                 node_size=1000, 
+nx.draw_circular(complete,
+                 node_color=COLORS[2],
+                 node_size=1000,
                  with_labels=True)
 \end{code}
 
@@ -1484,7 +1485,7 @@ neighbors of node 0).
 
 The next time through the loop, \py{pop} returns the last element
 in the stack, which is node 9.  So node 9 gets added to \py{seen}
-and its neighbors get added to the stack.  
+and its neighbors get added to the stack.
 
 Notice that the same node can appear more than once in the stack;
 in fact, a node with $k$ neighbors will be added to the stack
@@ -1704,7 +1705,7 @@ constant time, and then add the neighbors to the stack, which is
 linear in the number of neighbors.
 
 To express the run time in terms of $\V$ and $\E$, we can add up
-the total number of times each node is added \py{seen}
+the total number of times each node is added to \py{seen}
 and \py{stack}.
 
 Each node is only added to \py{seen} once, so the total number
@@ -1874,7 +1875,7 @@ links in the social network, they should have taken 32 hops, not six.
 \section{Watts and Strogatz}
 
 In 1998 Duncan Watts and Steven Strogatz published a paper in {\em
-  Nature}, ``Collective dynamics of 'small-world' networks'', that
+  Nature}, ``Collective dynamics of `small-world' networks'', that
 proposed an explanation for the small world phenomenon.  You can
 download it from
 \url{http://www.nature.com/nature/journal/v393/n6684/abs/393440a0.html}.
@@ -1980,7 +1981,7 @@ of the node.
 A ring lattice is a kind of regular graph, which Watts and Strogatz
 use as the basis of their model.
 In a ring lattice with $n$ nodes, the nodes can be arranged in a circle
-with each node connected the $k$ nearest neighbors.
+with each node connected to the $k$ nearest neighbors.
 
 For example, a ring lattice with $n=3$
 and $k=2$ would add the following edges: $(0, 1)$, $(1, 2)$, and
@@ -2080,7 +2081,7 @@ have to choose a replacement for \py{v}, called \py{new_v}.
 To compute the possible choices,
 we start with \py{nodes}, which is a set,
 and subtract off \py{u} and its neighbors, which avoids self
-loops and multiple edges.  
+loops and multiple edges.
 
 Then we choose \py{new_v} from \py{choices}, remove the existing
 edge from \py{u} to \py{v}, and add a new edge from \py{u} to
@@ -2094,7 +2095,7 @@ This function does not consider the edges in the order specified
 by Watts and Strogatz, but it doesn't seem to affect
 the results.
 
-Figure~\ref{chap03-2} shows WS graphs with $n=20$, $k=4$, and 
+Figure~\ref{chap03-2} shows WS graphs with $n=20$, $k=4$, and
 a range of values of $p$.  When $p=0$, the graph is a ring lattice.
 When $p=1$, it is completely random.  As we'll see, the interesting
 things happen in between.
@@ -2118,7 +2119,7 @@ a ``coefficient'' because it is always between 0 and 1.
 If we compute the average of $C_u$ over all nodes, we get the
 ``network average clustering coefficient'', denoted $\bar{C}$.
 
-Here is a function that computes it. 
+Here is a function that computes it.
 
 \begin{code}
 def node_clustering(G, u):
@@ -2126,9 +2127,9 @@ def node_clustering(G, u):
     k = len(neighbors)
     if k < 2:
         return 0
-        
+
     total = k * (k-1) / 2
-    exist = 0    
+    exist = 0
     for v, w in all_pairs(neighbors):
         if G.has_edge(v, w):
             exist +=1
@@ -2145,7 +2146,7 @@ Otherwise we compute the number of possible edges among the neighbors,
 exist.  The result is the fraction of all edges that exist.
 
 We can test the function like this:
-   
+
 \begin{code}
 >>> lattice = make_ring_lattice(10, 4)
 >>> node_clustering(lattice, 1)
@@ -2157,7 +2158,7 @@ is 0.5 (if you are not convinced, take another look at
 Figure~\ref{chap03-1}).
 
 Now we can compute the network average clustering coefficient like this:
-   
+
 \begin{code}
 def clustering_coefficient(G):
     cc = np.mean([node_clustering(G, node) for node in G])
@@ -2242,7 +2243,7 @@ mean path length, \py{mpl}, and clustering coefficient \py{cc}:
 
 \begin{code}
 def run_one_graph(n, k, p):
-    ws = make_ws_graph(n, k, p)    
+    ws = make_ws_graph(n, k, p)
     mpl = characteristic_path_length(ws)
     cc = clustering_coefficient(ws)
     print(mpl, cc)
@@ -2521,7 +2522,7 @@ problem'', which means that it finds the minimum distance from a given
 connected node).
 
 \index{shortest path}
-\index{single source shortest path} 
+\index{single source shortest path}
 \index{Dijkstra's algorithm}
 
 We start with a simplified version of the algorithm that
@@ -2546,7 +2547,7 @@ def shortest_path_dijkstra(G, start):
         neighbors = set(G[node]) - set(dist)
         for n in neighbors:
             dist[n] = new_dist
-        
+
         queue.extend(neighbors)
     return dist
 \end{code}
@@ -2651,7 +2652,7 @@ def _plain_bfs(G, source):
 
 Compare this function to \py{reachable_nodes_bfs} and see which is
 faster.  Then see if you can modify this function to implement a
-faster version of \py{shortest_path_dijkstra}
+faster version of \py{shortest_path_dijkstra}.
 
 \end{exercise}
 
@@ -2783,7 +2784,7 @@ high connectivity and low path lengths characteristic of small world
 graphs.
 
 In this section we'll perform the same analysis with a different
-dataset, a set Facebook users and their friends.  If you are not
+dataset, a set of Facebook users and their friends.  If you are not
 familiar with Facebook, users who are connected to each other are
 called ``friends'', regardless of the nature of their relationship in
 the real world.
@@ -2846,7 +2847,7 @@ this:
     from networkx.algorithms.approximation import average_clustering
     average_clustering(G, trials=1000)
 \end{code}
-    
+
 The following function does something similar for path lengths.
 
 \begin{code}
@@ -2857,7 +2858,7 @@ def random_path_lengths(G, nodes=None, trials=1000):
         nodes = list(nodes)
 
     pairs = np.random.choice(nodes, (trials, 2))
-    lengths = [nx.shortest_path_length(G, *pair) 
+    lengths = [nx.shortest_path_length(G, *pair)
                for pair in pairs]
     return lengths
 \end{code}
@@ -2875,7 +2876,7 @@ The result is a list of path lengths.
 
 \py{estimate_path_length} generates a list of random path lengths and
 returns their mean:
-    
+
 \begin{code}
 def estimate_path_length(G, nodes=None, trials=1000):
     return np.mean(random_path_lengths(G, nodes, trials))
@@ -2981,7 +2982,7 @@ What's going on here?  To get a better view, we have to look at the
 {\bf distribution} of degrees, not just the mean and standard deviation.
 
 I'll represent the distribution of degrees with a \py{Pmf} object,
-which is defined in the \py{thinkstats2} module.  
+which is defined in the \py{thinkstats2} module.
 \py{Pmf} stands for ``probability mass function'';
 if you are not familiar with this concept,
 you might want to read Chapter 3 of {\it Think Stats, 2nd edition}
@@ -3049,14 +3050,14 @@ thinkplot.Pdf(pmf_ws, label='WS graph')
 
 Figure~\ref{chap04-1} shows the two distributions.  They are
 very different.
-  
+
 In the WS model, most users have about 44 friends; the minimum is 38
 and the maximum is 50.  That's not much variation.
 In the dataset, there are many users with only 1 or 2 friends,
 but one has more than 1000!
 
 Distributions like this, with many small values and a few very large
-values, are called {\bf heavy-tailed}.  
+values, are called {\bf heavy-tailed}.
 
 
 \section{Heavy-tailed distributions}
@@ -3218,9 +3219,9 @@ models intended to capture all of these characteristics.
 \centering
 \begin{tabular}{lrrr}
 \hline
-            & \textbf{Facebook} & \textbf{WS model} & \textbf{BA model} \\ 
+            & \textbf{Facebook} & \textbf{WS model} & \textbf{BA model} \\
 \hline
-C           & 0.61             & 0.63             & 0.037             \\ 
+C           & 0.61             & 0.63             & 0.037             \\
 L           & 3.69              & 3.23              & 2.51              \\
 mean degree & 43.7              & 44                & 43.7              \\
 std degree  & 52.4              & 1.5               & 40.1              \\
@@ -3282,7 +3283,7 @@ Each time through the loop, we add edges from the source to
 each node in \py{targets}.  Then we update \py{repeated_nodes} by
 adding each target once and the new node \py{k} times.
 
-Finally, we choose a subject of the nodes to be targets for the
+Finally, we choose a subset of the nodes to be targets for the
 next iteration.  Here's the definition of \py{_random_subset}:
 
 \begin{code}
@@ -3331,7 +3332,7 @@ def cumulative_prob(pmf, x):
 \end{code}
 
 For example, given the degree distribution in the dataset,
-\py{pmf_pf}, we can compute the fraction of users with 25 or fewer
+\py{pmf_fb}, we can compute the fraction of users with 25 or fewer
 friends:
 
 \begin{code}
@@ -3386,7 +3387,7 @@ The {\bf complementary CDF} (CCDF) is defined
 
 \[ \CCDF(x) = 1 - \CDF(x) \]
 
-If is useful because if the PMF follows a power law, the CCDF 
+If is useful because if the PMF follows a power law, the CCDF
 also follows a power law:
 
 \[ \CCDF(x) = \left( \frac{x}{x_m} \right)^{-\alpha} \]
@@ -3507,7 +3508,7 @@ that would provide evidence in favor of one model over the other?
 
 Choosing among competing models is the topic of Thomas Kuhn's
 essay, ``Objectivity, Value Judgment, and Theory Choice'', which
-you can read at 
+you can read at
 \url{https://github.com/AllenDowney/ThinkComplexity2/blob/master/papers/kuhn.pdf}.
 \index{Kuhn, Thomas}
 \index{theory choice}
@@ -3752,7 +3753,7 @@ of itself.  Rule 18 makes the nested structure even clearer;
 Figure~\ref{chap05-3} shows what it looks like after 64 steps.
 
 \index{Rule 18}
- 
+
 \newcommand{\Sierpinski}{Sierpi\'{n}ski}
 
 This pattern resembles the \Sierpinski~triangle, which
@@ -4159,7 +4160,7 @@ not very detailed or realistic.
 
 For example, some species of cone snail produce a pattern on their
 shells that resembles the patterns generated by cellular automatons
-(seee \url{en.wikipedia.org/wiki/Cone_snail}).  So it is natural to
+(see \url{en.wikipedia.org/wiki/Cone_snail}).  So it is natural to
 suppose that a CA is a model of the mechanism that produces patterns
 on shells as they grow.  But, at least initially, it is not clear how
 the elements of the model (so-called cells, communication between
@@ -4227,7 +4228,7 @@ the results.  In the next few sections I explain how they work.
 
 To store the state of the CA, I use a NumPy array, which is a
 multi-dimensional data structure whose elements are all the same type.
-It is similar to a nested list, but usually smaller and faster.  
+It is similar to a nested list, but usually smaller and faster.
 Figure~\ref{fig.array} shows why.
 The diagram on the left shows a list of lists of integers; each
 dot represents a reference, which takes up 4--8 bytes.  To access
@@ -4304,7 +4305,7 @@ element is the sum of three elements from the previous row, mod 2.
 
 The \py{step} function in the previous section is simple, but it is
 not very fast.  In general, we can speed up operations like this
-if we replace \py{for} loops with NumPy operations, because 
+if we replace \py{for} loops with NumPy operations, because
 \py{for} loops incur a lot of overhead in the Python interpreter.
 In this section I'll show how we can speed up \py{step} using the
 NumPy function \py{correlate}.
@@ -4356,7 +4357,7 @@ def step2(array, i):
 \end{code}
 
 \py{roll} shifts the window to the right (it also wraps it around to the
-beginning, but that doesn't affect this function).  
+beginning, but that doesn't affect this function).
 
 \py{step2} yields the same results as \py{step}.  It is still not
 very fast, but it is a step in the right direction because the
@@ -4451,8 +4452,8 @@ exercises in this chapter.  My solutions are in {\tt chap05soln.ipynb}.
 
 \begin{exercise}
 
-This exercise asks you to experiment with Rule 110 and 
-some of its spaceships.  
+This exercise asks you to experiment with Rule 110 and
+some of its spaceships.
 
 \begin{enumerate}
 
@@ -4507,8 +4508,8 @@ see \url{http://mathworld.wolfram.com/TuringMachine.html}.
 \begin{exercise}
 
 This exercise asks you to implement and test several PRNGs.
-For testing, you will need to install 
-\py{DieHarder}, which you can download from 
+For testing, you will need to install
+\py{DieHarder}, which you can download from
 \url{https://www.phy.duke.edu/~rgb/General/dieharder.php}, or it
 might be available as a package for your operating system.
 \index{DieHarder}
@@ -4723,14 +4724,14 @@ is an oscillator that alternates between two states.  The
 \index{oscillator}
 
 Finally, some patterns oscillate and return to the starting
-configuration, but shifted in space.  Because these patterns 
+configuration, but shifted in space.  Because these patterns
 seem to move, they are called ``spaceships''.
 
 Figure~\ref{chap06-3} shows a spaceship called a
 ``glider''.  After a period of 4 steps, the glider is back in the
 starting configuration, shifted one unit down and to the right.
 
-\index{glider} 
+\index{glider}
 \index{spaceship}
 
 Depending on the starting orientation, gliders can move along any
@@ -4864,7 +4865,7 @@ scene.
 {\bf Scientific realism} pertains to scientific theories and the
 entities they postulate.
 A theory postulates an entity if it is
-expressed in terms of the properties and behavior of the entity.  
+expressed in terms of the properties and behavior of the entity.
 For example, theories about electromagnetism are expressed in
 terms of electrical and magnetic fields.  Some theories about economics
 are expressed in terms of supply, demand, and market forces.
@@ -5080,14 +5081,14 @@ b = (c==3) | (c==12) | (c==13)
 b = b.astype(np.uint8)
 \end{code}
 
-This version of the kernel includes the center cell and gives it a 
+This version of the kernel includes the center cell and gives it a
 weight of 10.  If the center cell is 0, the result is between 0 and 8;
 if the center cell is 1, the result is between 10 and 18.
 Using this kernel, we can simplify the logical operations, selecting
-only cells with the values 3, 12, and 13.  
+only cells with the values 3, 12, and 13.
 
 That might not seem like a big improvement, but it allows one more
-simplification: with this kernel, we can use a table to look up 
+simplification: with this kernel, we can use a table to look up
 cell values, as we did in Section~\ref{tables}.
 
 \begin{code}
@@ -5357,12 +5358,12 @@ And here is the \py{step} function that updates the arrays:
         A = self.array
         B = self.array2
         ra, rb, f, k = self.params
-        
+
         cA = correlate2d(A, self.kernel, **self.options)
         cB = correlate2d(B, self.kernel, **self.options)
 
         reaction = A * B**2
-        self.array += ra * cA - reaction + f * (1-A) 
+        self.array += ra * cA - reaction + f * (1-A)
         self.array2 += rb * cB + reaction - (f+k) * B
 \end{code}
 
@@ -5388,7 +5389,7 @@ Now let's look more closely at the update statements:
 
 \begin{code}
         reaction = A * B**2
-        self.array += ra * cA - reaction + f * (1-A) 
+        self.array += ra * cA - reaction + f * (1-A)
         self.array2 += rb * cB + reaction - (f+k) * B
 \end{code}
 
@@ -5405,7 +5406,7 @@ The term \py{f * (1-A)} determines the rate that \py{A} is added to
 the system.  Where \py{A} is near 0, the maximum feed rate is \py{f}.
 Where \py{A} approaches 1, the feed rate drops off to zero.
 
-Finally, the term \py{(f+k) * B} determines the rate the \py{B} is
+Finally, the term \py{(f+k) * B} determines the rate that \py{B} is
 removed from the system.  As \py{B} approaches 0, this rate goes
 to zero.
 
@@ -5454,7 +5455,7 @@ Figure~\ref{chap07-4} shows results with \py{f=0.039} and
 divide in a process that resembles mitosis, ending with a stable pattern
 of equally-spaced spots.
 
-Since 1952, observations and experiments have provides some support
+Since 1952, observations and experiments have provided some support
 for Turing's conjecture.  At this point it seems likely, but not yet
 proven, that many animal patterns are actually formed by
 reaction-diffusion processes of some kind.
@@ -5573,7 +5574,7 @@ def test_perc(perc):
 
         if perc.bottom_row_wet():
             return True, num_steps
-        
+
         new_num_wet = perc.num_wet()
         if new_num_wet == num_wet:
             return False, num_steps
@@ -5604,7 +5605,7 @@ def estimate_prob_percolating(p=0.5, n=100, iters=100):
         flag, _ = test_perc(perc)
         if flag:
             count += 1
-        
+
     return count / iters
 \end{code}
 
@@ -5615,7 +5616,7 @@ that do.
 
 When \py{p=0.55}, the probability of a percolating cluster is near 0.
 At \py{p=0.60}, it is about 70\%, and at \py{p=0.65} it is near 1.
-This rapid transition indicates that there is a critical value of 
+This rapid transition indicates that there is a critical value of
 \py{p} near 0.6.
 
 We can estimate the critical value more precisely using a random
@@ -5699,13 +5700,13 @@ $i^2$, for purposes of comparison, and the total number of cells.
 def count_cells(rule, n=500):
     ca = Cell1D(rule, n)
     ca.start_single()
-    
+
     res = []
     for i in range(1, n):
         cells = np.sum(ca.array)
         res.append((i, i**2, cells))
         ca.step()
-        
+
     return res
 \end{code}
 
@@ -5872,7 +5873,7 @@ heavy-tailed distributions, which we saw in Chapter~\ref{heavytail}
 and pink noise, which I'll explain in this chapter.
 
 These properties are interesting in part because they appear
-frequently in nature; that is, many natural systems produce 
+frequently in nature; that is, many natural systems produce
 fractal-like geometry, heavy-tailed distributions, and pink noise.
 
 This observation raises a natural question: why do so many natural
@@ -5958,7 +5959,7 @@ excess spills over the edge.
 
 \index{2-D cellular automaton} \index{state}
 
-Bak, Tang and Wiesenfeld initialize all cells a level
+Bak, Tang and Wiesenfeld initialize all cells at a
 level greater than \py{K} and run the model until it stabilizes.
 Then they observe the effect of small perturbations; they choose a
 cell at random, increment its value by 1, and run the model,
@@ -5971,7 +5972,7 @@ the pile takes to stabilize, and \py{S}, the total number of cells
 that topple\footnote{The original paper uses a different definition
 of \py{S}, but most later work uses this definition.}.
 
-Most of the time, dropping an single grain causes no cells to topple,
+Most of the time, dropping a single grain causes no cells to topple,
 so \py{T=1} and \py{S=0}.  But occasionally a single grain can cause an
 {\bf avalanche} that affects a substantial fraction of the grid.  The
 distributions of \py{T} and \py{S} turn out to be heavy-tailed, which
@@ -6014,6 +6015,7 @@ topples them:
 
     def step(self, K=3):
         toppling = self.array > K
+        num_toppled = np.sum(toppling)
         c = correlate2d(toppling, self.kernel, mode='same')
         self.array += c
         return num_toppled
@@ -6085,7 +6087,7 @@ And here's the result.
 
 So that's how \py{step} works.
 
-By default, \py{correlate2d} considers the boundary of the array 
+By default, \py{correlate2d} considers the boundary of the array
 to be fixed at zero, so any grains of sand that go over the edge
 disappear.
 
@@ -6144,7 +6146,7 @@ pile after dropping 200 grains onto random cells, each time running
 until the pile reaches equilibrium.  The symmetry of the initial
 configuration has been broken; the configuration looks random.
 
-Finally Figure~\ref{chap08-1} (right) shows the configuration 
+Finally Figure~\ref{chap08-1} (right) shows the configuration
 after 400 drops.  It looks similar to the configuration after 200
 drops.  In fact, the pile is now in a steady state where its statistical
 properties don't change over time.  I'll explain some of those
@@ -6268,7 +6270,7 @@ levels 0, 1, 2, and 3, and plot them separately:
 def draw_four(viewer, vals=range(4)):
     thinkplot.preplot(rows=2, cols=2)
     a = viewer.viewee.array
-    
+
     for i, val in enumerate(vals):
         thinkplot.subplot(i+1)
         viewer.draw_array(a==vals[i], vmax=1)
@@ -6302,7 +6304,7 @@ Here's my implementation:
 def count_cells(a):
     n, m = a.shape
     end = min(n, m)
-    
+
     res = []
     for i in range(1, end, 2):
         top = (n-i) // 2
@@ -6310,7 +6312,7 @@ def count_cells(a):
         box = a[top:top+i, left:left+i]
         total = np.sum(box)
         res.append((i, i**2, total))
-        
+
     return np.transpose(res)
 \end{code}
 
@@ -6395,7 +6397,7 @@ see if the estimated dimensions are consistent.
 The title of the original paper that presented the sand pile model
 is ``Self-Organized Criticality: An Explanation of $1/f$ Noise''.
 As the subtitle suggests, Bak, Tang and Wiesenfeld were trying to
-explain why many natural and engineered systems exhibit $1/f$ 
+explain why many natural and engineered systems exhibit $1/f$
 noise, which is also known as ``flicker noise'' and ``pink noise''.
 
 To understand pink noise, we have to take a detour to understand
@@ -6419,7 +6421,7 @@ signals, spectral analysis, and noise.
 
 \item[Noise:] In common use, ``noise'' is usually an unwanted sound,
   but in the context of signal processing, it is a signal that
-  contains many frequency components.  
+  contains many frequency components.
 
 \end{description}
 
@@ -6517,7 +6519,7 @@ This result confirms that the sand pile model generates pink noise.
 
 \section{Reductionism and Holism}
 \label{model2}
- 
+
 The original paper by Bak, Tang and Wiesenfeld is one of
 the most frequently-cited papers in the last few decades.
 Other systems have been shown to be self-organized critical,
@@ -6720,6 +6722,7 @@ events may be fundamentally unpredictable and unexplainable.
 
 \begin{exercise}
 
+
 The code for this chapter is in the Jupyter notebook {\tt chap08.ipynb}
 in the repository for this book.  Open this notebook, read the code,
 and run the cells.  You can use this notebook to work on the
@@ -6855,7 +6858,7 @@ interact with each other locally.  They usually have imperfect,
 incomplete information about the world.
 
 Often there are differences among agents, unlike previous models where
-all components are identical.  And agent-based models often include 
+all components are identical.  And agent-based models often include
 randomness, either among the agents or in the world.
 
 Since the 1970s, agent-based modeling has become an important tool in
@@ -6935,7 +6938,7 @@ inherits from \py{Cell2D}:
 
 \begin{code}
 class Schelling(Cell2D):
-    
+
     def __init__(self, n, m=None, p=0.5):
         self.p = p
         m = n if m is None else m
@@ -6962,7 +6965,7 @@ First, I'll make logical arrays indicating which cells are
 red, blue, and occupied:
 
 \begin{code}
-        a = self.array        
+        a = self.array
         red = a==1
         blue = a==2
         occupied = a!=0
@@ -7171,7 +7174,7 @@ agent has three randomly-chosen attributes:
 from a uniform distribution between 5 and 25 units.
 
 \item[Metabolism:] Each agent has some amount of sugar they must
-consumer per time step, chosen uniformly between 1 and 4.
+consume per time step, chosen uniformly between 1 and 4.
 
 \item[Vision:] Each agent can ``see'' the amount
 of sugar in nearby cells and move to the cell with the most, but
@@ -7340,14 +7343,14 @@ And here's the \py{Sugarscape} class and its \py{step} method
 class Sugarscape(Cell2D):
 
     def step(self):
-        
+
         # loop through the agents in random order
         random_order = np.random.permutation(self.agents)
         for agent in random_order:
-            
+
             # mark the current cell unoccupied
             self.occupied.remove(agent.loc)
-            
+
             # execute one step
             agent.step(self)
 
@@ -7462,7 +7465,7 @@ property, but it is a weak example because we could
 reasonably predict it based on the distributions of vision, metabolism,
 and lifespan.  The wave behavior we saw in the last example might
 be a stronger example, since the wave displays a capability -- diagonal
-movement -- that the agents clearly do not have. 
+movement -- that the agents clearly do not have.
 
 Emergent properties are surprising: it is hard to predict the behavior
 of the system even if we know all the rules.  That difficulty is not
@@ -7623,7 +7626,7 @@ Here's the class that represents the ``highway'':
 
 \begin{code}
 class Highway:
-    
+
     def __init__(self, n=10, length=1000, eps=0):
         self.length = length
         self.eps = eps
@@ -7631,7 +7634,7 @@ class Highway:
         # create the drivers
         locs = np.linspace(0, length, n, endpoint=False)
         self.drivers = [Driver(loc) for loc in locs]
-        
+
         # and link them up
         for i in range(n):
             j = (i+1) % n
@@ -7672,18 +7675,18 @@ And here's the \py{move} method:
         acc = min(acc, self.max_acc)
         acc = max(acc, self.min_acc)
         speed = driver.speed + acc
-            
+
         # add random noise to speed
         speed *= np.random.uniform(1-self.eps, 1+self.eps)
-        
+
         # keep it nonnegative and under the speed limit
         speed = max(speed, 0)
         speed = min(speed, self.speed_limit)
-        
+
         # if current speed would collide, stop
         if speed > d:
             speed = 0
-            
+
         # update speed and loc
         driver.speed = speed
         driver.loc += speed
@@ -7723,11 +7726,11 @@ Here's the definition for the \py{Driver} class:
 
 \begin{code}
 class Driver:
-    
+
     def __init__(self, loc, speed=0):
         self.loc = loc
         self.speed = speed
-        
+
     def choose_acceleration(self, d):
         return 1
 \end{code}
@@ -7751,12 +7754,12 @@ exceeds the space between them.  At that point, at least one
 
 Figure~\ref{chap10-1} shows a few steps in this process, starting with
 30 cars and \py{eps=0.02}.  On the left is the configuration after
-16 time steps, with the cars arranged in a circle.  
+16 time steps, with the cars arranged in a circle.
 Because of random noise, some cars are going faster
 than others, and the spacing has become uneven.
 
 During the next time step (center) two cars collide, indicated
-by the \py{x} marks.  
+by the \py{x} marks.
 
 During the next time step (right) two cars collide with the stopped
 cars, and we can see the initial formation of a traffic jam.  Once
@@ -8097,7 +8100,7 @@ How is this possible?  In my opinion, contributing factors include:
 
 There's probably not much I can do about the first group, but I think I can help the others.  Empirically, the theory of evolution is hard for people to understand.  At the same time, it is profoundly simple: for many people, once they understand it, it seems both obvious and irrefutable.
 
-To help people make this transition from confusion to clarity, the most powerful tool I have found is computation.  Ideas that are hard to understand in theory can be easy to understand when we see them happening in simulation.  
+To help people make this transition from confusion to clarity, the most powerful tool I have found is computation.  Ideas that are hard to understand in theory can be easy to understand when we see them happening in simulation.
 That is the goal of this chapter.
 
 The code for this chapter is in \py{chap11.ipynb}, which is a
@@ -8141,9 +8144,9 @@ class FitnessLandscape:
         self.N = N
         self.one_values = np.random.random(N)
         self.zero_values = np.random.random(N)
-        
+
     def fitness(self, loc):
-        fs = np.where(loc, self.one_values, 
+        fs = np.where(loc, self.one_values,
                            self.zero_values)
         return fs.mean()
 \end{code}
@@ -8172,12 +8175,12 @@ Next we need agents.  Here's the class definition:
 
 \begin{code}
 class Agent:
-    
+
     def __init__(self, loc, fit_land):
         self.loc = loc
         self.fit_land = fit_land
         self.fitness = fit_land.fitness(self.loc)
-        
+
     def copy(self):
         return Agent(self.loc, self.fit_land)
 \end{code}
@@ -8206,7 +8209,7 @@ Here's the definition of \py{Simulation}:
 
 \begin{code}
 class Simulation:
-    
+
     def __init__(self, fit_land, agents):
         self.fit_land = fit_land
         self.agents = agents
@@ -8226,15 +8229,15 @@ The most important function in \py{Simulation} is \py{step}, which simulates one
 
 \begin{code}
 # class Simulation:
-    
+
     def step(self):
         n = len(self.agents)
         fits = self.get_fitnesses()
-        
+
         # see who dies
         index_dead = self.choose_dead(fits)
         num_dead = len(index_dead)
-        
+
         # replace the dead with copies of the living
         replacements = self.choose_replacements(num_dead, fits)
         self.agents[index_dead] = replacements
@@ -8267,7 +8270,7 @@ Before we run the simulation, we have to specify the behavior of \py{choose_dead
         is_dead = np.random.random(n) < 0.1
         index_dead = np.nonzero(is_dead)[0]
         return index_dead
-        
+
     def choose_replacements(self, n, fits):
         agents = np.random.choice(self.agents, size=n, replace=True)
         replacements = [agent.copy() for agent in agents]
@@ -8285,7 +8288,7 @@ These methods don't depend on fitness, so this simulation does not have differen
 \section{Evidence of evolution}
 \label{instrument}
 
-The most inclusive definition of evolution is a change in the distribution of genotypes in a population.  So evolution is an aggregate effect: in other words, individuals don't evolve; populations do.  
+The most inclusive definition of evolution is a change in the distribution of genotypes in a population.  So evolution is an aggregate effect: in other words, individuals don't evolve; populations do.
 
 In this simulation, genotypes are locations in a high-dimensional space, so it is hard to visualize changes in their distribution.  However, if the genotypes change, we expect their fitness to change as well.  So we will use changes in the distribution of fitness as evidence of evolution.  In particular, we'll look at the mean and standard deviation of fitness across the population.
 
@@ -8362,7 +8365,7 @@ So let's add one more ingredient, differential survival.  Here's the definition 
 
 \begin{code}
 class SimWithDiffSurvival(Simulation):
-    
+
     def choose_dead(self, fits):
         n = len(self.agents)
         is_dead = np.random.random(n) > fits
@@ -8402,9 +8405,9 @@ Here is a class definition that extends \py{Agent} and overrides \py{copy}:
 
 \begin{code}
 class Mutant(Agent):
-    
+
     prob_mutate = 0.05
-    
+
     def copy(self):
         if np.random.random() > self.prob_mutate:
             loc = self.loc.copy()
@@ -8441,7 +8444,7 @@ Figure~\ref{chap11-3} shows the results of 10 simulations with mutation and diff
 \label{chap11-4}
 \end{figure}
 
-To measure diversity in the population, we can plot the number of occupied locations after each timestep.  Figure~\ref{chap11-4} shows the results.  We start with 100 agents, all at the same location.  As mutations occur, the number of occupied locations increases quickly. 
+To measure diversity in the population, we can plot the number of occupied locations after each timestep.  Figure~\ref{chap11-4} shows the results.  We start with 100 agents, all at the same location.  As mutations occur, the number of occupied locations increases quickly.
 
 When an agent discovers a high-fitness location, it is more likely to survive and reproduce.  Agents at lower-fitness locations eventually die out.  Over time, the population migrates through the landscape until most agents are at the location with the highest fitness.
 
@@ -8505,7 +8508,7 @@ However, mean fitness increases quickly as the population migrates across the ne
 
 Once the population reaches steady state, it forms a new cluster, with mean distance between agents near 1 again.
 
-Now if we compute the distance between the agents' locations before and after the change, they differ by more than 6, on average.  The distances between clusters are much bigger than the distances between agents in each cluster, so we can interpret these clusters as distinct species. 
+Now if we compute the distance between the agents' locations before and after the change, they differ by more than 6, on average.  The distances between clusters are much bigger than the distances between agents in each cluster, so we can interpret these clusters as distinct species.
 
 
 \section{Summary}
@@ -8579,7 +8582,7 @@ With this set of punishments, it is tempting to say that the players should coop
 
 \begin{itemize}
 
-\item If B remains silent, A is better off defecting; she would go free rather than serve 1 year. 
+\item If B remains silent, A is better off defecting; she would go free rather than serve 1 year.
 
 \item If B defects, A is still better off defecting; she would serve only 2 years rather than 3.
 
@@ -8623,7 +8626,7 @@ This apparent contradiction is the ``problem of altruism": why haven't the genes
 
 Among biologists, there are many possible explanations, including reciprocal altruism, sexual selection, kin selection, and group selection.  And among non-scientists, there are even more explanations.  I leave it to you to explore the alternatives; for now I want to focus on just one explanation, arguably the simplest one: maybe altruism is adaptive.  In other words, maybe genes for altruism make people more likely to survive and reproduce.
 
-And it turns out that the Prisoner's Dilemma, which raises the problem of altruism, might also help resolve it. 
+And it turns out that the Prisoner's Dilemma, which raises the problem of altruism, might also help resolve it.
 
 
 \section{Prisoner's dilemma tournaments}
@@ -8648,7 +8651,7 @@ Looking at the strategies that did well in these tournaments, Alexrod identified
 \item Forgiving: But strategies that were too vindictive tended to punish themselves as well as their opponents.
 
 \item Non-envious: Some the most successful strategies seldom outscore their opponents; they are successful because they do well enough against a wide variety of opponents.
-  
+
 \end{itemize}
 
 TFT has all of these properties.
@@ -8668,7 +8671,7 @@ Here is the class definition for these agents:
 
 \begin{code}
 class Agent:
-    
+
     keys = [(None, None),
             (None, 'C'),
             (None, 'D'),
@@ -8676,7 +8679,7 @@ class Agent:
             ('C', 'D'),
             ('D', 'C'),
             ('D', 'D')]
-    
+
     def __init__(self, values, fitness=np.nan):
         self.values = values
         self.responses = dict(zip(self.keys, values))
@@ -8693,7 +8696,7 @@ The \py{Agent} class provides \py{copy}, which makes another agent with the same
 
 \begin{code}
     prob_mutate = 0.05
-    
+
     def copy(self):
         if np.random.random() > self.prob_mutate:
             values = self.values
@@ -8723,22 +8726,22 @@ The \py{Tournament} class encapsulates the details of the PD competition:
                ('C', 'D'): (0, 5),
                ('D', 'C'): (5, 0),
                ('D', 'D'): (1, 1)}
-               
+
     num_rounds = 6
-    
+
     def play(self, agent1, agent2):
         agent1.reset()
         agent2.reset()
-        
+
         for i in range(self.num_rounds):
             resp1 = agent1.respond(agent2)
             resp2 = agent2.respond(agent1)
 
             pay1, pay2 = self.payoffs[resp1, resp2]
-            
+
             agent1.append(resp1, pay1)
             agent2.append(resp2, pay2)
-            
+
         return agent1.score, agent2.score
 \end{code}
 
@@ -8750,7 +8753,7 @@ The \py{Tournament} class encapsulates the details of the PD competition:
 
 \item \py{reset}: Initializes the agents before the first round, resetting their scores and the history of their responses.
 
-\item \py{respond}: Asks each agent for their response, given the opponent's previous responses. 
+\item \py{respond}: Asks each agent for their response, given the opponent's previous responses.
 
 \item \py{append}: Updates each agent by storing the choices and adding up the scores from successive rounds.
 
@@ -8764,19 +8767,19 @@ After the given number of rounds, \py{play} returns the total score for each age
     def melee(self, agents, randomize=True):
         if randomize:
             agents = np.random.permutation(agents)
-            
+
         n = len(agents)
         i_row = np.arange(n)
         j_row = (i_row + 1) % n
-        
+
         totals = np.zeros(n)
-        
+
         for i, j in zip(i_row, j_row):
             agent1, agent2 = agents[i], agents[j]
             score1, score2 = self.play(agent1, agent2)
             totals[i] += score1
             totals[j] += score2
-            
+
         for i in i_row:
             agents[i].fitness = totals[i] / self.num_rounds / 2
 \end{code}
@@ -8820,11 +8823,11 @@ This version of \py{step} uses \py{Tournament.melee}, which sets the \py{fitness
     def step(self):
         n = len(self.agents)
         fits = self.get_fitnesses()
-        
+
         # see who dies
         index_dead = self.choose_dead(fits)
         num_dead = len(index_dead)
-        
+
         # replace the dead with copies of the living
         replacements = self.choose_replacements(num_dead, fits)
         self.agents[index_dead] = replacements
@@ -8874,9 +8877,9 @@ To get some insight into this level of fitness, let's look at a few more instrum
 
 \begin{code}
 class Niceness(Instrument):
-    
+
     def update(self, sim):
-        responses = np.array([agent.values 
+        responses = np.array([agent.values
                               for agent in sim.agents])
         metric = np.mean(responses == 'C')
         self.metrics.append(metric)
@@ -8895,7 +8898,7 @@ Looking specifically at the opening move, we can track the fraction of agents th
 
 \begin{code}
 class Opening(Instrument):
-    
+
     def update(self, sim):
         responses = np.array([agent.values[0]
                               for agent in sim.agents])
@@ -8909,9 +8912,9 @@ These results are consistent with Axelrod's tournaments; in general, nice strate
 
 \begin{code}
 class Retaliating(Instrument):
-    
+
     def update(self, sim):
-        after_d = np.array([agent.values[2::2] 
+        after_d = np.array([agent.values[2::2]
                             for agent in sim.agents])
         after_c = np.array([agent.values[1::2]
                             for agent in sim.agents])
@@ -8944,11 +8947,11 @@ The simulations in this chapter suggest:
 
 \item TFT, which is a prevalent strategy in Alexrod's tournaments, does not see to be a specially optimal strategy in an evolving population.  In fact, there is probably no stable optimal strategy.
 
-\item It's possible that TFT doesn't prevail in my simulations because it's not necessary for all agents to retaliate.  If there is enough retaliation in the population as a whole, that might be enough to prevent invasion by defectors\footnote{And that introduces a whole new topic in game theory, the free-rider problem (see \url{https://en.wikipedia.org/wiki/Free-rider_problem})}. 
+\item It's possible that TFT doesn't prevail in my simulations because it's not necessary for all agents to retaliate.  If there is enough retaliation in the population as a whole, that might be enough to prevent invasion by defectors\footnote{And that introduces a whole new topic in game theory, the free-rider problem (see \url{https://en.wikipedia.org/wiki/Free-rider_problem})}.
 
 \end{itemize}
 
-Obviously, the agents in these simulations are simple, and the Prisoner's Dilemma is a highly abstract model of a limited range of social interactions.  Nevertheless, the results in this chapter provide some insight into human nature.  Maybe our inclinations toward cooperation, retaliation, and forgiveness are innate, at least in part.  These characteristics are a result of how our brains are wired, which is controlled by our genes, at least in part.  And maybe our genes build our brains that way because over the history of human evolution, genes for less altruistic brains were less likely to propagate.  
+Obviously, the agents in these simulations are simple, and the Prisoner's Dilemma is a highly abstract model of a limited range of social interactions.  Nevertheless, the results in this chapter provide some insight into human nature.  Maybe our inclinations toward cooperation, retaliation, and forgiveness are innate, at least in part.  These characteristics are a result of how our brains are wired, which is controlled by our genes, at least in part.  And maybe our genes build our brains that way because over the history of human evolution, genes for less altruistic brains were less likely to propagate.
 
 So maybe that's why selfish genes build altruistic brains.
 
@@ -9706,7 +9709,7 @@ in \py{resize}.
 
 \begin{exercise}
 
-A drawbacks of hashtables is that the elements have to be hashable,
+A drawback of hashtables is that the elements have to be hashable,
 which usually means they have to be immutable.  That's why, in Python,
 you can use tuples but not lists as keys in a dictionary.  An
 alternative is to use a tree-based map.
@@ -10011,13 +10014,13 @@ Values from a Pareto distribution often have these properties:
 \begin{description}
 
 \item[Long tail:] Pareto distributions contain many small values and a
-  few very large ones.  
+  few very large ones.
   \index{long tail}
 
 \item[80/20 rule:] The large values in a Pareto distribution are so
   large that they make up a disproportionate share of the total.  In
   the context of wealth, the 80/20 rule says that 20\% of the people
-  own 80\% of the wealth.  
+  own 80\% of the wealth.
   \index{80/20 rule}
 
 \item[Scale free:] Short-tailed distributions are centered around a
@@ -10188,4 +10191,3 @@ Implement percolation on a network.
 \begin{exercise}
 Check whether the clusters in Schelling's model are connected.
 \end{exercise}
-
