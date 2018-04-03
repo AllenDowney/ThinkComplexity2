@@ -34,23 +34,28 @@ distrib:
 plastex:
 	# Before running plastex, we need the current directory in PYTHONPATH
 	# export PYTHONPATH=$PYTHONPATH:.
-	python Filist.py book.tex > book.plastex
-	rm -rf /home/downey/complexity/trunk/book
-	plastex --renderer=DocBook --theme=book --image-resolution=300 --filename=book.xml book.plastex
-	rm -rf /home/downey/complexity/trunk/book/.svn
+	python2 preprocess.py book.tex > $(F).plastex
+	plastex --renderer=DocBook --theme=book --image-resolution=300 --filename=$(F).xml $(F).plastex
+	cd $(F); python2 ../postprocess.py $(F).xml > temp; mv temp $(F).xml
 
 diff:
 	diff book/book.xml /home/downey/complexity/branches/manuscript.1.1/book/book.xml > patch
 
 xxe:
-	~/Downloads/xxe-perso-4_8_0/bin/xxe book/book.xml
+	xmlcopyeditor ~/ThinkComplexity2/$(F)/$(F).xml &
 
-OREILLY = /home/downey/oreilly/complexity
+lint:
+	xmllint -noout $(F)/$(F).xml
+
+OREILLY = /home/downey/oreilly/thinkcomplexity2e
 
 oreilly:
-	rsync -a book/ $(OREILLY)
-	rsync -a figs/* $(OREILLY)/figs
-	rsync -a $(F).pdf $(OREILLY)/pdf
+	rsync -a $(F)/$(F).xml atlas	
+	rsync -a figs/*.pdf atlas/figs/
+	rsync -a figs/*.png atlas/figs/
+	cd atlas; git add $(F).xml figs/*	
+	cd atlas; git commit -m "Automated check in."
+	cd atlas; git push
 
 clean:
 	rm -f *~ *.aux *.log *.dvi *.idx *.ilg *.ind *.toc

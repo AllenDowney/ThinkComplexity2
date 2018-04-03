@@ -21,7 +21,7 @@
 \newcommand{\thetitle}{Think Complexity}
 \newcommand{\thesubtitle}{Exploring Complexity Science in Python}
 \newcommand{\theauthors}{Allen B. Downey}
-\newcommand{\theversion}{2.3}
+\newcommand{\theversion}{2.4}
 
 %%%% Both LATEX and PLASTEX
 
@@ -245,57 +245,14 @@ available at \url{http://creativecommons.org/licenses/by-nc-sa/4.0/}.
 \chapter{Preface}
 \label{preface}
 
-%TODO: Re-write this preface to provide a more explicit explanation
-% of who the book is for and what they will get out of it.
-
-This book is primarily about complexity science, but it is also
-about data structures and algorithms, intermediate
-programming in Python, computational modeling, and the philosophy of
-science:
-
-\begin{description}
-
-\item [Complexity science] Complexity is an interdisciplinary
-  field---at the intersection of mathematics, computer science and
-  natural science---that focuses on discrete models of physical and
-  social systems.  In particular, it focuses on {\bf complex systems},
-  which are systems with many interacting components.
+Complexity Science is an interdisciplinary
+field---at the intersection of mathematics, computer science and
+natural science---that focuses on discrete models of physical and
+social systems.  In particular, it focuses on {\bf complex systems},
+which are systems with many interacting components.
 
 \index{complexity science}
 \index{complex systems}
-
-\item[Data structures:] A data structure is a
-  collection of data elements organized in a way that supports
-  particular operations.  For example, a Python dictionary organizes
-  key-value pairs in a way that provides fast mapping from keys to
-  values, but mapping from values to keys is slower.
-
-\index{data structure}
-
-\item[Algorithms:] An algorithm is a process for performing a
-  computation.  Designing efficient programs often involves the
-  co-evolution of data structures and the algorithms that use them.
-  For example, in the first few chapters I present graphs, data
-  structures that implement graphs, and graph algorithms based on
-  those data structures.
-
-\index{algorithm}
-
-\item[Computational modeling:] A model is a simplified
-  description of a system used for simulation or analysis.
-  Computational models are designed to take advantage of cheap, fast
-  computation.
-
-\index{modeling}
-
-\item[Philosophy of science:] The experiments and results in this book
-  raise questions relevant to the philosophy of science,
-  including the nature of scientific laws, theory choice, realism and
-  instrumentalism, holism and reductionism, and epistemology.
-
-\index{philosophy}
-
-\end{description}
 
 Complex systems include networks and graphs, cellular automatons,
 agent-based models and swarms, fractals and self-organizing
@@ -304,43 +261,44 @@ might not mean much to you at this point.  We will get to them
 soon, but you can get a preview at
 \url{http://en.wikipedia.org/wiki/Complex_systems}.
 
-I hope this book helps readers explore a set of topics
-and ideas they might not encounter otherwise, practice programming
-skills in Python, and learn more about data structures and
-algorithms (or review material that might have been less engaging
-the first time around).
+Why should you learn about Complexity Science?  Here are a few reasons:
+
+\begin{itemize}
+
+\item Complexity Science is useful, especially for explaining why natural and social systems behave the way they do.  Since Newton, math-based physics has focused on systems with small numbers of components and simple interactions.  These models are effective for some applications, like celestial mechanics, and less useful for others, like economics.  Complexity Science provides a diverse and adaptable modeling toolkit. 
+
+\item Many of the central results of Complexity Science are surprising; a recurring theme of this book is that simple models can produce complex behavior, with the corollary that we can sometimes explain complex behavior in the real world using simple models.
+
+\item As I explain in Chapter~\ref{overview}, Complexity Science is at the center of a slow shift in the practice of science, and a change in what we consider good science, or science at all.
+
+\item Studying Complexity Science provides an opportunity to learn about diverse physical and social systems, to develop and apply programming skills, and to think about fundamental questions in the philosophy of science.
+
+\end{itemize}
+
+By reading this book and working on the exercises you will have a chance to explore topics and ideas you might not encounter otherwise, practice programming in Python, and learn about data structures and algorithms.
 
 Features of this book include:
 
 \begin{description}
 
-\item[Technical details] There are many books about complex systems,
-  but most are written for a popular audience.  They usually skip the
+\item[Technical details]: Most books about Complexity Science,
+  are written for a popular audience.  They usually leave out
   technical details, which is frustrating for people who can handle
-  it.  This book presents the mathematics, the code, and the other
-  material you need to really understand this work.
+  them.  This book presents the mathematics, the code, and the other
+  material you need to really understand the models and how they work.
 
-\item[Further reading] Throughout the book, I include pointers to
+\item[Further reading]: Throughout the book, I include pointers to
   further reading, including original papers (most of which are
   available electronically) and related articles from Wikipedia and
-  other sources.  Some professors have an allergic reaction to
-  Wikipedia, on the grounds that students depend too heavily on a
-  suppposedly unreliable source.  Since many of my references are
-  Wikipedia articles, I want to explain my thinking.  First, the
-  articles on complexity science and related topics tend to be good;
-  second, they are written at a level that is accessible after you
-  have read this book (but sometimes not before); and finally, they
-  are freely available to readers all over the world.  If there is a
-  danger in sending readers to these references, it is not that the
-  material is unreliable, but that the readers won't come back!
+  other sources.
 
-\item[Jupyter notebooks] For each chapter I provide a Jupyter notebook
+\item[Jupyter notebooks]: For each chapter I provide a Jupyter notebook
   that includes the code from the chapter, additional examples (and
   especially animations), and suggestions for experiments you can run
   with small changes in the code.
 
-\item[Exercises and solutions] At the end of each chapter I suggest
-  exercises you might want to work on, and I include solutions.
+\item[Exercises and solutions]: At the end of each chapter I suggest
+  exercises you might want to work on, with solutions.
 
 \end{description}
 
@@ -348,9 +306,7 @@ Features of this book include:
 \section{Who is this book for?}
 
 The examples and supporting code for this book are in Python.  You
-should know core Python and you should be
-familiar with object-oriented features, at least using objects if not
-defining your own.
+should know core Python and be familiar with object-oriented features, at least using objects if not defining your own.
 
 If you are not already familiar with Python, you might want to start
 with my other book, {\it Think Python}, which is an introduction to
@@ -358,23 +314,29 @@ Python for people who have never programmed, or Mark
 Lutz's {\it Learning Python}, which might be better for people with
 programming experience.
 
-I use NumPy and SciPy extensively.  If you are familiar with them
-already, that's great, but I will also explain the functions
-and data structures I use.
+I use NumPy and SciPy throughout the book.  If you are familiar with these libraries already, that's great, but I will also explain them as we go along.
 
-I assume that the reader knows basic mathematics, including complex
-numbers.  You don't need much calculus; if you understand the concepts
-of integration and differentiation, that will do.
-I use some linear algebra, but I will explain it as we
-go along.
+I assume that the reader knows basic mathematics.  You don't need much calculus; if you understand the concepts of integration and differentiation, that will do.  I use some linear algebra, but I will explain it along the way.
+
+
+\section{Changes from the first edition}
+
+For the second edition,  I have added two chapters, one on evolution, the other on the evolution of cooperation.
+
+In the first edition, each chapter presented background on a topic and suggested experiments the reader could perform.  For the second edition, I have done those experiments: each chapter presents the implementation and results as a worked example, then suggests extensions and additional experiments for the reader.  
+
+Also, the Jupyter notebooks are new.  For every chapter there are two notebooks in the book's software repository: one contains the code from the chapter, explanatory text, and exercises; the other contains the solutions to the exercises.
+
+Finally, all supporting software has been updated to Python 3 (but also runs unmodified in Python 2).
 
 
 \section{Using the code}
 \label{code}
 
-All code used in this book is available from
-\url{https://github.com/AllenDowney/ThinkComplexity2}.
-If you are not familiar with Git, it is a
+
+All code used in this book is available from a Git repository on GitHub:
+\url{https://github.com/AllenDowney/ThinkComplexity2}.  
+If you are not familiar with Git, it is a 
 version control system that allows you to keep track of the files that
 make up a project.  A collection of files under Git's control is
 called a ``repository''.  GitHub is a hosting service that provides
@@ -408,9 +370,6 @@ to your computer.
 
 \end{itemize}
 
-All of the code is written to work in both Python 2 and Python 3
-with no translation.
-
 I developed this book using Anaconda from Continuum Analytics, which
 is a free Python distribution that includes all the packages you'll
 need to run the code (and lots more).  I found Anaconda easy to
@@ -420,31 +379,6 @@ supports both Python 2 and Python 3.  You can download Anaconda from
 \url{http://continuum.io/downloads}.
 
 \index{Anaconda}
-
-If you don't want to use Anaconda, you will need the following
-packages:
-
-\begin{itemize}
-
-\item NumPy for basic numerical computation, \url{http://www.numpy.org/};
-\index{NumPy}
-
-\item SciPy for scientific computation,
-  \url{http://www.scipy.org/};
-\index{SciPy}
-
-\item matplotlib for visualization, \url{http://matplotlib.org/}.
-\index{matplotlib}
-
-\end{itemize}
-
-Although these are commonly used packages, they are not included with
-all Python installations, and they can be hard to install in some
-environments.  If you have trouble installing them, I
-recommend using Anaconda or one of the other Python distributions
-that include these packages.
-
-\index{installation}
 
 The repository includes Python scripts and several Jupyter
 notebooks.  If you have not used Jupyter before, you can read about
@@ -462,6 +396,7 @@ If you installed Anaconda, you probably got Jupyter by default.  To
 check, start the server from the command line, like this:
 
 \begin{verbatim}
+$ cd ThinkComplexity2/code
 $ jupyter notebook
 \end{verbatim}
 
@@ -551,7 +486,8 @@ found typos and made helpful suggestions.
 
 \item Philipp Marek sent a number of corrections.
 
-% TODO: Add Jason
+\item Jason Woodard co-taught Complexity Science with me at Olin College, introduced me to NK models, and made many helpful suggestions and corrections.
+
 
 % ENDCONTRIB
 
@@ -2597,6 +2533,8 @@ The simplified version is similar to the breadth-first search
 in Section~\ref{bfs} except that we replace the set called
 \py{seen} with a dictionary called \py{dist}, which maps from each
 node to its distance from the source:
+
+%TODO: get rid of the second set constructor, if possible
 
 \begin{code}
 def shortest_path_dijkstra(G, start):
@@ -5168,6 +5106,8 @@ lookup; that is, it takes each value from \py{c}, looks it up in
 This version is faster and more concise than the others; the only
 drawback is that it takes more explaining.
 
+% TODO: look into using a simpler animation mechanism
+
 \py{Life.py}, which is included in the repository for this book,
 provides a \py{Life} class that encapsulates this implementation of
 the rules.  If you run \py{Life.py}, you should see an animation
@@ -5924,8 +5864,6 @@ What is its fractal dimension?
 \chapter{Self-organized criticality}
 \label{soc}
 
-%TODO: captions for the figures in this chapter
-
 In the previous chapter we saw an example of a system with a critical
 point and we explored one of the common properties of critical
 systems, fractal geometry.
@@ -6193,7 +6131,7 @@ pile.run()
 
 \begin{figure}
 \centerline{\includegraphics[height=3in]{figs/chap08-1.pdf}}
-\caption{}
+\caption{Sand pile model initial state (left), after 200 steps (middle), and 400 steps (right).}
 \label{chap08-1}
 \end{figure}
 
@@ -6271,13 +6209,13 @@ histS = Hist(S)
 
 \begin{figure}
 \centerline{\includegraphics[height=3in]{figs/chap08-2.pdf}}
-\caption{}
+\caption{Distribution of avalanche duration (left) and size (right), linear scale.}
 \label{chap08-2}
 \end{figure}
 
 \begin{figure}
 \centerline{\includegraphics[height=3in]{figs/chap08-3.pdf}}
-\caption{}
+\caption{Distribution of avalanche duration (left) and size (right), log-log scale.}
 \label{chap08-3}
 \end{figure}
 
@@ -6351,7 +6289,7 @@ draw_four(viewer3)
 
 \begin{figure}
 \centerline{\includegraphics[height=3in]{figs/chap08-4.pdf}}
-\caption{}
+\caption{Sand pile model initial state, selecting cells with levels 0, 1, 2, and 3, top to bottom, left to right. }
 \label{chap08-4}
 \end{figure}
 
@@ -6419,7 +6357,7 @@ slope = params[0]
 
 \begin{figure}
 \centerline{\includegraphics[height=4in]{figs/chap08-5.pdf}}
-\caption{}
+\caption{Box counts for cells with levels 0, 1, 2, and 3, compared to dashed lines with slopes 1 and 2.}
 \label{chap08-5}
 \end{figure}
 
@@ -6566,7 +6504,7 @@ expect a straight line with slope $-\beta$.
 
 \begin{figure}
 \centerline{\includegraphics[height=3in]{figs/chap08-6.pdf}}
-\caption{}
+\caption{Power spectrum of the number of toppled cells over time, log-log scale.}
 \label{chap08-6}
 \end{figure}
 
@@ -6781,15 +6719,14 @@ events may be fundamentally unpredictable and unexplainable.
 
 \section{Exercises}
 
-The code for this chapter is in \py{chap08.ipynb}, which is a
-Jupyter notebook in the repository for this book.  For more information
-about working with this code, see Section~\ref{code}.
 
 \begin{exercise}
 
-Launch \py{chap08.ipynb} and run the code.
-There are a few short
-exercises embedded in the notebook that you might want to try.
+
+The code for this chapter is in the Jupyter notebook {\tt chap08.ipynb}
+in the repository for this book.  Open this notebook, read the code,
+and run the cells.  You can use this notebook to work on the
+exercises in this chapter.  My solutions are in {\tt chap08soln.ipynb}.
 
 \end{exercise}
 
@@ -7590,6 +7527,15 @@ You can read more about emergence at
 
 \begin{exercise}
 
+The code for this chapter is in the Jupyter notebook {\tt chap09.ipynb}
+in the repository for this book.  Open this notebook, read the code,
+and run the cells.  You can use this notebook to work on the
+exercises in this chapter.  My solutions are in {\tt chap09soln.ipynb}.
+
+\end{exercise}
+
+\begin{exercise}
+
 Bill Bishop, author of {\em The Big Sort}, argues that
 American society is increasingly segregated by political
 opinion, as people choose to live among like-minded neighbors.
@@ -7890,7 +7836,7 @@ Each agent simulates three behaviors:
 
 \item[Flock centering:] Move toward the center of the flock.
 
-\item[Velocity matching:] Align velocity with neighboring birds.
+\item[Velocity matching:] Align velocity (speed and direction) with neighboring birds.
 
 \end{description}
 
@@ -7900,17 +7846,8 @@ vision and range.
 
 \index{local information}
 
-The \py{Visual} package, also known as VPython, is well-suited
-for implementing boids.  It provides simple 3-D graphics as
-well as vector objects and operations that are useful for the
-computations.
-
-\index{Visual package}
-\index{VPython}
-
-You can download my implementation from
-\url{thinkcomplex.com/Boids.py}.  It is based in part
-on the description of boids in Flake, {\em The Computational
+In the repository for this book, you will find {\tt Boids7.py}, which contains my implementation of boids, based in part
+on the description in Flake, {\em The Computational
 Beauty of Nature}.
 
 The program defines two classes: \py{Boid}, which implements the boid
@@ -8010,7 +7947,7 @@ flock.  For some settings, the boids resemble a flock of birds; other
 settings resemble a school of fish or a cloud flying insects.
 
 
-\section{Free will}
+\section{Emergence and free will}
 \label{freewill}
 
 
@@ -8093,11 +8030,13 @@ average speed, or a lower number of collisions.
 
 \begin{exercise}
 
-%TODO: VPython installation help.
+Note: To do this exercise, you will have to install VPython, a library for 3D displays and animation.  If you use Anaconda (as I recommend in Section~\ref{code}), you can run:
 
-% sudo apt-get install python-visual libgtkglextmm-x11-1.2-dev
+\begin{code}
+conda install -c vpython vpython
+\end{code}
 
-Run my implementation of the boid algorithm and experiment with
+Then run \py{Boids7.py}, which is in the repository for this book.  Read the code to see how the parameters defined at the beginning of the program control boid behaviors.  Experiment with
 different parameters.  What happens if you ``turn off'' one
 of the behaviors by setting the weight to 0?
 \index{parameter}
@@ -8584,12 +8523,22 @@ I hope this observation helps to demystify evolution.  When we look at natural s
 
 But in simulation, we see the whole process, not just the results.  And by including the minimal set of features to produce evolution --- temporarily ignoring the vast complexity of biological life --- we can see evolution as the surprisingly simple, inevitable idea that it is.
 
-%TODO: exercises in the chapters?  or just the notebooks?
+
+\section{Exercises}
+
+\begin{exercise}
+
+The code for this chapter is in the Jupyter notebook {\tt chap11.ipynb}
+in the repository for this book.  Open this notebook, read the code,
+and run the cells.  You can use this notebook to work on the
+exercises in this chapter.  My solutions are in {\tt chap11soln.ipynb}.
+
+\end{exercise}
 
 
-\chapter{Game Theory}
+\chapter{Evolution of cooperation}
 
-In this final chapter, I modestly take on two questions, one from biology and one from philosophy:
+In this final chapter, we take on two questions, one from biology and one from philosophy:
 
 \begin{itemize}
 
@@ -8609,7 +8558,7 @@ about working with this code, see Section~\ref{code}.
 \section{Prisoner's Dilemma}
 \label{prisoners}
 
-The Prisoner's Dilemma is a topic in game theory, but it's not the fun kind of game.  Instead, it is the kind of game that sheds light on human motivation and behavior.  Here is the presentation of the dilemma from \url{http://en.wikipedia.org/wiki/Prisoner's_dilemma}:
+The Prisoner's Dilemma is a topic in game theory, but it's not the fun kind of game.  Instead, it is the kind of game that sheds light on human motivation and behavior.  Here is the presentation of the dilemma from Wikipedia (\url{http://en.wikipedia.org/wiki/Prisoner's_dilemma}):
 \index{Prisoner's Dilemma}
 
 \begin{quote}
@@ -8627,7 +8576,7 @@ Two members of a criminal gang are arrested and imprisoned. Each prisoner is in 
 
 \end{quote}
 
-Obviously, this scenario is contrived, but it is meant to represent a variety of interactions where agents have to choose whether to ``cooperate" with each other or ``defect", and where the reward (or punishment) for each agent depends on what the other agent chooses.
+Obviously, this scenario is contrived, but it is meant to represent a variety of interactions where agents have to choose whether to ``cooperate" with each other or ``defect", and where the reward (or punishment) for each agent depends on what the other chooses.
 
 With this set of punishments, it is tempting to say that the players should cooperate, that is, that both should remain silent.  But neither agent knows what the other will do, so each has to consider two possible outcomes.  First, looking at it from A's point of view:
 
@@ -8645,7 +8594,7 @@ In the simplest version of this game, we assume that A and B have no other consi
 
 Under those assumptions, the rational choice for both agents is to defect.  That might be a good thing, at least for purposes of criminal justice.  But for the prisoners, it is frustrating because there is, apparently, nothing they can do to achieve the outcome they both want.  And this model applies to other scenarios in real life where cooperation would be better for the greater good as well as for the players.
 
-Studying those scenarios, and ways to escape from the dilemma, is the focus of people who study game theory, but it is not the focus of this chapter.  We are headed in a different direction.
+Studying these scenarios, and ways to escape from the dilemma, is the focus of people who study game theory, but it is not the focus of this chapter.  We are headed in a different direction.
 
 
 \section{The problem of nice}
@@ -8655,19 +8604,19 @@ Barreda-Tarrazona, Jaramillo-Guti\'{e}rrez, Pavan, and Sabater-Grande,
 ``Individual Characteristics vs. Experience: An Experimental Study on Cooperation in Prisoner's Dilemma", Frontiers in Psychology, 2017; 8: 596.
 \url{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5397528/}.}.
 
-If we assume that people are smart enough to do the analysis (or understand it when explained), and that they generally act in their own interest, we would expect them to defect pretty much all the time.  But they don't.  The results depend on the details of the experiment, but in general subjects cooperate much more than the rational agent model predicts\footnote{For an excellent video summarizing what we have discussed so far, see \url{https://www.youtube.com/watch?v=t9Lo2fgxWHw}.}.
+If we assume that people are smart enough to do the analysis (or understand it when explained), and that they generally act in their own interest, we would expect them to defect pretty much all the time.  But they don't.  In most experiments, subjects cooperate much more than the rational agent model predicts\footnote{For an excellent video summarizing what we have discussed so far, see \url{https://www.youtube.com/watch?v=t9Lo2fgxWHw}.}.
 
 The most obvious explanation of this result is that people are not rational agents, which should not be a surprise to anyone.  But why not?  Is it because they are not smart enough to understand the scenario or because they are knowingly acting contrary to their own interest?
 
-Based on experimental results, it seems that at least part of the explanation is just plain altruism: many people are willing to incur a cost to themselves in order to benefit another person.  Now, before you nominate that conclusion for publication in the {\it Journal of Obvious Results}, let's keep asking why:
+Based on experimental results, it seems that at least part of the explanation is plain altruism: many people are willing to incur a cost to themselves in order to benefit another person.  Now, before you nominate that conclusion for publication in the {\it Journal of Obvious Results}, let's keep asking why:
 
 \begin{itemize}
 
 \item Why do people help other people, even at a cost to themselves?  At least part of the reason is that they want to; it makes them feel good about themselves and the world.
 
-\item And why does being nice make people feel good?  It might be tempting to say that they were raised right, or more generally trained by society to want to do good things.  But there is little doubt\footnote{I hope you'll forgive my use of ``little doubt" here in place of references to relevant experiments.  I am trying to cover some ground in this chapter without getting too bogged down.} that at least a substantial part of altruism is innate; to varying degrees, a proclivity for altruism is a common result of normal brain development.
+\item And why does being nice make people feel good?  It might be tempting to say that they were raised right, or more generally trained by society to want to do good things.  But there is little doubt\footnote{I hope you'll forgive my use of ``little doubt" here in place of references to relevant experiments.  I am trying to cover some ground in this chapter without getting too bogged down.} that at least a substantial part of altruism is innate; to varying degrees, a proclivity for altruism is a result of normal brain development.
 
-\item Well, why is that?  The innate parts of brain development, and the personal characteristics that follow, are the result of genetic information.  Of course, the relationship between genes and altruism is probably complicated;  there are probably many genes that interact with each other, and with environmental factors, to cause people to be more or less altruistic in different circumstances.  Nevertheless, there are almost certainly genes that cause people to be altruistic.
+\item Well, why is that?  The innate parts of brain development, and the personal characteristics that follow, are the result of genetic information.  Of course, the relationship between genes and altruism is complicated;  there are probably many genes that interact with each other and with environmental factors to cause people to be more or less altruistic in different circumstances.  Nevertheless, there are almost certainly genes that cause people to be altruistic.
 
 \item Finally, why is that?  If, under natural selection, animals are in constant competition with each other to survive and reproduce, it seems obvious that altruism would be counterproductive.  In a population where some people help others, even to their own detriment, and others are purely selfish, it seems like the selfish ones would benefit, the altruistic ones would suffer, and the genes for altruism would be driven to extinction.
 
@@ -8675,7 +8624,7 @@ Based on experimental results, it seems that at least part of the explanation is
 
 This apparent contradiction is the ``problem of altruism": why haven't the genes for altruism died out?
 
-Among biologists, there are many possible explanations, including reciprocal altruism, sexual selection, kin selection, and group selection.  And among non-scientists, there are even more explanations.  I leave it to you to explore the alternatives; for now I want to focus one just one explanation, arguably the simplest one: maybe altruism is actually adaptive.  In other words, maybe genes for altruism actually make people more likely to survive and reproduce.
+Among biologists, there are many possible explanations, including reciprocal altruism, sexual selection, kin selection, and group selection.  And among non-scientists, there are even more explanations.  I leave it to you to explore the alternatives; for now I want to focus on just one explanation, arguably the simplest one: maybe altruism is adaptive.  In other words, maybe genes for altruism make people more likely to survive and reproduce.
 
 And it turns out that the Prisoner's Dilemma, which raises the problem of altruism, might also help resolve it.
 
@@ -9011,6 +8960,16 @@ So maybe that's why selfish genes build altruistic brains.
 
 \begin{exercise}
 
+The code for this chapter is in the Jupyter notebook {\tt chap12.ipynb}
+in the repository for this book.  Open this notebook, read the code,
+and run the cells.  You can use this notebook to work on the
+exercises in this chapter.  My solutions are in {\tt chap12soln.ipynb}.
+
+\end{exercise}
+
+
+\begin{exercise}
+
 The simulations in this chapter depend on conditions and parameters I chose arbitrarily. As an exercise, I encourage you to explore other conditions to see what effect they have on the results. Here are some suggestions:
 
 \begin{enumerate}
@@ -9036,24 +8995,6 @@ The simulations in this chapter depend on conditions and parameters I chose arbi
 In my simulations, the population never converges to a state where a majority share the same, presumably optimal, genotype. There are two possible explanations for this outcome: one is that there is no optimal strategy, because whenever the population is dominated by a majority genotype, that condition creates an opportunity for a minority to invade; the other possibility is that the mutation rate is high enough to maintain a diversity of genotypes even if the majority is non-optimal. To distinguish between these explanations, try lowering the mutation rate to see what happens. Alternatively, start with a random population and run without mutation until only one genotype survives. Or run with mutation until the system reaches something like a steady state; then turn off mutation and run until there is only one surviving genotype. What are the characteristics of the genotypes that prevail in these conditions?
 
 \end{exercise}
-
-
-
-
-
-
-\chapter{Outro}
-
-You have reached the end of the book.  Congratulations!  When you
-first read Chapter~\ref{overview}, some of the topics might not have
-made sense.  You might find it helpful to read that chapter again now.
-Then get to work on your case study!
-
-More to say, coming soon.
-
-% Instrumentalism and particle-wave duality
-
-% Problem of free will, and what complexity has to say about it
 
 
 

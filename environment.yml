@@ -5,7 +5,7 @@ channels:
 dependencies:
 - python=2.7
 - matplotlib
-- networkx
+- networkx=2.*
 - numpy
 - jupyter
 - ipykernel
