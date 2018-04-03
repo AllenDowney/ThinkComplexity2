@@ -21,7 +21,7 @@
 \newcommand{\thetitle}{Think Complexity}
 \newcommand{\thesubtitle}{Exploring Complexity Science in Python}
 \newcommand{\theauthors}{Allen B. Downey}
-\newcommand{\theversion}{2.4}
+\newcommand{\theversion}{2.4.1}
 
 %%%% Both LATEX and PLASTEX
 
@@ -281,23 +281,23 @@ Features of this book include:
 
 \begin{description}
 
-\item[Technical details]: Most books about Complexity Science,
+\item[Technical details] Most books about Complexity Science,
   are written for a popular audience.  They usually leave out
   technical details, which is frustrating for people who can handle
   them.  This book presents the mathematics, the code, and the other
   material you need to really understand the models and how they work.
 
-\item[Further reading]: Throughout the book, I include pointers to
+\item[Further reading] Throughout the book, I include pointers to
   further reading, including original papers (most of which are
   available electronically) and related articles from Wikipedia and
   other sources.
 
-\item[Jupyter notebooks]: For each chapter I provide a Jupyter notebook
+\item[Jupyter notebooks] For each chapter I provide a Jupyter notebook
   that includes the code from the chapter, additional examples (and
   especially animations), and suggestions for experiments you can run
   with small changes in the code.
 
-\item[Exercises and solutions]: At the end of each chapter I suggest
+\item[Exercises and solutions] At the end of each chapter I suggest
   exercises you might want to work on, with solutions.
 
 \end{description}
@@ -487,6 +487,7 @@ found typos and made helpful suggestions.
 
 \item Jason Woodard co-taught Complexity Science with me at Olin College, introduced me to NK models, and made many helpful suggestions and corrections.
 
+\item Davi Post sent several corrections and suggestions.
 
 % ENDCONTRIB
 
@@ -683,7 +684,7 @@ clarify {\em why} it was inevitable.
 
 Strogatz is a mathematician, so his enthusiasm for proofs is
 understandable, but his proof doesn't address what is, to me, the
-most interesting part the phenomenon.  In order to prove that ``sync
+most interesting part of the phenomenon.  In order to prove that ``sync
 was inevitable'', Strogatz makes several simplifying assumptions, in
 particular that each firefly can see all the others.
 
@@ -873,7 +874,7 @@ years in the future.
 \end{description}
 
 We get back to explanatory models in Chapter~\ref{scale-free},
-instrumentalism in Chapter~\ref{life}, and holism in Chapter~\ref{soc}.
+instrumentalism in Chapter~\ref{lifechap}, and holism in Chapter~\ref{soc}.
 
 
 \section{A new kind of engineering}
@@ -1495,14 +1496,12 @@ We can use \py{reachable_nodes} to write \py{is_connected}:
 
 \begin{code}
 def is_connected(G):
-    start = next(G.nodes_iter())
+    start = list(G)[0]
     reachable = reachable_nodes(G, start)
     return len(reachable) == len(G)
 \end{code}
 
-\py{is_connected} chooses a starting node by calling
-\py{nodes_iter}, which returns an iterator object, and passing the
-result to \py{next}, which returns the first node.
+\py{is_connected} chooses a starting node by making a list of nodes in the graph and selecting the first.
 
 \py{reachable} gets the set of nodes that can be reached from
 \py{start}.  If the size of this set is the same as the size
@@ -1750,11 +1749,10 @@ analysis, what is the order of growth for \py{is_connected}?
 
 \begin{code}
 def is_connected(G):
-    start = next(G.nodes_iter())
+    start = list(G)[0]
     reachable = reachable_nodes(G, start)
     return len(reachable) == len(G)
 \end{code}
-
 
 \end{exercise}
 
@@ -2061,7 +2059,7 @@ Here is my implementation of this process.
 
 \begin{code}
 def rewire(G, p):
-    nodes = set(G.nodes())
+    nodes = set(G)
     for edge in G.edges():
         if flip(p):
             u, v = edge
@@ -2533,8 +2531,6 @@ in Section~\ref{bfs} except that we replace the set called
 \py{seen} with a dictionary called \py{dist}, which maps from each
 node to its distance from the source:
 
-%TODO: get rid of the second set constructor, if possible
-
 \begin{code}
 def shortest_path_dijkstra(G, start):
     dist = {start: 0}
@@ -2543,7 +2539,7 @@ def shortest_path_dijkstra(G, start):
         node = queue.popleft()
         new_dist = dist[node] + 1
 
-        neighbors = set(G[node]) - set(dist)
+        neighbors = set(G[node]).difference(dist)
         for n in neighbors:
             dist[n] = new_dist
         
@@ -2555,9 +2551,7 @@ Here's how it works:
 
 \begin{itemize}
 
-\item Initially, \py{queue} contains a single element, \py{start}, and \py{dist}
-maps from \py{start} to distance 0 (which is the distance from \py{start} to
-itself).
+\item Initially, \py{queue} contains a single element, \py{start}, and \py{dist} maps from \py{start} to distance 0 (which is the distance from \py{start} to itself).
 
 \item Each time through the loop, we use \py{popleft} to select nodes
 in the order they were added to the queue.
@@ -2852,7 +2846,7 @@ The following function does something similar for path lengths.
 \begin{code}
 def random_path_lengths(G, nodes=None, trials=1000):
     if nodes is None:
-        nodes = G.nodes()
+        nodes = list(G)
     else:
         nodes = list(nodes)
 
@@ -4571,6 +4565,7 @@ highly of Popper's work?
 
 
 \chapter{Game of Life}
+\label{lifechap}
 
 In this chapter we consider two-dimensional cellular automatons,
 especially John Conway's Game of Life (GoL).  Like some of
@@ -7100,7 +7095,7 @@ steps, and 80\% after 10 steps!
 
 Remember that when \py{p=0.3} the agents would be happy if 3 of 8
 neighbors were their own color, but they end up living in
-neighborhood where 6 or 7 of their neighbors are their own color,
+neighborhoods where 6 or 7 of their neighbors are their own color,
 typically.
 
 
@@ -7171,7 +7166,7 @@ agent has three randomly-chosen attributes:
 from a uniform distribution between 5 and 25 units.
 
 \item[Metabolism:] Each agent has some amount of sugar they must
-consumer per time step, chosen uniformly between 1 and 4.
+consume per time step, chosen uniformly between 1 and 4.
 
 \item[Vision:] Each agent can ``see'' the amount
 of sugar in nearby cells and move to the cell with the most, but
@@ -7208,7 +7203,7 @@ bounded by its capacity.
 
 Figure~\ref{chap09-3} (middle) shows the state of the model after two
 steps.  Most agents are moving toward the areas with the most sugar.
-Agents with high vision also move the fastest; agents with low vision
+Agents with high vision move the fastest; agents with low vision
 tend to get stuck on the plateaus, wandering randomly until they get
 close enough to see the next level.
 
@@ -7250,8 +7245,7 @@ a stationary distribution of wealth.  And then we can run experiments to
 see what effect the parameters and rules have on this distribution.
 
 In this version of the model, agents have an age that gets incremented
-each time step, and a random lifespan that is uniform from 60 to 100.
-If an agent's age exceeds its lifespan, it dies.
+each time step, and a random lifespan chosen from a uniform distribution between 60 to 100.  If an agent's age exceeds its lifespan, it dies.
 
 When an agent dies, from starvation or old age, it is replaced by
 a new agent with random attributes, so the total population is
@@ -7597,8 +7591,6 @@ your reaction to the system response?
 
 \chapter{Herds, Flocks, and Traffic Jams}
 
-NOTE: THIS CHAPTER IS NOT DONE!
-
 The code for this chapter is in \py{chap10.ipynb}, which is a
 Jupyter notebook in the repository for this book.  For more information
 about working with this code, see Section~\ref{code}.
@@ -7613,7 +7605,7 @@ apparent reason.
 \index{traffic jam}
 
 Agent-based models can help explain spontaneous traffic jams.
-As an example, I implemented a simple highway simulation, based on
+As an example, I implement a simple highway simulation, based on
 a model in Resnick, {\em Turtles, Termites and Traffic Jams}.
 
 \index{Turtles, Termites and Traffic Jams@{\em Turtles, Termites and Traffic Jams}}
@@ -7649,8 +7641,7 @@ random noise we'll add to the system.
 \py{locs} contains the locations of the drivers; initially
 they are equally spaced along the highway.
 
-Finally, we link the drivers so that each driver contains a reference
-to the next driver in front.  The highway is circular, so the
+Drivers are represented by \py{Driver} objects.  Each \py{Driver} contains a reference to the next driver in front.  The highway is circular, so the
 last driver contains a reference to the first.
 
 The \py{step} method is simple; it just moves each of the drivers:
@@ -7703,10 +7694,7 @@ of the simulation.
 
 \item \py{speed} is the old speed plus the requested acceleration, but
 then we make some adjustments.  First, we add random noise to
-\py{speed}, because the world is not perfect.  \py{eps} determines the magnitude
-of the noise, which is a percentage applied to \py{speed}; for example, if
-\py{eps} is 0.02, \py{speed} is muliplied by a random number between 98\%
-and 102\%.
+\py{speed}, because the world is not perfect.  \py{eps} determines the magnitude of the noise, which is a percentage applied to \py{speed}; for example, if \py{eps} is 0.02, \py{speed} is muliplied by a random number between 98\% and 102\%.
 
 \item Then speed is bounded between 0 and \py{speed_limit}, which is
 40 in my implementation, so cars are not allowed to go backward or speed.
@@ -7745,7 +7733,7 @@ exceeds the space between them.  At that point, at least one
 
 \begin{figure}
 \centerline{\includegraphics[height=3in]{figs/chap10-1.pdf}}
-\caption{}
+\caption{Simulation of drivers on a circular highway at three points in time.  Dots indicate the position of the drivers; crosses indicate places where one driver has to brake to avoid another.}
 \label{chap10-1}
 \end{figure}
 
@@ -7773,7 +7761,7 @@ can see if you watch the animations in the notebook for this chapter.
 
 \begin{figure}
 \centerline{\includegraphics[height=3in]{figs/chap10-2.pdf}}
-\caption{}
+\caption{Average speed as a function of the number of cars, for three magnitudes of added random noise.}
 \label{chap10-2}
 \end{figure}
 
@@ -7947,9 +7935,7 @@ settings resemble a school of fish or a cloud flying insects.
 \section{Emergence and free will}
 \label{freewill}
 
-
 %TODO: expand this based on class discussion
-
 
 Many complex systems have properties, as a whole, that their
 components do not:
@@ -7958,7 +7944,7 @@ components do not:
 
 \item The Rule 30 cellular automaton is deterministic, and the rules
   that govern its evolution are completely known.  Nevertheless, it
-  generates a sequence that is statistically indistiguishable from
+  generates a sequence that is statistically indistinguishable from
   random.
 
 \item The agents in Schelling's model are not racist, but the outcome
