@@ -21,7 +21,7 @@
 \newcommand{\thetitle}{Think Complexity}
 \newcommand{\thesubtitle}{Exploring Complexity Science in Python}
 \newcommand{\theauthors}{Allen B. Downey}
-\newcommand{\theversion}{2.4.1}
+\newcommand{\theversion}{2.4.2}
 
 %%%% Both LATEX and PLASTEX
 
@@ -490,9 +490,13 @@ found typos and made helpful suggestions.
 
 \item Davi Post sent several corrections and suggestions.
 
+\item Graham Taylor sent a pull request on GitHub that fixed many typos.
+
 % ENDCONTRIB
 
 \end{itemize}
+
+%I would especially like to thank the technical reviewers for this book, who %made many helpful suggestions: Vincent Knight.
 
 Other people who reported errors include
 Richard Hollands,
@@ -8622,7 +8626,7 @@ In the late 1970s Robert Axelrod, a political scientist at the University of Mic
 
 He invited participants to submit strategies in the form of computer programs, then played the programs against each other and kept score.  Specifically, they played the iterated version of PD, in which the agents play multiple rounds against the same opponent, so their decisions can be based on history.
 
-Across many tournaments, with many variations in the rules, one strategy that consistently did well, and often won, was called ``tit for tat", or TFT.  TFT always cooperates during the first round of an iterated match; after that, it copies whatever the opponent did during the previous round.  If the opponent keeps cooperating, TFT keeps cooperating.  If the opponent defects at any point, TFT defects in the next round.  But if the opponent goes back to cooperating, so does TFT.
+In Axelrod's tournaments, a simple strategy that did surprisingly well was called ``tit for tat", or TFT.  TFT always cooperates during the first round of an iterated match; after that, it copies whatever the opponent did during the previous round.  If the opponent keeps cooperating, TFT keeps cooperating.  If the opponent defects at any point, TFT defects in the next round.  But if the opponent goes back to cooperating, so does TFT.
 
 For more information about these tournaments, and an explanation of why TFT does so well, see this video: \url{https://www.youtube.com/watch?v=BOvAbjfJ0x0}.
 
@@ -8878,6 +8882,8 @@ class Niceness(Instrument):
 \label{chap12-2}
 \end{figure}
 
+% TODO: make both figures' y-axis go from 0 to 1
+
 Figure~\ref{chap12-2} (left) shows the results: starting from 0, average niceness increases quickly to 0.75, then oscillates between 0.4 and 0.85, with a long-term mean near 0.65.  Again, that's a lot of niceness!
 
 Looking specifically at the opening move, we can track the fraction of agents that cooperate in the first round.  Here's the instrument:
@@ -8979,6 +8985,18 @@ The simulations in this chapter depend on conditions and parameters I chose arbi
 \begin{exercise}
 
 In my simulations, the population never converges to a state where a majority share the same, presumably optimal, genotype. There are two possible explanations for this outcome: one is that there is no optimal strategy, because whenever the population is dominated by a majority genotype, that condition creates an opportunity for a minority to invade; the other possibility is that the mutation rate is high enough to maintain a diversity of genotypes even if the majority is non-optimal. To distinguish between these explanations, try lowering the mutation rate to see what happens. Alternatively, start with a random population and run without mutation until only one genotype survives. Or run with mutation until the system reaches something like a steady state; then turn off mutation and run until there is only one surviving genotype. What are the characteristics of the genotypes that prevail in these conditions?
+
+\end{exercise}
+
+
+\begin{exercise}
+
+The agents in my experiment are ``reactive'' in the sense that their
+choice during each round depends only on what the opponent did during
+previous rounds.  Consider exploring strategies that also take into
+account the agent's past choices.  Such a strategy would be able to
+distinguish an opponent who retaliates from an opponent who defects
+without provocation.
 
 \end{exercise}
 
