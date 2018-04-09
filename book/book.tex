@@ -12,6 +12,7 @@
 % The LaTeX source for this book is available from
 % http://greenteapress.com/complexity
 
+% TODO: Fix PDFLATEX options.
 
 \documentclass[12pt]{book}
 
@@ -21,7 +22,7 @@
 \newcommand{\thetitle}{Think Complexity}
 \newcommand{\thesubtitle}{Exploring Complexity Science in Python}
 \newcommand{\theauthors}{Allen B. Downey}
-\newcommand{\theversion}{2.4.2}
+\newcommand{\theversion}{2.5}
 
 %%%% Both LATEX and PLASTEX
 
@@ -93,6 +94,8 @@
 \else
 
 \input{latexonly}
+
+\newcommand{\myrightarrow}{\ensuremath \rightarrow}
 
 \fi
 
@@ -245,7 +248,7 @@ available at \url{http://creativecommons.org/licenses/by-nc-sa/4.0/}.
 \chapter{Preface}
 \label{preface}
 
-Complexity Science is an interdisciplinary
+Complexity science is an interdisciplinary
 field---at the intersection of mathematics, computer science and
 natural science---that focuses on discrete models of physical and
 social systems.  In particular, it focuses on {\bf complex systems},
@@ -255,36 +258,36 @@ which are systems with many interacting components.
 \index{complex systems}
 
 Complex systems include networks and graphs, cellular automatons,
-agent-based models and swarms, fractals and self-organizing
+herds, flocks, and swarms, fractals and self-organizing
 systems, chaotic systems and cybernetic systems.  These terms
 might not mean much to you at this point.  We will get to them
 soon, but you can get a preview at
 \url{http://en.wikipedia.org/wiki/Complex_systems}.
 
-Why should you learn about Complexity Science?  Here are a few reasons:
+Why should you learn about Complexity science?  Here are a few reasons:
 
 \begin{itemize}
 
-\item Complexity Science is useful, especially for explaining why natural and social systems behave the way they do.  Since Newton, math-based physics has focused on systems with small numbers of components and simple interactions.  These models are effective for some applications, like celestial mechanics, and less useful for others, like economics.  Complexity Science provides a diverse and adaptable modeling toolkit. 
+\item Complexity science is useful, especially for explaining why natural and social systems behave the way they do.  Since Newton, math-based physics has focused on systems with small numbers of components and simple interactions.  These models are effective for some applications, like celestial mechanics, and less useful for others, like economics.  Complexity science provides a diverse and adaptable modeling toolkit. 
 
-\item Many of the central results of Complexity Science are surprising; a recurring theme of this book is that simple models can produce complex behavior, with the corollary that we can sometimes explain complex behavior in the real world using simple models.
+\item Many of the central results of Complexity science are surprising; a recurring theme of this book is that simple models can produce complicated behavior, with the corollary that we can sometimes explain complicated behavior in the real world using simple models.
 
-\item As I explain in Chapter~\ref{overview}, Complexity Science is at the center of a slow shift in the practice of science, and a change in what we consider good science, or science at all.
+\item As I explain in Chapter~\ref{overview}, Complexity science is at the center of a slow shift in the practice of science, and a change in what we consider good science or science at all.
 
-\item Studying Complexity Science provides an opportunity to learn about diverse physical and social systems, to develop and apply programming skills, and to think about fundamental questions in the philosophy of science.
+\item Studying Complexity science provides an opportunity to learn about diverse physical and social systems, to develop and apply programming skills, and to think about fundamental questions in the philosophy of science.
 
 \end{itemize}
 
-By reading this book and working on the exercises you will have a chance to explore topics and ideas you might not encounter otherwise, practice programming in Python, and learn about data structures and algorithms.
+By reading this book and working on the exercises you will have a chance to explore topics and ideas you might not encounter otherwise, practice programming in Python, and learn more about data structures and algorithms.
 
 Features of this book include:
 
 \begin{description}
 
-\item[Technical details] Most books about Complexity Science,
-  are written for a popular audience.  They usually leave out
-  technical details, which is frustrating for people who can handle
-  them.  This book presents the mathematics, the code, and the other
+\item[Technical details] Most books about Complexity science
+  are written for a popular audience.  They leave out
+  technical detail, which is frustrating for people who can handle
+  it.  This book presents the code, the math, and the other
   material you need to really understand the models and how they work.
 
 \item[Further reading] Throughout the book, I include pointers to
@@ -293,9 +296,8 @@ Features of this book include:
   other sources.
 
 \item[Jupyter notebooks] For each chapter I provide a Jupyter notebook
-  that includes the code from the chapter, additional examples (and
-  especially animations), and suggestions for experiments you can run
-  with small changes in the code.
+  that includes the code from the chapter, additional examples, and
+  animations that let you see the models in action.
 
 \item[Exercises and solutions] At the end of each chapter I suggest
   exercises you might want to work on, with solutions.
@@ -306,24 +308,25 @@ Features of this book include:
 \section{Who is this book for?}
 
 The examples and supporting code for this book are in Python.  You
-should know core Python and be familiar with object-oriented features, at least using objects if not defining your own.
+should know core Python and be familiar with its object-oriented features,
+specifically using and defining classes.
 
 If you are not already familiar with Python, you might want to start
-with my other book, {\it Think Python}, which is an introduction to
-Python for people who have never programmed, or Mark
+with my {\it Think Python}, which is an introduction
+for people who have never programmed, or Mark
 Lutz's {\it Learning Python}, which might be better for people with
-programming experience.
+prior experience.
 
-I use NumPy and SciPy throughout the book.  If you are familiar with these libraries already, that's great, but I will also explain them as we go along.
+I use NumPy, SciPy, and NetworkX throughout the book.  If you are familiar with these libraries already, that's great, but I will also explain them when they appear.
 
 I assume that the reader knows basic mathematics.  You don't need much calculus; if you understand the concepts of integration and differentiation, that will do.  I use some linear algebra, but I will explain it along the way.
 
 
 \section{Changes from the first edition}
 
-For the second edition,  I have added two chapters, one on evolution, the other on the evolution of cooperation.
+For the second edition, I added two chapters, one on evolution, the other on the evolution of cooperation.
 
-In the first edition, each chapter presented background on a topic and suggested experiments the reader could perform.  For the second edition, I have done those experiments: each chapter presents the implementation and results as a worked example, then suggests extensions and additional experiments for the reader.  
+In the first edition, each chapter presented background on a topic and suggested experiments the reader could run.  For the second edition, I have done those experiments.  Each chapter presents the implementation and results as a worked example, then suggests extensions and additional experiments for the reader.
 
 Also, the Jupyter notebooks are new.  For every chapter there are two notebooks in the book's software repository: one contains the code from the chapter, explanatory text, and exercises; the other contains the solutions to the exercises.
 
@@ -349,19 +352,19 @@ work with the code:
 
 \begin{itemize}
 
-\item You can create a copy of my repository
-on GitHub by pressing the {\sf Fork} button.  If you don't already
-have a GitHub account, you'll need to create one.  After forking, you'll
-have your own repository on GitHub that you can use to keep track
-of code you write while working on this book.  Then you can
-clone the repo, which means that you copy the files
-to your computer.
+\item You can create a copy of my repository by pressing the {\sf
+  Fork} button in the upper right.  If you don't already have a GitHub
+  account, you'll need to create one.  After forking, you'll have your
+  own repository on GitHub that you can use to keep track of code you
+  write while working on this book.  Then you can clone the repo,
+  which means that you copy the files to your computer.
 
 \index{fork}
 
-\item Or you can clone my repository.  You don't need a GitHub account
-  to do this, but you won't be able to write your changes back to
-  GitHub.
+\item Or you can clone my repository without forking; that is, you can
+  make a copy of my repo on your computer.  You don't need a GitHub
+  account to do this, but you won't be able to write your changes back
+  to GitHub.
 
 \index{clone}
 
@@ -380,7 +383,7 @@ supports both Python 2 and Python 3.  You can download Anaconda from
 
 \index{Anaconda}
 
-The repository includes Python scripts and several Jupyter
+The repository includes both Python scripts and Jupyter
 notebooks.  If you have not used Jupyter before, you can read about
 it at \url{http://jupyter.org}.
 
@@ -452,7 +455,8 @@ feedback, I will add you to the contributor list
 (unless you ask to be omitted).
 \index{contributors}
 
-If you include at least part of the sentence the
+Let me know what version of the book you are working with, and
+what format.  If you include at least part of the sentence the
 error appears in, that makes it easy for me to search.  Page and
 section numbers are fine, too, but not quite as easy to work with.
 Thanks!
@@ -516,21 +520,10 @@ Jonathan Harford.
 \chapter{Complexity Science}
 \label{overview}
 
-The thesis of this book is that complexity science is a ``new
-kind of science'', a phrase I'm borrowing from Stephen Wolfram.
-
-In 2002 Wolfram published {\em A New Kind of Science}, where he
-presents his and others' work on cellular automatons and describes a
-scientific approach to the study of computational systems.  We'll get
-back to Wolfram in Chapter~\ref{automatons}, but for now I want
-to use his title for something a little broader.
-
-\index{Wolfram, Stephen}
-\index{New Kind of Science@{\it A New Kind of Science}}
-
-I think complexity is new not because
-it applies the tools of science to a new subject, but because it
-uses different tools, allows different kinds of work, and ultimately
+Complexity science is relatively new; it became recognizable as a
+field, and was given a name, in the 1980s.  But is new not because it
+applies the tools of science to a new subject, but because it uses
+different tools, allows different kinds of work, and ultimately
 changes what we mean by ``science''.
 
 To demonstrate the difference, I'll start with an example of classical
@@ -572,10 +565,10 @@ represents a house.  The houses are occupied by two kinds of
 \index{Schelling, Thomas}
 \index{agent}
 
-At any point in time, an agent might be happy or unhappy, depending
-on the other agents in the neighborhood.
-In one version of the model, agents are happy if they have at least
-two neighbors like themselves, and unhappy if they have one or zero.
+At any point in time, an agent might be happy or unhappy, depending on
+the other agents in the neighborhood.  In one version of the model,
+agents are happy if they have at least two neighbors like themselves,
+and unhappy if they have one or zero.
 
 \index{agent-based model}
 
@@ -638,28 +631,11 @@ this book is to explain how.
 \index{modeling}
 
 
-\section{Paradigm shift?}
+\section{The changing criteria of science}
 
-When I describe this book to people, I am often asked if this new kind
-of science is a paradigm shift.  I don't think so, and here's why.
-
-\index{paradigm shift}
-
-Thomas Kuhn introduced the term ``paradigm shift'' in {\em The
-Structure of Scientific Revolutions} in 1962.  It refers to a process
-in the history of science where the basic assumptions of a field
-change, or where one theory is replaced by another.
-He presents as examples the Copernican revolution, the displacement
-of phlogiston by the oxygen model of combustion, and the emergence
-of relativity.
-
-\index{Kuhn, Thomas}
-\index{Structure of Scientific Revolutions@{\it The Structure of Scientific Revolutions}}
-
-The development of complexity science is not the replacement of
-an older model, but (in my opinion) a gradual shift in the criteria
-models are judged by, and in the kinds of models that are considered
-acceptable.
+Complexity science is not just a different set of mdoels; it is also a
+gradual shift in the criteria models are judged by, and in the kinds
+of models that are considered acceptable.
 
 \index{complexity science}
 
@@ -688,9 +664,9 @@ clarify {\em why} it was inevitable.
 \end{quote}
 
 Strogatz is a mathematician, so his enthusiasm for proofs is
-understandable, but his proof doesn't address what is, to me, the
-most interesting part of the phenomenon.  In order to prove that ``sync
-was inevitable'', Strogatz makes several simplifying assumptions, in
+understandable, but his proof doesn't address what is, to me, the most
+interesting part of the phenomenon.  In order to prove that ``sync was
+inevitable'', Strogatz makes several simplifying assumptions, in
 particular that each firefly can see all the others.
 
 \index{proof}
@@ -729,7 +705,7 @@ these criteria.
 
 I have described classical models as based on physical laws, expressed
 in the form of equations, and solved by mathematical analysis;
-conversely, models of complexity systems are often based on simple
+conversely, models of complex systems are often based on simple
 rules and implemented as computations.
 
 \index{criteria for models}
@@ -738,20 +714,19 @@ We can think of this trend as a shift over time along two axes:
 
 \begin{description}
 
-\item[Equation-based $\rightarrow$ simulation-based] \quad
+\item[Equation-based \myrightarrow~simulation-based] \quad
 
-\item[Analysis $\rightarrow$ computation] \quad
+\item[Analysis \myrightarrow~computation] \quad
 
 \end{description}
 
-The new kind of science is different in several other
-ways.  I present them here so you know what's coming, but some of them
-might not make sense until you have seen the examples later in the
-book.
+Complexity science is different in several other ways.  I present them
+here so you know what's coming, but some of them might not make sense
+until you have seen the examples later in the book.
 
 \begin{description}
 
-\item[Continuous $\rightarrow$ discrete] Classical models tend to be
+\item[Continuous \myrightarrow~discrete] Classical models tend to be
   based on continuous mathematics, like calculus; models of complex
   systems are often based on discrete mathematics, including graphs and
   cellular automatons.
@@ -759,7 +734,7 @@ book.
 \index{continuous}
 \index{discrete}
 
-\item[Linear $\rightarrow$ non-linear] Classical models are often
+\item[Linear \myrightarrow~non-linear] Classical models are often
   linear, or use linear approximations to non-linear systems;
   complexity science is more friendly to non-linear models.  One example
   is chaos theory\footnote{Chaos is not covered in this book, but you can
@@ -768,7 +743,7 @@ book.
 \index{linear}
 \index{non-linear}
 
-\item[Deterministic $\rightarrow$ stochastic] Classical models are
+\item[Deterministic \myrightarrow~stochastic] Classical models are
   usually deterministic, which may reflect underlying philosophical
   determinism, discussed in Chapter~\ref{automatons}; complex models
   often feature randomness.
@@ -776,7 +751,7 @@ book.
 \index{deterministic}
 \index{stochastic}
 
-\item[Abstract $\rightarrow$ detailed] In classical models, planets are
+\item[Abstract \myrightarrow~detailed] In classical models, planets are
   point masses, planes are frictionless, and cows are
   spherical (see \url{http://en.wikipedia.org/wiki/Spherical_cow}).
   Simplifications like these are often necessary for analysis,
@@ -785,7 +760,7 @@ book.
 \index{spherical cow}
 \index{cow, spherical}
 
-\item[One, two $\rightarrow$ many] In celestial mechanics, the
+\item[One, two \myrightarrow~many] In celestial mechanics, the
   two-body problem can be solved analytically; the three-body problem
   cannot.  Where classical models are often limited to
   small numbers of interacting elements, complexity science works with
@@ -793,7 +768,7 @@ book.
 
 \index{one, two, many}
 
-\item[Homogeneous $\rightarrow$ composite] In classical models, the
+\item[Homogeneous \myrightarrow~composite] In classical models, the
   elements tend to be interchangeable; complex models more often
   include heterogeneity.
 
@@ -806,7 +781,7 @@ These are generalizations, so we should not take them too seriously.
 And I don't mean to deprecate classical science.  A more complicated
 model is not necessarily better; in fact, it is usually worse.
 
-Also, I don't mean to say that these changes are abrupt or complete.
+And I don't mean to say that these changes are abrupt or complete.
 Rather, there is a gradual migration in the frontier of what is
 considered acceptable, respectable work.  Some tools that used to be
 regarded with suspicion are now common, and some models that were
@@ -836,7 +811,7 @@ bounded rationality are hot topics.
 \index{economics}
 
 
-\section{A new kind of model}
+\section{Different models for different purposes}
 
 Complex models are often appropriate for different purposes and
 interpretations:
@@ -845,7 +820,7 @@ interpretations:
 
 \begin{description}
 
-\item[Predictive $\rightarrow$ explanatory] Schelling's model
+\item[Predictive \myrightarrow~explanatory] Schelling's model
 of segregation might shed light on a complex social phenomenon, but
 it is not useful for prediction.  On the other hand, a simple model
 of celestial mechanics can predict solar eclipses, down to the second,
@@ -854,7 +829,7 @@ years in the future.
 \index{predictive model}
 \index{explanatory model}
 
-\item[Realism $\rightarrow$ instrumentalism] Classical models lend
+\item[Realism \myrightarrow~instrumentalism] Classical models lend
   themselves to a realist interpretation; for example, most people
   accept that electrons are real things that exist.  Instrumentalism
   is the view that models can be useful even if the entities they
@@ -864,11 +839,11 @@ years in the future.
 \index{realism}
 \index{instrumentalism}
 
-\item[Reductionism $\rightarrow$ holism] Reductionism is the view that
+\item[Reductionism \myrightarrow~holism] Reductionism is the view that
   the behavior of a system can be explained by understanding its
   components.  For example, the periodic table of the elements is a
   triumph of reductionism, because it explains the chemical behavior
-  of elements with a simple model of electrons in atoms.  Holism
+  of elements with a model of electrons in atoms.  Holism
   is the view that some phenomena that appear at the system level do
   not exist at the level of components, and cannot be explained in
   component-level terms.
@@ -882,18 +857,17 @@ We get back to explanatory models in Chapter~\ref{scale-free},
 instrumentalism in Chapter~\ref{lifechap}, and holism in Chapter~\ref{soc}.
 
 
-\section{A new kind of engineering}
+\section{Complexity engineering}
 
 I have been talking about complex systems in the context of science,
-but complexity is also a cause, and effect, of
-changes in engineering and the organization of social
-systems:
+but complexity is also a cause, and effect, of changes in engineering
+and the design of social systems:
 
 \index{engineering}
 
 \begin{description}
 
-\item[Centralized $\rightarrow$ decentralized] Centralized systems are
+\item[Centralized \myrightarrow~decentralized] Centralized systems are
   conceptually simple and easier to analyze, but decentralized systems
   can be more robust.  For example, in the World Wide Web clients send
   requests to centralized servers; if the servers are down, the
@@ -906,7 +880,7 @@ systems:
 \index{client-server architecture}
 \index{peer-to-peer architecture}
 
-\item[Isolation $\rightarrow$ interaction] In classical engineering,
+\item[Isolation \myrightarrow~interaction] In classical engineering,
   the complexity of large systems is managed by isolating components
   and minimizing interactions.  This is still an important engineering
   principle; nevertheless, the availability of cheap computation makes
@@ -916,14 +890,14 @@ systems:
 \index{isolation}
 \index{interaction}
 
-\item[One-to-many $\rightarrow$ many-to-many] In many communication
+\item[One-to-many \myrightarrow~many-to-many] In many communication
   systems, broadcast services are being augmented, and sometimes
   replaced, by services that allow users to communicate with each
   other and create, share, and modify content.
 
 \index{broadcast service}
 
-\item[Top-down $\rightarrow$ bottom-up] In social, political and
+\item[Top-down \myrightarrow~bottom-up] In social, political and
   economic systems, many activities that would normally be centrally
   organized now operate as grassroots movements.  Even armies, which
   are the canonical example of hierarchical structure, are moving
@@ -933,7 +907,7 @@ systems:
 \index{bottom-up}
 \index{grassroots}
 
-\item[Analysis $\rightarrow$ computation] In classical engineering,
+\item[Analysis \myrightarrow~computation] In classical engineering,
   the space of feasible designs is limited by our capability for
   analysis.  For example, designing the Eiffel Tower was possible
   because Gustave Eiffel developed novel analytic techniques, in
@@ -949,7 +923,7 @@ systems:
 \index{Gehry, Frank}
 \index{Guggenheim Museum Bilbao}
 
-\item[Design $\rightarrow$ search] Engineering is sometimes described
+\item[Design \myrightarrow~search] Engineering is sometimes described
   as a search for solutions in a landscape of possible designs.
   Increasingly, the search process can be automated.  For example,
   genetic algorithms explore large design spaces and discover
@@ -963,7 +937,7 @@ systems:
 \end{description}
 
 
-\section{A new kind of thinking}
+\section{Complexity thinking}
 
 We are getting farther afield now, but the shifts I am postulating
 in the criteria of scientific modeling are related to 20th Century
@@ -974,14 +948,13 @@ developments in logic and epistemology.
 
 \begin{description}
 
-\item[Aristotelian logic $\rightarrow$ many-valued logic] In
+\item[Aristotelian logic \myrightarrow~many-valued logic] In
   traditional logic, any proposition is either true or false.  This
   system lends itself to math-like proofs, but fails (in dramatic
   ways) for many real-world applications.  Alternatives include
   many-valued logic, fuzzy logic, and other systems designed to handle
   indeterminacy, vagueness, and uncertainty.  Bart
-  Kosko discusses some of these systems in {\em Fuzzy
-    Thinking}.
+  Kosko discusses some of these systems in {\em Fuzzy Thinking}.
 
 \index{Aristotelian logic}
 \index{many-valued logic}
@@ -989,7 +962,7 @@ developments in logic and epistemology.
 \index{Fuzzy Thinking@{\it Fuzzy Thinking}}
 \index{uncertainty}
 
-\item[Frequentist probability $\rightarrow$ Bayesianism] Bayesian
+\item[Frequentist probability \myrightarrow~Bayesianism] Bayesian
   probability has been around for centuries, but was not widely used
   until recently, facilitated by the availability of cheap computation
   and the reluctant acceptance of subjectivity
@@ -1001,7 +974,7 @@ developments in logic and epistemology.
 \index{McGrayne, Sharon Bertsch}
 \index{Theory That Would Not Die, The@{\it The Theory That Would Not Die}}
 
-\item[Objective $\rightarrow$ subjective] The Enlightenment, and
+\item[Objective \myrightarrow~subjective] The Enlightenment, and
   philosophic modernism, are based on belief in objective truth; that
   is, truths that are independent of the people that hold them.  20th
   Century developments including quantum mechanics, G\"{o}del's
@@ -1018,25 +991,24 @@ developments in logic and epistemology.
 \index{Goldstein, Rebecca}
 \index{Incompleteness@{\it Incompleteness}}
 
-\item[Physical law $\rightarrow$ theory $\rightarrow$ model]
-  Some people distinguish between laws, theories, and models, but
-  I think they are the same thing.
-  People who use ``law'' are likely to
-  believe that it is objectively true and immutable; people who use
-  ``theory'' concede that it is subject to revision; and ``model''
-  concedes that it is based on simplification and approximation.
+\item[Physical law \myrightarrow~theory \myrightarrow~model] Some
+  people distinguish between laws, theories, and models.  Calling
+  something a ``law'' implies that it is objectively true and
+  immutable; ``theory'' suggests that it is subject to revision; and
+  ``model'' concedes that it is a subjective choice based on
+  simplifications and approximations.  
 
 \index{physical law}
 \index{theory}
 \index{model}
 
-  Some concepts that are called ``physical laws'' are really
-  definitions; others are, in effect, the assertion that a model
-  predicts or explains the behavior of a system particularly well.
-  We come back to the nature of physical laws
-  in Section~\ref{model1}, Section~\ref{model3} and Section~\ref{model2}.
+  I think they are all the same thing.  Some concepts that are called
+  laws are really definitions; others are, in effect, the
+  assertion that a certain model predicts or explains the behavior of a system
+  particularly well.  We come back to the nature of physical laws in
+  Section~\ref{model1}, Section~\ref{model3} and Section~\ref{model2}.
 
-\item[Determinism $\rightarrow$ indeterminism] Determinism is the view
+\item[Determinism \myrightarrow~indeterminism] Determinism is the view
   that all events are caused, inevitably, by prior events.  Forms of
   indeterminism include randomness, probabilistic causation, and
   fundamental uncertainty.  We come back to this
@@ -1736,6 +1708,8 @@ is $n(n-1)/2$, which is in $O(\V^2)$.  So for a complete graph,
 
 
 \section{Exercises}
+
+%TODO: get rid of the blank exercises in the DocBook version
 
 The code for this chapter is in \py{chap02.ipynb}, which is a
 Jupyter notebook in the repository for this book.  For more information
@@ -8058,7 +8032,7 @@ book?
 
 \chapter{Evolution}
 
-The most important idea in biology, and possibly all of science, is the {\bf theory of evolution by natural selection}, which claims that new species are created, and existing species change over time, due to natural selection.  Natural selection is a process in which heritable differences between individuals cause differences in survival or reproduction (or both).
+The most important idea in biology, and possibly all of science, is the {\bf theory of evolution by natural selection}, which claims that new species are created and existing species change due to natural selection.  Natural selection is a process in which heritable differences between individuals cause differences in survival and reproduction.
 
 Among people who know something about biology, the theory of evolution is widely regarded as a fact, which is to say that it close enough to the truth that if it is corrected in the future, the amendments will leave the central ideas substantially intact.
 
@@ -8074,13 +8048,13 @@ Nevertheless, many people do not believe in evolution.  In a survey run by the P
 
 About 34\% of Americans chose the second (see \url{http://www.thearda.com/Archive/Files/Codebooks/RELLAND14_CB.asp}).
 
-Even among the ones who believe that living things have evolved, barely more than half believe that the cause of evolution is natural selection.  In other words, only about 33\% of Americans believe that the theory of evolution is true.
+Even among the ones who believe that living things have evolved, barely more than half believe that the cause of evolution is natural selection.  In other words, only a third of Americans believe that the theory of evolution is true.
 
 How is this possible?  In my opinion, contributing factors include:
 
 \begin{itemize}
 
-\item Some people think that there is a conflict between evolution and their religious beliefs and, feeling like they have to reject one, they reject evolution.
+\item Some people think that there is a conflict between evolution and their religious beliefs.  Feeling like they have to reject one, they reject evolution.
 
 \item Others have been actively misinformed, often by members of the first group, so that much of what they know about evolution is false.
 
@@ -8104,17 +8078,29 @@ I will start with a simple model that demonstrates a basic form of evolution.  A
 
 \begin{itemize}
 
-\item Replicators:  We need a population of agents that can reproduce in some way.  We'll start with replicators that make perfect copies of themselves.  Later we'll add imperfect copying, that is, mutation.
+\item Replicators: We need a population of agents that can reproduce
+  in some way.  We'll start with replicators that make perfect copies
+  of themselves.  Later we'll add imperfect copying, that is,
+  mutation.
 
-\item Variation:  We also need some variability in the population, that is, differences between individuals.
+\item Variation: We also need some variability in the population, that
+  is, differences between individuals.
 
-\item Differential survival or reproduction:  The differences between individuals have to affect their ability to survive or reproduce.
+\item Differential survival or reproduction: The differences between
+  individuals have to affect their ability to survive or reproduce.
 
 \end{itemize}
 
-To simulate these features, we'll define a population of {\bf agents} that represent individual organisms.  Each agent has genetic information, called its {\bf genotype}, which is the information that gets copied when the agent replicates.  In our model\footnote{This model is a variant of the NK model developed primarily by Stuart Kauffman (see \url{https://en.wikipedia.org/wiki/NK_model})}, a genotype is represented by a sequence of \py{N} binary digits (zeros and ones), where \py{N} is a parameter we can choose.
+To simulate these features, we'll define a population of {\bf agents}
+that represent individual organisms.  Each agent has genetic
+information, called its {\bf genotype}, which is the information that
+gets copied when the agent replicates.  In our model\footnote{This
+  model is a variant of the NK model developed primarily by Stuart
+  Kauffman (see \url{https://en.wikipedia.org/wiki/NK_model})}, a
+genotype is represented by a sequence of \py{N} binary digits (zeros
+and ones), where \py{N} is a parameter we choose.
 
-To generate a population with variation, we choose initial genotypes at random; later we will explore mechanisms that generate or increase variation.
+To generate variation, we create a population with a variety of genotypes; later we will explore mechanisms that create or increase variation.
 
 Finally, to generate differential survival and reproduction, we define a function that maps from each genotype to a {\bf fitness}, where fitness is a quantity related to the ability of an agent to survive or reproduce.
 
@@ -8124,7 +8110,7 @@ The function that maps from genotype to fitness is called a {\bf fitness landsca
 
 In biological terms, the fitness landscape represents information about how the genotype of an organism is related to its physical form and capabilities, called its {\bf phenotype}, and how the phenotype interacts with its {\bf environment}.
 
-In the real world, fitness landscapes are complicated, but we don't need to build a realistic model.  To induce evolution, we need {\em some} relationship between genotype and fitness, but it turns out that it can be {\em any} relationship.  To demonstrate this point, we'll generate the fitness function at random.
+In the real world, fitness landscapes are complicated, but we don't need to build a realistic model.  To induce evolution, we need {\em some} relationship between genotype and fitness, but it turns out that it can be {\em any} relationship.  To demonstrate this point, we'll use a totally random fitness landscape.
 
 Here is the definition for a class that represents a fitness landscape:
 
@@ -8141,7 +8127,7 @@ class FitnessLandscape:
         return fs.mean()
 \end{code}
 
-The genotype of an agent, which corresponds to its location in the fitness landscape, is represented by a NumPy array of zeros and ones, called \py{loc}.
+The genotype of an agent, which corresponds to its location in the fitness landscape, is represented by a NumPy array of zeros and ones called \py{loc}.
 The fitness of a given genotype is the mean of \py{N} {\bf fitness contributions}, one for each element of \py{loc}.
 
 To compute the fitness of a genotype, \py{FitnessLandscape} uses two arrays:
@@ -8233,6 +8219,7 @@ The most important function in \py{Simulation} is \py{step}, which simulates one
         self.agents[index_dead] = replacements
 \end{code}
 
+During each time step, some agents die and some reproduce.
 \py{step} uses three other methods:
 
 \begin{itemize}
@@ -8267,22 +8254,22 @@ Before we run the simulation, we have to specify the behavior of \py{choose_dead
         return replacements
 \end{code}
 
-In \py{choose_dead}, \py{n} is the number of agents; \py{is_dead} is a boolean array that contains \py{True} for the agents who die during this time step.  In this version, every agents has the same chance of dying: 10\%.
-
+In \py{choose_dead}, \py{n} is the number of agents and \py{is_dead} is a boolean array that contains \py{True} for the agents who die during this time step.  In this version, every agent has the same probability of dying: $0.1$.
 \py{choose_dead} uses \py{np.nonzero} to find the indices of the non-zero elements of \py{is_dead} (\py{True} is considered non-zero).
 
 In \py{choose_replacements}, \py{n} is the number of agents who reproduce during this time step.  It uses \py{np.random.choice} to choose \py{n} agents, with replacement.  Then it invokes \py{copy} on each one and returns a list of new \py{Agent} objects.
 
 These methods don't depend on fitness, so this simulation does not have differential survival or reproduction.  As a result, we should not expect to see evolution.  But how can we tell?
 
+
 \section{Evidence of evolution}
 \label{instrument}
 
-The most inclusive definition of evolution is a change in the distribution of genotypes in a population.  So evolution is an aggregate effect: in other words, individuals don't evolve; populations do.
+The most inclusive definition of evolution is a change in the distribution of genotypes in a population.  Evolution is an aggregate effect: in other words, individuals don't evolve; populations do.
 
 In this simulation, genotypes are locations in a high-dimensional space, so it is hard to visualize changes in their distribution.  However, if the genotypes change, we expect their fitness to change as well.  So we will use changes in the distribution of fitness as evidence of evolution.  In particular, we'll look at the mean and standard deviation of fitness across the population.
 
-Before we run the simulation, we have to add an \py{Instrument}, which is an object that gets updated after each time step, computes some statistic of interest, and stores the result in a sequence we can plot later.
+Before we run the simulation, we have to add an \py{Instrument}, which is an object that gets updated after each time step, computes a statistic of interest, and stores the result in a sequence we can plot later.
 
 Here is the parent class for all instruments:
 
@@ -8301,7 +8288,7 @@ class MeanFitness(Instrument):
         self.metrics.append(mean)
 \end{code}
 
-Now we're ready to run the simulation.  To minimize the effect of random changes in the starting population, we'll start every simulation with the same set of agents.  And to make sure we explore the entire fitness landscape, we'll start with one agent at every location.  Here's the code that creates the \py{Simulation}:
+Now we're ready to run the simulation.  To minimize the effect of random changes in the starting population, we start every simulation with the same set of agents.  And to make sure we explore the entire fitness landscape, we start with one agent at every location.  Here's the code that creates the \py{Simulation}:
 
 \begin{code}
 N = 8
@@ -8323,7 +8310,7 @@ sim.plot(0)
 
 The \py{Simulation} keeps a list of \py{Instrument} objects.  After each timestep it invokes \py{update} on each \py{Instrument} in the list.
 
-After the simulation runs, we plot the results using \py{Simulation.plot}, which takes an index as a parameter, uses the index to select an \py{Instrument} from the list, and plots the results.  In this example, there is only one \py{Instrument}, so the index is 0.
+After the simulation runs, we plot the results using \py{Simulation.plot}, which takes an index as a parameter, uses the index to select an \py{Instrument} from the list, and plots the results.  In this example, there is only one \py{Instrument}, with index 0.
 
 \begin{figure}
 \centerline{\includegraphics[height=3in]{figs/chap11-1.pdf}}
@@ -8331,7 +8318,7 @@ After the simulation runs, we plot the results using \py{Simulation.plot}, which
 \label{chap11-1}
 \end{figure}
 
-Figure~\ref{chap11-1} shows the results of running this simulation with the \py{MeanFitness} instrument 10 times.  The mean fitness of the population drifts up or down, due to chance.  Since the distribution of fitness changes over time, we infer that the distribution of phenotypes is also changing.  By the most inclusive definition, this {\bf random walk} is a kind of evolution.  But it is not a particularly interesting kind.
+Figure~\ref{chap11-1} shows the results of running this simulation 10 times.  The mean fitness of the population drifts up or down at random.  Since the distribution of fitness changes over time, we infer that the distribution of phenotypes is also changing.  By the most inclusive definition, this {\bf random walk} is a kind of evolution.  But it is not a particularly interesting kind.
 
 In particular, this kind of evolution does not explain how biological species change over time, or how new species appear.  The theory of evolution is powerful because it explains phenomena we see in the natural world that seem inexplicable:
 
@@ -8351,7 +8338,7 @@ These are the phenomena we want to explain.  So far, our model doesn't do the jo
 \section{Differential survival}
 \label{diffsurv}
 
-So let's add one more ingredient, differential survival.  Here's the definition for a class that extends \py{Simulation} and overrides \py{choose_dead}:
+Let's add one more ingredient, differential survival.  Here's the definition for a class that extends \py{Simulation} and overrides \py{choose_dead}:
 
 \begin{code}
 class SimWithDiffSurvival(Simulation):
@@ -8365,7 +8352,7 @@ class SimWithDiffSurvival(Simulation):
 
 Now the probability of survival depends on fitness; in fact, in this version, the probability that an agent survives each time step {\em is} its fitness.
 
-Since agents with low fitness are more likely to die, agents with high fitness are more likely to survive long enough to reproduce.  So we expect the number of low-fitness agents to decrease, and the number of high-fitness agents to increase.  If we plot the mean fitness over time, we expect it to increase.
+Since agents with low fitness are more likely to die, agents with high fitness are more likely to survive long enough to reproduce.  Over time we expect the number of low-fitness agents to decrease, and the number of high-fitness agents to increase.
 
 \begin{figure}
 \centerline{\includegraphics[height=3in]{figs/chap11-2.pdf}}
@@ -8373,19 +8360,20 @@ Since agents with low fitness are more likely to die, agents with high fitness a
 \label{chap11-2}
 \end{figure}
 
-Figure~\ref{chap11-2} shows the results of 10 simulations with differential survival.  Mean fitness increases quickly at first, but then levels off.
+Figure~\ref{chap11-2} shows mean fitness over time for 10 simulations with differential survival.  Mean fitness increases quickly at first, but then levels off.
 
-You can probably figure out why it levels off: if there is only one agent at a particular location and it dies, it leaves that location unoccupied.  And without mutation, there is no way for it to be occupied again.
+You can probably figure out why it levels off: if there is only one agent at a particular location and it dies, it leaves that location unoccupied.  Without mutation, there is no way for it to be occupied again.
 
 With \py{N=8}, this simulation starts with 256 agents occupying all possible locations.  Over time, the number of occupied locations decreases; if the simulation runs long enough, eventually all agents will occupy the same location.
 
-So this simulation starts to explain adaptation: increasing fitness means that the species is getting better at surviving in its environment.  But with a decreasing number of locations, it does not explain increasing diversity at all.
+So this simulation starts to explain adaptation: increasing fitness means that the species is getting better at surviving in its environment.  But the number of occupied locations decreases over time, so this model does not explain increasing diversity at all.
 
 In the notebook for this chapter, you will see the effect of differential reproduction.  As you might expect, differential reproduction also increases mean fitness.  But without mutation, we still don't see increasing diversity.
 
+
 \section{Mutation}
 
-In the simulations so far, we start with the maximum possible diversity --- one agent at every location in the landscape --- and end (eventually) with the minimum possible diversity, all agents at one location.
+In the simulations so far, we start with the maximum possible diversity---one agent at every location in the landscape---and end with the minimum possible diversity, all agents at one location.
 
 That's almost the opposite of what happened in the natural world, which apparently began with a single species that branched, over time, into the millions, or possibly billions, of species on Earth today (see \url{https://en.wikipedia.org/wiki/Global_biodiversity}).
 
@@ -8407,7 +8395,7 @@ class Mutant(Agent):
         return Mutant(loc, self.fit_land)
 \end{code}
 
-In this model of mutation, every time we call \py{copy}, there is a 5\% chance of mutation.  In case of mutation, we choose a random direction from the current location --- that is, a random bit in the genotype --- and flip it.  Here's \py{mutate}:
+In this model of mutation, every time we call \py{copy}, there is a 5\% chance of mutation.  In case of mutation, we choose a random direction from the current location---that is, a random bit in the genotype---and flip it.  Here's \py{mutate}:
 
 \begin{code}
     def mutate(self, direction):
@@ -8416,7 +8404,9 @@ In this model of mutation, every time we call \py{copy}, there is a 5\% chance o
         return new_loc
 \end{code}
 
-The operator \py{^=} computes ``exclusive OR", which has the effect of flipping a bit (see \url{https://en.wikipedia.org/wiki/Exclusive_or#Bitwise_operation}).
+The operator \py{^=} computes ``exclusive OR"; with the operand 1, it
+has the effect of flipping a bit (see
+\url{https://en.wikipedia.org/wiki/Exclusive_or#Bitwise_operation}).
 
 Now that we have mutation, we don't have to start with an agent at every location.  Instead, we can start with the minimum variability: all agents at the same location.
 
@@ -8434,17 +8424,15 @@ Figure~\ref{chap11-3} shows the results of 10 simulations with mutation and diff
 \label{chap11-4}
 \end{figure}
 
-To measure diversity in the population, we can plot the number of occupied locations after each timestep.  Figure~\ref{chap11-4} shows the results.  We start with 100 agents, all at the same location.  As mutations occur, the number of occupied locations increases quickly.
+To measure diversity in the population, we can plot the number of occupied locations after each timestep.  Figure~\ref{chap11-4} shows the results.  We start with 100 agents at the same location.  As mutations occur, the number of occupied locations increases quickly.
 
 When an agent discovers a high-fitness location, it is more likely to survive and reproduce.  Agents at lower-fitness locations eventually die out.  Over time, the population migrates through the landscape until most agents are at the location with the highest fitness.
 
 At that point, the system reaches an equilibrium where mutation occupies new locations at the same rate that differential survival causes lower-fitness locations to be left empty.
 
-The number of occupied locations in equilibrium depends on the mutation rate and the degree of differential survival.  In these simulations the number of unique occupied locations at any point is typically 5--15.
+The number of occupied locations in equilibrium depends on the mutation rate and the degree of differential survival.  In these simulations the number of unique occupied locations at any point is typically 10--20.
 
-It is important to remember that the agents in this model don't move, just as the genotype of an organism doesn't change.  When an agent dies, it can leave a location unoccupied.  And when a mutation occurs, it can occupy a new location.
-
-As agents disappear from some locations and appear in others, the population migrates across the landscape, like a glider in Game of Life.  But organisms don't evolve; populations do.
+It is important to remember that the agents in this model don't move, just as the genotype of an organism doesn't change.  When an agent dies, it can leave a location unoccupied.  And when a mutation occurs, it can occupy a new location.  As agents disappear from some locations and appear in others, the population migrates across the landscape, like a glider in Game of Life.  But organisms don't evolve; populations do.
 
 
 \section{Speciation}
@@ -8455,7 +8443,9 @@ Among species that reproduce sexually, two organisms are considered the same spe
 
 Among organisms that reproduce asexually, like bacteria, the definition of species is not as clear-cut.  Generally, a population is considered a species if their genotypes form a cluster, that is, if the genetic differences within the population are small compared to the differences between populations.
 
-So before we can model new species, we need the ability to identify clusters of agents in the landscape, which means we need a definition of {\bf distance} between locations.  Since locations are represented with strings of binary digits, we'll define distance as the number of bits in the genotype that differ.  \py{FitnessLandscape} provides a \py{distance} method:
+Before we can model new species, we need the ability to identify clusters of agents in the landscape, which means we need a definition of {\bf distance} between locations.  Since locations are represented with strings of binary digits, we'll define distance as the number of bits in the genotype that differ.  \py{FitnessLandscape} provides a \py{distance} method:
+
+%TODO: Why didn't I use the ^ operator in distance()?
 
 \begin{code}
 # class FitnessLandscape
@@ -8490,11 +8480,11 @@ We can model these scenarios by running a simulation until the population reache
 \label{chap11-6}
 \end{figure}
 
-Figure~\ref{chap11-6} shows results from a simulation like that.  Again, we start with 100 identical mutants at a random location, and run the simulation for 500 timesteps.  At that point, many agents are at the optimal location, which has fitness near 0.65, in this example.  And the genotypes of the agents form a cluster, with the mean distance between agents near 1.
+Figure~\ref{chap11-6} shows results from a simulation like that.  Again, we start with 100 identical mutants at a random location, and run the simulation for 500 timesteps.  At that point, many agents are at the optimal location, which has fitness near 0.65 in this example.  The genotypes of the agents form a cluster, with the mean distance between agents near 1.
 
-After 500 steps, we run \py{FitnessLandscape.set_values}, which changes the mapping from genotype to fitness; then we resume the simulation.  Mean fitness drops immediately, because the optimal location and its neighbors in the old landscape are no better than random locations in the new landscape.
+After 500 steps, we run \py{FitnessLandscape.set_values}, which changes the fitness landscape; then we resume the simulation.  Mean fitness drops immediately, because the optimal location in the old landscape is no better than a random location in the new landscape.
 
-However, mean fitness increases quickly as the population migrates across the new landscape, eventually finding the new optimal location, which has fitness near 0.75 (which happens to be higher in this example, but needn't be).
+However, mean fitness increases quickly as the population migrates across the new landscape, eventually finding the new optimum, which has fitness near 0.75 (which happens to be higher in this example, but needn't be).
 
 Once the population reaches steady state, it forms a new cluster, with mean distance between agents near 1 again.
 
@@ -8507,23 +8497,20 @@ We have seen that mutation, along with differential survival and reproduction, i
 
 Logically, this ``theorem" doesn't prove that evolution in nature is caused by these mechanisms alone.  But since these mechanisms do appear, in many forms, in biological systems, it is reasonable to think that they at least contribute to natural evolution.
 
-Likewise, the model does not prove that these mechanisms always cause evolution.  But the results we see here turn out to be robust: in almost any model that includes these features --- imperfect replicators, variability, and differential reproduction --- evolution happens.
+Likewise, the model does not prove that these mechanisms always cause evolution.  But the results we see here turn out to be robust: in almost any model that includes these features---imperfect replicators, variability, and differential reproduction---evolution happens.
 
-I hope this observation helps to demystify evolution.  When we look at natural systems, evolution seems complicated.  And because we primarily see the results of evolution, with only glimpses of the process, it can be hard to imagine and sometimes hard to believe.
+I hope this observation helps to demystify evolution.  When we look at natural systems, evolution seems complicated.  And because we primarily see the results of evolution, with only glimpses of the process, it can be hard to imagine and hard to believe.
 
-But in simulation, we see the whole process, not just the results.  And by including the minimal set of features to produce evolution --- temporarily ignoring the vast complexity of biological life --- we can see evolution as the surprisingly simple, inevitable idea that it is.
+But in simulation, we see the whole process, not just the results.  And by including the minimal set of features to produce evolution---temporarily ignoring the vast complexity of biological life---we can see evolution as the surprisingly simple, inevitable idea that it is.
 
 
 \section{Exercises}
 
-\begin{exercise}
-
 The code for this chapter is in the Jupyter notebook {\tt chap11.ipynb}
-in the repository for this book.  Open this notebook, read the code,
-and run the cells.  You can use this notebook to work on the
-exercises in this chapter.  My solutions are in {\tt chap11soln.ipynb}.
+in the repository for this book.  Open the notebook, read the code,
+and run the cells.  The notebook includes
+exercises for this chapter.  My solutions are in {\tt chap11soln.ipynb}.
 
-\end{exercise}
 
 
 \chapter{Evolution of cooperation}
@@ -8578,7 +8565,8 @@ With this set of punishments, it is tempting to say that the players should coop
 
 \end{itemize}
 
-And because the game is symmetric, this analysis is the same from B's point of view.  No matter what A does, B would be better off defecting.
+No matter what B does, A is better of defecting.
+And because the game is symmetric, this analysis is the same from B's point of view: no matter what A does, B is better off defecting.
 
 In the simplest version of this game, we assume that A and B have no other considerations to take into account.  They can't communicate with each other, so they can't negotiate, make promises, or threaten each other.  And they consider only the immediate goal of minimizing their sentences; they don't take into account any other factors.
 
@@ -8606,7 +8594,7 @@ Based on experimental results, it seems that at least part of the explanation is
 
 \item And why does being nice make people feel good?  It might be tempting to say that they were raised right, or more generally trained by society to want to do good things.  But there is little doubt\footnote{I hope you'll forgive my use of ``little doubt" here in place of references to relevant experiments.  I am trying to cover some ground in this chapter without getting too bogged down.} that at least a substantial part of altruism is innate; to varying degrees, a proclivity for altruism is a result of normal brain development.
 
-\item Well, why is that?  The innate parts of brain development, and the personal characteristics that follow, are the result of genetic information.  Of course, the relationship between genes and altruism is complicated;  there are probably many genes that interact with each other and with environmental factors to cause people to be more or less altruistic in different circumstances.  Nevertheless, there are almost certainly genes that cause people to be altruistic.
+\item Well, why is that?  The innate parts of brain development, and the personal characteristics that follow, are the result of genetic information.  Of course, the relationship between genes and altruism is complicated; there are probably many genes that interact with each other and with environmental factors to cause people to be more or less altruistic in different circumstances.  Nevertheless, there are almost certainly genes that cause people to be altruistic.
 
 \item Finally, why is that?  If, under natural selection, animals are in constant competition with each other to survive and reproduce, it seems obvious that altruism would be counterproductive.  In a population where some people help others, even to their own detriment, and others are purely selfish, it seems like the selfish ones would benefit, the altruistic ones would suffer, and the genes for altruism would be driven to extinction.
 
@@ -8680,7 +8668,7 @@ class Agent:
 
 In the \py{__init__} method, \py{values} is a sequence of choices, either \py{'C'} or \py{'D'}, that correspond to \py{keys}.  So if the first element of \py{values} is \py{'C'}, that means that this agent will cooperate in the first round.  If the last element of \py{values} is \py{'D'}, this agent will defect if the opponent defected in the previous two rounds.
 
-In this implementation, the genotype for an agent that always defects is \py{'DDDDDDD'}; the genotype for always cooperate is \py{'CCCCCCC'}, and the genotype for ``tit for tat" is \py{'CCDCDCD'}.
+In this implementation, the genotype of an agent who always defects is \py{'DDDDDDD'}; the genotype of an agent who always cooperates is \py{'CCCCCCC'}, and the genotype for TFT is \py{'CCDCDCD'}.
 
 The \py{Agent} class provides \py{copy}, which makes another agent with the same genotype, but with some probability of mutation:
 
@@ -8705,6 +8693,7 @@ Mutation works by choosing a random value in the genotype and flipping from \py{
         return values
 \end{code}
 
+Now that we have agents, we need a tournament.
 
 
 \section{The Tournament}
@@ -8780,6 +8769,7 @@ After the given number of rounds, \py{play} returns the total score for each age
 
 Inside the loop, we select two agents, invoke \py{play}, and update \py{totals}.  At the end, we compute the average number of points each agent got, per round and per opponent, and store the results in the \py{fitness} attribute of each agent.
 
+
 \section{The Simulation}
 
 The \py{Simulation} class for this chapter is based on the one in Section~\ref{evosim}; the only differences are in \py{__init__} and \py{step}.
@@ -8797,7 +8787,7 @@ class PDSimulation(Simulation):
 
 A \py{Simulation} object contains a \py{Tournament} object, a sequence of agents, and a sequence of \py{Instrument} objects (as in Section~\ref{instrument}).
 
-And here's \py{step}:
+Here's the \py{step} method:
 
 \begin{code}
     def step(self):
@@ -8826,10 +8816,9 @@ This version of \py{step} uses \py{Tournament.melee}, which sets the \py{fitness
         self.update_instruments()
 \end{code}
 
-
 \py{Simulation.step} collects the agents' fitnesses in an array; then it calls \py{choose_dead} to decide which agents die and \py{choose_replacements} to decide which agents reproduce.
 
-My simulation includes differential survival, as in Section~\ref{diffsurv}, but just random reproduction.  You can see the details in the notebook for this chapter.  As one of the exercises, you will have a chance to explore the effect of differential reproduction.
+My simulation includes differential survival, as in Section~\ref{diffsurv}, but not differential reproduction.  You can see the details in the notebook for this chapter.  As one of the exercises, you will have a chance to explore the effect of differential reproduction.
 
 
 \section{Results}
@@ -8857,7 +8846,11 @@ sim = PDSimulation(tour, agents)
 
 Figure~\ref{chap12-1} shows mean fitness over time (using the \py{MeanFitness} instrument from Section~\ref{instrument}).  Initially mean fitness is 1, because when defectors face each other, they get only 1 point each per round.
 
-After about 500 time steps increases to nearly 3, which is what cooperators get when they face each other.  However, as we suspected, this situation in unstable.  Over the next 500 steps, mean fitness drops below 2, climbs back toward 3, and continues to oscillate.
+After about 500 time steps, mean fitness increases to nearly 3, which
+is what cooperators get when they face each other.  However, as we
+suspected, this situation in unstable.  Over the next 500 steps, mean
+fitness drops below 2, climbs back toward 3, and continues to
+oscillate.
 
 The rest of the simulation is highly variable, but with the exception of one big drop, mean fitness is usually between 2 and 3, with the long-term mean close to 2.5.
 
@@ -8898,9 +8891,9 @@ class Opening(Instrument):
         self.metrics.append(metric)
 \end{code}
 
-Figure~\ref{chap12-2} (right) shows the results, which are highly variables.  The fraction of agents who cooperate in the first round is often near 1, and occasionally near 0.  The long-term average is close to 0.65, similar to overall niceness.
+Figure~\ref{chap12-2} (right) shows the results, which are highly variable.  The fraction of agents who cooperate in the first round is often near 1, and occasionally near 0.  The long-term average is close to 0.65, similar to overall niceness.  These results are consistent with Axelrod's tournaments; in general, nice strategies do well.
 
-These results are consistent with Axelrod's tournaments; in general, nice strategies do well.  The other characteristics Axelrod identifies in successful strategies are retaliation and forgiveness.  To measure retaliation, I define this instrument:
+The other characteristics Axelrod identifies in successful strategies are retaliation and forgiveness.  To measure retaliation, I define this instrument:
 
 \begin{code}
 class Retaliating(Instrument):
@@ -8918,14 +8911,14 @@ class Retaliating(Instrument):
 
 This result provides weak support for the claim that successful strategies retaliate.  Maybe it's not necessary for all agents, or even many, to be retaliatory; if there is at least some tendency toward retaliation in the population as a whole, that might be enough to prevent high-defection strategies from gaining ground.
 
-To measure forgiveness, I defined one more instrument to see whether agent's might be more likely to cooperate after D-C in the previous two rounds, compared to C-D.  In my simulations, there is no evidence for this particular kind of forgiveness.  On the other hand, the strategies in these simulations are forgiving, in some sense, because they consider only the previous two rounds of history.
+To measure forgiveness, I defined one more instrument to see whether agent's might be more likely to cooperate after D-C in the previous two rounds, compared to C-D.  In my simulations, there is no evidence for this particular kind of forgiveness.  On the other hand, the strategies in these simulations are necessarily forgiving, in some sense, because they consider only the previous two rounds of history.
 
 
 \section{Conclusions}
 
 Axelrod's tournaments suggest a possible resolution to the problem of altruism: maybe being nice, but not {\em too} nice, is adaptive.  But the strategies in the original tournaments were designed by people, not evolution, and the distribution of strategies did not change over the course of the tournaments.
 
-So that raises a natural objection: strategies like TFT might do well in a fixed population of human-designed strategies, but can they evolve?  Could they appear in a population through mutation, compete successfully with their ancestors, and resist invasion by their descendants?
+So that raises a question: strategies like TFT might do well in a fixed population of human-designed strategies, but can they evolve?  In other words, can they appear in a population through mutation, compete successfully with their ancestors, and resist invasion by their descendants?
 
 The simulations in this chapter suggest:
 
@@ -8937,9 +8930,10 @@ The simulations in this chapter suggest:
 
 \item As a result, the average level of niceness oscillates, but the average amount of niceness is generally high, and the average level of fitness is generally closer to the cooperative utopia than to the dystopia of defection.
 
-\item TFT, which is a prevalent strategy in Alexrod's tournaments, does not see to be a specially optimal strategy in an evolving population.  In fact, there is probably no stable optimal strategy.
+\item TFT, which was a successful strategy in Alexrod's tournaments, does not seem to be a specially optimal strategy in an evolving population.  In fact, there is probably no stable optimal strategy.
 
-\item It's possible that TFT doesn't prevail in my simulations because it's not necessary for all agents to retaliate.  If there is enough retaliation in the population as a whole, that might be enough to prevent invasion by defectors\footnote{And that introduces a whole new topic in game theory, the free-rider problem (see \url{https://en.wikipedia.org/wiki/Free-rider_problem})}.
+\item Some degree of retaliation may be adaptive, but it might not be
+necessary for all agents to retaliate.  If there is enough retaliation in the population as a whole, that might be enough to prevent invasion by defectors\footnote{And that introduces a whole new topic in game theory, the free-rider problem (see \url{https://en.wikipedia.org/wiki/Free-rider_problem})}.
 
 \end{itemize}
 
@@ -8950,14 +8944,10 @@ So maybe that's why selfish genes build altruistic brains.
 
 \section{Exercises}
 
-\begin{exercise}
-
 The code for this chapter is in the Jupyter notebook {\tt chap12.ipynb}
-in the repository for this book.  Open this notebook, read the code,
+in the repository for this book.  Open the notebook, read the code,
 and run the cells.  You can use this notebook to work on the
 exercises in this chapter.  My solutions are in {\tt chap12soln.ipynb}.
-
-\end{exercise}
 
 
 \begin{exercise}
@@ -8972,11 +8962,11 @@ The simulations in this chapter depend on conditions and parameters I chose arbi
 
 \item Since each agent only plays against two other agents, the outcome of each round is highly variable: an agent that would do well against most other agents might get unlucky during any given round, or the other way around. What happens if you increase the number of opponents each agent plays against during each round? Or what if an agent's fitness at the end of each step is the average of its current score and its fitness at the end of the previous round?
 
-\item The function I chose for \py{prob_survival} varies from 0.7 to 0.9, so the least fit agent, with \py{p=0.7}, lives for 3.33 timesteps, on average, and the most fit agent lives for 10 timesteps. What happens if you make \py{prob_survival} more or less "aggressive".
+\item The function I chose for \py{prob_survival} varies from 0.7 to 0.9, so the least fit agent, with \py{p=0.7}, lives for 3.33 timesteps, on average, and the most fit agent lives for 10 timesteps. What happens if you make \py{prob_survival} more or less ``aggressive".
 
 \item I chose \py{num_rounds=6} so that each element of the genome has roughly the same impact on the outcome of a match. But that is substantially shorter than what Alexrod used in his tournaments. What happens if you increase \py{num_rounds}?  Note: if you explore the effect of this parameter, you might want to modify \py{Niceness} to measure the niceness of the last 4 elements of the genome, which will be under more selective pressure as \py{num_rounds} increases.
 
-\item My implementation has differential survival but just random reproduction. What happens if you add differential reproduction?
+\item My implementation has differential survival and random reproduction. What happens if you add differential reproduction?
 
 \end{enumerate}
 
