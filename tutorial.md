@@ -43,7 +43,7 @@ Once you have Jupyter, you can get my code from  this Git repository on Github. 
 ```
 
 It should create a directory named `ThinkComplexity2`.
-Otherwise you can download the repository in [this zip file](https://github.com/AllenDowney/ThinkComplexity2/zipball/gh-pages).
+Otherwise you can download the repository in [this zip file](https://github.com/AllenDowney/ThinkComplexity2/archive/master.zip).
 
 To start Jupyter, run:
 
