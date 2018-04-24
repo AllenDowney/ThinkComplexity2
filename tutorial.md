@@ -68,14 +68,13 @@ When you start your server, you might get a different URL.
 Whatever it is, if you paste it into a browser, you should should see a home page with a list of the
 notebooks in the repository.
 
-Click on `chap01.ipynb`.  It should open the notebook for Chapter 1.
+Click on `chap09.ipynb`.  It should open the notebook for Chapter 9.
 
 Select the cell with the import statements and press "Shift-Enter" to run the code in the cell.
 If it works and you get no error messages, **you are all set**.  
 
 If you get error messages about missing packages, you can install the packages you need using your
 package manager, or install Anaconda.
-
 
 ### Option 2
 
@@ -85,8 +84,7 @@ You can run my notebook in a virtual machine on Binder. To launch the VM, press 
 
 You should see a home page with a list of the notebooks in the repository.
 
-If you want to try the exercises, open `chap01.ipynb`. If you just want to see the answers,
-open `chap01soln.ipynb`.  Either way, you should be able to run the notebooks in your browser 
+Open `chap09.ipynb`. You should be able to run the notebook in your browser 
 and try out the examples.  
 
 However, be aware that the virtual machine you are running is temporary.
@@ -97,6 +95,6 @@ Special thanks to the generous people who run Binder, which makes it easy to sha
 ### Option 3
 
 You can read the notebooks on GitHub.  [The repository is here](https://github.com/AllenDowney/ThinkComplexity2/tree/master/code).
-You should see the list of files in the repo.   Open `chap01.ipynb` or, if you just want to see the answers, 
-open `chap01soln.ipynb`.
+You should see the list of files in the repo.   Open `chap09.ipynb`.
+You should be able to read the notebook, but you won't be able to run the code.
 
