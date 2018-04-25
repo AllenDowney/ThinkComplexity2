@@ -76,6 +76,10 @@ If it works and you get no error messages, **you are all set**.
 If you get error messages about missing packages, you can install the packages you need using your
 package manager, or install Anaconda.
 
+If you have trouble with the animations, you might have to install `ffmpeg`.  The animations are not necessary
+for the tutorial.
+
+
 ### Option 2
 
 You can run my notebook in a virtual machine on Binder. To launch the VM, press this button:
@@ -85,7 +89,7 @@ You can run my notebook in a virtual machine on Binder. To launch the VM, press 
 You should see a home page with a list of the notebooks in the repository.
 
 Open `chap09.ipynb`. You should be able to run the notebook in your browser 
-and try out the examples.  
+and try out the examples.  The animations may not work, but they are not really necessary for the tutorial.
 
 However, be aware that the virtual machine you are running is temporary.
 If you leave it idle for more than an hour or so, it will disappear along with any work you have done.
