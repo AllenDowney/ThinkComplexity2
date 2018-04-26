@@ -57,7 +57,7 @@ class Cell2DViewer:
 
     cmap = plt.get_cmap('Greens')
     options = dict(interpolation='nearest', alpha=0.8,
-                   vmin=0, vmax=1)
+                   vmin=0, vmax=1, origin='upper')
 
     def __init__(self, viewee):
         self.viewee = viewee
@@ -103,13 +103,15 @@ class Cell2DViewer:
         """Draws the grid."""
         a = self.viewee.array
         n, m = a.shape
-        lw = 2 if m < 10 else 1
+        lw = 2 if m < 7 else 1
         options = dict(color='white', linewidth=lw)
 
-        rows = np.arange(1, n)
+        # the shift is a hack to get the grid to line up with the cells
+        shift = 0.005 * n
+        rows = np.arange(n) + shift
         self.hlines = plt.hlines(rows, 0, m, **options)
 
-        cols = np.arange(1, m)
+        cols = np.arange(m)
         self.vlines = plt.vlines(cols, 0, n, **options)
 
     def animate(self, frames=20, interval=200, grid=False):
@@ -118,7 +120,7 @@ class Cell2DViewer:
         frames: number of frames to draw
         interval: time between frames in ms
         """
-        fig = plt.figure()
+        fig = plt.gcf()
         self.draw(grid)
         anim = animation.FuncAnimation(fig, self.animate_func,
                                        init_func=self.init_func,
@@ -136,6 +138,3 @@ class Cell2DViewer:
         a = self.viewee.array
         self.im.set_array(a)
         return (self.im,)
-
-
-

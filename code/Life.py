@@ -12,9 +12,7 @@ import sys
 
 import numpy as np
 import matplotlib.pyplot as plt
-
 from matplotlib import animation
-from scipy.signal import convolve2d
 
 """
 For animation to work in the notebook, you might have to install
@@ -24,8 +22,10 @@ ffmpeg.  On Ubuntu and Linux Mint, the following should work.
     sudo apt-get update
     sudo apt-get install ffmpeg
 """
+
 from Cell2D import Cell2D, Cell2DViewer
 from scipy.signal import correlate2d
+
 
 class Life(Cell2D):
     """Implementation of Conway's Game of Life."""
