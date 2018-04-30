@@ -43,12 +43,31 @@ Once you have Jupyter, you can get my code from  this Git repository on Github. 
 ```
 
 It should create a directory named `ThinkComplexity2`.
-Otherwise you can download the repository in [this zip file](https://github.com/AllenDowney/ThinkComplexity2/archive/master.zip).
+Otherwise you can download the repository in [this zip file](https://github.com/AllenDowney/ThinkComplexity2/archive/master.zip)
+and unzip it.
+
+Then `cd` into the new directory:
+
+```
+    cd ThinkComplexity2
+```
+
+To make sure you have the packages you need, you can use `environment.yml`
+to create a Conda environment named `complexity`
+
+```
+   conda env create -f environment.yml
+```
+
+Then activate the new environment
+
+Windows: `activate complexity` 
+
+Linux or Mac: `source activate complexity` 
 
 To start Jupyter, run:
 
 ```
-    cd ThinkComplexity2/code
     jupyter notebook
 ```
 
