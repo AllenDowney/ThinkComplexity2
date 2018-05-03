@@ -61,13 +61,14 @@ to create a Conda environment named `complexity`
 
 Then activate the new environment
 
-Windows: `activate complexity` 
-
-Linux or Mac: `source activate complexity` 
+ ```
+   conda activate complexity
+```
 
 To start Jupyter, run:
 
 ```
+    cd code
     jupyter notebook
 ```
 
