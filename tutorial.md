@@ -30,6 +30,8 @@ user-level install, it will not interfere with other Python installations.
 
 [Information about installing Anaconda is here](http://docs.continuum.io/anaconda/install.html).
 
+The code for the tutorial works in Python 2 and Python 3, but I recommend Python 3.
+
 When you install Anaconda, you should get Jupyter by default, but if not, run
 
 ```
