@@ -30,6 +30,8 @@ user-level install, it will not interfere with other Python installations.
 
 [Information about installing Anaconda is here](http://docs.continuum.io/anaconda/install.html).
 
+The code for the tutorial works in Python 2 and Python 3, but I recommend Python 3.
+
 When you install Anaconda, you should get Jupyter by default, but if not, run
 
 ```
@@ -43,12 +45,32 @@ Once you have Jupyter, you can get my code from  this Git repository on Github. 
 ```
 
 It should create a directory named `ThinkComplexity2`.
-Otherwise you can download the repository in [this zip file](https://github.com/AllenDowney/ThinkComplexity2/archive/master.zip).
+Otherwise you can download the repository in [this zip file](https://github.com/AllenDowney/ThinkComplexity2/archive/master.zip)
+and unzip it.
+
+Then `cd` into the new directory:
+
+```
+    cd ThinkComplexity2
+```
+
+To make sure you have the packages you need, you can use `environment.yml`
+to create a Conda environment named `complexity`
+
+```
+   conda env create -f environment.yml
+```
+
+Then activate the new environment
+
+ ```
+   conda activate complexity
+```
 
 To start Jupyter, run:
 
 ```
-    cd ThinkComplexity2/code
+    cd code
     jupyter notebook
 ```
 
