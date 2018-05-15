@@ -270,6 +270,37 @@ def Hlines(ys, x1, x2, **options):
     plt.hlines(ys, x1, x2, **options)
 
 
+def axvline(x, **options):
+    """Plots a vertical line.
+
+    Args:
+      x: x location
+      options: keyword args passed to plt.axvline
+    """
+    options = _UnderrideColor(options)
+    options = _Underride(options, linewidth=1, alpha=0.5)
+    plt.axvline(x, **options)
+
+
+def axhline(y, **options):
+    """Plots a horizontal line.
+
+    Args:
+      y: y location
+      options: keyword args passed to plt.axhline
+    """
+    options = _UnderrideColor(options)
+    options = _Underride(options, linewidth=1, alpha=0.5)
+    plt.axhline(y, **options)
+
+
+def tight_layout():
+    """Adjust subplots to minimize padding and margins.
+    """
+    plt.tight_layout()
+    plt.subplots_adjust(wspace=0, hspace=0, left=0, right=1)
+
+
 def FillBetween(xs, y1, y2=None, where=None, **options):
     """Fills the space between two lines.
 
@@ -528,7 +559,7 @@ def Cdf(cdf, complement=False, transform=None, **options):
         scale['yscale'] = 'log'
 
     if transform == 'gumbel':
-        xs = xp.delete(xs, 0)
+        xs = np.delete(xs, 0)
         ps = np.delete(ps, 0)
         ps = [-math.log(p) for p in ps]
         scale['yscale'] = 'log'
@@ -680,6 +711,35 @@ def Config(**options):
             labels = ax.get_yticklabels()
             plt.setp(labels, visible=False)
 
+def set_font_size(title_size=16, label_size=16, ticklabel_size=14, legend_size=14):
+    """Set font sizes for the title, labels, ticklabels, and legend.
+    """
+    def set_text_size(texts, size):
+        for text in texts:
+            text.set_size(size)
+
+    ax = plt.gca()
+
+    # title
+    ax.title.set_size(title_size)
+
+    # x axis
+    ax.xaxis.label.set_size(label_size)
+    set_text_size(ax.xaxis.get_ticklabels(), ticklabel_size)
+
+    # y axis
+    ax.yaxis.label.set_size(label_size)
+    set_text_size(ax.yaxis.get_ticklabels(), ticklabel_size)
+
+    # legend
+    # TODO: This doesn't seem to work on the last axis in a subplot
+    set_text_size(ax.legend().texts, legend_size)
+
+
+def bigger_text():
+    sizes = dict(title_size=16, label_size=16, ticklabel_size=14, legend_size=14)
+    set_font_size(**sizes)
+
 
 def Show(**options):
     """Shows the plot.
@@ -716,6 +776,10 @@ def Save(root=None, formats=None, **options):
 
     For options, see Config.
 
+    Note: With a capital S, this is the original save, maintained for
+    compatibility.  New code should use save(), which works better
+    with my newer code, especially in Jupyter notebooks.
+
     Args:
       root: string filename root
       formats: list of string formats
@@ -728,6 +792,8 @@ def Save(root=None, formats=None, **options):
         if option in options:
             save_options[option] = options.pop(option)
 
+    # TODO: falling Config inside Save was probably a mistake, but removing
+    # it will require some work
     Config(**options)
 
     if formats is None:
@@ -744,6 +810,29 @@ def Save(root=None, formats=None, **options):
             SaveFormat(root, fmt, **save_options)
     if clf:
         Clf()
+
+
+def save(root, formats=None, **options):
+    """Saves the plot in the given formats and clears the figure.
+
+    For options, see plt.savefig.
+
+    Args:
+      root: string filename root
+      formats: list of string formats
+      options: keyword args passed to plt.savefig
+    """
+    if formats is None:
+        formats = ['pdf', 'png']
+
+    try:
+        formats.remove('plotly')
+        Plotly(clf=False)
+    except ValueError:
+        pass
+
+    for fmt in formats:
+        SaveFormat(root, fmt, **options)
 
 
 def SaveFormat(root, fmt='eps', **options):
@@ -781,7 +870,6 @@ contour = Contour
 pcolor = Pcolor
 config = Config
 show = Show
-save = Save
 
 
 def main():
