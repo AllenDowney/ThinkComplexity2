@@ -294,11 +294,15 @@ def axhline(y, **options):
     plt.axhline(y, **options)
 
 
-def tight_layout():
+def tight_layout(**options):
     """Adjust subplots to minimize padding and margins.
     """
+    options = _Underride(options,
+                         wspace=0.1, hspace=0.1,
+                         left=0, right=1,
+                         bottom=0, top=1)
     plt.tight_layout()
-    plt.subplots_adjust(wspace=0, hspace=0, left=0, right=1)
+    plt.subplots_adjust(**options)
 
 
 def FillBetween(xs, y1, y2=None, where=None, **options):
