@@ -27,21 +27,18 @@ b_length = 0.1
 # radiuses for sensing different rules
 r_avoid = 0.3
 r_center = 1.0
-r_copy = 0.5
+r_align = 0.5
 
 # viewing angle for different rules, in radians
 a_avoid = 2*np.pi
 a_center = 2
-a_copy = 2
+a_align = 2
 
 # weights for various rules
 w_avoid = 4
 w_center = 3
-w_copy = 2
+w_align = 2
 w_love = 10
-
-# time step
-dt = 0.1
 
 null_vector = vector(0,0,0)
 
@@ -53,7 +50,7 @@ def random_vector(a, b):
 
 
 def limit_vector(vect):
-    """if the magnitude is greater than 1, set it to 1"""
+    """If the magnitude is greater than 1, set it to 1"""
     if vect.mag > 1:
         vect.mag = 1
     return vect
@@ -69,10 +66,11 @@ class Boid(cone):
         self.axis = length * self.vel.norm()
 
     def get_neighbors(self, others, radius, angle):
-        """Return the list of neighbors within the given radius and angle."""
+        """Return a list of neighbors within the given radius and angle."""
         boids = []
         for other in others:
-            if other is self: continue
+            if other is self:
+                continue
             offset = other.pos - self.pos
 
             # if not in range, skip it
@@ -93,9 +91,15 @@ class Boid(cone):
         return a vector pointing toward it."""
         close = self.get_neighbors(others, r_center, a_center)
         vecs = [other.pos for other in close]
-        return self.mean_vector(vecs)
+        return self.vector_toward_center(vecs)
 
-    def mean_vector(self, vecs)
+    def vector_toward_center(self, vecs):
+        """Vector from self to the mean of vecs.
+
+        vecs: sequence of vector
+
+        returns: Vector
+        """
         if vecs:
             center = np.mean(vecs)
             toward = vector(center - self.pos)
@@ -109,28 +113,17 @@ class Boid(cone):
         proportional to the inverse of the distance (up to a limit)."""
         others = others + [carrot]
         close = self.get_neighbors(others, r_avoid, a_avoid)
-        t = [other.pos for other in close]
-        if t:
-            center = np.mean(t)
-            away = vector(self.pos - center)
-            away.mag = r_avoid / away.mag
-            return limit_vector(away)
-        else:
-            return null_vector
+        vecs = [other.pos for other in close]
+        return -self.vector_toward_center(vecs)
 
-    def copy(self, others):
+    def align(self, others):
         """Return the average heading of other boids in range.
 
         others: list of Boids
         """
-        close = self.get_neighbors(others, r_copy, a_copy)
-        t = [other.vel for other in close]
-        if t:
-            center = np.mean(t)
-            away = vector(self.pos - center)
-            return limit_vector(away)
-        else:
-            return null_vector
+        close = self.get_neighbors(others, r_align, a_align)
+        vecs = [other.vel for other in close]
+        return -self.vector_toward_center(vecs)
 
     def love(self, carrot):
         """Returns a vector pointing toward the carrot."""
@@ -141,13 +134,16 @@ class Boid(cone):
         """Sets the goal to be the weighted sum of the goal vectors."""
         self.goal = (w_avoid * self.avoid(boids, carrot) +
                      w_center * self.center(boids) +
-                     w_copy * self.copy(boids) +
+                     w_align * self.align(boids) +
                      w_love * self.love(carrot))
         self.goal.mag = 1
 
-    def move(self, mu=0.1):
+    def move(self, mu=0.1, dt=0.1):
         """Update the velocity, position and axis vectors.
-        mu controls how fast the boids can turn (maneuverability)."""
+
+        mu: how fast the boids can turn (maneuverability).
+        dt: time step
+        """
 
         self.vel = (1-mu) * self.vel + mu * self.goal
         self.vel.mag = 1
@@ -197,6 +193,5 @@ def toggle_tracking(evt):
 scene.bind('click', toggle_tracking)
 
 while 1:
-    # update the screen once per time step
-    rate(1/dt)
+    rate(10)
     world.step()
