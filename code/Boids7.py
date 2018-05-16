@@ -6,10 +6,17 @@ Based on Reynolds, "Flocks, Herds and Schools" and
 Flake, "The Computational Beauty of Nature."
 
 Copyright 2011 Allen B. Downey.
-Distributed under the GNU General Public License at gnu.org/licenses/gpl.html.
+Distributed under the MIT License.
 """
-
-from vpython import *
+try:
+    from vpython import *
+except:
+    print("This program requires VPython 7, which you can read about")
+    print("at http://vpython.org/.  If you are using Anaconda, you can")
+    print("install VPython by running the following on the command line:")
+    print("conda install -c vpython vpython")
+    import sys
+    sys.exit()
 
 import numpy as np
 
@@ -41,8 +48,8 @@ null_vector = vector(0,0,0)
 
 def random_vector(a, b):
     """Create a vector with each element uniformly distributed in [a, b)."""
-    t = [np.random.uniform(a,b) for i in range(3)]
-    return vector(*t)
+    coords = np.random.uniform(a, b, size=3)
+    return vector(*coords)
 
 
 def limit_vector(vect):
@@ -81,6 +88,21 @@ class Boid(cone):
 
         return boids
 
+    def center(self, others):
+        """Find the center of mass of other boids in range and
+        return a vector pointing toward it."""
+        close = self.get_neighbors(others, r_center, a_center)
+        vecs = [other.pos for other in close]
+        return self.mean_vector(vecs)
+
+    def mean_vector(self, vecs)
+        if vecs:
+            center = np.mean(vecs)
+            toward = vector(center - self.pos)
+            return limit_vector(toward)
+        else:
+            return null_vector
+
     def avoid(self, others, carrot):
         """Find the center of mass of all objects in range and
         return a vector in the opposite direction, with magnitude
@@ -89,22 +111,10 @@ class Boid(cone):
         close = self.get_neighbors(others, r_avoid, a_avoid)
         t = [other.pos for other in close]
         if t:
-            center = np.sum(t)/len(t)
+            center = np.mean(t)
             away = vector(self.pos - center)
             away.mag = r_avoid / away.mag
             return limit_vector(away)
-        else:
-            return null_vector
-
-    def center(self, others):
-        """Find the center of mass of other boids in range and
-        return a vector pointing toward it."""
-        close = self.get_neighbors(others, r_center, a_center)
-        t = [other.pos for other in close]
-        if t:
-            center = np.sum(t)/len(t)
-            toward = vector(center - self.pos)
-            return limit_vector(toward)
         else:
             return null_vector
 
