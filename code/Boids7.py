@@ -20,9 +20,6 @@ except:
 
 import numpy as np
 
-# size of the boids
-b_radius = 0.03
-b_length = 0.1
 
 # radiuses for sensing different rules
 r_avoid = 0.3
@@ -59,14 +56,14 @@ def limit_vector(vect):
 class Boid(cone):
     """A Boid is a VPython cone with a velocity and an axis."""
 
-    def __init__(self, radius=b_radius, length=b_length):
+    def __init__(self, radius=0.03, length=0.1):
         pos = random_vector(0, 1)
         self.vel = random_vector(0, 1).norm()
-        cone.__init__(self, pos=pos, radius=radius)
+        cone.__init__(self, pos=pos, radius=radius, length=length)
         self.axis = length * self.vel.norm()
 
     def get_neighbors(self, others, radius, angle):
-        """Return a list of neighbors within the given radius and angle."""
+        """Return neighbors within the given field of view."""
         boids = []
         for other in others:
             if other is self:
@@ -123,7 +120,7 @@ class Boid(cone):
         """
         close = self.get_neighbors(others, r_align, a_align)
         vecs = [other.vel for other in close]
-        return -self.vector_toward_center(vecs)
+        return self.vector_toward_center(vecs)
 
     def love(self, carrot):
         """Returns a vector pointing toward the carrot."""
@@ -149,7 +146,7 @@ class Boid(cone):
         self.vel.mag = 1
 
         self.pos += dt * self.vel
-        self.axis = b_length * self.vel.norm()
+        self.axis = self.length * self.vel
 
 
 class World(object):
