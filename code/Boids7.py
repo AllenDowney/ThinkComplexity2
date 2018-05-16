@@ -20,9 +20,6 @@ except:
 
 import numpy as np
 
-# size of the boids
-b_radius = 0.03
-b_length = 0.1
 
 # radiuses for sensing different rules
 r_avoid = 0.3
@@ -59,19 +56,19 @@ def limit_vector(vect):
 class Boid(cone):
     """A Boid is a VPython cone with a velocity and an axis."""
 
-    def __init__(self, radius=b_radius, length=b_length):
+    def __init__(self, radius=0.03, length=0.1):
         pos = random_vector(0, 1)
         self.vel = random_vector(0, 1).norm()
         cone.__init__(self, pos=pos, radius=radius)
         self.axis = length * self.vel.norm()
 
-    def get_neighbors(self, others, radius, angle):
+    def get_neighbors(self, boids, radius, angle):
         """Return a list of neighbors within the given radius and angle."""
-        boids = []
-        for other in others:
-            if other is self:
+        neighbors = []
+        for boid in boids:
+            if boid is self:
                 continue
-            offset = other.pos - self.pos
+            offset = boid.pos - self.pos
 
             # if not in range, skip it
             if offset.mag > radius:
@@ -82,15 +79,15 @@ class Boid(cone):
                 continue
 
             # otherwise add it to the list
-            boids.append(other)
+            neighbors.append(boid)
 
-        return boids
+        return neighbors
 
-    def center(self, others):
+    def center(self, boids):
         """Find the center of mass of other boids in range and
         return a vector pointing toward it."""
-        close = self.get_neighbors(others, r_center, a_center)
-        vecs = [other.pos for other in close]
+        close = self.get_neighbors(boids, r_center, a_center)
+        vecs = [boid.pos for boid in close]
         return self.vector_toward_center(vecs)
 
     def vector_toward_center(self, vecs):
@@ -107,22 +104,22 @@ class Boid(cone):
         else:
             return null_vector
 
-    def avoid(self, others, carrot):
+    def avoid(self, boids, carrot):
         """Find the center of mass of all objects in range and
         return a vector in the opposite direction, with magnitude
         proportional to the inverse of the distance (up to a limit)."""
-        others = others + [carrot]
-        close = self.get_neighbors(others, r_avoid, a_avoid)
-        vecs = [other.pos for other in close]
+        objects = boids + [carrot]
+        close = self.get_neighbors(objects, r_avoid, a_avoid)
+        vecs = [boid.pos for boid in close]
         return -self.vector_toward_center(vecs)
 
-    def align(self, others):
+    def align(self, boids):
         """Return the average heading of other boids in range.
 
-        others: list of Boids
+        boids: list of Boids
         """
-        close = self.get_neighbors(others, r_align, a_align)
-        vecs = [other.vel for other in close]
+        close = self.get_neighbors(boids, r_align, a_align)
+        vecs = [boid.vel for boid in close]
         return -self.vector_toward_center(vecs)
 
     def love(self, carrot):
