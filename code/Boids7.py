@@ -28,13 +28,13 @@ r_align = 0.5
 
 # viewing angle for different rules, in radians
 a_avoid = 2*np.pi
-a_center = 2
-a_align = 2
+a_center = 1
+a_align = 1
 
 # weights for various rules
-w_avoid = 4
+w_avoid = 10
 w_center = 3
-w_align = 2
+w_align = 1
 w_love = 10
 
 null_vector = vector(0,0,0)
@@ -62,32 +62,40 @@ class Boid(cone):
         cone.__init__(self, pos=pos, radius=radius, length=length)
         self.axis = length * self.vel.norm()
 
-    def get_neighbors(self, others, radius, angle):
-        """Return neighbors within the given field of view."""
-        boids = []
-        for other in others:
-            if other is self:
+    def get_neighbors(self, boids, radius, angle):
+        """Return a list of neighbors within a field of view.
+
+        boids: list of boids
+        radius: field of view radius
+        angle: field of view angle in radians
+
+        returns: list of Boid
+        """
+        neighbors = []
+        for boid in boids:
+            if boid is self:
                 continue
-            offset = other.pos - self.pos
+            offset = boid.pos - self.pos
 
             # if not in range, skip it
             if offset.mag > radius:
                 continue
 
             # if not within viewing angle, skip it
-            if self.vel.diff_angle(offset) > angle:
+            diff = self.vel.diff_angle(offset)
+            if abs(diff) > angle:
                 continue
 
             # otherwise add it to the list
-            boids.append(other)
+            neighbors.append(boid)
 
-        return boids
+        return neighbors
 
-    def center(self, others):
+    def center(self, boids):
         """Find the center of mass of other boids in range and
         return a vector pointing toward it."""
-        close = self.get_neighbors(others, r_center, a_center)
-        vecs = [other.pos for other in close]
+        close = self.get_neighbors(boids, r_center, a_center)
+        vecs = [boid.pos for boid in close]
         return self.vector_toward_center(vecs)
 
     def vector_toward_center(self, vecs):
@@ -104,22 +112,22 @@ class Boid(cone):
         else:
             return null_vector
 
-    def avoid(self, others, carrot):
+    def avoid(self, boids, carrot):
         """Find the center of mass of all objects in range and
         return a vector in the opposite direction, with magnitude
         proportional to the inverse of the distance (up to a limit)."""
-        others = others + [carrot]
-        close = self.get_neighbors(others, r_avoid, a_avoid)
-        vecs = [other.pos for other in close]
+        objects = boids + [carrot]
+        close = self.get_neighbors(objects, r_avoid, a_avoid)
+        vecs = [boid.pos for boid in close]
         return -self.vector_toward_center(vecs)
 
-    def align(self, others):
+    def align(self, boids):
         """Return the average heading of other boids in range.
 
-        others: list of Boids
+        boids: list of Boids
         """
-        close = self.get_neighbors(others, r_align, a_align)
-        vecs = [other.vel for other in close]
+        close = self.get_neighbors(boids, r_align, a_align)
+        vecs = [boid.vel for boid in close]
         return self.vector_toward_center(vecs)
 
     def love(self, carrot):
