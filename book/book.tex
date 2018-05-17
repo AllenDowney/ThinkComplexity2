@@ -10,7 +10,7 @@
 % work, please contact Allen Downey.
 
 % The LaTeX source for this book is available from
-% http://greenteapress.com/complexity
+% https://greenteapress.com/complexity
 
 % TODO: Fix PDFLATEX options.
 
@@ -22,7 +22,7 @@
 \newcommand{\thetitle}{Think Complexity}
 \newcommand{\thesubtitle}{Exploring Complexity Science in Python}
 \newcommand{\theauthors}{Allen B. Downey}
-\newcommand{\theversion}{2.5}
+\newcommand{\theversion}{2.5.3}
 
 %%%% Both LATEX and PLASTEX
 
@@ -195,7 +195,7 @@ Needham MA 02492
 Permission is granted to copy, distribute, transmit and adapt
 this work under a Creative Commons
 Attribution-NonCommercial-ShareAlike 4.0 International License:
-\url{http://creativecommons.org/licenses/by-nc-sa/4.0/}.
+\url{https://creativecommons.org/licenses/by-nc-sa/4.0/}.
 
 If you are interested in distributing a commercial version of this
 work, please contact the author.
@@ -203,7 +203,7 @@ work, please contact the author.
 The \LaTeX\ source for this book is available from
 
 \begin{code}
-      http://greenteapress.com/complexity
+      https://greenteapress.com/complexity
 \end{code}
 
 %--table of contents------------------------------------------
@@ -234,7 +234,7 @@ Copyright \copyright ~2016 \theauthors.
 Permission is granted to copy, distribute, and/or modify this work
 under the terms of the Creative Commons
 Attribution-NonCommercial-ShareAlike 4.0 International License, which is
-available at \url{http://creativecommons.org/licenses/by-nc-sa/4.0/}.
+available at \url{https://creativecommons.org/licenses/by-nc-sa/4.0/}.
 
 \vspace{1em}
 
@@ -254,6 +254,8 @@ natural science---that focuses on discrete models of physical and
 social systems.  In particular, it focuses on {\bf complex systems},
 which are systems with many interacting components.
 
+%TODO: Don't put index terms in para.
+
 \index{complexity science}
 \index{complex systems}
 
@@ -262,7 +264,7 @@ herds, flocks, and swarms, fractals and self-organizing
 systems, chaotic systems and cybernetic systems.  These terms
 might not mean much to you at this point.  We will get to them
 soon, but you can get a preview at
-\url{http://en.wikipedia.org/wiki/Complex_systems}.
+\url{https://en.wikipedia.org/wiki/Complex_systems}.
 
 Why should you learn about Complexity science?  Here are a few reasons:
 
@@ -379,13 +381,13 @@ need to run the code (and lots more).  I found Anaconda easy to
 install.  By default it does a user-level installation, not
 system-level, so you don't need administrative privileges.  And it
 supports both Python 2 and Python 3.  You can download Anaconda from
-\url{http://continuum.io/downloads}.
+\url{https://continuum.io/downloads}.
 
 \index{Anaconda}
 
 The repository includes both Python scripts and Jupyter
 notebooks.  If you have not used Jupyter before, you can read about
-it at \url{http://jupyter.org}.
+it at \url{https://jupyter.org}.
 
 \index{Jupyter}
 
@@ -416,7 +418,7 @@ or create a new tab in an open browser window.
 \item[Run Jupyter on Binder]
 
 Binder is a service that runs Jupyter in a virtual machine.  If you
-follow this link, \url{http://mybinder.org/repo/AllenDowney/ThinkComplexity2},
+follow this link, \url{https://mybinder.org/repo/AllenDowney/ThinkComplexity2},
 you should get a Jupyter home page with the notebooks for this book
 and the supporting data and scripts.
 
@@ -438,9 +440,12 @@ Good luck, and have fun!
 
 
 \begin{flushleft}
-Allen B. Downey \newline
-Professor of Computer Science \newline
-Olin College of Engineering \newline
+Allen B. Downey \\
+
+Professor of Computer Science \\
+
+Olin College of Engineering \\
+
 Needham, MA
 \end{flushleft}
 
@@ -738,7 +743,7 @@ until you have seen the examples later in the book.
   linear, or use linear approximations to non-linear systems;
   complexity science is more friendly to non-linear models.  One example
   is chaos theory\footnote{Chaos is not covered in this book, but you can
-  read about it at \url{http://en.wikipedia.org/wiki/Chaos}.}.
+  read about it at \url{https://en.wikipedia.org/wiki/Chaos_theory}.}.
 
 \index{linear}
 \index{non-linear}
@@ -753,7 +758,7 @@ until you have seen the examples later in the book.
 
 \item[Abstract \myrightarrow~detailed] In classical models, planets are
   point masses, planes are frictionless, and cows are
-  spherical (see \url{http://en.wikipedia.org/wiki/Spherical_cow}).
+  spherical (see \url{https://en.wikipedia.org/wiki/Spherical_cow}).
   Simplifications like these are often necessary for analysis,
   but computational models can be more realistic.
 
@@ -1047,12 +1052,10 @@ chapter again.
 \newcommand{\Erdos}{Erd\H{o}s}
 \newcommand{\Renyi}{R\'{e}nyi}
 
-The first three chapters of this book are about models that describe
-systems that are made up of components and connections between components.
-For example, in a social network, the components are people and connections represent friendships, business relationships, etc.  In an ecological food web, the components are species and the connections represent predator-prey relationships.
+The next three chapters of this book are about systems made up of components and connections between components.  For example, in a social network, the components are people and connections represent friendships, business relationships, etc.  In an ecological food web, the components are species and the connections represent predator-prey relationships.
 
 In this chapter, I introduce NetworkX, a Python package for building
-and studying these models.  We start with the \Erdos-\Renyi~model,
+model of these systems.  We start with the \Erdos-\Renyi~model,
 which has interesting mathematical properties.  In the next
 chapter we move on to models that are more useful for explaining
 real-world systems.
@@ -1295,7 +1298,7 @@ by Paul \Erdos~and Alfr\'{e}d \Renyi~in the 1960s.
 An \Erdos-\Renyi~graph (ER graph) is characterized by two parameters:
 $n$ is the number of nodes and $p$ is the probability that there
 is an edge between any two nodes.
-See \url{http://en.wikipedia.org/wiki/Erdos-Renyi_model}.
+See \url{https://en.wikipedia.org/wiki/Erdos-Renyi_model}.
 \index{Erdos-Renyi model@\Erdos-\Renyi~model}
 
 \Erdos~and \Renyi~studied the properties of these random graphs;
@@ -1314,7 +1317,7 @@ two regimes, there is a rapid transition at a particular value of
 $p$, denoted $p^*$.
 
 \Erdos~and \Renyi~showed that this critical value is
-$p^* = \ln n / n$, where $n$ is the number of nodes.
+$p^* = (\ln n) / n$, where $n$ is the number of nodes.
 A random graph, $G(n, p)$, is unlikely to be connected
 if $p < p^*$ and very likely to be connected if $p > p^*$.
 \index{critical value}
@@ -1337,7 +1340,7 @@ where every node is connected to every other.
 
 Here's a generator function that takes a list of nodes and enumerates
 all distinct pairs.  If you are not familiar with generator functions,
-you can read about them at \url{http://intermediatepythonista.com/python-generators}.
+you can read about them at \url{https://wiki.python.org/moin/Generators}.
 
 \begin{code}
 def all_pairs(nodes):
@@ -1381,7 +1384,7 @@ we'll develop functions to check whether a graph is connected.
 \label{connected}
 
 A graph is {\bf connected} if there is a path from every node to every
-other node (see \url{http://en.wikipedia.org/wiki/Connectivity_(graph_theory)}).
+other node (see \url{https://en.wikipedia.org/wiki/Connectivity_(graph_theory)}).
 \index{connected graph}
 \index{path}
 
@@ -1430,7 +1433,7 @@ list called \py{stack} that keeps track of nodes we have
 discovered but not yet processed.  Initially the stack contains
 a single node, \py{start}.
 
-Now, each time through the loop, we
+Now, each time through the loop, we:
 
 \begin{enumerate}
 
@@ -1466,7 +1469,7 @@ and its neighbors get added to the stack.
 
 Notice that the same node can appear more than once in the stack;
 in fact, a node with $k$ neighbors will be added to the stack
-$k$ times.  Later we will look for ways to make this algorithm
+$k$ times.  Later, we will look for ways to make this algorithm
 more efficient.
 
 We can use \py{reachable_nodes} to write \py{is_connected}:
@@ -1529,7 +1532,7 @@ from numpy.random import random
 
 def flip(p):
     return random() < p
-\end{code}
+\end{code} 
 
 Finally, \py{make_random_graph} generates and returns the ER graph $G(n, p)$.
 
@@ -1596,7 +1599,7 @@ increase \py{iters}, the estimated probability gets more precise\footnote{Since 
 0.6454
 \end{code}
 
-Out of 10000 ER graphs with these parameters, 6498 are connected, so
+Out of 10,000 ER graphs with these parameters, 6498 are connected, so
 we estimate that 65\% of them are connected.  I chose $0.3$ because it is close to the critical value where the probability of connectivity goes from near 0 to near 1.  According to \Erdos~and \Renyi, $p^* = \ln n / n = 0.23$.
 
 We can get a clearer view of the transition by estimating the probability
@@ -1635,7 +1638,7 @@ These experiments are consistent with the results \Erdos~and
 \section{Analysis of graph algorithms}
 \label{graphanalysis}
 
-In this chapter I presented an algorithm for checking whether
+Earlier in this chapter I presented an algorithm for checking whether
 a graph is connected; in the next few chapters, we will see
 other graph algorithms.  And we will analyze the
 performance of those algorithms, figuring out how their run times
@@ -1778,7 +1781,7 @@ first type of ER graph?
 \end{exercise}
 
 
-\chapter{Small world graphs}
+\chapter{Small World Graphs}
 
 Many networks in the real world, including social networks, have
 the ``small world property'', which is that the average distance
@@ -1806,10 +1809,10 @@ in Section~\ref{code}.
 Stanley Milgram was an American social psychologist who conducted
 two of the most famous experiments in social science, the
 Milgram experiment, which studied people's obedience to authority
-(\url{http://en.wikipedia.org/wiki/Milgram_experiment})
+(\url{https://en.wikipedia.org/wiki/Milgram_experiment})
 and the Small World Experiment, which studied
 the structure of social networks
-(\url{http://en.wikipedia.org/wiki/Small_world_phenomenon}).
+(\url{https://en.wikipedia.org/wiki/Small_world_phenomenon}).
 \index{Milgram, Stanley}
 \index{small world experiment}
 
@@ -1854,9 +1857,10 @@ In 1998 Duncan Watts and Steven Strogatz published a paper in {\em
   Nature}, ``Collective dynamics of `small-world' networks'', that
 proposed an explanation for the small world phenomenon.  You can
 download it from
-\url{http://www.nature.com/nature/journal/v393/n6684/abs/393440a0.html}.
-\index{Watts, Duncan} \index{Strogatz, Steven} \index{small world
-  network}
+\url{https://github.com/AllenDowney/ThinkComplexity2/blob/master/papers/watts98collective.pdf}.
+\index{Watts, Duncan} 
+\index{Strogatz, Steven}
+\index{small world network}
 
 Watts and Strogatz start with two kinds of graph that were well
 understood: random graphs and regular graphs.  In a random graph, nodes
@@ -1936,8 +1940,7 @@ and use a NetworkX function to compute path lengths.
 \item Then we'll compute the degree of clustering and path length for
 a range of values of $p$.
 
-\item Finally, I'll present an efficient algorithm for computing shortest
-paths, Dijkstra's algorithm.
+\item Finally, I'll present Dijkstra's algorithm, which computes shortest paths efficiently.
 
 \end{enumerate}
 
@@ -2300,10 +2303,10 @@ model for real-world networks that exhibit the small world phenomenon.
 If you ask me why planetary orbits are elliptical,
 I might start by modeling a planet and a star as point masses; I
 would look up the law of universal gravitation at
-\url{http://en.wikipedia.org/wiki/Newton's_law_of_universal_gravitation}
+\url{https://en.wikipedia.org/wiki/Newton's_law_of_universal_gravitation}
 and use it to write a differential equation for the motion of
 the planet.  Then I would either derive the orbit equation or,
-more likely, look it up at \url{http://en.wikipedia.org/wiki/Orbit_equation}.
+more likely, look it up at \url{https://en.wikipedia.org/wiki/Orbit_equation}.
 With a little algebra, I could derive the conditions that
 yield an elliptical orbit.  Then I would argue that the objects
 we consider planets satisfy these conditions.
@@ -2475,10 +2478,10 @@ find shortest paths.
 
 Edsger W. Dijkstra was a Dutch computer scientist who invented an
 efficient shortest-path algorithm (see
-\url{http://en.wikipedia.org/wiki/Dijkstra's_algorithm}).  He also invented the
+\url{https://en.wikipedia.org/wiki/Dijkstra's_algorithm}).  He also invented the
 semaphore, which is a data structure used to coordinate programs that
 communicate with each other (see
-\url{http://en.wikipedia.org/wiki/Semaphore_(programming)} and Downey, {\em The
+\url{https://en.wikipedia.org/wiki/Semaphore_(programming)} and Downey, {\em The
   Little Book of Semaphores}).
 
 \index{Dijkstra, Edsger}
@@ -2958,7 +2961,7 @@ which is defined in the \py{thinkstats2} module.
 \py{Pmf} stands for ``probability mass function'';
 if you are not familiar with this concept,
 you might want to read Chapter 3 of {\it Think Stats, 2nd edition}
-at \url{http://greenteapress.com/thinkstats2/html/thinkstats2004.html}.
+at \url{https://greenteapress.com/thinkstats2}.
 
 Briefly, a \py{Pmf} maps from values to their probabilities.
 A \py{Pmf} of degrees is a mapping from each possible degree, $d$, to the
@@ -3093,7 +3096,7 @@ structure of several real-world networks,
 including graphs that represent the interconnectivity of movie actors,
 world-wide web (WWW) pages, and elements in the electrical power grid
 in the western United States.  You can download the paper from
-\url{http://www.sciencemag.org/content/286/5439/509}.
+\url{https://github.com/AllenDowney/ThinkComplexity2/blob/master/papers/barabasi99emergence.pdf}.
 
 \index{movie actor}
 \index{world-wide web}
@@ -3130,7 +3133,7 @@ model model have a distribution of degrees that obeys a power law.
 
 Graphs with this property are sometimes called {\bf scale-free networks},
 for reasons I won't explain; if you are curious, you can read more
-at \url{http://en.wikipedia.org/wiki/Scale-free_network}.
+at \url{https://en.wikipedia.org/wiki/Scale-free_network}.
 \index{scale-free network}
 
 NetworkX provides a function that generates BA graphs.  We will use
@@ -3382,42 +3385,43 @@ With this way of looking at the data, we can see that the BA model
 matches the tail of the distribution (values above 20) reasonably well.
 The WS model does not.
 
-
-
-\section{Explanatory models}
-\label{model1}
-
 \begin{figure}
 \centerline{\includegraphics[height=2in]{figs/model.pdf}}
 \caption{The logical structure of an explanatory model.\label{fig.model}}
 \end{figure}
 
+
+\section{Explanatory models}
+\label{model1}
+
+
 We started the discussion of networks with Milgram's Small World
 Experiment, which shows that path lengths in social
 networks are surprisingly small; hence, ``six degrees of separation''.
 \index{six degrees}
+\index{explanatory model}
+\index{system}
+\index{observable}
+\index{model}
+\index{behavior}
 
 When we see something surprising, it is natural to ask ``Why?''  but
 sometimes it's not clear what kind of answer we are looking for.  One
 kind of answer is an {\bf explanatory model} (see
 Figure~\ref{fig.model}).  The logical structure of an explanatory
-model is: \index{explanatory model}
+model is:
 
 \begin{enumerate}
 
 \item In a system, S, we see something observable, O, that warrants
   explanation.
-\index{system}
-\index{observable}
 
 \item We construct a model, M, that is analogous to the system; that
   is, there is a correspondence between the elements of the model and
   the elements of the system.
-\index{model}
 
 \item By simulation or mathematical derivation, we show that the model
   exhibits a behavior, B, that is analogous to O.
-\index{behavior}
 
 \item We conclude that S exhibits O {\em because} S is similar to M, M
   exhibits B, and B is similar to O.
@@ -3452,7 +3456,7 @@ small world behavior, but they offer different explanations:
 
 \item The WS model suggests that social networks are ``small'' because
   they include both strongly-connected clusters and ``weak ties'' that
-  connect clusters (see \url{http://en.wikipedia.org/wiki/Mark_Granovetter#The_strength_of_weak_ties}).
+  connect clusters (see \url{https://en.wikipedia.org/wiki/Mark_Granovetter#The_strength_of_weak_ties}).
 \index{weak ties}
 
 \item The BA model suggests that social networks are small because
@@ -3481,7 +3485,7 @@ that would provide evidence in favor of one model over the other?
 Choosing among competing models is the topic of Thomas Kuhn's
 essay, ``Objectivity, Value Judgment, and Theory Choice'', which
 you can read at
-\url{https://github.com/AllenDowney/ThinkComplexity2/blob/master/papers/kuhn.pdf}.
+\url{https://github.com/AllenDowney/ThinkComplexity2/blob/master/papers/kuhn73objectivity.pdf}.
 \index{Kuhn, Thomas}
 \index{theory choice}
 \index{objectivity}
@@ -3510,8 +3514,7 @@ distribution?
 \begin{exercise}
 
 Data files from the \Barabasi~and Albert paper are available from
-\url{http://www3.nd.edu/~networks/resources.htm}.  Their actor
-collaboration data is included in the repository for this book in a
+\url{https://web.archive.org/web/20161027031010/http://www3.nd.edu/~networks/resources.htm}.  Their actor collaboration data is included in the repository for this book in a
 file named \py{actor.dat.gz}.  The following function reads the file and
 builds the graph.
 
@@ -3729,7 +3732,7 @@ Figure~\ref{chap05-3} shows what it looks like after 64 steps.
 \newcommand{\Sierpinski}{Sierpi\'{n}ski}
 
 This pattern resembles the \Sierpinski~triangle, which
-you can read about at \url{http://en.wikipedia.org/wiki/Sierpinski_triangle}.
+you can read about at \url{https://en.wikipedia.org/wiki/Sierpinski_triangle}.
 \index{Sierpi\'{n}ski triangle}
 
 Some Class 2 CAs generate patterns that are intricate and
@@ -3804,7 +3807,7 @@ and a sequence generated by a ``truly'' random process.  In {\em A New
 
 The existence of Class 3 CAs is surprising.  To explain how
 surprising, let me start with philosophical
-{\bf determinism} (see \url{http://en.wikipedia.org/wiki/Determinism}).
+{\bf determinism} (see \url{https://en.wikipedia.org/wiki/Determinism}).
 Many philosophical stances are hard to define precisely because
 they come in a variety of flavors.  I often find it useful
 to define them with a list of statements ordered from weak
@@ -3857,7 +3860,7 @@ present before its eyes.
 \end{quote}
 
 This ``intellect'' came to be called ``Laplace's Demon''.
-See \url{http://en.wikipedia.org/wiki/Laplace's_demon}.  The word
+See \url{https://en.wikipedia.org/wiki/Laplace's_demon}.  The word
 ``demon'' in this context has the sense of ``spirit'', with no
 implication of evil.
 
@@ -3908,7 +3911,7 @@ The behavior of Class 4 CAs is even more surprising.  Several 1-D CAs,
 most notably Rule 110, are {\bf Turing complete}, which means that
 they can compute any computable function.  This property, also called
 {\bf universality}, was proved by Matthew Cook in 1998.  See
-\url{http://en.wikipedia.org/wiki/Rule_110}.
+\url{https://en.wikipedia.org/wiki/Rule_110}.
 
 \index{Turing complete}
 \index{universality}
@@ -4032,7 +4035,7 @@ a maximal (``universal'') level of computational power, and that most
 systems do in fact attain this maximal level of computational
 power. Consequently, most systems are computationally
 equivalent (see
-  \url{mathworld.wolfram.com/PrincipleofComputationalEquivalence.html}).
+  \url{http://mathworld.wolfram.com/PrincipleofComputationalEquivalence.html}).
 \end{quote}
 
 Applying these definitions to CAs, Classes 1 and 2 are ``obviously
@@ -4132,7 +4135,7 @@ not very detailed or realistic.
 
 For example, some species of cone snail produce a pattern on their
 shells that resembles the patterns generated by cellular automatons
-(see \url{en.wikipedia.org/wiki/Cone_snail}).  So it is natural to
+(see \url{https://en.wikipedia.org/wiki/Cone_snail}).  So it is natural to
 suppose that a CA is a model of the mechanism that produces patterns
 on shells as they grow.  But, at least initially, it is not clear how
 the elements of the model (so-called cells, communication between
@@ -4461,7 +4464,7 @@ The goal of this exercise is to implement a Turing machine.
 
 \begin{enumerate}
 
-\item Read about Turing machines at \url{http://en.wikipedia.org/wiki/Turing_machine}.
+\item Read about Turing machines at \url{https://en.wikipedia.org/wiki/Turing_machine}.
 
 \item Write a class called \py{Turing} that implements a Turing machine.
 For the action table, use the rules for a 3-state busy beaver.
@@ -4490,7 +4493,7 @@ might be available as a package for your operating system.
 
 \item Write a program that implements one of the linear congruential
 generators described at
-\url{http://en.wikipedia.org/wiki/Linear_congruential_generator}).
+\url{https://en.wikipedia.org/wiki/Linear_congruential_generator}).
 Test it using \py{DieHarder}.
 
 \item Read the documentation of Python's \py{random} module.
@@ -4503,6 +4506,8 @@ of time, and output the center column as a sequence of bits.
 Test it.
 \index{Rule 30}
 
+%TODO: Do this exercise (project idea).
+
 \end{enumerate}
 
 \end{exercise}
@@ -4514,7 +4519,7 @@ Falsifiability is an appealing and useful idea, but among
 philosophers of science it is not generally accepted
 as a solution to the demarcation problem, as Popper claimed.
 
-Read \url{http://en.wikipedia.org/wiki/Falsifiability} and answer the
+Read \url{https://en.wikipedia.org/wiki/Falsifiability} and answer the
 following questions.
 
 \begin{enumerate}
@@ -4573,7 +4578,7 @@ One of the first cellular automatons to be studied, and probably the
 most popular of all time, is a 2-D CA called ``The Game of Life'', or GoL
 for short.  It was developed by John H. Conway and popularized in 1970
 in Martin Gardner's column in {\em Scientific American}.
-See \url{http://en.wikipedia.org/wiki/Conway_Game_of_Life}.
+See \url{https://en.wikipedia.org/wiki/Conway_Game_of_Life}.
 \index{Game of Life}
 \index{Conway, John H.}
 \index{Gardner, Martin}
@@ -4582,7 +4587,7 @@ The cells in GoL are arranged in a 2-D {\bf grid}, either infinite in
 both directions or wrapped around.  A grid wrapped in both directions
 is called a {\bf torus} because it is topographically equivalent to
 the surface of a doughnut.  See
-\url{http://en.wikipedia.org/wiki/Torus}.
+\url{https://en.wikipedia.org/wiki/Torus}.
 
 \index{grid}
 \index{torus}
@@ -4884,15 +4889,11 @@ between SR1 and SR3.
 \section{Instrumentalism}
 
 But SR1 is so weak that it verges on {\bf instrumentalism}, which is
-the view that we can't say whether a theory is true or false because
-we can't know whether a theory corresponds to reality.  Theories are
-instruments that we use for our purposes; a theory is useful, or not,
-to the degree that it is fit for its purpose.
-
+the view that theories are instruments that we use for our purposes: a theory is useful, or not, to the degree that it is fit for its purpose, but we can't say whether it is true or false.
 \index{instrumentalism}
 
-To see whether you are comfortable with instrumentalism, consider
-the following statements:
+To see whether you are comfortable with instrumentalism, I made up the following test.  Read the following statements and give yourself a point for each one you agree with.  If you score 4 or more, you might be an instrumentalist!
+
 
 \begin{quote}
 ``Entities in the Game of Life aren't real; they are just patterns of
@@ -4947,8 +4948,7 @@ the following statements:
   is useful, but the entities we identify are not real.''
 \end{quote}
 
-Give yourself one point for each statement you agree with.
-If you score 4 or more, you might be an instrumentalist!
+
 
 If you are more comfortable with some of these statements than
 others, ask yourself why.  What are the differences in these
@@ -4956,7 +4956,7 @@ scenarios that influence your reaction?  Can you make
 a principled distinction between them?
 
 For more on instrumentalism, see
-\url{http://en.wikipedia.org/wiki/Instrumentalism}.
+\url{https://en.wikipedia.org/wiki/Instrumentalism}.
 
 
 
@@ -5079,8 +5079,6 @@ lookup; that is, it takes each value from \py{c}, looks it up in
 This version is faster and more concise than the others; the only
 drawback is that it takes more explaining.
 
-% TODO: look into using a simpler animation mechanism
-
 \py{Life.py}, which is included in the repository for this book,
 provides a \py{Life} class that encapsulates this implementation of
 the rules.  If you run \py{Life.py}, you should see an animation
@@ -5165,7 +5163,7 @@ spelled wrong as an homage to Alan Turing.
 \index{Turing, Alan}
 
 The most famous Turmite is Langton's Ant, discovered by Chris Langton
-in 1986.  See \url{http://en.wikipedia.org/wiki/Langton_ant}.
+in 1986.  See \url{https://en.wikipedia.org/wiki/Langton_ant}.
 
 \index{Langton's Ant}
 \index{Langton, Chris}
@@ -5277,7 +5275,7 @@ in concentration to the rate of flow:
 \label{chap07-1}
 \end{figure}
 
-Figure~\ref{chap07-1} show results for a CA with \py{n=9}, \py{r=0.1}
+Figure~\ref{chap07-1} shows results for a CA with \py{n=9}, \py{r=0.1}
 and initial concentration 0 everywhere except for an ``island'' in the
 middle.  The figure shows the starting configuration and the state of
 the CA after 5 and 10 steps.  The chemical spreads from the center
@@ -5441,7 +5439,7 @@ material.  Examples include oil in rock formations, water in paper,
 and hydrogen gas in micropores.  Percolation models are also used to
 study systems that are not literally percolation, including epidemics
 and networks of electrical resistors.  See
-\url{http://en.wikipedia.org/wiki/Percolation_theory}.
+\url{https://en.wikipedia.org/wiki/Percolation_theory}.
 
 \index{percolation}
 
@@ -6753,7 +6751,7 @@ You can read more about this version of the sand pile model at
 In a 1989 paper, Bak, Chen and Creutz suggest that the Game of Life is
 an SOC system.\footnote{``Self-organized criticality in the Game of
   Life'', available from
-  \url{http://www.nature.com/nature/journal/v342/n6251/abs/342780a0.html}.}
+  \url{https://github.com/AllenDowney/ThinkComplexity2/blob/master/papers/bak89life.pdf}.}
 
 \index{Game of Life}
 \index{self-organized criticality}
@@ -6766,6 +6764,8 @@ Repeat for a large number of trials and plot the distributions
 of \py{T} and \py{S}.  Also, record the number of cells that change
 state during each time step and see if the resulting time series
 resembles pink noise.
+
+%TODO: Do this exercise (project idea).
 
 \end{exercise}
 
@@ -6805,7 +6805,7 @@ it as reductionist or holist?
 \begin{exercise}
 
 Read about the ``Great Man'' theory of history at
-\url{http://en.wikipedia.org/wiki/Great_man_theory}.  What implication
+\url{https://en.wikipedia.org/wiki/Great_man_theory}.  What implication
 does self-organized criticality have for this theory?
 
 \index{Great Man theory}
@@ -6934,19 +6934,17 @@ complicated than previous step functions.  If you are not
 interested in the details, you can skip to the next section.
 But if you stick around, you might pick up some NumPy tips.
 
-First, I'll make logical arrays indicating which cells are
-red, blue, and occupied:
+First, I'll make logical arrays indicating which cells are red, blue, and empty:
 
 \begin{code}
         a = self.array
         red = a==1
         blue = a==2
-        occupied = a!=0
+        empty = a==0
 \end{code}
 
-I'll use \py{np.correlate2d} to count, for each cell,
-the number of neighboring cells that are red and the number
-that are occupied.
+I'll use \py{np.correlate2d} to count, for each location,
+the number of neighboring cells that are red, blue, and non-empty.
 
 \begin{code}
     options = dict(mode='same', boundary='wrap')
@@ -6956,61 +6954,56 @@ that are occupied.
                        [1, 1, 1]], dtype=np.int8)
 
     num_red = correlate2d(red, kernel, **options)
-    num_neighbors = correlate2d(occupied, kernel, **options)
+    num_blue = correlate2d(blue, kernel, **options)
+    num_neighbors = num_red + num_blue
 \end{code}
 
-%TODO: Update this code.
-
-Now for each cell we can compute the fraction of neighbors
-that are red and the fraction that are the same color:
+Now for each location we can compute the fraction of neighbors
+that are red and blue.
 
 \begin{code}
     frac_red = num_red / num_neighbors
-    frac_blue = 1 - frac_red
-    frac_same = np.where(red, frac_red, frac_blue)
+    frac_blue = num_blue / num_neighbors
 \end{code}
 
-\py{frac_red} is just the ratio of \py{num_red} and \py{num_neighbors},
-and \py{frac_blue} is the complement of \py{frac_red}.
-
-\py{frac_same} is a little bit more complicated.  The function
-\py{np.where} is like an element-wise \py{if} expression.  The
-first parameter is a condition that selects elements from
+To compute the fraction of neighbors that are the same as the center cell, I use \py{np.where}, which is like an element-wise \py{if} expression.  The first parameter is a condition that selects elements from
 the second or third parameter.
-
 \index{np.where}
+
+\begin{code}
+    frac_same = np.where(red, frac_red, frac_blue)
+    frac_same[empty] = np.nan
+\end{code}
 
 In this case, wherever \py{red} is \py{True}, \py{frac_same} gets
 the corresponding element of \py{frac_red}.  Where \py{red} is
 \py{False}, \py{frac_same} gets the corresponding element of \py{frac_blue}.
+Finally, where \py{empty} indicates that a cell is empty, \py{frac_same} is set to \py{np.nan}, which is a floating-point value that indicates ``Not A Number''. 
 
 Now we can identify the locations of the unhappy agents:
 
 \begin{code}
-    unhappy_locs = locs_where(occupied & (frac_same < self.p))
+    unhappy = frac_same < self.p
+    unhappy_locs = locs_where(unhappy)
 \end{code}
-
-The result, \py{unhappy_locs}, is a NumPy array where each row is
-the coordinates of an occupied cell where \py{frac_same} is below
-the threshold \py{p}.
 
 \py{locs_where} is a wrapper function for \py{np.nonzero}:
 
 \begin{code}
 def locs_where(condition):
-    return np.transpose(np.nonzero(condition))
+    return list(zip(*np.nonzero(condition)))
 \end{code}
 
 \py{np.nonzero} takes an array and returns the coordinates of
-all non-zero cells, but the results are in the form of
-two tuples.  \py{np.transpose} converts the results to a more
-useful form, an array where each row is a coordinate pair.
+all non-zero cells, but the result is a tuple of arrays, one for
+each dimension.  \py{locs_where} converts this result to a list of coordinate pairs.
 
 Similarly, \py{empty_locs} is an array that contains the coordinates
-of the empty cells, shuffled:
+of the empty cells:
 
 \begin{code}
-    empty_locs = locs_where(a==0)
+    num_empty = np.sum(empty)
+    empty_locs = locs_where(empty)
 \end{code}
 
 Now we get to the core of the simulation.  We loop through the
@@ -7018,15 +7011,15 @@ unhappy agents and move them:
 
 \begin{code}
     for source in unhappy_locs:
-        i = np.random.randint(len(empty_locs))
-        dest = tuple(empty_locs[i])
-        a[dest] = a[tuple(source)]
-        a[tuple(source)] = 0
+        i = np.random.randint(num_empty)
+        dest = empty_locs[i]
+            
+        a[dest] = a[source]
+        a[source] = 0
         empty_locs[i] = source
 \end{code}
 
-\py{i} is an index used to choose a random empty cell.
-
+\py{i} is the index of a random empty cell;
 \py{dest} is a tuple containing the coordinates of the empty cell.
 
 In order to move an agent, we copy the value from \py{source} to
@@ -7067,12 +7060,12 @@ which is the fraction of neighbors who are the same color, averaged
 across cells:
 
 \begin{code}
-    np.sum(frac_same) / np.sum(occupied)
+    np.nanmean(frac_same)
 \end{code}
 
 In Figure~\ref{chap09-1}, the degree average fraction of similar
-neighbors is 55\% in the initial configuration, 71\% after two
-steps, and 80\% after 10 steps!
+neighbors is 50\% in the initial configuration, 65\% after two
+steps, and 76\% after 10 steps!
 
 Remember that when \py{p=0.3} the agents would be happy if 3 of 8
 neighbors were their own color, but they end up living in
@@ -7089,20 +7082,15 @@ for a range of \py{p}.}
 
 Figure~\ref{chap09-2} shows how the degree of segregation increases
 and where it levels off for several values of \py{p}.  When \py{p=0.4},
-the degree of segregation in steady state is about 88\%, and a majority
+the degree of segregation in steady state is about 82\%, and a majority
 of agents have no neighbors with a different color.
 
 These results are surprising to many people, and they make a striking
-example of the complex and unpredictable relationship between
+example of the unpredictable relationship between
 individual decisions and system behavior.
 
 
 \section{Sugarscape}
-
-% cjw: I think Epstein and Axtell use lower case for the second s.
-% I've replaced all references except in code (\py{SugarScape}),
-% where I think it's fine (or at least consistent with the notebooks,
-% which I haven't looked at).
 
 In 1996 Joshua Epstein and Robert Axtell proposed Sugarscape, an
 agent-based model of an ``artificial society'' intended to support
@@ -7275,7 +7263,7 @@ Sugarscape is more complicated than the previous models, so I won't
 present the entire implementation here.  I will outline the
 structure of the code and you can see the details in the Jupyter notebook
 for this chapter, {\tt chap09.ipynb}, which is in the repository
-for this book.  And if you are not interested in the details, you
+for this book.  If you are not interested in the details, you
 can skip to the next section.
 
 Here is the \py{Agent} class with the \py{step} method:
@@ -7492,7 +7480,7 @@ properties can never be ``explained'' by a classical reductionist
 model.
 
 You can read more about emergence at
-\url{http://en.wikipedia.org/wiki/Emergence}.
+\url{https://en.wikipedia.org/wiki/Emergence}.
 
 
 \section{Exercises}
@@ -7560,7 +7548,7 @@ that humans have minds.
 
 John Searle presented a thought experiment called ``The Chinese Room'',
 intended to show that {\em Strong AI} is false.  You can read about
-it at \url{http://en.wikipedia.org/wiki/Chinese_room}.
+it at \url{https://en.wikipedia.org/wiki/Chinese_room}.
 
 What is the {\bf system reply} to the Chinese Room argument?
 How does what you have learned about emergence influence
@@ -7586,8 +7574,8 @@ apparent reason.
 \index{traffic jam}
 
 Agent-based models can help explain spontaneous traffic jams.
-As an example, I implement a simple highway simulation, based on
-a model in Resnick, {\em Turtles, Termites and Traffic Jams}.
+As an example, I implement a simple highway simulation based on
+a model in Mitchell Resnick's book, {\em Turtles, Termites and Traffic Jams}.
 
 \index{Turtles, Termites and Traffic Jams@{\em Turtles, Termites and Traffic Jams}}
 \index{Resnick, Mitchell}
@@ -7611,16 +7599,10 @@ class Highway:
             self.drivers[i].next = self.drivers[j]
 \end{code}
 
-\py{n} is the number of cars.
+\py{n} is the number of cars; \py{length} is the length of the
+highway, which is 1000 by default (in arbitrary units); \py{eps} is the amount of random noise we'll add to the system.
 
-\py{length} is the length of the
-highway, which is 1000 by default (in arbitrary units).
-
-\py{eps} is the amount of
-random noise we'll add to the system.
-
-\py{locs} contains the locations of the drivers; initially
-they are equally spaced along the highway.
+\py{locs} contains the locations of the drivers; initially they are equally spaced along the highway.
 
 Drivers are represented by \py{Driver} objects.  Each \py{Driver} contains a reference to the next driver in front.  The highway is circular, so the
 last driver contains a reference to the first.
@@ -7637,10 +7619,10 @@ And here's the \py{move} method:
 
 \begin{code}
     def move(self, driver):
-        d = self.distance(driver)
+        dist = self.distance(driver)
 
         # let the driver choose acceleration
-        acc = driver.choose_acceleration(d)
+        acc = driver.choose_acceleration(dist)
         acc = min(acc, self.max_acc)
         acc = max(acc, self.min_acc)
         speed = driver.speed + acc
@@ -7653,7 +7635,7 @@ And here's the \py{move} method:
         speed = min(speed, self.speed_limit)
 
         # if current speed would collide, stop
-        if speed > d:
+        if speed > dist:
             speed = 0
 
         # update speed and loc
@@ -7661,7 +7643,7 @@ And here's the \py{move} method:
         driver.loc += speed
 \end{code}
 
-\py{d} is the distance between \py{driver} and the next driver ahead.
+\py{dist} is the distance between \py{driver} and the next driver ahead.
 This distance is passed to \py{choose_acceleration}, which
 specifies the behavior of the driver.  This is the only decision the
 driver gets to make; everything else is determined by the ``physics''
@@ -7675,7 +7657,7 @@ of the simulation.
 
 \item \py{speed} is the old speed plus the requested acceleration, but
 then we make some adjustments.  First, we add random noise to
-\py{speed}, because the world is not perfect.  \py{eps} determines the magnitude of the noise, which is a percentage applied to \py{speed}; for example, if \py{eps} is 0.02, \py{speed} is muliplied by a random number between 98\% and 102\%.
+\py{speed}, because the world is not perfect.  \py{eps} determines the magnitude of the noise, which is a percentage applied to \py{speed}; for example, if \py{eps} is 0.02, \py{speed} is multiplied by a random number between 98\% and 102\%.
 
 \item Then speed is bounded between 0 and \py{speed_limit}, which is
 40 in my implementation, so cars are not allowed to go backward or speed.
@@ -7683,8 +7665,7 @@ then we make some adjustments.  First, we add random noise to
 \item If the requested speed would cause a collision with the next car,
 \py{speed} is set to 0.
 
-\item Finally, we update the \py{speed} and \py{loc}
-attributes of \py{driver}.
+\item Finally, we update the \py{speed} and \py{loc} attributes of \py{driver}.
 
 \end{itemize}
 
@@ -7697,14 +7678,14 @@ class Driver:
         self.loc = loc
         self.speed = speed
 
-    def choose_acceleration(self, d):
+    def choose_acceleration(self, dist):
         return 1
 \end{code}
 
 The attributes \py{loc} and \py{speed} are the location and speed of the
 driver.
 
-This implementation of \py{choose_acceleration} is very simple:
+This implementation of \py{choose_acceleration} is simple:
 it always accelerates at the maximum rate.
 
 Since the cars start out equally spaced, we expect them all to
@@ -7720,12 +7701,12 @@ exceeds the space between them.  At that point, at least one
 
 Figure~\ref{chap10-1} shows a few steps in this process, starting with
 30 cars and \py{eps=0.02}.  On the left is the configuration after
-16 time steps, with the cars arranged in a circle.
+16 time steps, with the highway mapped to a circle.
 Because of random noise, some cars are going faster
 than others, and the spacing has become uneven.
 
-During the next time step (center) two cars collide, indicated
-by the \py{x} marks.
+During the next time step there are two collisions, indicated
+by the triangles.
 
 During the next time step (right) two cars collide with the stopped
 cars, and we can see the initial formation of a traffic jam.  Once
@@ -7784,56 +7765,92 @@ find driver behaviors that improve average speed.
 In 1987 Craig Reynolds published ``Flocks, herds and
 schools: A distributed behavioral model'', which describes an
 agent-based model of herd behavior.  You can download his
-paper from \url{http://www.red3d.com/cwr/papers/1987/boids.html}.
+paper from \url{https://www.red3d.com/cwr/papers/1987/boids.html}.
 
 \index{Reynolds, Craig}
 
-Agents in this models are called ``boids'', which is both a
+Agents in this model are called ``Boids'', which is both a
 contraction of ``bird-oid'' and an accented pronunciation of ``bird''
-(although boids are also used to model fish and herding land animals).
+(although Boids are also used to model fish and herding land animals).
 
-\index{boid}
+\index{Boid}
 
 Each agent simulates three behaviors:
 
 \begin{description}
 
-\item[Collision avoidance:] Avoid obstacles, including other birds.
-
 \item[Flock centering:] Move toward the center of the flock.
+
+\item[Collision avoidance:] Avoid obstacles, including other birds.
 
 \item[Velocity matching:] Align velocity (speed and direction) with neighboring birds.
 
 \end{description}
 
-Boids make decisions based on local information only; each boid
-only sees (or pays attention to) other boids in its field of
+Boids make decisions based on local information only; each Boid
+only sees (or pays attention to) other Boids in its field of
 vision and range.
 
 \index{local information}
 
-In the repository for this book, you will find {\tt Boids7.py}, which contains my implementation of boids, based in part
-on the description in Flake, {\em The Computational
-Beauty of Nature}.
+In the repository for this book, you will find {\tt Boids7.py}, which contains my implementation of Boids, based in part
+on the description in Flake, {\em The Computational Beauty of Nature}.
 
-The program defines two classes: \py{Boid}, which implements the boid
+To run this program you will need VPython, which is a library that provides 3D graphics.  If you are using Anaconda, you can install VPython by running the following in a terminal or Command Window:
+
+\begin{code}
+conda install -c vpython vpython
+\end{code}
+
+VPython provides a \py{Vector} object we'll use to represent the position and velocity of Boids in a 3-dimensional space.  You can read about them at \url{http://www.glowscript.org/docs/VPythonDocs/vector.html}.
+
+
+\section{The Boid algorithm}
+
+\py{Boids7.py} defines two classes: \py{Boid}, which implements the Boid
 algorithm, and \py{World}, which contains a list of Boids and a
 ``carrot'' the Boids are attracted to.
 \index{carrot}
 
-The boid algorithm uses \py{get_neighbors} to find other
-boids in the field of view:
+The \py{Boid} class defines the following methods:
+
+\begin{itemize}
+
+\item \py{center}: Finds other Boids within range and computes a vector
+toward their center of mass.
+
+\item \py{avoid}: Finds objects, including other Boids, within a given range,
+and computes a vector that points away from their center of mass.
+
+\item \py{align}: Finds other Boids within range and computes the average of their headings.
+
+\item \py{love}: Computes a vector that points toward the carrot. 
+
+\end{itemize}
+
+Here's the implementation of \py{center}:
 
 \begin{code}
-    def get_neighbors(self, others, radius, angle):
-        boids = []
-        for other in others:
-            if other is self:
-               continue
+    def center(self, boids):
+        close = self.get_neighbors(boids, r_center, a_center)
+        vecs = [other.pos for other in close]
+        return self.vector_toward_center(vecs)
+\end{code}
 
-            offset = other.pos - self.pos
+The parameters \py{r_center} and \py{a_center} are the radius and angle of
+the field of view, which determines which other Boids are taken into consideration.
 
+Here's how \py{get_neighbors} works:
+
+\begin{code}
+    def get_neighbors(self, boids, radius, angle):
+        neighbors = []
+        for boid in boids:
+            if boid is self:
+                continue
+                
             # if not in range, skip it
+            offset = boid.pos - self.pos
             if offset.mag > radius:
                 continue
 
@@ -7842,84 +7859,111 @@ boids in the field of view:
                 continue
 
             # otherwise add it to the list
-            boids.append(other)
+            neighbors.append(boid)
 
-        return boids
+        return neighbors
 \end{code}
 
 \py{get_neighbors} uses vector subtraction to compute the
 vector from \py{self} to \py{other}.  The magnitude of
-this vector is the distance to the other boid.  \py{diff_angle}
-computes the angle between the velocity of \py{self}, which
-is also the line of sight, and the other boid.
+this vector is the distance to the other Boid.
 
-\py{center} finds the center of mass of the boids in the
-field of view and returns a vector pointing toward it:
+\py{diff_angle} computes the angle between the velocity of \py{self}, which points in the direction the Boid is heading, and the position of the other Boid.
+
+Finally, \py{center} uses \py{vector_toward_center} to compute a vector that points from the Boid's position to the center of mass of its neighbors.
 
 \begin{code}
-    def center(self, others):
-        close = self.get_neighbors(others, r_center, a_center)
-        t = [other.pos for other in close]
-        if t:
-            center = sum(t)/len(t)
+    def vector_toward_center(self, vecs):
+        if vecs:
+            center = np.mean(vecs)
             toward = vector(center - self.pos)
             return limit_vector(toward)
         else:
             return null_vector
 \end{code}
 
-Similarly, \py{avoid} finds the center of mass of any obstacles
-in range and returns a vector pointing away from it,
-\py{copy} returns the difference between the current heading
-and the average heading of the neighbors, and \py{love}
-computes the heading toward the carrot.
+VPython vectors work with NumPy, so \py{np.mean} computes the mean of a sequences of vectors.  \py{limit_vector} limits the magnitude of the result to 1; and \py{null_vector} has magnitude 0.
 
-\py{set_goal} computes the weighed sum of these goals and
-sets the overall goal:
+We use the same helper methods to implement \py{avoid}:
+
+\begin{code}
+    def avoid(self, boids, carrot):
+        objects = boids + [carrot]
+        close = self.get_neighbors(objects, r_avoid, a_avoid)
+        vecs = [boid.pos for boid in close]
+        return -self.vector_toward_center(vecs)
+\end{code}
+
+\py{avoid} is similar to \py{center}, but it takes into account the carrot as well as the other Boids.  Also, the parameters are different: usually \py{r_avoid} is smaller, so Boids only avoid objects that are too close, and \py{a_avoid} is wider, so Boids avoid objects from all directions.  Finally, the result from \py{vector_toward_center} is negated, so it points {\em away} from the center of any objects that are too close.
+
+Here's the implementation of \py{align}:
+
+\begin{code}
+    def align(self, boids):
+        close = self.get_neighbors(boids, r_align, a_align)
+        vecs = [boid.vel for boid in close]
+        return self.vector_toward_center(vecs)
+\end{code}
+
+\py{align} is also similar to \py{center}; the big difference is that is computes the average of the neighbors' velocities, rather than their positions.  If the neighbors are pointing in a particular direction, the Boid tends to steer toward that direction.
+
+Finally, \py{love} computes a vector that points in the direction of the carrot.
+
+\begin{code}
+    def love(self, carrot):
+        toward = carrot.pos - self.pos
+        return limit_vector(toward)
+\end{code}
+
+The results from \py{center}, \py{avoid}, \py{align}, and \py{love} are what Reynolds calls ``acceleration requests", where each request is intended to achieve a different goal.
+
+
+\section{Arbitration}
+
+To arbitrate among these possibly conflicting goals, we compute a weighted sum of the four requests:
+\index{weighted sum}
 
 \begin{code}
     def set_goal(self, boids, carrot):
-        self.goal = (w_avoid * self.avoid(boids, carrot) +
-                     w_center * self.center(boids) +
-                     w_copy * self.copy(boids) +
+        self.goal = (w_center * self.center(boids) +
+                     w_avoid * self.avoid(boids, carrot) +
+                     w_align * self.align(boids) +
                      w_love * self.love(carrot))
+        self.goal.mag = 1
 \end{code}
 
-Finally, \py{move} updates the velocity, position and
-attitude of the boid:
+\py{w_center}, \py{w_avoid}, and the other weights determine the importance of the acceleration requests.  Usually \py{w_avoid} is relatively high and \py{w_align} is relatively low.  As an exercise, you will have a chance to experiment with these parameters and see what effect they have.
+
+After computing a goal for each Boid, we update their velocity and position:
 
 \begin{code}
-    def move(self, mu=0.1):
+    def move(self, mu=0.1, dt=0.1):
         self.vel = (1-mu) * self.vel + mu * self.goal
         self.vel.mag = 1
-
+        self.axis = self.length * self.vel
         self.pos += dt * self.vel
-        self.axis = b_length * self.vel.norm()
 \end{code}
 
 The new velocity is the weighted sum of the old velocity
 and the goal.  The parameter \py{mu} determines how quickly
-the birds can change speed and direction.  The time step, \py{dt},
-determines how far the boids move.
-\index{weighted sum}
+the birds can change speed and direction.  Then we normalize velocity so its magnitude is 1, and orient the axis of the Boid to point in the direction it is moving.
+
+To update position, we multiply velocity by the time step, \py{dt}, to get the change in position.
 
 Many parameters influence flock behavior, including the range, angle
 and weight for each behavior, and the maneuverability, \py{mu}.
 \index{flock behavior}
 
-These parameters determine the ability of the boids to form and
+These parameters determine the ability of the Boids to form and
 maintain a flock and the patterns of motion and organization in the
-flock.  For some settings, the boids resemble a flock of birds; other
+flock.  For some settings, the Boids resemble a flock of birds; other
 settings resemble a school of fish or a cloud flying insects.
 
 
 \section{Emergence and free will}
 \label{freewill}
 
-%TODO: expand this based on class discussion
-
-Many complex systems have properties, as a whole, that their
-components do not:
+Many complex systems have properties, as a whole, that their components do not:
 
 \begin{itemize}
 
@@ -7932,18 +7976,16 @@ components do not:
   of their interactions is as if they were.
 
 \item Agents in Sugarscape form waves that move diagonally even
-though the agents cannot.
+  though the agents cannot.
 
 \item Traffic jams move backward even though the cars in them are
   moving forward.
 
-\item The behavior of flocks and herds emerges from local interactions
-  between their members.
+\item Flocks and herds behave as if they are centrally organized even though the animals in them are making individual decisions based on local information.
 
 \end{itemize}
 
-These examples suggest an approach to several old and challenging
-questions, including the problems of consciousness and free will.
+These examples suggest an approach to several old and challenging questions, including the problems of consciousness and free will.
 
 Free will is the ability to make choices, but if our bodies and brains
 are governed by deterministic physical laws, our choices would be
@@ -7994,20 +8036,22 @@ average speed, or a lower number of collisions.
 
 \begin{exercise}
 
-Note: To do this exercise, you will have to install VPython, a library for 3D displays and animation.  If you use Anaconda (as I recommend in Section~\ref{code}), you can run:
+Note: To do this exercise, you will have to install VPython, a library for 3D displays and animation.  If you use Anaconda (as I recommend in Section~\ref{code}), you can run the following in a terminal or Command Window:
 
 \begin{code}
 conda install -c vpython vpython
 \end{code}
 
-Then run \py{Boids7.py}, which is in the repository for this book.  Read the code to see how the parameters defined at the beginning of the program control boid behaviors.  Experiment with
+Then run \py{Boids7.py}, which is in the repository for this book.  It should either launch a browser or create a window in a running browser, and then create an animated display showing Boids, as white cones, circling a red sphere, which is the carrot.  If you click and move the mouse, you can move the carrot and see how the Boids react.
+
+Read the code to see how the parameters defined at the beginning of the program control Boid behaviors.  Experiment with
 different parameters.  What happens if you ``turn off'' one
-of the behaviors by setting the weight to 0?
+of the behaviors by setting its weight to 0?
 \index{parameter}
 
 To generate more bird-like behavior, Flake suggests adding a fourth
 behavior to maintain a clear line of sight; in other words, if there
-is another bird directly ahead, the boid should move away
+is another bird directly ahead, the Boid should move away
 laterally.  What effect do you expect this rule to have on the
 behavior of the flock?  Implement it and see.
 
@@ -8017,7 +8061,7 @@ behavior of the flock?  Implement it and see.
 \begin{exercise}
 
 Read more about free will at
-\url{http://en.wikipedia.org/wiki/Free_will}.  The view that free will
+\url{https://en.wikipedia.org/wiki/Free_will}.  The view that free will
 is compatible with determinism is called {\bf compatibilism}.  One of
 the strongest challenges to compatibilism is the ``consequence
 argument''.  What is the consequence argument?  What response can you
@@ -8503,6 +8547,9 @@ I hope this observation helps to demystify evolution.  When we look at natural s
 
 But in simulation, we see the whole process, not just the results.  And by including the minimal set of features to produce evolution---temporarily ignoring the vast complexity of biological life---we can see evolution as the surprisingly simple, inevitable idea that it is.
 
+%TODO: A reviewer suggests that I have made the case for "simple" but
+% not "inevitable".
+
 
 \section{Exercises}
 
@@ -8535,7 +8582,7 @@ about working with this code, see Section~\ref{code}.
 \section{Prisoner's Dilemma}
 \label{prisoners}
 
-The Prisoner's Dilemma is a topic in game theory, but it's not the fun kind of game.  Instead, it is the kind of game that sheds light on human motivation and behavior.  Here is the presentation of the dilemma from Wikipedia (\url{http://en.wikipedia.org/wiki/Prisoner's_dilemma}):
+The Prisoner's Dilemma is a topic in game theory, but it's not the fun kind of game.  Instead, it is the kind of game that sheds light on human motivation and behavior.  Here is the presentation of the dilemma from Wikipedia (\url{https://en.wikipedia.org/wiki/Prisoner's_dilemma}):
 \index{Prisoner's Dilemma}
 
 \begin{quote}
@@ -8577,7 +8624,7 @@ Studying these scenarios, and ways to escape from the dilemma, is the focus of p
 
 \section{The problem of nice}
 
-Since the Prisoner's Dilemma was first discussed in the 1950s, it has been a popular topic of study in social psychology.  Based on the analysis in the previous section, we can say what a perfectly rational agent {\em should} do; it is harder to predict what real people actually do.  Fortunately, the experiment has been done.  Many times\footnote{Here's one recent report with references to previous experiments:
+Since the Prisoner's Dilemma was first discussed in the 1950s, it has been a popular topic of study in social psychology.  Based on the analysis in the previous section, we can say what a perfectly rational agent {\em should} do; it is harder to predict what real people actually do.  Fortunately, the experiment has been done\footnote{Here's a recent report with references to previous experiments:
 Barreda-Tarrazona, Jaramillo-Guti\'{e}rrez, Pavan, and Sabater-Grande,
 ``Individual Characteristics vs. Experience: An Experimental Study on Cooperation in Prisoner's Dilemma", Frontiers in Psychology, 2017; 8: 596.
 \url{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5397528/}.}.
@@ -8999,11 +9046,11 @@ without provocation.
 
 Analysis of algorithms is the branch of computer science that studies
 the performance of algorithms, especially their run time and space
-requirements.  See \url{http://en.wikipedia.org/wiki/Analysis_of_algorithms}.
+requirements.  See \url{https://en.wikipedia.org/wiki/Analysis_of_algorithms}.
 \index{algorithm}
 \index{analysis of algorithms}
 
-%\url{http://en.wikipedia.org/wiki/Run-time_analysis}
+%\url{https://en.wikipedia.org/wiki/Run-time_analysis}
 
 The practical goal of algorithm analysis is to predict the performance
 of different algorithms in order to guide design decisions.
@@ -9014,14 +9061,14 @@ he visited Google.  Chief executive Eric Schmidt jokingly asked him
 for ``the most efficient way to sort a million 32-bit integers''.
 Obama had apparently been tipped off, because he quickly
 replied, ``I think the bubble sort would be the wrong way to go.''
-See \url{http://www.youtube.com/watch?v=k4RRi_ntQc8}.
+See \url{https://www.youtube.com/watch?v=k4RRi_ntQc8}.
 \index{Obama, Barack}
 \index{Schmidt, Eric}
 \index{bubble sort}
 
 This is true: bubble sort is conceptually simple but slow for
 large datasets.  The answer Schmidt was probably looking for is
-``radix sort'' (see \url{http://en.wikipedia.org/wiki/Radix_sort})\footnote{
+``radix sort'' (see \url{https://en.wikipedia.org/wiki/Radix_sort})\footnote{
 But if you get a question like this in an interview, I think
 a better answer is, ``The fastest way to sort a million integers
 is to use whatever sort function is provided by the language
@@ -9185,7 +9232,7 @@ only useful for small problems.
 \begin{exercise}
 
 Read the Wikipedia page on Big-Oh notation at
-\url{http://en.wikipedia.org/wiki/Big_O_notation} and
+\url{https://en.wikipedia.org/wiki/Big_O_notation} and
 answer the following questions:
 
 \begin{enumerate}
@@ -9343,7 +9390,7 @@ Section~\ref{hashtable}.
 \begin{exercise}
 
 Read the Wikipedia page on sorting algorithms at
-\url{http://en.wikipedia.org/wiki/Sorting_algorithm} and answer
+\url{https://en.wikipedia.org/wiki/Sorting_algorithm} and answer
 the following questions:
 \index{sorting}
 
@@ -9496,7 +9543,7 @@ An alternative is to keep the list sorted by key.  Then \py{get}
 could use a bisection search, which is $O(\log n)$.  But inserting a
 new item in the middle of a list is linear, so this might not be the
 best option.  There are other data structures (see
-  \url{http://en.wikipedia.org/wiki/Red-black_tree})  that can implement {\tt
+  \url{https://en.wikipedia.org/wiki/Red-black_tree})  that can implement {\tt
   add} and \py{get} in log time, but that's still not as good as
 constant time, so let's move on.
 \index{red-black tree}
@@ -9675,9 +9722,11 @@ arithmetically---adding a fixed number each time---the average time
 per \py{add} is linear.
 \index{geometric resizing}
 
-You can download my implementation of HashMap from
-\url{thinkcomplex.com/Map.py}, but remember that there
-is no reason to use it; if you want a map, just use a Python dictionary.
+% TODO: Add this to the repo?
+
+%You can download my implementation of HashMap from
+%\url{https://thinkcomplex.com/Map.py}, but remember that there
+%is no reason to use it; if you want a map, just use a Python dictionary.
 
 \begin{exercise}
 
@@ -9798,9 +9847,8 @@ To measure the elapsed time of a function you can call
     elapsed = end - start
 \end{code}
 
-Alternatively, if you use IPython, you can use the
-\py{timeit} command. See \url{ipython.scipy.org}.
-\index{IPython}
+Alternatively, if you use Jupyter, you can use the \py{timeit} command.
+\index{Jupyter}
 \index{timeit@\py{timeit}}
 
 If an algorithm is quadratic, we expect the run time, $t$
@@ -9827,7 +9875,7 @@ slope 1.
 I wrote three functions that concatenate lists: \py{sum_plus} uses
 \py{+=}; \py{sum_extend} uses \py{list.extend}; and \py{sum_sum}
 uses \py{sum}.  I timed them for a range of \py{n} and plotted the
-results on a log-log scale.  Figures~\ref{listsum1} and \ref{listsum2}
+results on a log-log scale.  Figure~\ref{listsum1} and Figure~\ref{listsum2}
 show the results.
 
 \begin{figure}
@@ -9850,6 +9898,8 @@ In Figure~\ref{listsum2} the data fit a line with slope 2, so the
 implementation of \py{sum} is quadratic.
 \index{quadratic}
 
+
+%TODO: delete this section?
 
 \section{pyplot}
 \index{pyplot@\py{pyplot}}
@@ -9888,24 +9938,22 @@ plots them.  The lists have to have the same length.
 Finally, \py{show} displays the plot on the screen.  You could also
 use \py{savefig} to save the plot in a file.
 
-Documentation of \py{pyplot} is at \url{http://matplotlib.sourceforge.net/}.
+Documentation of \py{pyplot} is at \url{https://matplotlib.org}.
 
 
-\begin{exercise}
+%\begin{exercise}
 
-Test the performance of
-\py{LinearMap}, \py{BetterMap} and \py{HashMap}; see if you
-can characterize their order of growth.
+%TODO: Add this to the repo.
 
-You can download my map implementations from
-\url{thinkcomplex.com/Map.py}, and the code I used in this section
-from \url{thinkcomplex.com/listsum.py}.
+%Test the performance of
+%\py{LinearMap}, \py{BetterMap} and \py{HashMap}; see if you
+%can characterize their order of growth.
 
-You will have to find a range
-of \py{n} that is big enough to show asymptotic behavior, but small
-enough to run quickly.
+%You will have to find a range
+%of \py{n} that is big enough to show asymptotic behavior, but small
+%enough to run quickly.
 
-\end{exercise}
+%\end{exercise}
 
 
 
@@ -9986,7 +10034,7 @@ of the field.
 
 The Pareto distribution is named after the economist Vilfredo
 Pareto, who used it to describe the distribution of wealth;
-see \url{http://en.wikipedia.org/wiki/Pareto_distribution}.  Since then,
+see \url{https://en.wikipedia.org/wiki/Pareto_distribution}.  Since then,
 people have used it to describe
 phenomena in the natural and social sciences
 including sizes of cities and towns, sand particles
