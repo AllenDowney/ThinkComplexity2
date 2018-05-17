@@ -195,7 +195,7 @@ Needham MA 02492
 Permission is granted to copy, distribute, transmit and adapt
 this work under a Creative Commons
 Attribution-NonCommercial-ShareAlike 4.0 International License:
-\url{https://greenteapress.com/tc/license}.
+\url{https://creativecommons.org/licenses/by-nc-sa/4.0/}.
 
 If you are interested in distributing a commercial version of this
 work, please contact the author.
@@ -234,7 +234,7 @@ Copyright \copyright ~2016 \theauthors.
 Permission is granted to copy, distribute, and/or modify this work
 under the terms of the Creative Commons
 Attribution-NonCommercial-ShareAlike 4.0 International License, which is
-available at \url{https://greenteapress.com/tc/license}.
+available at \url{https://creativecommons.org/licenses/by-nc-sa/4.0/}.
 
 \vspace{1em}
 
@@ -254,8 +254,6 @@ natural science---that focuses on discrete models of physical and
 social systems.  In particular, it focuses on {\bf complex systems},
 which are systems with many interacting components.
 
-%TODO: Don't put index terms in para.
-
 \index{complexity science}
 \index{complex systems}
 
@@ -264,7 +262,7 @@ herds, flocks, and swarms, fractals and self-organizing
 systems, chaotic systems and cybernetic systems.  These terms
 might not mean much to you at this point.  We will get to them
 soon, but you can get a preview at
-\url{https://greenteapress.com/tc/complex}.
+\url{https://en.wikipedia.org/wiki/Complex_systems}.
 
 Why should you learn about Complexity science?  Here are a few reasons:
 
@@ -312,16 +310,17 @@ Features of this book include:
 The examples and supporting code for this book are in Python.  You
 should know core Python and be familiar with its object-oriented features,
 specifically using and defining classes.
+\index{Python}
 
 If you are not already familiar with Python, you might want to start
-with my {\it Think Python}, which is an introduction
-for people who have never programmed, or Mark
-Lutz's {\it Learning Python}, which might be better for people with
-prior experience.
+with my {\it Think Python}, which is appropriate for people who have never programmed before.  If you have programming experience in another language, there are many good Python books to chose from, as well as online resources.
 
 I use NumPy, SciPy, and NetworkX throughout the book.  If you are familiar with these libraries already, that's great, but I will also explain them when they appear.
+\index{NumPy}
+\index{SciPy}
+\index{NetworkX}
 
-I assume that the reader knows basic mathematics.  You don't need much calculus; if you understand the concepts of integration and differentiation, that will do.  I use some linear algebra, but I will explain it along the way.
+I assume that the reader knows some mathematics, but not a lot.  In a few places, I take the logarithm of both sides of an equation.
 
 
 \section{Changes from the first edition}
@@ -331,6 +330,7 @@ For the second edition, I added two chapters, one on evolution, the other on the
 In the first edition, each chapter presented background on a topic and suggested experiments the reader could run.  For the second edition, I have done those experiments.  Each chapter presents the implementation and results as a worked example, then suggests extensions and additional experiments for the reader.
 
 Also, the Jupyter notebooks are new.  For every chapter there are two notebooks in the book's software repository: one contains the code from the chapter, explanatory text, and exercises; the other contains the solutions to the exercises.
+\index{Jupyter}
 
 Finally, all supporting software has been updated to Python 3 (but also runs unmodified in Python 2).
 
@@ -340,14 +340,16 @@ Finally, all supporting software has been updated to Python 3 (but also runs unm
 
 
 All code used in this book is available from a Git repository on GitHub:
-\url{https://greenteapress.com/tc/repo}.  
+\url{https://github.com/AllenDowney/ThinkComplexity2}.  
 If you are not familiar with Git, it is a 
 version control system that allows you to keep track of the files that
 make up a project.  A collection of files under Git's control is
 called a ``repository''.  GitHub is a hosting service that provides
 storage for Git repositories and a convenient web interface.
 
-\index{repository} \index{Git} \index{GitHub}
+\index{repository}
+\index{Git}
+\index{GitHub}
 
 The GitHub homepage for my repository provides several ways to
 work with the code:
@@ -397,8 +399,7 @@ There are three ways you can work with the Jupyter notebooks:
 
 \item[Run Jupyter on your computer]
 
-If you installed Anaconda, you probably got Jupyter by default.  To
-check, start the server from the command line, like this:
+If you installed Anaconda, you probably got Jupyter by default.  To check, start the server from the command line, like this:
 
 \begin{verbatim}
 $ cd ThinkComplexity2/code
@@ -418,9 +419,11 @@ or create a new tab in an open browser window.
 \item[Run Jupyter on Binder]
 
 Binder is a service that runs Jupyter in a virtual machine.  If you
-follow this link, \url{https://greenteapress.com/tc/binder},
+follow this link, \url{https://mybinder.org/repo/AllenDowney/ThinkComplexity2},
 you should get a Jupyter home page with the notebooks for this book
 and the supporting data and scripts.
+
+\index{Binder}
 
 You can run the scripts and modify them to run your own code, but the
 virtual machine you run them in is temporary.  Any changes you make will
@@ -505,7 +508,7 @@ found typos and made helpful suggestions.
 
 \end{itemize}
 
-%I would especially like to thank the technical reviewers for this book, who %made many helpful suggestions: Vincent Knight.
+I would especially like to thank the technical reviewers for this book, who made many helpful suggestions: Vincent Knight and Eric Ma.
 
 Other people who reported errors include
 Richard Hollands,
@@ -530,6 +533,8 @@ field, and was given a name, in the 1980s.  But is new not because it
 applies the tools of science to a new subject, but because it uses
 different tools, allows different kinds of work, and ultimately
 changes what we mean by ``science''.
+
+\index{complexity science}
 
 To demonstrate the difference, I'll start with an example of classical
 science: suppose someone asked you why planetary orbits are
@@ -743,7 +748,7 @@ until you have seen the examples later in the book.
   linear, or use linear approximations to non-linear systems;
   complexity science is more friendly to non-linear models.  One example
   is chaos theory\footnote{Chaos is not covered in this book, but you can
-  read about it at \url{https://greenteapress.com/tc/chaos}.}.
+  read about it at \url{https://en.wikipedia.org/wiki/Chaos_theory}.}.
 
 \index{linear}
 \index{non-linear}
@@ -758,7 +763,7 @@ until you have seen the examples later in the book.
 
 \item[Abstract \myrightarrow~detailed] In classical models, planets are
   point masses, planes are frictionless, and cows are
-  spherical (see \url{https://greenteapress.com/tc/cow}).
+  spherical (see \url{https://en.wikipedia.org/wiki/Spherical_cow}).
   Simplifications like these are often necessary for analysis,
   but computational models can be more realistic.
 
@@ -800,7 +805,7 @@ computer-assisted proofs are common and generally (but not
 universally) accepted.
 
 \index{Appel, Kenneth}
-\index{Hacken, Wolfgang}
+\index{Haken, Wolfgang}
 \index{four-color theorem}
 
 Conversely, a substantial body of economic analysis is based on a
@@ -1075,12 +1080,15 @@ in Section~\ref{code}.
 
 To most people a ``graph" is a visual representation of data, like
 a bar chart or a plot of stock prices over time.  That's not what this
-chapter is about.  \index{graph}
+chapter is about.  
+
+\index{graph}
 
 In this chapter, a {\bf graph} is a representation of
 a system that contains discrete, interconnected elements.  The
-elements are represented by {\bf nodes}
+elements are represented by {\bf nodes} -- also called {\bf vertices} --
 and the interconnections are represented by {\bf edges}.
+
 \index{node}
 \index{edge}
 \index{vertex}
@@ -1089,6 +1097,7 @@ For example, you could represent a road map with a node for each
 city and an edge for each road between cities.  Or you could
 represent a social network using a node for each person, with an
 edge between two people if they are friends and no edge otherwise.
+
 \index{road network}
 \index{social network}
 
@@ -1097,7 +1106,9 @@ For example, in a road map, the length of an edge might represent the
 distance between two cities, or the travel time.  In a
 social network there might be different kinds of edges to represent
 different kinds of relationships: friends, business associates, etc.
-\index{edge weight} \index{weight}
+
+\index{edge weight} 
+\index{weight}
 
 Edges may be {\bf directed} or {\bf undirected}, depending on whether
 the relationships they represent are asymmetric or symmetric.  In a
@@ -1108,11 +1119,14 @@ with $B$ then $B$ is friends with $A$.  But on Twitter, for example,
 the ``follows'' relationship is not symmetric; if $A$ follows $B$,
 that doesn't imply that $B$ follows $A$.  So you might use undirected
 edges to represent a Facebook network and directed edges for Twitter.
-\index{directed graph} \index{undirected graph}
+
+\index{directed graph} 
+\index{undirected graph}
 
 Graphs have interesting mathematical properties, and
 there is a branch of mathematics called {\bf graph theory}
 that studies them.
+
 \index{graph theory}
 
 Graphs are also useful, because there are many real world
@@ -1121,6 +1135,7 @@ For example, Dijkstra's shortest path algorithm is an efficient
 way to find the shortest path from a node to all
 other nodes in a graph.  A {\bf path} is a sequence of nodes
 with an edge between each consecutive pair.
+
 \index{graph algorithm}
 \index{path}
 
@@ -1130,6 +1145,7 @@ might represent three people who follow each other on Twitter.
 The thick part of the line indicates edge direction.
 In this example, Alice and Bob follow each other and both follow
 Chuck, but Chuck follows no one.
+
 \index{representing graphs}
 
 The undirected graph in Figure~\ref{chap02-2} shows four cities
@@ -1138,6 +1154,7 @@ indicate driving time in hours.
 In this example the placement of the nodes corresponds
 roughly to the geography of the cities, but in general the layout
 of a graph is arbitrary.
+
 \index{graph layout}
 
 
@@ -1151,8 +1168,10 @@ of a graph is arbitrary.
 
 To represent graphs, we'll use a package called NetworkX,
 which is the most commonly used network library in Python.
-You can read more about it at \url{https://greenteapress.com/tc/netx},
+You can read more about it at \url{https://networkx.github.io/},
 but I'll explain it as we go along.
+
+\index{NetworkX}
 
 We can create a directed graph by importing NetworkX (usually imported as \py{nx}) and instantiating
 \py{nx.DiGraph}:
@@ -1209,6 +1228,10 @@ nx.draw_circular(G,
 And that's the code I use to generate Figure~\ref{chap02-1}.
 The option \py{with_labels} causes the nodes to be labeled;
 in the next example we'll see how to label the edges.
+
+\index{Graph}
+\index{node}
+\index{edge}
 
 To generate Figure~\ref{chap02-2}, I start with a dictionary
 that maps from each city name to its approximate longitude
@@ -1279,6 +1302,7 @@ And that's how I generated Figure~\ref{chap02-2}.
 
 In both of these examples, the nodes are strings, but in general they
 can be any hashable type.
+
 \index{hashable}
 
 
@@ -1288,28 +1312,34 @@ can be any hashable type.
 A random graph is just what it sounds like: a graph with nodes and edges
 generated at random.  Of course, there are many random processes that
 can generate graphs, so there are many kinds of random graphs.
+
 \index{random graph}
 
 One of the more interesting kinds is the \Erdos-\Renyi~model, studied
 by Paul \Erdos~and Alfr\'{e}d \Renyi~in the 1960s.
+
 \index{Renyi, Alfred@\Renyi, Afr\'{e}d}
 \index{Erdos, Paul@\Erdos, Paul}
 
 An \Erdos-\Renyi~graph (ER graph) is characterized by two parameters:
 $n$ is the number of nodes and $p$ is the probability that there
 is an edge between any two nodes.
-See \url{https://greenteapress.com/tc/er}.
+See \url{https://en.wikipedia.org/wiki/Erdos-Renyi_model}.
+
 \index{Erdos-Renyi model@\Erdos-\Renyi~model}
 
 \Erdos~and \Renyi~studied the properties of these random graphs;
 one of their surprising results is the existence of
 abrupt changes in the properties of random graphs as
 random edges are added.
-\index{threshold value}
+
+\index{random edge}
 
 One of the properties that displays this kind of transition is
 connectivity.  An undirected graph is {\bf connected} if there is a
 path from every node to every other node.
+
+\index{connected graph}
 
 In an ER graph, the probability that the graph is connected is very
 low when $p$ is small and nearly 1 when $p$ is large.  Between these
@@ -1320,6 +1350,7 @@ $p$, denoted $p^*$.
 $p^* = (\ln n) / n$, where $n$ is the number of nodes.
 A random graph, $G(n, p)$, is unlikely to be connected
 if $p < p^*$ and very likely to be connected if $p > p^*$.
+
 \index{critical value}
 
 To test this claim, we'll develop algorithms to generate random
@@ -1338,9 +1369,12 @@ graphs and check whether they are connected.
 I'll start by generating a {\bf complete} graph, which is a graph
 where every node is connected to every other.
 
+\index{complete graph}
+\index{generator function}
+
 Here's a generator function that takes a list of nodes and enumerates
 all distinct pairs.  If you are not familiar with generator functions,
-you can read about them at \url{https://greenteapress.com/tc/gen}.
+you can read about them at \url{https://wiki.python.org/moin/Generators}.
 
 \begin{code}
 def all_pairs(nodes):
@@ -1384,7 +1418,7 @@ we'll develop functions to check whether a graph is connected.
 \label{connected}
 
 A graph is {\bf connected} if there is a path from every node to every
-other node (see \url{https://greenteapress.com/tc/conn}).
+other node (see \url{https://en.wikipedia.org/wiki/Connectivity_(graph_theory)}).
 \index{connected graph}
 \index{path}
 
@@ -1394,6 +1428,8 @@ You can start at any node and check whether you can reach all
 other nodes.  If you can reach a node, $v$, you can reach any
 of the {\bf neighbors} of $v$, which is any node connected by
 $v$ by an edge.
+
+\index{neighbor node}
 
 The \py{Graph} class provides a method called \py{neighbors}
 that returns a list of neighbors for a given node.  For
@@ -1409,6 +1445,8 @@ then we can mark its neighbors.
 Then we mark the neighbor's neighbors, and so
 on, until we can't reach any more nodes.  If all nodes are
 seen, the graph is connected.
+
+\index{reachable node}
 
 Here's what that looks like in Python:
 
@@ -1433,6 +1471,8 @@ list called \py{stack} that keeps track of nodes we have
 discovered but not yet processed.  Initially the stack contains
 a single node, \py{start}.
 
+\index{set}
+
 Now, each time through the loop, we:
 
 \begin{enumerate}
@@ -1449,6 +1489,8 @@ neighbors to the stack.
 
 When the stack is empty, we can't reach any more nodes, so we
 break out of the loop and return \py{seen}.
+
+\index{stack}
 
 As an example, we can find all nodes in the complete graph that
 are reachable from node 0:
@@ -1510,6 +1552,8 @@ are connected.
 The ER graph $G(n, p)$ contains $n$ nodes, and each pair of nodes is
 connected by an edge with probability $p$.  Generating an ER graph is
 similar to generating a complete graph.
+
+\index{flip}
 
 The following generator function enumerates all possible edges and
 uses a helper function, \py{flip}, to choose which ones should be
@@ -1592,7 +1636,10 @@ def prob_connected(n, p, iters=100):
 \end{code}
 
 \py{iters} is the number of random graphs we generate.  As we
-increase \py{iters}, the estimated probability gets more precise\footnote{Since \py{count} and \py{iters} are integers, this function won't work correctly in Python 2 unless you import \py{division} from \py{__future__}.  See \url{https://greenteapress.com/tc/pep}}.
+increase \py{iters}, the estimated probability gets more precise\footnote{Since \py{count} and \py{iters} are integers, this function won't work correctly in Python 2 unless you import \py{division} from \py{__future__}.  See \url{https://www.python.org/dev/peps/pep-0238/}}.
+
+\index{probability of connectivity}
+\index{integer division}
 
 \begin{code}
 >>> prob_connected(10, 0.3, iters=10000)
@@ -1601,6 +1648,8 @@ increase \py{iters}, the estimated probability gets more precise\footnote{Since 
 
 Out of 10,000 ER graphs with these parameters, 6498 are connected, so
 we estimate that 65\% of them are connected.  I chose $0.3$ because it is close to the critical value where the probability of connectivity goes from near 0 to near 1.  According to \Erdos~and \Renyi, $p^* = \ln n / n = 0.23$.
+
+\index{critical value}
 
 We can get a clearer view of the transition by estimating the probability
 of connectivity for a range of values of $p$:
@@ -1617,6 +1666,9 @@ This is the first example we've seen using NumPy.  Following convention,
 I import NumPy as {\tt np}.  The function \py{logspace} returns an
 {\bf array} of 11 values from $10^{-2.5}$ to $10^0 = 1$, equally spaced
 on a logarithmic scale.
+
+\index{NumPy}
+\index{logarithm}
 
 To compute \py{ys}, I use a list comprehension that iterates the
 elements of \py{ps} and computes the probability that a random
@@ -1644,17 +1696,19 @@ other graph algorithms.  Along the way, we will analyze the
 performance of those algorithms, figuring out how their run times
 grow as the size of the graphs increases.
 
+\index{analysis of algorithms}
+
 If you are not already familiar with analysis of algorithms,
 you might want to read Appendix B of {\it Think Python, 2nd Edition},
-at \url{https://greenteapress.com/tc/tp2}. 
+at \url{https://greenteapress.com/thinkpython2}. 
 
 \newcommand{\V}{n}
 \newcommand{\E}{m}
 
 The order of growth for graph algorithms is usually expressed
-as a function of $\V$, the number of vertices, and $\E$, the number
+as a function of $\V$, the number of vertices (nodes), and $\E$, the number
 of edges.
-\index{analysis of graph algorithms}
+
 \index{graph algorithm}
 
 As an example, let's analyze \py{reachable_nodes} from
@@ -1676,12 +1730,16 @@ Each time through the loop, we pop a node off the stack; by default,
 \py{pop} removes and returns the last element of a list, which is
 a constant time operation.
 
+\index{constant time}
+
 Next we check whether the node is in \py{seen}, which is a set,
 so checking membership is constant time.
 
 If the node is not already in \py{seen}, we add it, which is
 constant time, and then add the neighbors to the stack, which is
 linear in the number of neighbors.
+
+\index{linear time}
 
 To express the run time in terms of $\V$ and $\E$, we can add up
 the total number of times each node is added to \py{seen}
@@ -1698,6 +1756,8 @@ that means it is connected to $k$ edges.
 So the total number
 of additions to \py{stack} is the total number of edges, $\E$,
 doubled because we consider every edge twice.
+
+\index{order of growth}
 
 Therefore, the order of growth for this function is $O(\V + \E)$,
 which is a convenient way to say that the run time grows in proportion
@@ -1755,6 +1815,8 @@ There are actually two kinds of ER graphs.  The one we generated in
 this chapter, $G(n, p)$, is characterized by two parameters, the number
 of nodes and the probability of an edge between nodes.
 
+\index{Erdos-Renyi model@\Erdos-\Renyi~model}
+
 An alternative definition, denoted $G(n, m)$, is also characterized by
 two parameters: the number of nodes, $n$, and the number of edges,
 $m$.  Under this definition, the number of edges is fixed, but their
@@ -1793,9 +1855,7 @@ In this chapter, I present Stanley Milgram's famous Small World
 Experiment, which was the first scientific demonstration of
 the small world property in a real social network.  Then we'll
 consider Watts-Strogatz graphs, which are intended as a model of
-small world graphs.
-I'll replicate the experiment Watts and Strogatz performed and
-explain what it is intended to show.
+small world graphs.  I'll replicate the experiment Watts and Strogatz performed and explain what it is intended to show.
 
 Along the way, we'll see two new graph algorithms: breadth-first
 search (BFS) and Dijkstra's algorithm for computing the shortest
@@ -1810,10 +1870,11 @@ in Section~\ref{code}.
 Stanley Milgram was an American social psychologist who conducted
 two of the most famous experiments in social science, the
 Milgram experiment, which studied people's obedience to authority
-(\url{https://greenteapress.com/tc/milgram})
+(\url{https://en.wikipedia.org/wiki/Milgram_experiment})
 and the Small World Experiment, which studied
 the structure of social networks
-(\url{https://greenteapress.com/tc/small}).
+(\url{https://en.wikipedia.org/wiki/Small_world_phenomenon}).
+
 \index{Milgram, Stanley}
 \index{small world experiment}
 
@@ -1826,6 +1887,7 @@ the letter directly to the target person only if they knew him
 personally; otherwise they were instructed to send it, and the same
 instructions, to a relative or friend they thought would be more
 likely to know the target person.
+
 \index{Kansas}
 \index{Wichita, Kansas}
 \index{Massachusetts}
@@ -1837,6 +1899,7 @@ times the letters were forwarded---was about six.  This result
 was taken to confirm previous observations (and speculations) that
 the typical distance between any two people in a social network
 is about ``six degrees of separation.''
+
 \index{six degrees}
 
 This conclusion is surprising because most people expect social
@@ -1847,6 +1910,7 @@ my friends live nearby, so I would guess that the average distance
 between nodes in a social network is about 50 miles.  Wichita is about
 1600 miles from Boston, so if Milgram's letters traversed typical
 links in the social network, they should have taken 32 hops, not six.
+
 \index{hop}
 \index{social network}
 \index{local connection}
@@ -1858,7 +1922,8 @@ In 1998 Duncan Watts and Steven Strogatz published a paper in {\em
   Nature}, ``Collective dynamics of `small-world' networks'', that
 proposed an explanation for the small world phenomenon.  You can
 download it from
-\url{https://greenteapress.com/tc/watts}.
+\url{https://github.com/AllenDowney/ThinkComplexity2/blob/master/papers/watts98collective.pdf}.
+
 \index{Watts, Duncan} 
 \index{Strogatz, Steven}
 \index{small world network}
@@ -1869,6 +1934,7 @@ are connected at random.  In a regular graph, every node has the
 same number of neighbors.
 They consider two
 properties of these graphs, clustering and path length:
+
 \index{random graph}
 \index{regular graph}
 \index{clustering}
@@ -1883,6 +1949,7 @@ a set of people who are all friends with each other.  Watts and Strogatz
 defined a clustering coefficient that quantifies the likelihood
 that two nodes that are connected to the same node are also
 connected to each other.
+
 \index{clique}
 
 \item Path length is a measure of the average distance between
@@ -1958,6 +2025,9 @@ A {\bf regular} graph is a graph where each node has the same number
 of neighbors; the number of neighbors is also called the {\bf degree}
 of the node.
 
+\index{regular graph}
+\index{ring lattice}
+
 A ring lattice is a kind of regular graph, which Watts and Strogatz
 use as the basis of their model.
 In a ring lattice with $n$ nodes, the nodes can be arranged in a circle
@@ -2011,6 +2081,8 @@ Notice that \py{make_ring_lattice} uses floor division to compute
 a ring lattice with degree \py{k-1}.  That's probably not what we
 want, but it is good enough for now.
 
+\index{degree}
+
 We can test the function like this:
 
 \begin{code}
@@ -2037,6 +2109,9 @@ unchanged and choose the second node at random.  They don't allow self
 loops or multiple edges; that is, you can't have a edge from a node to
 itself, and you can't have more than one edge between the same two
 nodes.
+
+\index{Watts-Strogatz graph}
+\index{rewire}
 
 Here is my implementation of this process.
 
@@ -2067,9 +2142,7 @@ Then we choose \py{new_v} from \py{choices}, remove the existing
 edge from \py{u} to \py{v}, and add a new edge from \py{u} to
 \py{new_v}.
 
-As an aside, the expression \py{G[u]} returns a
-dictionary that contains the neighbors of \py{u} as keys.  In
-this case it is a little faster than using \py{G.neighbors}.
+As an aside, the expression \py{G[u]} returns a dictionary that contains the neighbors of \py{u} as keys.  It is usually faster than using \py{G.neighbors}.
 
 This function does not consider the edges in the order specified
 by Watts and Strogatz, but it doesn't seem to affect
@@ -2089,12 +2162,13 @@ quantifies the tendency for the nodes to form cliques.
 A {\bf clique} is a set of nodes that are completely connected;
 that is, there are edges between all pairs of nodes in the set.
 
+\index{clustering coefficient}
+\index{network average clustering coefficient}
+
 Suppose a particular node, $u$, has $k$ neighbors.  If all of the
 neighbors are connected to each other, there would be $k(k-1)/2$
 edges among them.  The fraction of those edges that actually exist
 is the local clustering coefficient for $u$, denoted $C_u$.
-It is called
-a ``coefficient'' because it is always between 0 and 1.
 
 If we compute the average of $C_u$ over all nodes, we get the
 ``network average clustering coefficient'', denoted $\bar{C}$.
@@ -2133,7 +2207,7 @@ We can test the function like this:
 0.5
 \end{code}
 
-In a ring lattice with $k=4$, the clusting coefficient for each node
+In a ring lattice with $k=4$, the clustering coefficient for each node
 is 0.5 (if you are not convinced, take another look at
 Figure~\ref{chap03-1}).
 
@@ -2168,6 +2242,10 @@ is the average length of the shortest path between each pair of nodes.
 To compute it, I'll start with a function provided by NetworkX,
 \py{shortest_path_length}.  I'll use it to replicate the Watts and
 Strogatz experiment, then I'll explain how it works.
+
+\index{characteristic path length}
+\index{path length}
+\index{shortest path}
 
 Here's a function that takes a graph and returns a list of shortest
 path lengths, one for each pair of nodes.
@@ -2235,6 +2313,8 @@ With these parameters, \py{run_one_graph} takes about one second on
 my computer; most of that time is spent computing the
 mean path length.
 
+\index{NumPy}
+
 Now we need to compute these values for a range of \py{p}.  I'll use
 the NumPy function \py{logspace} again to compute \py{ps}:
 
@@ -2277,6 +2357,8 @@ Each time through the loop, we get a value of \py{p} and a list of
 \py{ccs}, then compute their means and append them to \py{L} and \py{C}, which
 are lists of path lengths and clustering coefficients.
 
+\index{zip}
+
 In order to plot \py{L} and \py{C} on the same axes, we standardize them
 by dividing through by the first element:
 
@@ -2304,13 +2386,16 @@ model for real-world networks that exhibit the small world phenomenon.
 If you ask me why planetary orbits are elliptical,
 I might start by modeling a planet and a star as point masses; I
 would look up the law of universal gravitation at
-\url{https://greenteapress.com/tc/grav}
+\url{https://en.wikipedia.org/wiki/Newton's_law_of_universal_gravitation}
 and use it to write a differential equation for the motion of
 the planet.  Then I would either derive the orbit equation or,
-more likely, look it up at \url{https://greenteapress.com/tc/orbit}.
+more likely, look it up at \url{https://en.wikipedia.org/wiki/Orbit_equation}.
 With a little algebra, I could derive the conditions that
 yield an elliptical orbit.  Then I would argue that the objects
 we consider planets satisfy these conditions.
+
+\index{orbit}
+\index{ellipse}
 \index{planetary motion}
 \index{universal gravitation}
 
@@ -2323,6 +2408,7 @@ sizes are negligible.  Planets in the same solar system can
 affect each others' orbits, but the effect is usually small.
 And we ignore relativistic effects, again on the assumption that
 they are small.
+
 \index{explanatory model}
 
 This explanation is also appealing because it is equation-based.
@@ -2330,6 +2416,7 @@ We can express the orbit equation in a closed form, which means
 that we can compute orbits efficiently.  It also means that
 we can derive general expressions for the orbital velocity,
 orbital period, and other quantities.
+
 \index{equation-based model}
 
 Finally, I think this kind of explanation is appealing because
@@ -2340,6 +2427,7 @@ model and not the real world.  That is, we can prove that
 an idealized model of a planet yields an elliptic orbit, but
 we can't prove that the model pertains to actual planets (in
 fact, it does not).
+
 \index{mathematical proof}
 \index{proof}
 
@@ -2349,6 +2437,7 @@ is more abstract, which is to say less realistic.  Second,
 the results are generated by simulation, not by mathematical
 analysis.  Finally, the results seem less like a proof and
 more like an example.
+
 \index{abstract model}
 
 Many of the models in this book are like the Watts and Strogatz model:
@@ -2386,6 +2475,8 @@ NetworkX, but I have not explained how it works.  To do that, I'll
 start with breadth-first search, which is the basis of Dijkstra's
 algorithm for computing shortest paths.
 
+\index{NetworkX}
+
 In Section~\ref{connected} I presented \py{reachable_nodes}, which finds all
 the nodes that can be reached from a given starting node:
 
@@ -2405,6 +2496,11 @@ I didn't say so at the time, but \py{reachable_nodes} performs a
 depth-first search (DFS).  Now we'll modify it to perform breadth-first
 search (BFS).
 
+\index{depth-first search}
+\index{breadth-first search}
+\index{DFS}
+\index{BFS}
+
 To understand the difference, imagine you are exploring a castle.
 You start in a room with three doors marked A, B, and C.  You open
 door C and discover another room, with doors marked D, E, and F.
@@ -2420,6 +2516,8 @@ In \py{reachable_nodes}, we use \py{list.pop} to choose the next node to
 ``explore''.  By default, \py{pop} returns the last element of the list,
 which is the last one we added.  In the example, that would be door F.
 
+\index{pop}
+
 If we want to perform a BFS instead, the simplest solution is to
 pop the first element off the stack:
 
@@ -2433,10 +2531,17 @@ in the length of the list.  In the worst case, the length of the
 stack is $O(\V)$, which makes this implementation of BFS $O(\V\E)$,
 which is much worse than what it should be, $O(\V + \E)$.
 
+\index{stack}
+\index{queue}
+\index{deque}
+\index{double-ended queue}
+
 We can solve this problem with a double-ended queue, also known
 as a {\bf deque}.  The important feature of a deque is that you
 can add and remove elements from the beginning or end in constant time.
-To see how it is implemented, see \url{https://greenteapress.com/tc/deque}.
+To see how it is implemented, see \url{https://en.wikipedia.org/wiki/Double-ended_queue}.
+
+\index{collections module}
 
 Python provides a \py{deque} in the \py{collections} module, so we can
 import it like this:
@@ -2479,11 +2584,9 @@ find shortest paths.
 
 Edsger W. Dijkstra was a Dutch computer scientist who invented an
 efficient shortest-path algorithm (see
-\url{https://greenteapress.com/tc/dijk}).  He also invented the
-semaphore, which is a data structure used to coordinate programs that
+\url{https://en.wikipedia.org/wiki/Dijkstra's_algorithm}).  He also invented the semaphore, which is a data structure used to coordinate programs that
 communicate with each other (see
-\url{https://greenteapress.com/tc/sem} and Downey, {\em The
-  Little Book of Semaphores}).
+\url{https://en.wikipedia.org/wiki/Semaphore_(programming)} and Downey, {\em The Little Book of Semaphores}).
 
 \index{Dijkstra, Edsger}
 \index{Little Book of Semaphores@{\em The Little Book of Semaphores}}
@@ -2552,6 +2655,9 @@ the neighbors to the queue.
 
 This algorithm only works if we use BFS, not DFS.  Why?
 
+\index{BFS}
+\index{DFS}
+
 The first time through the loop \py{node} is \py{start}, and \py{new_dist}
 is 1.  So the neighbors of \py{start} get distance 1 and they
 go in the queue.
@@ -2568,6 +2674,8 @@ discovered them during a previous iteration.
 
 And so on.  If you are familiar with proof by induction, you
 can see where this is going.
+
+\index{proof by induction}
 
 But this argument only works if we process all nodes with distance
 1 before we start processing nodes with distance 2, and so on.
@@ -2586,6 +2694,8 @@ In a ring lattice, every node has the same number of neighbors.  The
 number of neighbors is called the {\bf degree} of the node, and a
 graph where all nodes have the same degree is called a {\bf regular
   graph}.
+
+\index{ring lattice}
 
 All ring lattices are regular, but not all regular graphs are ring
 lattices.  In particular, if \py{k} is odd, we can't construct a ring
@@ -2606,9 +2716,7 @@ My implementation of \py{reachable_nodes_bfs} is efficient in the sense
 that it is in $O(\V + \E)$, but it incurs a lot of overhead adding nodes
 to the queue and removing them.  NetworkX provides a simple, fast
 implementation of BFS, available from the NetworkX repository on
-  GitHub at \url{https://greenteapress.com/tc/connx}.
-
-%TODO: tinyurl
+GitHub at \url{https://greenteapress.com/tc/connx}.
 
 Here is a version I modified to return a set of nodes:
 
@@ -2638,6 +2746,8 @@ faster version of \py{shortest_path_dijkstra}.
 The following implementation of a BFS
 contains two performance errors.  What are
 they?  What is the actual order of growth for this algorithm?
+
+\index{BFS}
 \index{order of growth}
 \index{performance error}
 
@@ -2670,10 +2780,13 @@ to see what goes wrong.
 
 \begin{exercise}
 
+%TODO: Do this exercise (project idea)
+
 A natural question about the Watts and Strogatz paper is
 whether the small world phenomenon is specific to their
 generative model or whether other similar models yield
 the same qualitative result (high clustering and low path lengths).
+
 \index{small world phenomenon}
 
 To answer this question, choose a variation of the
@@ -2693,6 +2806,7 @@ and connect each node to its nearest $k$ neighbors.
 
 If a range of similar models yield similar behavior, we
 say that the results of the paper are {\bf robust}.
+
 \index{robust}
 
 \end{exercise}
@@ -2703,6 +2817,8 @@ say that the results of the paper are {\bf robust}.
 Dijkstra's algorithm solves the ``single source shortest path''
 problem, but to compute the characteristic path length of a graph,
 we actually want to solve the ``all pairs shortest path'' problem.
+
+\index{all pairs shortest path}
 
 Of course, one option is to run Dijkstra's algorithm $n$ times,
 once for each starting node.  And for some applications, that's
@@ -2759,11 +2875,16 @@ States; and the network of neurons in the brain of the roundworm
 high connectivity and low path lengths characteristic of small world
 graphs.
 
+\index{Watts-Strogatz graph}
+
 In this section we'll perform the same analysis with a different
 dataset, a set of Facebook users and their friends.  If you are not
 familiar with Facebook, users who are connected to each other are
 called ``friends'', regardless of the nature of their relationship in
 the real world.
+
+\index{Facebook data}
+\index{SNAP}
 
 I'll use data from the Stanford Network Analysis Project (SNAP), which
 shares large datasets from online social networks and other sources.
@@ -2772,7 +2893,7 @@ Specifically, I'll use their Facebook dataset\footnote{J. McAuley and
   Networks. NIPS, 2012.}, which includes 4039 users and 88,234
 friend relationships among them.  This dataset is in the repository
 for this book, but it is also available from the SNAP web site at
-\url{https://greenteapress.com/tc/snap}
+\url{https://snap.stanford.edu/data/egonets-Facebook.html}
 
 The data file contains one line per edge, with users identified by
 integers from 0 to 4038.  Here's the code that reads the file:
@@ -2962,7 +3083,7 @@ which is defined in the \py{thinkstats2} module.
 \py{Pmf} stands for ``probability mass function'';
 if you are not familiar with this concept,
 you might want to read Chapter 3 of {\it Think Stats, 2nd edition}
-at \url{https://greenteapress.com/tc/ts2}.
+at \url{https://greenteapress.com/thinkstats2}.
 
 Briefly, a \py{Pmf} maps from values to their probabilities.
 A \py{Pmf} of degrees is a mapping from each possible degree, $d$, to the
@@ -3097,7 +3218,7 @@ structure of several real-world networks,
 including graphs that represent the interconnectivity of movie actors,
 world-wide web (WWW) pages, and elements in the electrical power grid
 in the western United States.  You can download the paper from
-\url{https://greenteapress.com/tc/barabasi}.
+\url{https://github.com/AllenDowney/ThinkComplexity2/blob/master/papers/barabasi99emergence.pdf}.
 
 \index{movie actor}
 \index{world-wide web}
@@ -3134,7 +3255,7 @@ model model have a distribution of degrees that obeys a power law.
 
 Graphs with this property are sometimes called {\bf scale-free networks},
 for reasons I won't explain; if you are curious, you can read more
-at \url{https://greenteapress.com/tc/scale}.
+at \url{https://en.wikipedia.org/wiki/Scale-free_network}.
 \index{scale-free network}
 
 NetworkX provides a function that generates BA graphs.  We will use
@@ -3486,7 +3607,7 @@ that would provide evidence in favor of one model over the other?
 Choosing among competing models is the topic of Thomas Kuhn's
 essay, ``Objectivity, Value Judgment, and Theory Choice'', which
 you can read at
-\url{https://greenteapress.com/tc/kuhn}.
+\url{https://github.com/AllenDowney/ThinkComplexity2/blob/master/papers/kuhn73objectivity.pdf}.
 \index{Kuhn, Thomas}
 \index{theory choice}
 \index{objectivity}
@@ -3515,7 +3636,7 @@ distribution?
 \begin{exercise}
 
 Data files from the \Barabasi~and Albert paper are available from
-\url{https://greenteapress.com/tc/netdata}.  Their actor collaboration data is included in the repository for this book in a
+\url{https://web.archive.org/web/20161027031010/http://www3.nd.edu/~networks/resources.htm}.  Their actor collaboration data is included in the repository for this book in a
 file named \py{actor.dat.gz}.  The following function reads the file and
 builds the graph.
 
@@ -3733,7 +3854,7 @@ Figure~\ref{chap05-3} shows what it looks like after 64 steps.
 \newcommand{\Sierpinski}{Sierpi\'{n}ski}
 
 This pattern resembles the \Sierpinski~triangle, which
-you can read about at \url{https://greenteapress.com/tc/sier}.
+you can read about at \url{https://en.wikipedia.org/wiki/Sierpinski_triangle}.
 \index{Sierpi\'{n}ski triangle}
 
 Some Class 2 CAs generate patterns that are intricate and
@@ -3808,7 +3929,7 @@ and a sequence generated by a ``truly'' random process.  In {\em A New
 
 The existence of Class 3 CAs is surprising.  To explain how
 surprising, let me start with philosophical
-{\bf determinism} (see \url{https://greenteapress.com/tc/deter}).
+{\bf determinism} (see \url{https://en.wikipedia.org/wiki/Determinism}).
 Many philosophical stances are hard to define precisely because
 they come in a variety of flavors.  I often find it useful
 to define them with a list of statements ordered from weak
@@ -3861,7 +3982,7 @@ present before its eyes.
 \end{quote}
 
 This ``intellect'' came to be called ``Laplace's Demon''.
-See \url{https://greenteapress.com/tc/demon}.  The word
+See \url{https://en.wikipedia.org/wiki/Laplace's_demon}.  The word
 ``demon'' in this context has the sense of ``spirit'', with no
 implication of evil.
 
@@ -3912,7 +4033,7 @@ The behavior of Class 4 CAs is even more surprising.  Several 1-D CAs,
 most notably Rule 110, are {\bf Turing complete}, which means that
 they can compute any computable function.  This property, also called
 {\bf universality}, was proved by Matthew Cook in 1998.  See
-\url{https://greenteapress.com/tc/r110}.
+\url{https://en.wikipedia.org/wiki/Rule_110}.
 
 \index{Turing complete}
 \index{universality}
@@ -4036,7 +4157,7 @@ a maximal (``universal'') level of computational power, and that most
 systems do in fact attain this maximal level of computational
 power. Consequently, most systems are computationally
 equivalent (see
-  \url{https://greenteapress.com/tc/equiv}).
+  \url{http://mathworld.wolfram.com/PrincipleofComputationalEquivalence.html}).
 \end{quote}
 
 Applying these definitions to CAs, Classes 1 and 2 are ``obviously
@@ -4136,7 +4257,7 @@ not very detailed or realistic.
 
 For example, some species of cone snail produce a pattern on their
 shells that resembles the patterns generated by cellular automatons
-(see \url{https://greenteapress.com/tc/cone}).  So it is natural to
+(see \url{https://en.wikipedia.org/wiki/Cone_snail}).  So it is natural to
 suppose that a CA is a model of the mechanism that produces patterns
 on shells as they grow.  But, at least initially, it is not clear how
 the elements of the model (so-called cells, communication between
@@ -4435,7 +4556,7 @@ some of its spaceships.
 
 \item Read the Wikipedia page about Rule 110, which describes its
   background pattern and spaceships:
-  \url{https://greenteapress.com/tc/r110}.
+  \url{https://en.wikipedia.org/wiki/Rule_110}.
 
 \item Create a Rule 110 CA with an initial condition that yields the
   stable background pattern.
@@ -4465,7 +4586,7 @@ The goal of this exercise is to implement a Turing machine.
 
 \begin{enumerate}
 
-\item Read about Turing machines at \url{https://greenteapress.com/tc/tm}.
+\item Read about Turing machines at \url{https://en.wikipedia.org/wiki/Turing_machine}.
 
 \item Write a class called \py{Turing} that implements a Turing machine.
 For the action table, use the rules for a 3-state busy beaver.
@@ -4474,7 +4595,7 @@ For the action table, use the rules for a 3-state busy beaver.
 \item Write a class named \py{TuringDrawer} that generates an
 image that represents the state of the tape and the position and
 state of the head.  For one example of what that might look like,
-see \url{https://greenteapress.com/tc/turing}.
+see \url{http://mathworld.wolfram.com/TuringMachine.html}.
 
 \end{enumerate}
 
@@ -4486,7 +4607,7 @@ see \url{https://greenteapress.com/tc/turing}.
 This exercise asks you to implement and test several PRNGs.
 For testing, you will need to install
 \py{DieHarder}, which you can download from
-\url{https://greenteapress.com/tc/dh}, or it
+\url{https://www.phy.duke.edu/~rgb/General/dieharder.php}, or it
 might be available as a package for your operating system.
 \index{DieHarder}
 
@@ -4494,7 +4615,7 @@ might be available as a package for your operating system.
 
 \item Write a program that implements one of the linear congruential
 generators described at
-\url{https://greenteapress.com/tc/lcg}).
+\url{https://en.wikipedia.org/wiki/Linear_congruential_generator}).
 Test it using \py{DieHarder}.
 
 \item Read the documentation of Python's \py{random} module.
@@ -4520,7 +4641,7 @@ Falsifiability is an appealing and useful idea, but among
 philosophers of science it is not generally accepted
 as a solution to the demarcation problem, as Popper claimed.
 
-Read \url{https://greenteapress.com/tc/false} and answer the
+Read \url{https://en.wikipedia.org/wiki/Falsifiability} and answer the
 following questions.
 
 \begin{enumerate}
@@ -4579,7 +4700,7 @@ One of the first cellular automatons to be studied, and probably the
 most popular of all time, is a 2-D CA called ``The Game of Life'', or GoL
 for short.  It was developed by John H. Conway and popularized in 1970
 in Martin Gardner's column in {\em Scientific American}.
-See \url{https://greenteapress.com/tc/gol}.
+See \url{https://en.wikipedia.org/wiki/Conway_Game_of_Life}.
 \index{Game of Life}
 \index{Conway, John H.}
 \index{Gardner, Martin}
@@ -4588,7 +4709,7 @@ The cells in GoL are arranged in a 2-D {\bf grid}, either infinite in
 both directions or wrapped around.  A grid wrapped in both directions
 is called a {\bf torus} because it is topographically equivalent to
 the surface of a doughnut.  See
-\url{https://greenteapress.com/tc/torus}.
+\url{https://en.wikipedia.org/wiki/Torus}.
 
 \index{grid}
 \index{torus}
@@ -4957,7 +5078,7 @@ scenarios that influence your reaction?  Can you make
 a principled distinction between them?
 
 For more on instrumentalism, see
-\url{https://greenteapress.com/tc/instr}.
+\url{https://en.wikipedia.org/wiki/Instrumentalism}.
 
 
 
@@ -5123,7 +5244,7 @@ the grid.
 One of the longest-lived small patterns is ``rabbits'', which starts with
 9 live cells and takes 17 331 steps to stabilize.  You can get the
 initial configuration in various formats from
-\url{https://greenteapress.com/tc/rabbits}.  Load this configuration
+\url{http://www.conwaylife.com/wiki/Rabbits}.  Load this configuration
 and run it.
 
 \end{exercise}
@@ -5164,7 +5285,7 @@ spelled wrong as an homage to Alan Turing.
 \index{Turing, Alan}
 
 The most famous Turmite is Langton's Ant, discovered by Chris Langton
-in 1986.  See \url{https://greenteapress.com/tc/langton}.
+in 1986.  See \url{https://en.wikipedia.org/wiki/Langton_ant}.
 
 \index{Langton's Ant}
 \index{Langton, Chris}
@@ -5440,7 +5561,7 @@ material.  Examples include oil in rock formations, water in paper,
 and hydrogen gas in micropores.  Percolation models are also used to
 study systems that are not literally percolation, including epidemics
 and networks of electrical resistors.  See
-\url{https://greenteapress.com/tc/perc}.
+\url{https://en.wikipedia.org/wiki/Percolation_theory}.
 
 \index{percolation}
 
@@ -6742,7 +6863,7 @@ runs until the pile reaches equilibrium.  Does the result appear to be
 fractal?
 
 You can read more about this version of the sand pile model at
-\url{https://greenteapress.com/tc/sand}.
+\url{http://math.cmu.edu/~wes/sandgallery.html}.
 
 \end{exercise}
 
@@ -6752,7 +6873,7 @@ You can read more about this version of the sand pile model at
 In a 1989 paper, Bak, Chen and Creutz suggest that the Game of Life is
 an SOC system.\footnote{``Self-organized criticality in the Game of
   Life'', available from
-  \url{https://greenteapress.com/tc/bak}.}
+  \url{https://github.com/AllenDowney/ThinkComplexity2/blob/master/papers/bak89life.pdf}.}
 
 \index{Game of Life}
 \index{self-organized criticality}
@@ -6806,7 +6927,7 @@ it as reductionist or holist?
 \begin{exercise}
 
 Read about the ``Great Man'' theory of history at
-\url{https://greenteapress.com/tc/great}.  What implication
+\url{https://en.wikipedia.org/wiki/Great_man_theory}.  What implication
 does self-organized criticality have for this theory?
 
 \index{Great Man theory}
@@ -7481,7 +7602,7 @@ properties can never be ``explained'' by a classical reductionist
 model.
 
 You can read more about emergence at
-\url{https://greenteapress.com/tc/emer}.
+\url{https://en.wikipedia.org/wiki/Emergence}.
 
 
 \section{Exercises}
@@ -7549,7 +7670,7 @@ that humans have minds.
 
 John Searle presented a thought experiment called ``The Chinese Room'',
 intended to show that {\em Strong AI} is false.  You can read about
-it at \url{https://greenteapress.com/tc/searle}.
+it at \url{https://en.wikipedia.org/wiki/Chinese_room}.
 
 What is the {\bf system reply} to the Chinese Room argument?
 How does what you have learned about emergence influence
@@ -7766,7 +7887,7 @@ find driver behaviors that improve average speed.
 In 1987 Craig Reynolds published ``Flocks, herds and
 schools: A distributed behavioral model'', which describes an
 agent-based model of herd behavior.  You can download his
-paper from \url{https://greenteapress.com/tc/boid}.
+paper from \url{https://www.red3d.com/cwr/papers/1987/boids.html}.
 
 \index{Reynolds, Craig}
 
@@ -7803,7 +7924,7 @@ To run this program you will need VPython, which is a library that provides 3D g
 conda install -c vpython vpython
 \end{code}
 
-VPython provides a \py{Vector} object we'll use to represent the position and velocity of Boids in a 3-dimensional space.  You can read about them at \url{https://greenteapress.com/tc/vector}.
+VPython provides a \py{Vector} object we'll use to represent the position and velocity of Boids in a 3-dimensional space.  You can read about them at \url{http://www.glowscript.org/docs/VPythonDocs/vector.html}.
 
 
 \section{The Boid algorithm}
@@ -8062,7 +8183,7 @@ behavior of the flock?  Implement it and see.
 \begin{exercise}
 
 Read more about free will at
-\url{https://greenteapress.com/tc/will}.  The view that free will
+\url{https://en.wikipedia.org/wiki/Free_will}.  The view that free will
 is compatible with determinism is called {\bf compatibilism}.  One of
 the strongest challenges to compatibilism is the ``consequence
 argument''.  What is the consequence argument?  What response can you
@@ -8091,7 +8212,7 @@ Nevertheless, many people do not believe in evolution.  In a survey run by the P
 
 \end{enumerate}
 
-About 34\% of Americans chose the second (see \url{https://greenteapress.com/tc/arda}).
+About 34\% of Americans chose the second (see \url{http://www.thearda.com/Archive/Files/Codebooks/RELLAND14_CB.asp}).
 
 Even among the ones who believe that living things have evolved, barely more than half believe that the cause of evolution is natural selection.  In other words, only a third of Americans believe that the theory of evolution is true.
 
@@ -8141,7 +8262,7 @@ that represent individual organisms.  Each agent has genetic
 information, called its {\bf genotype}, which is the information that
 gets copied when the agent replicates.  In our model\footnote{This
   model is a variant of the NK model developed primarily by Stuart
-  Kauffman (see \url{https://greenteapress.com/tc/nk})}, a
+  Kauffman (see \url{https://en.wikipedia.org/wiki/NK_model})}, a
 genotype is represented by a sequence of \py{N} binary digits (zeros
 and ones), where \py{N} is a parameter we choose.
 
@@ -8151,7 +8272,7 @@ Finally, to generate differential survival and reproduction, we define a functio
 
 \section{Fitness landscape}
 
-The function that maps from genotype to fitness is called a {\bf fitness landscape}.  In the landscape metaphor, each genotype corresponds to a location in an \py{N}-dimensional space, and fitness corresponds to the ``height" of the landscape at that location.  For visualizations that might clarify this metaphor, see \url{https://greenteapress.com/tc/fit}.
+The function that maps from genotype to fitness is called a {\bf fitness landscape}.  In the landscape metaphor, each genotype corresponds to a location in an \py{N}-dimensional space, and fitness corresponds to the ``height" of the landscape at that location.  For visualizations that might clarify this metaphor, see \url{https://en.wikipedia.org/wiki/Fitness_landscape}.
 
 In biological terms, the fitness landscape represents information about how the genotype of an organism is related to its physical form and capabilities, called its {\bf phenotype}, and how the phenotype interacts with its {\bf environment}.
 
@@ -8420,7 +8541,7 @@ In the notebook for this chapter, you will see the effect of differential reprod
 
 In the simulations so far, we start with the maximum possible diversity---one agent at every location in the landscape---and end with the minimum possible diversity, all agents at one location.
 
-That's almost the opposite of what happened in the natural world, which apparently began with a single species that branched, over time, into the millions, or possibly billions, of species on Earth today (see \url{https://greenteapress.com/tc/bio}).
+That's almost the opposite of what happened in the natural world, which apparently began with a single species that branched, over time, into the millions, or possibly billions, of species on Earth today (see \url{https://en.wikipedia.org/wiki/Global_biodiversity}).
 
 With perfect copying in our model, we never see increasing diversity.  But if we add mutation, along with differential survival and reproduction, we get a step closer to understanding evolution in nature.
 
@@ -8538,7 +8659,7 @@ Now if we compute the distance between the agents' locations before and after th
 
 \section{Summary}
 
-We have seen that mutation, along with differential survival and reproduction, is sufficient to cause increasing fitness, increasing diversity, and a simple form of speciation.  This model is not meant to be realistic; evolution in natural systems is much more complicated than this.  Rather, it is meant to be a ``sufficiency theorem"; that is, a demonstration that the features of the model are sufficient to produce the behavior we are trying to explain (see \url{https://greenteapress.com/tc/suff}).
+We have seen that mutation, along with differential survival and reproduction, is sufficient to cause increasing fitness, increasing diversity, and a simple form of speciation.  This model is not meant to be realistic; evolution in natural systems is much more complicated than this.  Rather, it is meant to be a ``sufficiency theorem"; that is, a demonstration that the features of the model are sufficient to produce the behavior we are trying to explain (see \url{https://en.wikipedia.org/wiki/Necessity_and_sufficiency}).
 
 Logically, this ``theorem" doesn't prove that evolution in nature is caused by these mechanisms alone.  But since these mechanisms do appear, in many forms, in biological systems, it is reasonable to think that they at least contribute to natural evolution.
 
@@ -8567,9 +8688,9 @@ In this final chapter, we take on two questions, one from biology and one from p
 
 \begin{itemize}
 
-\item In biology, the ``problem of altruism" is the apparent conflict between natural selection, which suggests that animals live in a state of constant competition to survive and reproduce, and altruism, which is the tendency of many animals to help other animals, even to their apparent detriment.  See \url{https://greenteapress.com/tc/altruism}.
+\item In biology, the ``problem of altruism" is the apparent conflict between natural selection, which suggests that animals live in a state of constant competition to survive and reproduce, and altruism, which is the tendency of many animals to help other animals, even to their apparent detriment.  See \url{https://en.wikipedia.org/wiki/Altruism_(biology)}.
 
-\item In moral philosophy, the question of human nature asks whether humans are fundamentally good, or evil, or blank states shaped by their environment.  See \url{https://greenteapress.com/tc/nature}.
+\item In moral philosophy, the question of human nature asks whether humans are fundamentally good, or evil, or blank states shaped by their environment.  See \url{https://en.wikipedia.org/wiki/Human_nature}.
 
 \end{itemize}
 
@@ -8583,7 +8704,7 @@ about working with this code, see Section~\ref{code}.
 \section{Prisoner's Dilemma}
 \label{prisoners}
 
-The Prisoner's Dilemma is a topic in game theory, but it's not the fun kind of game.  Instead, it is the kind of game that sheds light on human motivation and behavior.  Here is the presentation of the dilemma from Wikipedia (\url{https://greenteapress.com/tc/pd}):
+The Prisoner's Dilemma is a topic in game theory, but it's not the fun kind of game.  Instead, it is the kind of game that sheds light on human motivation and behavior.  Here is the presentation of the dilemma from Wikipedia (\url{https://en.wikipedia.org/wiki/Prisoner's_dilemma}):
 \index{Prisoner's Dilemma}
 
 \begin{quote}
@@ -8628,9 +8749,9 @@ Studying these scenarios, and ways to escape from the dilemma, is the focus of p
 Since the Prisoner's Dilemma was first discussed in the 1950s, it has been a popular topic of study in social psychology.  Based on the analysis in the previous section, we can say what a perfectly rational agent {\em should} do; it is harder to predict what real people actually do.  Fortunately, the experiment has been done\footnote{Here's a recent report with references to previous experiments:
 Barreda-Tarrazona, Jaramillo-Guti\'{e}rrez, Pavan, and Sabater-Grande,
 ``Individual Characteristics vs. Experience: An Experimental Study on Cooperation in Prisoner's Dilemma", Frontiers in Psychology, 2017; 8: 596.
-\url{https://greenteapress.com/tc/pdexp}.}.
+\url{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5397528/}.}.
 
-If we assume that people are smart enough to do the analysis (or understand it when explained), and that they generally act in their own interest, we would expect them to defect pretty much all the time.  But they don't.  In most experiments, subjects cooperate much more than the rational agent model predicts\footnote{For an excellent video summarizing what we have discussed so far, see \url{https://greenteapress.com/tc/pdvid1}.}.
+If we assume that people are smart enough to do the analysis (or understand it when explained), and that they generally act in their own interest, we would expect them to defect pretty much all the time.  But they don't.  In most experiments, subjects cooperate much more than the rational agent model predicts\footnote{For an excellent video summarizing what we have discussed so far, see \url{https://www.youtube.com/watch?v=t9Lo2fgxWHw}.}.
 
 The most obvious explanation of this result is that people are not rational agents, which should not be a surprise to anyone.  But why not?  Is it because they are not smart enough to understand the scenario or because they are knowingly acting contrary to their own interest?
 
@@ -8664,7 +8785,7 @@ He invited participants to submit strategies in the form of computer programs, t
 
 In Axelrod's tournaments, a simple strategy that did surprisingly well was called ``tit for tat", or TFT.  TFT always cooperates during the first round of an iterated match; after that, it copies whatever the opponent did during the previous round.  If the opponent keeps cooperating, TFT keeps cooperating.  If the opponent defects at any point, TFT defects in the next round.  But if the opponent goes back to cooperating, so does TFT.
 
-For more information about these tournaments, and an explanation of why TFT does so well, see this video: \url{https://greenteapress.com/tc/pdvid2}.
+For more information about these tournaments, and an explanation of why TFT does so well, see this video: \url{https://www.youtube.com/watch?v=BOvAbjfJ0x0}.
 
 Looking at the strategies that did well in these tournaments, Alexrod identified the characteristics they tended to share:
 
@@ -8981,7 +9102,7 @@ The simulations in this chapter suggest:
 \item TFT, which was a successful strategy in Alexrod's tournaments, does not seem to be a specially optimal strategy in an evolving population.  In fact, there is probably no stable optimal strategy.
 
 \item Some degree of retaliation may be adaptive, but it might not be
-necessary for all agents to retaliate.  If there is enough retaliation in the population as a whole, that might be enough to prevent invasion by defectors\footnote{And that introduces a whole new topic in game theory, the free-rider problem (see \url{https://greenteapress.com/tc/rider})}.
+necessary for all agents to retaliate.  If there is enough retaliation in the population as a whole, that might be enough to prevent invasion by defectors\footnote{And that introduces a whole new topic in game theory, the free-rider problem (see \url{https://en.wikipedia.org/wiki/Free-rider_problem})}.
 
 \end{itemize}
 
@@ -9118,7 +9239,7 @@ of the field.
 
 The Pareto distribution is named after the economist Vilfredo
 Pareto, who used it to describe the distribution of wealth;
-see \url{https://greenteapress.com/tc/pareto}.  Since then,
+see \url{https://en.wikipedia.org/wiki/Pareto_distribution}.  Since then,
 people have used it to describe
 phenomena in the natural and social sciences
 including sizes of cities and towns, sand particles
