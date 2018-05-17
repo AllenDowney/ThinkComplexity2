@@ -195,7 +195,7 @@ Needham MA 02492
 Permission is granted to copy, distribute, transmit and adapt
 this work under a Creative Commons
 Attribution-NonCommercial-ShareAlike 4.0 International License:
-\url{https://creativecommons.org/licenses/by-nc-sa/4.0/}.
+\url{https://greenteapress.com/tc/license}.
 
 If you are interested in distributing a commercial version of this
 work, please contact the author.
@@ -203,7 +203,7 @@ work, please contact the author.
 The \LaTeX\ source for this book is available from
 
 \begin{code}
-      https://greenteapress.com/complexity
+      https://github.com/AllenDowney/ThinkComplexity2
 \end{code}
 
 %--table of contents------------------------------------------
@@ -234,7 +234,7 @@ Copyright \copyright ~2016 \theauthors.
 Permission is granted to copy, distribute, and/or modify this work
 under the terms of the Creative Commons
 Attribution-NonCommercial-ShareAlike 4.0 International License, which is
-available at \url{https://creativecommons.org/licenses/by-nc-sa/4.0/}.
+available at \url{https://greenteapress.com/tc/license}.
 
 \vspace{1em}
 
@@ -262,7 +262,7 @@ herds, flocks, and swarms, fractals and self-organizing
 systems, chaotic systems and cybernetic systems.  These terms
 might not mean much to you at this point.  We will get to them
 soon, but you can get a preview at
-\url{https://en.wikipedia.org/wiki/Complex_systems}.
+\url{https://greenteapress.com/tc/complex}.
 
 Why should you learn about Complexity science?  Here are a few reasons:
 
@@ -340,7 +340,7 @@ Finally, all supporting software has been updated to Python 3 (but also runs unm
 
 
 All code used in this book is available from a Git repository on GitHub:
-\url{https://github.com/AllenDowney/ThinkComplexity2}.  
+\url{https://greenteapress.com/tc/repo}.  
 If you are not familiar with Git, it is a 
 version control system that allows you to keep track of the files that
 make up a project.  A collection of files under Git's control is
@@ -419,7 +419,7 @@ or create a new tab in an open browser window.
 \item[Run Jupyter on Binder]
 
 Binder is a service that runs Jupyter in a virtual machine.  If you
-follow this link, \url{https://mybinder.org/repo/AllenDowney/ThinkComplexity2},
+follow this link, \url{https://greenteapress.com/tc/binder},
 you should get a Jupyter home page with the notebooks for this book
 and the supporting data and scripts.
 
@@ -748,7 +748,7 @@ until you have seen the examples later in the book.
   linear, or use linear approximations to non-linear systems;
   complexity science is more friendly to non-linear models.  One example
   is chaos theory\footnote{Chaos is not covered in this book, but you can
-  read about it at \url{https://en.wikipedia.org/wiki/Chaos_theory}.}.
+  read about it at \url{https://greenteapress.com/tc/chaos}.}.
 
 \index{linear}
 \index{non-linear}
@@ -763,7 +763,7 @@ until you have seen the examples later in the book.
 
 \item[Abstract \myrightarrow~detailed] In classical models, planets are
   point masses, planes are frictionless, and cows are
-  spherical (see \url{https://en.wikipedia.org/wiki/Spherical_cow}).
+  spherical (see \url{https://greenteapress.com/tc/cow}).
   Simplifications like these are often necessary for analysis,
   but computational models can be more realistic.
 
@@ -1168,7 +1168,7 @@ of a graph is arbitrary.
 
 To represent graphs, we'll use a package called NetworkX,
 which is the most commonly used network library in Python.
-You can read more about it at \url{https://networkx.github.io/},
+You can read more about it at \url{https://greenteapress.com/tc/netx},
 but I'll explain it as we go along.
 
 \index{NetworkX}
@@ -1324,7 +1324,7 @@ by Paul \Erdos~and Alfr\'{e}d \Renyi~in the 1960s.
 An \Erdos-\Renyi~graph (ER graph) is characterized by two parameters:
 $n$ is the number of nodes and $p$ is the probability that there
 is an edge between any two nodes.
-See \url{https://en.wikipedia.org/wiki/Erdos-Renyi_model}.
+See \url{https://greenteapress.com/tc/er}.
 
 \index{Erdos-Renyi model@\Erdos-\Renyi~model}
 
@@ -1374,7 +1374,7 @@ where every node is connected to every other.
 
 Here's a generator function that takes a list of nodes and enumerates
 all distinct pairs.  If you are not familiar with generator functions,
-you can read about them at \url{https://wiki.python.org/moin/Generators}.
+you can read about them at \url{https://greenteapress.com/tc/gen}.
 
 \begin{code}
 def all_pairs(nodes):
@@ -1418,7 +1418,7 @@ we'll develop functions to check whether a graph is connected.
 \label{connected}
 
 A graph is {\bf connected} if there is a path from every node to every
-other node (see \url{https://en.wikipedia.org/wiki/Connectivity_(graph_theory)}).
+other node (see \url{https://greenteapress.com/tc/conn}).
 \index{connected graph}
 \index{path}
 
@@ -1636,7 +1636,7 @@ def prob_connected(n, p, iters=100):
 \end{code}
 
 \py{iters} is the number of random graphs we generate.  As we
-increase \py{iters}, the estimated probability gets more precise\footnote{Since \py{count} and \py{iters} are integers, this function won't work correctly in Python 2 unless you import \py{division} from \py{__future__}.  See \url{https://www.python.org/dev/peps/pep-0238/}}.
+increase \py{iters}, the estimated probability gets more precise\footnote{Since \py{count} and \py{iters} are integers, this function won't work correctly in Python 2 unless you import \py{division} from \py{__future__}.  See \url{https://greenteapress.com/tc/pep}}.
 
 \index{probability of connectivity}
 \index{integer division}
@@ -1700,7 +1700,7 @@ grow as the size of the graphs increases.
 
 If you are not already familiar with analysis of algorithms,
 you might want to read Appendix B of {\it Think Python, 2nd Edition},
-at \url{https://greenteapress.com/thinkpython2}. 
+at \url{https://greenteapress.com/tc/tp2}. 
 
 \newcommand{\V}{n}
 \newcommand{\E}{m}
@@ -1870,10 +1870,10 @@ in Section~\ref{code}.
 Stanley Milgram was an American social psychologist who conducted
 two of the most famous experiments in social science, the
 Milgram experiment, which studied people's obedience to authority
-(\url{https://en.wikipedia.org/wiki/Milgram_experiment})
+(\url{https://greenteapress.com/tc/milgram})
 and the Small World Experiment, which studied
 the structure of social networks
-(\url{https://en.wikipedia.org/wiki/Small_world_phenomenon}).
+(\url{https://greenteapress.com/tc/small}).
 
 \index{Milgram, Stanley}
 \index{small world experiment}
@@ -1922,7 +1922,7 @@ In 1998 Duncan Watts and Steven Strogatz published a paper in {\em
   Nature}, ``Collective dynamics of `small-world' networks'', that
 proposed an explanation for the small world phenomenon.  You can
 download it from
-\url{https://github.com/AllenDowney/ThinkComplexity2/blob/master/papers/watts98collective.pdf}.
+\url{https://greenteapress.com/tc/watts}.
 
 \index{Watts, Duncan} 
 \index{Strogatz, Steven}
@@ -2386,10 +2386,10 @@ model for real-world networks that exhibit the small world phenomenon.
 If you ask me why planetary orbits are elliptical,
 I might start by modeling a planet and a star as point masses; I
 would look up the law of universal gravitation at
-\url{https://en.wikipedia.org/wiki/Newton's_law_of_universal_gravitation}
+\url{https://greenteapress.com/tc/grav}
 and use it to write a differential equation for the motion of
 the planet.  Then I would either derive the orbit equation or,
-more likely, look it up at \url{https://en.wikipedia.org/wiki/Orbit_equation}.
+more likely, look it up at \url{https://greenteapress.com/tc/orbit}.
 With a little algebra, I could derive the conditions that
 yield an elliptical orbit.  Then I would argue that the objects
 we consider planets satisfy these conditions.
@@ -2539,7 +2539,7 @@ which is much worse than what it should be, $O(\V + \E)$.
 We can solve this problem with a double-ended queue, also known
 as a {\bf deque}.  The important feature of a deque is that you
 can add and remove elements from the beginning or end in constant time.
-To see how it is implemented, see \url{https://en.wikipedia.org/wiki/Double-ended_queue}.
+To see how it is implemented, see \url{https://greenteapress.com/tc/deque}.
 
 \index{collections module}
 
@@ -2584,9 +2584,9 @@ find shortest paths.
 
 Edsger W. Dijkstra was a Dutch computer scientist who invented an
 efficient shortest-path algorithm (see
-\url{https://en.wikipedia.org/wiki/Dijkstra's_algorithm}).  He also invented the semaphore, which is a data structure used to coordinate programs that
+\url{https://greenteapress.com/tc/dijk}).  He also invented the semaphore, which is a data structure used to coordinate programs that
 communicate with each other (see
-\url{https://en.wikipedia.org/wiki/Semaphore_(programming)} and Downey, {\em The Little Book of Semaphores}).
+\url{https://greenteapress.com/tc/sem} and Downey, {\em The Little Book of Semaphores}).
 
 \index{Dijkstra, Edsger}
 \index{Little Book of Semaphores@{\em The Little Book of Semaphores}}
@@ -2893,7 +2893,7 @@ Specifically, I'll use their Facebook dataset\footnote{J. McAuley and
   Networks. NIPS, 2012.}, which includes 4039 users and 88,234
 friend relationships among them.  This dataset is in the repository
 for this book, but it is also available from the SNAP web site at
-\url{https://snap.stanford.edu/data/egonets-Facebook.html}
+\url{https://greenteapress.com/tc/snap}
 
 The data file contains one line per edge, with users identified by
 integers from 0 to 4038.  Here's the code that reads the file:
@@ -3083,7 +3083,7 @@ which is defined in the \py{thinkstats2} module.
 \py{Pmf} stands for ``probability mass function'';
 if you are not familiar with this concept,
 you might want to read Chapter 3 of {\it Think Stats, 2nd edition}
-at \url{https://greenteapress.com/thinkstats2}.
+at \url{https://greenteapress.com/tc/ts2}.
 
 Briefly, a \py{Pmf} maps from values to their probabilities.
 A \py{Pmf} of degrees is a mapping from each possible degree, $d$, to the
@@ -3218,7 +3218,7 @@ structure of several real-world networks,
 including graphs that represent the interconnectivity of movie actors,
 world-wide web (WWW) pages, and elements in the electrical power grid
 in the western United States.  You can download the paper from
-\url{https://github.com/AllenDowney/ThinkComplexity2/blob/master/papers/barabasi99emergence.pdf}.
+\url{https://greenteapress.com/tc/barabasi}.
 
 \index{movie actor}
 \index{world-wide web}
@@ -3255,7 +3255,7 @@ model model have a distribution of degrees that obeys a power law.
 
 Graphs with this property are sometimes called {\bf scale-free networks},
 for reasons I won't explain; if you are curious, you can read more
-at \url{https://en.wikipedia.org/wiki/Scale-free_network}.
+at \url{https://greenteapress.com/tc/scale}.
 \index{scale-free network}
 
 NetworkX provides a function that generates BA graphs.  We will use
@@ -3607,7 +3607,7 @@ that would provide evidence in favor of one model over the other?
 Choosing among competing models is the topic of Thomas Kuhn's
 essay, ``Objectivity, Value Judgment, and Theory Choice'', which
 you can read at
-\url{https://github.com/AllenDowney/ThinkComplexity2/blob/master/papers/kuhn73objectivity.pdf}.
+\url{https://greenteapress.com/tc/kuhn}.
 \index{Kuhn, Thomas}
 \index{theory choice}
 \index{objectivity}
@@ -3636,7 +3636,7 @@ distribution?
 \begin{exercise}
 
 Data files from the \Barabasi~and Albert paper are available from
-\url{https://web.archive.org/web/20161027031010/http://www3.nd.edu/~networks/resources.htm}.  Their actor collaboration data is included in the repository for this book in a
+\url{https://greenteapress.com/tc/netdata}.  Their actor collaboration data is included in the repository for this book in a
 file named \py{actor.dat.gz}.  The following function reads the file and
 builds the graph.
 
@@ -3854,7 +3854,7 @@ Figure~\ref{chap05-3} shows what it looks like after 64 steps.
 \newcommand{\Sierpinski}{Sierpi\'{n}ski}
 
 This pattern resembles the \Sierpinski~triangle, which
-you can read about at \url{https://en.wikipedia.org/wiki/Sierpinski_triangle}.
+you can read about at \url{https://greenteapress.com/tc/sier}.
 \index{Sierpi\'{n}ski triangle}
 
 Some Class 2 CAs generate patterns that are intricate and
@@ -3929,7 +3929,7 @@ and a sequence generated by a ``truly'' random process.  In {\em A New
 
 The existence of Class 3 CAs is surprising.  To explain how
 surprising, let me start with philosophical
-{\bf determinism} (see \url{https://en.wikipedia.org/wiki/Determinism}).
+{\bf determinism} (see \url{https://greenteapress.com/tc/deter}).
 Many philosophical stances are hard to define precisely because
 they come in a variety of flavors.  I often find it useful
 to define them with a list of statements ordered from weak
@@ -3982,7 +3982,7 @@ present before its eyes.
 \end{quote}
 
 This ``intellect'' came to be called ``Laplace's Demon''.
-See \url{https://en.wikipedia.org/wiki/Laplace's_demon}.  The word
+See \url{https://greenteapress.com/tc/demon}.  The word
 ``demon'' in this context has the sense of ``spirit'', with no
 implication of evil.
 
@@ -4033,7 +4033,7 @@ The behavior of Class 4 CAs is even more surprising.  Several 1-D CAs,
 most notably Rule 110, are {\bf Turing complete}, which means that
 they can compute any computable function.  This property, also called
 {\bf universality}, was proved by Matthew Cook in 1998.  See
-\url{https://en.wikipedia.org/wiki/Rule_110}.
+\url{https://greenteapress.com/tc/r110}.
 
 \index{Turing complete}
 \index{universality}
@@ -4157,7 +4157,7 @@ a maximal (``universal'') level of computational power, and that most
 systems do in fact attain this maximal level of computational
 power. Consequently, most systems are computationally
 equivalent (see
-  \url{http://mathworld.wolfram.com/PrincipleofComputationalEquivalence.html}).
+  \url{https://greenteapress.com/tc/equiv}).
 \end{quote}
 
 Applying these definitions to CAs, Classes 1 and 2 are ``obviously
@@ -4257,7 +4257,7 @@ not very detailed or realistic.
 
 For example, some species of cone snail produce a pattern on their
 shells that resembles the patterns generated by cellular automatons
-(see \url{https://en.wikipedia.org/wiki/Cone_snail}).  So it is natural to
+(see \url{https://greenteapress.com/tc/cone}).  So it is natural to
 suppose that a CA is a model of the mechanism that produces patterns
 on shells as they grow.  But, at least initially, it is not clear how
 the elements of the model (so-called cells, communication between
@@ -4556,7 +4556,7 @@ some of its spaceships.
 
 \item Read the Wikipedia page about Rule 110, which describes its
   background pattern and spaceships:
-  \url{https://en.wikipedia.org/wiki/Rule_110}.
+  \url{https://greenteapress.com/tc/r110}.
 
 \item Create a Rule 110 CA with an initial condition that yields the
   stable background pattern.
@@ -4586,7 +4586,7 @@ The goal of this exercise is to implement a Turing machine.
 
 \begin{enumerate}
 
-\item Read about Turing machines at \url{https://en.wikipedia.org/wiki/Turing_machine}.
+\item Read about Turing machines at \url{https://greenteapress.com/tc/tm}.
 
 \item Write a class called \py{Turing} that implements a Turing machine.
 For the action table, use the rules for a 3-state busy beaver.
@@ -4595,7 +4595,7 @@ For the action table, use the rules for a 3-state busy beaver.
 \item Write a class named \py{TuringDrawer} that generates an
 image that represents the state of the tape and the position and
 state of the head.  For one example of what that might look like,
-see \url{http://mathworld.wolfram.com/TuringMachine.html}.
+see \url{https://greenteapress.com/tc/turing}.
 
 \end{enumerate}
 
@@ -4607,7 +4607,7 @@ see \url{http://mathworld.wolfram.com/TuringMachine.html}.
 This exercise asks you to implement and test several PRNGs.
 For testing, you will need to install
 \py{DieHarder}, which you can download from
-\url{https://www.phy.duke.edu/~rgb/General/dieharder.php}, or it
+\url{https://greenteapress.com/tc/dh}, or it
 might be available as a package for your operating system.
 \index{DieHarder}
 
@@ -4615,7 +4615,7 @@ might be available as a package for your operating system.
 
 \item Write a program that implements one of the linear congruential
 generators described at
-\url{https://en.wikipedia.org/wiki/Linear_congruential_generator}).
+\url{https://greenteapress.com/tc/lcg}).
 Test it using \py{DieHarder}.
 
 \item Read the documentation of Python's \py{random} module.
@@ -4641,7 +4641,7 @@ Falsifiability is an appealing and useful idea, but among
 philosophers of science it is not generally accepted
 as a solution to the demarcation problem, as Popper claimed.
 
-Read \url{https://en.wikipedia.org/wiki/Falsifiability} and answer the
+Read \url{https://greenteapress.com/tc/false} and answer the
 following questions.
 
 \begin{enumerate}
@@ -4700,7 +4700,7 @@ One of the first cellular automatons to be studied, and probably the
 most popular of all time, is a 2-D CA called ``The Game of Life'', or GoL
 for short.  It was developed by John H. Conway and popularized in 1970
 in Martin Gardner's column in {\em Scientific American}.
-See \url{https://en.wikipedia.org/wiki/Conway_Game_of_Life}.
+See \url{https://greenteapress.com/tc/gol}.
 \index{Game of Life}
 \index{Conway, John H.}
 \index{Gardner, Martin}
@@ -4709,7 +4709,7 @@ The cells in GoL are arranged in a 2-D {\bf grid}, either infinite in
 both directions or wrapped around.  A grid wrapped in both directions
 is called a {\bf torus} because it is topographically equivalent to
 the surface of a doughnut.  See
-\url{https://en.wikipedia.org/wiki/Torus}.
+\url{https://greenteapress.com/tc/torus}.
 
 \index{grid}
 \index{torus}
@@ -5078,7 +5078,7 @@ scenarios that influence your reaction?  Can you make
 a principled distinction between them?
 
 For more on instrumentalism, see
-\url{https://en.wikipedia.org/wiki/Instrumentalism}.
+\url{https://greenteapress.com/tc/instr}.
 
 
 
@@ -5244,7 +5244,7 @@ the grid.
 One of the longest-lived small patterns is ``rabbits'', which starts with
 9 live cells and takes 17 331 steps to stabilize.  You can get the
 initial configuration in various formats from
-\url{http://www.conwaylife.com/wiki/Rabbits}.  Load this configuration
+\url{https://greenteapress.com/tc/rabbits}.  Load this configuration
 and run it.
 
 \end{exercise}
@@ -5285,7 +5285,7 @@ spelled wrong as an homage to Alan Turing.
 \index{Turing, Alan}
 
 The most famous Turmite is Langton's Ant, discovered by Chris Langton
-in 1986.  See \url{https://en.wikipedia.org/wiki/Langton_ant}.
+in 1986.  See \url{https://greenteapress.com/tc/langton}.
 
 \index{Langton's Ant}
 \index{Langton, Chris}
@@ -5561,7 +5561,7 @@ material.  Examples include oil in rock formations, water in paper,
 and hydrogen gas in micropores.  Percolation models are also used to
 study systems that are not literally percolation, including epidemics
 and networks of electrical resistors.  See
-\url{https://en.wikipedia.org/wiki/Percolation_theory}.
+\url{https://greenteapress.com/tc/perc}.
 
 \index{percolation}
 
@@ -6863,7 +6863,7 @@ runs until the pile reaches equilibrium.  Does the result appear to be
 fractal?
 
 You can read more about this version of the sand pile model at
-\url{http://math.cmu.edu/~wes/sandgallery.html}.
+\url{https://greenteapress.com/tc/sand}.
 
 \end{exercise}
 
@@ -6873,7 +6873,7 @@ You can read more about this version of the sand pile model at
 In a 1989 paper, Bak, Chen and Creutz suggest that the Game of Life is
 an SOC system.\footnote{``Self-organized criticality in the Game of
   Life'', available from
-  \url{https://github.com/AllenDowney/ThinkComplexity2/blob/master/papers/bak89life.pdf}.}
+  \url{https://greenteapress.com/tc/bak}.}
 
 \index{Game of Life}
 \index{self-organized criticality}
@@ -6927,7 +6927,7 @@ it as reductionist or holist?
 \begin{exercise}
 
 Read about the ``Great Man'' theory of history at
-\url{https://en.wikipedia.org/wiki/Great_man_theory}.  What implication
+\url{https://greenteapress.com/tc/great}.  What implication
 does self-organized criticality have for this theory?
 
 \index{Great Man theory}
@@ -7602,7 +7602,7 @@ properties can never be ``explained'' by a classical reductionist
 model.
 
 You can read more about emergence at
-\url{https://en.wikipedia.org/wiki/Emergence}.
+\url{https://greenteapress.com/tc/emer}.
 
 
 \section{Exercises}
@@ -7670,7 +7670,7 @@ that humans have minds.
 
 John Searle presented a thought experiment called ``The Chinese Room'',
 intended to show that {\em Strong AI} is false.  You can read about
-it at \url{https://en.wikipedia.org/wiki/Chinese_room}.
+it at \url{https://greenteapress.com/tc/searle}.
 
 What is the {\bf system reply} to the Chinese Room argument?
 How does what you have learned about emergence influence
@@ -7887,7 +7887,7 @@ find driver behaviors that improve average speed.
 In 1987 Craig Reynolds published ``Flocks, herds and
 schools: A distributed behavioral model'', which describes an
 agent-based model of herd behavior.  You can download his
-paper from \url{https://www.red3d.com/cwr/papers/1987/boids.html}.
+paper from \url{https://greenteapress.com/tc/boid}.
 
 \index{Reynolds, Craig}
 
@@ -7924,7 +7924,7 @@ To run this program you will need VPython, which is a library that provides 3D g
 conda install -c vpython vpython
 \end{code}
 
-VPython provides a \py{Vector} object we'll use to represent the position and velocity of Boids in a 3-dimensional space.  You can read about them at \url{http://www.glowscript.org/docs/VPythonDocs/vector.html}.
+VPython provides a \py{Vector} object we'll use to represent the position and velocity of Boids in a 3-dimensional space.  You can read about them at \url{https://greenteapress.com/tc/vector}.
 
 
 \section{The Boid algorithm}
@@ -8183,7 +8183,7 @@ behavior of the flock?  Implement it and see.
 \begin{exercise}
 
 Read more about free will at
-\url{https://en.wikipedia.org/wiki/Free_will}.  The view that free will
+\url{https://greenteapress.com/tc/will}.  The view that free will
 is compatible with determinism is called {\bf compatibilism}.  One of
 the strongest challenges to compatibilism is the ``consequence
 argument''.  What is the consequence argument?  What response can you
@@ -8212,7 +8212,7 @@ Nevertheless, many people do not believe in evolution.  In a survey run by the P
 
 \end{enumerate}
 
-About 34\% of Americans chose the second (see \url{http://www.thearda.com/Archive/Files/Codebooks/RELLAND14_CB.asp}).
+About 34\% of Americans chose the second (see \url{https://greenteapress.com/tc/arda}).
 
 Even among the ones who believe that living things have evolved, barely more than half believe that the cause of evolution is natural selection.  In other words, only a third of Americans believe that the theory of evolution is true.
 
@@ -8262,7 +8262,7 @@ that represent individual organisms.  Each agent has genetic
 information, called its {\bf genotype}, which is the information that
 gets copied when the agent replicates.  In our model\footnote{This
   model is a variant of the NK model developed primarily by Stuart
-  Kauffman (see \url{https://en.wikipedia.org/wiki/NK_model})}, a
+  Kauffman (see \url{https://greenteapress.com/tc/nk})}, a
 genotype is represented by a sequence of \py{N} binary digits (zeros
 and ones), where \py{N} is a parameter we choose.
 
@@ -8272,7 +8272,7 @@ Finally, to generate differential survival and reproduction, we define a functio
 
 \section{Fitness landscape}
 
-The function that maps from genotype to fitness is called a {\bf fitness landscape}.  In the landscape metaphor, each genotype corresponds to a location in an \py{N}-dimensional space, and fitness corresponds to the ``height" of the landscape at that location.  For visualizations that might clarify this metaphor, see \url{https://en.wikipedia.org/wiki/Fitness_landscape}.
+The function that maps from genotype to fitness is called a {\bf fitness landscape}.  In the landscape metaphor, each genotype corresponds to a location in an \py{N}-dimensional space, and fitness corresponds to the ``height" of the landscape at that location.  For visualizations that might clarify this metaphor, see \url{https://greenteapress.com/tc/fit}.
 
 In biological terms, the fitness landscape represents information about how the genotype of an organism is related to its physical form and capabilities, called its {\bf phenotype}, and how the phenotype interacts with its {\bf environment}.
 
@@ -8541,7 +8541,7 @@ In the notebook for this chapter, you will see the effect of differential reprod
 
 In the simulations so far, we start with the maximum possible diversity---one agent at every location in the landscape---and end with the minimum possible diversity, all agents at one location.
 
-That's almost the opposite of what happened in the natural world, which apparently began with a single species that branched, over time, into the millions, or possibly billions, of species on Earth today (see \url{https://en.wikipedia.org/wiki/Global_biodiversity}).
+That's almost the opposite of what happened in the natural world, which apparently began with a single species that branched, over time, into the millions, or possibly billions, of species on Earth today (see \url{https://greenteapress.com/tc/bio}).
 
 With perfect copying in our model, we never see increasing diversity.  But if we add mutation, along with differential survival and reproduction, we get a step closer to understanding evolution in nature.
 
@@ -8659,7 +8659,7 @@ Now if we compute the distance between the agents' locations before and after th
 
 \section{Summary}
 
-We have seen that mutation, along with differential survival and reproduction, is sufficient to cause increasing fitness, increasing diversity, and a simple form of speciation.  This model is not meant to be realistic; evolution in natural systems is much more complicated than this.  Rather, it is meant to be a ``sufficiency theorem"; that is, a demonstration that the features of the model are sufficient to produce the behavior we are trying to explain (see \url{https://en.wikipedia.org/wiki/Necessity_and_sufficiency}).
+We have seen that mutation, along with differential survival and reproduction, is sufficient to cause increasing fitness, increasing diversity, and a simple form of speciation.  This model is not meant to be realistic; evolution in natural systems is much more complicated than this.  Rather, it is meant to be a ``sufficiency theorem"; that is, a demonstration that the features of the model are sufficient to produce the behavior we are trying to explain (see \url{https://greenteapress.com/tc/suff}).
 
 Logically, this ``theorem" doesn't prove that evolution in nature is caused by these mechanisms alone.  But since these mechanisms do appear, in many forms, in biological systems, it is reasonable to think that they at least contribute to natural evolution.
 
@@ -8688,9 +8688,9 @@ In this final chapter, we take on two questions, one from biology and one from p
 
 \begin{itemize}
 
-\item In biology, the ``problem of altruism" is the apparent conflict between natural selection, which suggests that animals live in a state of constant competition to survive and reproduce, and altruism, which is the tendency of many animals to help other animals, even to their apparent detriment.  See \url{https://en.wikipedia.org/wiki/Altruism_(biology)}.
+\item In biology, the ``problem of altruism" is the apparent conflict between natural selection, which suggests that animals live in a state of constant competition to survive and reproduce, and altruism, which is the tendency of many animals to help other animals, even to their apparent detriment.  See \url{https://greenteapress.com/tc/altruism}.
 
-\item In moral philosophy, the question of human nature asks whether humans are fundamentally good, or evil, or blank states shaped by their environment.  See \url{https://en.wikipedia.org/wiki/Human_nature}.
+\item In moral philosophy, the question of human nature asks whether humans are fundamentally good, or evil, or blank states shaped by their environment.  See \url{https://greenteapress.com/tc/nature}.
 
 \end{itemize}
 
@@ -8704,7 +8704,7 @@ about working with this code, see Section~\ref{code}.
 \section{Prisoner's Dilemma}
 \label{prisoners}
 
-The Prisoner's Dilemma is a topic in game theory, but it's not the fun kind of game.  Instead, it is the kind of game that sheds light on human motivation and behavior.  Here is the presentation of the dilemma from Wikipedia (\url{https://en.wikipedia.org/wiki/Prisoner's_dilemma}):
+The Prisoner's Dilemma is a topic in game theory, but it's not the fun kind of game.  Instead, it is the kind of game that sheds light on human motivation and behavior.  Here is the presentation of the dilemma from Wikipedia (\url{https://greenteapress.com/tc/pd}):
 \index{Prisoner's Dilemma}
 
 \begin{quote}
@@ -8749,9 +8749,9 @@ Studying these scenarios, and ways to escape from the dilemma, is the focus of p
 Since the Prisoner's Dilemma was first discussed in the 1950s, it has been a popular topic of study in social psychology.  Based on the analysis in the previous section, we can say what a perfectly rational agent {\em should} do; it is harder to predict what real people actually do.  Fortunately, the experiment has been done\footnote{Here's a recent report with references to previous experiments:
 Barreda-Tarrazona, Jaramillo-Guti\'{e}rrez, Pavan, and Sabater-Grande,
 ``Individual Characteristics vs. Experience: An Experimental Study on Cooperation in Prisoner's Dilemma", Frontiers in Psychology, 2017; 8: 596.
-\url{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5397528/}.}.
+\url{https://greenteapress.com/tc/pdexp}.}.
 
-If we assume that people are smart enough to do the analysis (or understand it when explained), and that they generally act in their own interest, we would expect them to defect pretty much all the time.  But they don't.  In most experiments, subjects cooperate much more than the rational agent model predicts\footnote{For an excellent video summarizing what we have discussed so far, see \url{https://www.youtube.com/watch?v=t9Lo2fgxWHw}.}.
+If we assume that people are smart enough to do the analysis (or understand it when explained), and that they generally act in their own interest, we would expect them to defect pretty much all the time.  But they don't.  In most experiments, subjects cooperate much more than the rational agent model predicts\footnote{For an excellent video summarizing what we have discussed so far, see \url{https://greenteapress.com/tc/pdvid1}.}.
 
 The most obvious explanation of this result is that people are not rational agents, which should not be a surprise to anyone.  But why not?  Is it because they are not smart enough to understand the scenario or because they are knowingly acting contrary to their own interest?
 
@@ -8785,7 +8785,7 @@ He invited participants to submit strategies in the form of computer programs, t
 
 In Axelrod's tournaments, a simple strategy that did surprisingly well was called ``tit for tat", or TFT.  TFT always cooperates during the first round of an iterated match; after that, it copies whatever the opponent did during the previous round.  If the opponent keeps cooperating, TFT keeps cooperating.  If the opponent defects at any point, TFT defects in the next round.  But if the opponent goes back to cooperating, so does TFT.
 
-For more information about these tournaments, and an explanation of why TFT does so well, see this video: \url{https://www.youtube.com/watch?v=BOvAbjfJ0x0}.
+For more information about these tournaments, and an explanation of why TFT does so well, see this video: \url{https://greenteapress.com/tc/pdvid2}.
 
 Looking at the strategies that did well in these tournaments, Alexrod identified the characteristics they tended to share:
 
@@ -9102,7 +9102,7 @@ The simulations in this chapter suggest:
 \item TFT, which was a successful strategy in Alexrod's tournaments, does not seem to be a specially optimal strategy in an evolving population.  In fact, there is probably no stable optimal strategy.
 
 \item Some degree of retaliation may be adaptive, but it might not be
-necessary for all agents to retaliate.  If there is enough retaliation in the population as a whole, that might be enough to prevent invasion by defectors\footnote{And that introduces a whole new topic in game theory, the free-rider problem (see \url{https://en.wikipedia.org/wiki/Free-rider_problem})}.
+necessary for all agents to retaliate.  If there is enough retaliation in the population as a whole, that might be enough to prevent invasion by defectors\footnote{And that introduces a whole new topic in game theory, the free-rider problem (see \url{https://greenteapress.com/tc/rider})}.
 
 \end{itemize}
 
@@ -9239,7 +9239,7 @@ of the field.
 
 The Pareto distribution is named after the economist Vilfredo
 Pareto, who used it to describe the distribution of wealth;
-see \url{https://en.wikipedia.org/wiki/Pareto_distribution}.  Since then,
+see \url{https://greenteapress.com/tc/pareto}.  Since then,
 people have used it to describe
 phenomena in the natural and social sciences
 including sizes of cities and towns, sand particles
