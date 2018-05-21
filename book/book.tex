@@ -250,31 +250,33 @@ available at \url{https://greenteapress.com/tc/license}.
 
 Complexity science is an interdisciplinary
 field -- at the intersection of mathematics, computer science and
-natural science -- that focuses on discrete models of physical and
-social systems.  In particular, it focuses on {\bf complex systems},
+natural science -- that focuses on {\bf complex systems},
 which are systems with many interacting components.
+
+One of the core tools of complexity science is discrete models,
+include networks and graphs, cellular automatons, and agent-based
+simulations.  These tools are useful in the natural and social sciences,
+and sometimes in arts and humanities.
+
+For an overview of complexity science, see
+\url{https://greenteapress.com/tc/complex}.
 
 \index{complexity science}
 \index{complex systems}
 
-Complex systems include networks and graphs, cellular automatons,
-herds, flocks, and swarms, fractals and self-organizing
-systems, chaotic systems and cybernetic systems.  These terms
-might not mean much to you at this point.  We will get to them
-soon, but you can get a preview at
-\url{https://greenteapress.com/tc/complex}.
 
-Why should you learn about Complexity science?  Here are a few reasons:
+
+Why should you learn about complexity science?  Here are a few reasons:
 
 \begin{itemize}
 
 \item Complexity science is useful, especially for explaining why natural and social systems behave the way they do.  Since Newton, math-based physics has focused on systems with small numbers of components and simple interactions.  These models are effective for some applications, like celestial mechanics, and less useful for others, like economics.  Complexity science provides a diverse and adaptable modeling toolkit. 
 
-\item Many of the central results of Complexity science are surprising; a recurring theme of this book is that simple models can produce complicated behavior, with the corollary that we can sometimes explain complicated behavior in the real world using simple models.
+\item Many of the central results of complexity science are surprising; a recurring theme of this book is that simple models can produce complicated behavior, with the corollary that we can sometimes explain complicated behavior in the real world using simple models.
 
-\item As I explain in Chapter~\ref{overview}, Complexity science is at the center of a slow shift in the practice of science, and a change in what we consider good science or science at all.
+\item As I explain in Chapter~\ref{overview}, complexity science is at the center of a slow shift in the practice of science and a change in what we consider science to be.
 
-\item Studying Complexity science provides an opportunity to learn about diverse physical and social systems, to develop and apply programming skills, and to think about fundamental questions in the philosophy of science.
+\item Studying complexity science provides an opportunity to learn about diverse physical and social systems, to develop and apply programming skills, and to think about fundamental questions in the philosophy of science.
 
 \end{itemize}
 
@@ -286,9 +288,9 @@ Features of this book include:
 
 \item[Technical details] Most books about Complexity science
   are written for a popular audience.  They leave out
-  technical detail, which is frustrating for people who can handle
-  it.  This book presents the code, the math, and the other
-  material you need to really understand the models and how they work.
+  technical details, which is frustrating for people who can handle
+  them.  This book presents the code, the math, and the explanations
+  you need to understand how the models work.
 
 \item[Further reading] Throughout the book, I include pointers to
   further reading, including original papers (most of which are
@@ -313,26 +315,29 @@ specifically using and defining classes.
 \index{Python}
 
 If you are not already familiar with Python, you might want to start
-with my {\it Think Python}, which is appropriate for people who have never programmed before.  If you have programming experience in another language, there are many good Python books to chose from, as well as online resources.
+with {\it Think Python}, which is appropriate for people who have never programmed before.  If you have programming experience in another language, there are many good Python books to chose from, as well as online resources.
 
 I use NumPy, SciPy, and NetworkX throughout the book.  If you are familiar with these libraries already, that's great, but I will also explain them when they appear.
 \index{NumPy}
 \index{SciPy}
 \index{NetworkX}
 
-I assume that the reader knows some mathematics, but not a lot.  In a few places, I take the logarithm of both sides of an equation.
+I assume that the reader knows some mathematics: I use logarithms in several places, and vectors in one example.  But that's about it.
 
 
 \section{Changes from the first edition}
 
 For the second edition, I added two chapters, one on evolution, the other on the evolution of cooperation.
 
-In the first edition, each chapter presented background on a topic and suggested experiments the reader could run.  For the second edition, I have done those experiments.  Each chapter presents the implementation and results as a worked example, then suggests extensions and additional experiments for the reader.
+In the first edition, each chapter presented background on a topic and suggested experiments the reader could run.  For the second edition, I have done those experiments.  Each chapter presents the implementation and results as a worked example, then suggests additional experiments for the reader.
 
-Also, the Jupyter notebooks are new.  For every chapter there are two notebooks in the book's software repository: one contains the code from the chapter, explanatory text, and exercises; the other contains the solutions to the exercises.
+For the second edition, I replaced some of my own code with standard libraries like NumPy and NetworkX.  The result is more concise and more efficient, and it gives readers a chance to learn these libraries.
+
+Also, the Jupyter notebooks are new.  For every chapter there are two notebooks: one contains the code from the chapter, explanatory text, and exercises; the other contains solutions to the exercises.
+
 \index{Jupyter}
 
-Finally, all supporting software has been updated to Python 3 (but also runs unmodified in Python 2).
+Finally, all supporting software has been updated to Python 3 (but most of it runs unmodified in Python 2).
 
 
 \section{Using the code}
@@ -399,22 +404,27 @@ There are three ways you can work with the Jupyter notebooks:
 
 \item[Run Jupyter on your computer]
 
-If you installed Anaconda, you probably got Jupyter by default.  To check, start the server from the command line, like this:
-
-\begin{verbatim}
-$ cd ThinkComplexity2/code
-$ jupyter notebook
-\end{verbatim}
-
-If it's not installed, you can install it using \py{conda}, which is
-the package manager used by Anaconda:
+If you installed Anaconda, you can install Jupyter by running the following command in a terminal or Command Window:
 
 \begin{verbatim}
 $ conda install jupyter
 \end{verbatim}
 
+Before you launch Jupyter, you should \py{cd} into the directory that contains the code:
+
+\begin{verbatim}
+$ cd ThinkComplexity2/code
+\end{verbatim}
+
+And then start the Jupyter server:
+
+\begin{verbatim}
+$ jupyter notebook
+\end{verbatim}
+
 When you start the server, it should launch your default web browser
-or create a new tab in an open browser window.
+or create a new tab in an open browser window.  Then you can open
+and run the notebooks.
 
 \item[Run Jupyter on Binder]
 
@@ -426,16 +436,14 @@ and the supporting data and scripts.
 \index{Binder}
 
 You can run the scripts and modify them to run your own code, but the
-virtual machine you run them in is temporary.  Any changes you make will
-disappear, along with the virtual machine, if you leave it idle for
-more than about an hour.
+virtual machine you run them in is temporary.  
+If you leave it idle, the virtual machine disappears along with any changes you made. 
 
 \item[View notebooks on GitHub]
 
 GitHub provides a view of the notebooks you can
 can use to read the notebooks and see the results I
 generated, but you won't be able to modify or run the code.
-And in the later chapters you won't see the animations move.
 
 \end{description}
 
@@ -529,7 +537,7 @@ Jonathan Harford.
 \label{overview}
 
 Complexity science is relatively new; it became recognizable as a
-field, and was given a name, in the 1980s.  But is new not because it
+field, and was given a name, in the 1980s.  But its newness is not because it
 applies the tools of science to a new subject, but because it uses
 different tools, allows different kinds of work, and ultimately
 changes what we mean by ``science''.
@@ -537,10 +545,10 @@ changes what we mean by ``science''.
 \index{complexity science}
 
 To demonstrate the difference, I'll start with an example of classical
-science: suppose someone asked you why planetary orbits are
+science: suppose someone asks you why planetary orbits are
 elliptical.  You might invoke Newton's law of universal
 gravitation and use it to write a differential equation that describes
-planetary motion.  Then you could solve the differential equation and
+planetary motion.  Then you can solve the differential equation and
 show that the solution is an ellipse.  QED!
 
 \index{gravitation}
@@ -609,20 +617,20 @@ Is this explanation satisfying in the same way as the explanation of
 planetary motion?  Many people would say not, but why?
 
 Most obviously, the Schelling model is highly abstract, which is to
-say not realistic.  It is tempting to say that people are more complicated
-than planets, but when you think about it, planets are just as complicated
-as people (especially the ones that {\em have} people).
+say not realistic.  So you might be tempted to say that people are more complicated than planets.  But that can't be right.  After all, some planets have people on them, so they have to be more complicated than people.
 
 \index{abstract model}
 
 Both systems are complicated, and both models are based on
-simplifications; for example, in the model of planetary motion we
+simplifications.  For example, in the model of planetary motion we
 include forces between the planet and its sun, and ignore interactions
-between planets.
+between planets.  In Schelling's model, we include individual decisions
+based on local information, and ignore every other aspect of human behavior. 
 
 \index{simplification}
 
-The important difference is that, for planetary motion, we can defend
+But there are differences of degree.
+For planetary motion, we can defend
 the model by showing that the forces we ignore are smaller than the
 ones we include.  And we can extend the model to include other
 interactions and show that the effect is small.  For Schelling's model
@@ -630,7 +638,7 @@ it is harder to justify the simplifications.
 
 \index{justification}
 
-To make matters worse, Schelling's model doesn't appeal to any
+Another difference is that Schelling's model doesn't appeal to any
 physical laws, and it uses only simple computation, not mathematical
 derivation.  Models like Schelling's don't look like classical
 science, and many people find them less compelling, at least at first.
@@ -705,7 +713,7 @@ are fringe science, pseudoscience, or not science at all.
 \index{fringe science}
 \index{pseudoscience}
 
-I claim, and this is a central thesis of this book, that the
+A central thesis of this book is that the
 criteria this consensus is based on change over time, and that
 the emergence of complexity science reflects a gradual shift in
 these criteria.
@@ -746,9 +754,7 @@ until you have seen the examples later in the book.
 
 \item[Linear \myrightarrow~non-linear] Classical models are often
   linear, or use linear approximations to non-linear systems;
-  complexity science is more friendly to non-linear models.  One example
-  is chaos theory\footnote{Chaos is not covered in this book, but you can
-  read about it at \url{https://greenteapress.com/tc/chaos}.}.
+  complexity science is more friendly to non-linear models.
 
 \index{linear}
 \index{non-linear}
@@ -756,7 +762,7 @@ until you have seen the examples later in the book.
 \item[Deterministic \myrightarrow~stochastic] Classical models are
   usually deterministic, which may reflect underlying philosophical
   determinism, discussed in Chapter~\ref{automatons}; complex models
-  often feature randomness.
+  often include randomness.
 
 \index{deterministic}
 \index{stochastic}
@@ -770,16 +776,15 @@ until you have seen the examples later in the book.
 \index{spherical cow}
 \index{cow, spherical}
 
-\item[One, two \myrightarrow~many] In celestial mechanics, the
+\item[One, two \myrightarrow~many] Classical models are often limited to
+  small numbers of components.  For example, in celestial mechanics the
   two-body problem can be solved analytically; the three-body problem
-  cannot.  Where classical models are often limited to
-  small numbers of interacting elements, complexity science works with
-  larger complexes (which is where the name comes from).
+  cannot.  Complexity science often works with large numbers of components and larger number of interactions.
 
 \index{one, two, many}
 
-\item[Homogeneous \myrightarrow~composite] In classical models, the
-  elements tend to be interchangeable; complex models more often
+\item[Homogeneous \myrightarrow~heterogeneous] In classical models, the
+  components and interactions tend to be identical; complex models more often
   include heterogeneity.
 
 \index{homogeneous}
@@ -890,16 +895,6 @@ and the design of social systems:
 \index{client-server architecture}
 \index{peer-to-peer architecture}
 
-\item[Isolation \myrightarrow~interaction] In classical engineering,
-  the complexity of large systems is managed by isolating components
-  and minimizing interactions.  This is still an important engineering
-  principle; nevertheless, the availability of cheap computation makes
-  it increasingly feasible to design systems with complex interactions
-  between components.
-
-\index{isolation}
-\index{interaction}
-
 \item[One-to-many \myrightarrow~many-to-many] In many communication
   systems, broadcast services are being augmented, and sometimes
   replaced, by services that allow users to communicate with each
@@ -932,6 +927,16 @@ and the design of social systems:
 \index{Eiffel, Gustave}
 \index{Gehry, Frank}
 \index{Guggenheim Museum Bilbao}
+
+\item[Isolation \myrightarrow~interaction] In classical engineering,
+  the complexity of large systems is managed by isolating components
+  and minimizing interactions.  This is still an important engineering
+  principle; nevertheless, the availability of computation makes
+  it increasingly feasible to design systems with complex interactions
+  between components.
+
+\index{isolation}
+\index{interaction}
 
 \item[Design \myrightarrow~search] Engineering is sometimes described
   as a search for solutions in a landscape of possible designs.
@@ -985,7 +990,7 @@ developments in logic and epistemology.
 \index{Theory That Would Not Die, The@{\it The Theory That Would Not Die}}
 
 \item[Objective \myrightarrow~subjective] The Enlightenment, and
-  philosophic modernism, are based on belief in objective truth; that
+  philosophic modernism, are based on belief in objective truth, that
   is, truths that are independent of the people that hold them.  20th
   Century developments including quantum mechanics, G\"{o}del's
   Incompleteness Theorem, and Kuhn's study of the history of science
@@ -1017,6 +1022,8 @@ developments in logic and epistemology.
   assertion that a certain model predicts or explains the behavior of a system
   particularly well.  We come back to the nature of physical laws in
   Section~\ref{model1}, Section~\ref{model3} and Section~\ref{model2}.
+
+%TODO: Check how these refs look in the O'Reilly version.
 
 \item[Determinism \myrightarrow~indeterminism] Determinism is the view
   that all events are caused, inevitably, by prior events.  Forms of
@@ -1057,10 +1064,10 @@ chapter again.
 \newcommand{\Erdos}{Erd\H{o}s}
 \newcommand{\Renyi}{R\'{e}nyi}
 
-The next three chapters of this book are about systems made up of components and connections between components.  For example, in a social network, the components are people and connections represent friendships, business relationships, etc.  In an ecological food web, the components are species and the connections represent predator-prey relationships.
+The next three chapters of are about systems made up of components and connections between components.  For example, in a social network, the components are people and connections represent friendships, business relationships, etc.  In an ecological food web, the components are species and the connections represent predator-prey relationships.
 
 In this chapter, I introduce NetworkX, a Python package for building
-model of these systems.  We start with the \Erdos-\Renyi~model,
+models of these systems.  We start with the \Erdos-\Renyi~model,
 which has interesting mathematical properties.  In the next
 chapter we move on to models that are more useful for explaining
 real-world systems.
@@ -1096,14 +1103,14 @@ and the interconnections are represented by {\bf edges}.
 For example, you could represent a road map with a node for each
 city and an edge for each road between cities.  Or you could
 represent a social network using a node for each person, with an
-edge between two people if they are friends and no edge otherwise.
+edge between two people if they are friends.
 
 \index{road network}
 \index{social network}
 
 In some graphs, edges have attributes like length, cost, or weight.
-For example, in a road map, the length of an edge might represent the
-distance between two cities, or the travel time.  In a
+For example, in a road map, the length of an edge might represent 
+distance between cities or travel time.  In a
 social network there might be different kinds of edges to represent
 different kinds of relationships: friends, business associates, etc.
 
@@ -1142,9 +1149,8 @@ with an edge between each consecutive pair.
 Graphs are usually drawn with squares or circles for nodes and lines
 for edges.  For example, the directed graph in Figure~\ref{chap02-1}
 might represent three people who follow each other on Twitter.
-The thick part of the line indicates edge direction.
-In this example, Alice and Bob follow each other and both follow
-Chuck, but Chuck follows no one.
+The arrow indicates the direction of the relationship.  In this example, Alice and Bob follow each other, both follow
+Chuck, and Chuck follows no one.
 
 \index{representing graphs}
 
@@ -1162,7 +1168,7 @@ of a graph is arbitrary.
 
 \begin{figure}
 \centerline{\includegraphics[width=3.5in]{figs/chap02-2.pdf}}
-\caption{An undirected graph that represents cities and highways.}
+\caption{An undirected graph that represents driving time between cities.}
 \label{chap02-2}
 \end{figure}
 
@@ -1190,12 +1196,14 @@ G.add_node('Bob')
 G.add_node('Chuck')
 \end{code}
 
-Now we can use the \py{nodes} method to get the list of nodes:
+Now we can use the \py{nodes} method to get a list of nodes:
 
 \begin{code}
->>> G.nodes()
-['Alice', 'Bob', 'Chuck']
+>>> list(G.nodes())
+NodeView(('Alice', 'Bob', 'Chuck'))
 \end{code}
+
+The \py{nodes} method returns a \py{NodeView}, which can be used in a for loop or, as in this example, used to make a list.
 
 Adding edges works pretty much the same way:
 
@@ -1209,7 +1217,7 @@ G.add_edge('Bob', 'Chuck')
 And we can use \py{edges} to get the list of edges:
 
 \begin{code}
->>> G.edges()
+>>> list(G.edges())
 [('Alice', 'Bob'), ('Alice', 'Chuck'),
  ('Bob', 'Alice'), ('Bob', 'Chuck')]
 \end{code}
@@ -1225,7 +1233,7 @@ nx.draw_circular(G,
                  with_labels=True)
 \end{code}
 
-And that's the code I use to generate Figure~\ref{chap02-1}.
+That's the code I use to generate Figure~\ref{chap02-1}.
 The option \py{with_labels} causes the nodes to be labeled;
 in the next example we'll see how to label the edges.
 
@@ -1238,10 +1246,10 @@ that maps from each city name to its approximate longitude
 and latitude:
 
 \begin{code}
-pos = dict(Albany=(-74, 43),
-           Boston=(-71, 42),
-           NYC=(-74, 41),
-           Philly=(-75, 40))
+positions = dict(Albany=(-74, 43),
+                 Boston=(-71, 42),
+                 NYC=(-74, 41),
+                 Philly=(-75, 40))
 \end{code}
 
 Since this is an undirected graph, I instantiate \py{nx.Graph}:
@@ -1251,10 +1259,10 @@ G = nx.Graph()
 \end{code}
 
 Then I can use \py{add_nodes_from} to iterate the keys of
-\py{pos} and add them as nodes:
+\py{positions} and add them as nodes:
 
 \begin{code}
-G.add_nodes_from(pos)
+G.add_nodes_from(positions)
 \end{code}
 
 Next I'll make a dictionary that maps from each edge to the corresponding
@@ -1274,30 +1282,28 @@ Now I can use \py{add_edges_from}, which iterates the keys of
 G.add_edges_from(drive_times)
 \end{code}
 
-Now instead of \py{draw_circular}, which arranges the nodes in
-a circle, I'll use \py{draw}, which takes \py{pos} as the second
+Instead of \py{draw_circular}, which arranges the nodes in
+a circle, I'll use \py{draw}, which takes the position dictionary as the second
 parameter:
 
 \begin{code}
-nx.draw(G, pos,
+nx.draw(G, positions,
         node_color=COLORS[1],
         node_shape='s',
         node_size=2500,
         with_labels=True)
 \end{code}
 
-\py{pos} is a dictionary that maps from each city to its coordinates;
-\py{draw} uses it to determine the locations of the nodes.
+\py{draw} uses \py{positions} to determine the locations of the nodes.
 
 To add the edge labels, we use \py{draw_networkx_edge_labels}:
 
 \begin{code}
-nx.draw_networkx_edge_labels(G, pos,
+nx.draw_networkx_edge_labels(G, positions,
                              edge_labels=drive_times)
 \end{code}
 
-\py{drive_times} is a dictionary that maps from each edge, represented
-by a pair of city names, to the driving distance between them.
+The \py{edge_labels} parameter expects a dictionary that maps from each pair of nodes to a label; in this case, the labels are driving times between cities.
 And that's how I generated Figure~\ref{chap02-2}.
 
 In both of these examples, the nodes are strings, but in general they
@@ -1345,6 +1351,8 @@ In an ER graph, the probability that the graph is connected is very
 low when $p$ is small and nearly 1 when $p$ is large.  Between these
 two regimes, there is a rapid transition at a particular value of
 $p$, denoted $p^*$.
+
+%TODO: check these formulas in the O'Reilly version
 
 \Erdos~and \Renyi~showed that this critical value is
 $p^* = (\ln n) / n$, where $n$ is the number of nodes.
@@ -1426,7 +1434,7 @@ For many applications involving graphs, it is useful to check whether a graph is
 
 You can start at any node and check whether you can reach all
 other nodes.  If you can reach a node, $v$, you can reach any
-of the {\bf neighbors} of $v$, which is any node connected by
+of the {\bf neighbors} of $v$, which are the nodes connected to
 $v$ by an edge.
 
 \index{neighbor node}
@@ -1440,9 +1448,7 @@ example, in the complete graph we generated in the previous section:
 [1, 2, 3, 4, 5, 6, 7, 8, 9]
 \end{code}
 
-Suppose we start at node $s$.  We can mark $s$ as ``seen'',
-then we can mark its neighbors.
-Then we mark the neighbor's neighbors, and so
+Suppose we start at node $s$.  We can mark $s$ as ``seen'' and mark its neighbors.  Then we mark the neighbor's neighbors, and their neighbors, and so
 on, until we can't reach any more nodes.  If all nodes are
 seen, the graph is connected.
 
@@ -1465,6 +1471,9 @@ def reachable_nodes(G, start):
 \py{reachable_nodes} takes a \py{Graph} and a starting node, {\tt
   start}, and returns the set of nodes that can be reached from {\tt
   start}.
+
+\index{set}
+\index{stack}
 
 Initially the set, \py{seen}, is empty, and we create a
 list called \py{stack} that keeps track of nodes we have
@@ -1518,14 +1527,13 @@ We can use \py{reachable_nodes} to write \py{is_connected}:
 
 \begin{code}
 def is_connected(G):
-    start = list(G)[0]
+    start = next(iter(G))
     reachable = reachable_nodes(G, start)
     return len(reachable) == len(G)
 \end{code}
 
-\py{is_connected} chooses a starting node by making a list of nodes in the graph and selecting the first.
-
-\py{reachable} gets the set of nodes that can be reached from
+\py{is_connected} chooses a starting node by making a node iterator and choosing the first element.
+Then it uses \py{reachable} to get the set of nodes that can be reached from
 \py{start}.  If the size of this set is the same as the size
 of the graph, that means we can reach all nodes, which means the
 graph is connected.
@@ -1542,6 +1550,7 @@ are connected.
 
 
 \section{Generating ER graphs}
+\label{flip}
 
 \begin{figure}
 \centerline{\includegraphics[width=3.5in]{figs/chap02-4.pdf}}
@@ -1554,29 +1563,33 @@ connected by an edge with probability $p$.  Generating an ER graph is
 similar to generating a complete graph.
 
 \index{flip}
+\index{generator function}
 
 The following generator function enumerates all possible edges and
-uses a helper function, \py{flip}, to choose which ones should be
-added to the graph:
+chooses which ones should be added to the graph:
 
 \begin{code}
 def random_pairs(nodes, p):
-    for i, u in enumerate(nodes):
-        for j, v in enumerate(nodes):
-            if i>j and flip(p):
-                yield u, v
+    for edge in all_pairs(nodes):
+        if flip(p):
+            yield edge
 \end{code}
 
-\py{flip} returns \py{True} with the
-given probability, \py{p}, and \py{False} with the complementary
-probability \py{1-p}:
+\py{random_pairs} uses \py{flip}:
 
 \begin{code}
-from numpy.random import random
-
 def flip(p):
-    return random() < p
+    return np.random.random() < p
 \end{code} 
+
+This is the first example we're seen that uses NumPy.  Following convention, I
+import \py{numpy} as \py{np}.  NumPy provides a module named \py{random}, which provides a method named \py{random}, which returns a number between 0 and 1, uniformly distributed.
+
+So \py{flip} returns \py{True} with the
+given probability, \py{p}, and \py{False} with the complementary
+probability, \py{1-p}:
+
+\index{NumPy}  
 
 Finally, \py{make_random_graph} generates and returns the ER graph $G(n, p)$.
 
@@ -1627,27 +1640,35 @@ Here's how:
 
 \begin{code}
 def prob_connected(n, p, iters=100):
-    count = 0
-    for i in range(iters):
-        random_graph = make_random_graph(n, p)
-        if is_connected(random_graph):
-            count += 1
-    return count/iters
+    tf = [is_connected(make_random_graph(n, p))
+          for i in range(iters)]
+    return np.mean(bool)
 \end{code}
 
-\py{iters} is the number of random graphs we generate.  As we
-increase \py{iters}, the estimated probability gets more precise\footnote{Since \py{count} and \py{iters} are integers, this function won't work correctly in Python 2 unless you import \py{division} from \py{__future__}.  See \url{https://greenteapress.com/tc/pep}}.
+The parameters \py{n} and \py{p} are passed along to \py{make_random_graph};
+\py{iters} is the number of random graphs we generate.
 
+This function uses a list comprehension; if you are not familiar with this feature, you can read about it at \url{https://greenteapress.com/tc/comp}.
+
+\index{list comprehension}
+
+The result, \py{tf}, is a list of boolean values: \py{True} for each graph that's connected and \py{False} for each one that's not.
+
+\index{boolean}
+
+\py{np.mean} is a NumPy function that computes the mean of this list, treating
+\py{True} as 1 and \py{False} as 0.  The result is the fraction of random graphs that are connected.
+
+\index{NumPy}
+\index{mean}
 \index{probability of connectivity}
-\index{integer division}
 
 \begin{code}
->>> prob_connected(10, 0.3, iters=10000)
-0.6454
+>>> prob_connected(10, 0.23, iters=10000)
+0.33
 \end{code}
 
-Out of 10,000 ER graphs with these parameters, 6498 are connected, so
-we estimate that 65\% of them are connected.  I chose $0.3$ because it is close to the critical value where the probability of connectivity goes from near 0 to near 1.  According to \Erdos~and \Renyi, $p^* = \ln n / n = 0.23$.
+I chose $0.23$ because it is close to the critical value where the probability of connectivity goes from near 0 to near 1.  According to \Erdos~and \Renyi, $p^* = \ln n / n = 0.23$.
 
 \index{critical value}
 
@@ -1655,39 +1676,31 @@ We can get a clearer view of the transition by estimating the probability
 of connectivity for a range of values of $p$:
 
 \begin{code}
-import numpy as np
-
 n = 10
 ps = np.logspace(-2.5, 0, 11)
 ys = [prob_connected(n, p) for p in ps]
 \end{code}
 
-This is the first example we've seen using NumPy.  Following convention,
-I import NumPy as {\tt np}.  The function \py{logspace} returns an
-{\bf array} of 11 values from $10^{-2.5}$ to $10^0 = 1$, equally spaced
+The NumPy function \py{logspace} returns an
+array of 11 values from $10^{-2.5}$ to $10^0 = 1$, equally spaced
 on a logarithmic scale.
 
 \index{NumPy}
 \index{logarithm}
 
-To compute \py{ys}, I use a list comprehension that iterates the
-elements of \py{ps} and computes the probability that a random
-graph with each value of \py{p} is connected.  If you are not familiar
-with list comprehensions, you can read about them at \url{https://greenteapress.com/tc/listcomp}.
-
-\index{list comprehension}
+For each value of \py{p} in the array, we compute the probability that a graph with parameter \py{p} is connected and store the results in \py{ys}.
 
 Figure~\ref{chap02-5} shows the results, with
-a vertical line at $p^*$.  The transition from 0 to 1
-occurs near the predicted critical value, 0.23.  With $p$ on a log scale,
-the transition is roughly symmetric.
+a vertical line at the computed critical value, $p^* = 0.23$.
+As expected, the transition from 0 to 1
+occurs near the critical value.
 
 Figure~\ref{chap02-6} shows
 similar results for larger values of $n$.  As $n$ increases, the
 critical value gets smaller and the transition gets more abrupt.
 
-These experiments are consistent with the results \Erdos~and
-\Renyi~proved in their papers.
+These experimental results are consistent with the analytic results \Erdos~and
+\Renyi~presented in their papers.
 
 
 \section{Analysis of graph algorithms}
@@ -1855,7 +1868,7 @@ between nodes, measured in number of edges on the shortest path,
 is much smaller than expected.
 
 In this chapter, I present Stanley Milgram's famous Small World
-Experiment, which was the first scientific demonstration of
+Experiment, which was the first demonstration of
 the small world property in a real social network.  Then we'll
 consider Watts-Strogatz graphs, which are intended as a model of
 small world graphs.  I'll replicate the experiment Watts and Strogatz performed and explain what it is intended to show.
@@ -1884,7 +1897,7 @@ the structure of social networks
 In the Small World Experiment, Milgram sent a package to several
 randomly-chosen people in Wichita, Kansas, with instructions asking
 them to forward an enclosed letter to a target person, identified by
-name and occupation, in Sharon, Massachusetts (which is the town near
+name and occupation, in Sharon, Massachusetts (which happens to be the town near
 Boston where I grew up).  The subjects were told that they could mail
 the letter directly to the target person only if they knew him
 personally; otherwise they were instructed to send it, and the same
@@ -1943,7 +1956,7 @@ properties of these graphs, clustering and path length:
 \index{clustering}
 \index{path length}
 
-\begin{description}
+\begin{itemize}
 
 \item Clustering is a measure of the ``cliquishness'' of the graph.
 In a graph, a {\bf clique} is a subset of nodes that are
@@ -1959,7 +1972,7 @@ connected to each other.
 two nodes, which corresponds to the degrees of separation in
 a social network.
 
-\end{description}
+\end{itemize}
 
 Watts and Strogatz show that regular graphs
 have high clustering and high path lengths, whereas
@@ -1988,7 +2001,7 @@ small-world graphs:
 
 The probability that an edge is rewired is a parameter, $p$,
 that controls how random the graph is.  With $p=0$, the graph
-is regular; with $p=1$ it is random.
+is regular; with $p=1$ it is completely random.
 \index{parameter}
 
 Watts and Strogatz found that small values of $p$ yield graphs
@@ -2037,7 +2050,7 @@ In a ring lattice with $n$ nodes, the nodes can be arranged in a circle
 with each node connected to the $k$ nearest neighbors.
 
 For example, a ring lattice with $n=3$
-and $k=2$ would add the following edges: $(0, 1)$, $(1, 2)$, and
+and $k=2$ would contain the following edges: $(0, 1)$, $(1, 2)$, and
 $(2, 0)$.  Notice that the edges ``wrap around'' from the
 highest-numbered node back to 0.
 
@@ -2056,6 +2069,8 @@ def adjacent_edges(nodes, halfk):
 \py{halfk}, which is half of $k$.  It is a generator function that
 yields one edge at a time.  It uses the modulus operator, \verb"%",
 to wrap around from the highest-numbered node to the lowest.
+
+\index{generator function}
 
 We can test it like this:
 
@@ -2080,13 +2095,16 @@ def make_ring_lattice(n, k):
 \end{code}
 
 Notice that \py{make_ring_lattice} uses floor division to compute
-\py{halfk}, so if \py{k} is odd, it will round down and generate
-a ring lattice with degree \py{k-1}.  That's probably not what we
-want, but it is good enough for now.
+\py{halfk}, so it is only correct if \py{k} is even.  If
+\py{k} is odd, floor division rounds down, so the result is
+a ring lattice with degree \py{k-1}.  As one of the exercises at the
+end of the chapter, you will generate regular graphs with odd
+values of \py{k}.
 
+\index{floor division}
 \index{degree}
 
-We can test the function like this:
+We can test \py{make_ring_lattice} like this:
 
 \begin{code}
 lattice = make_ring_lattice(10, 4)
@@ -2121,34 +2139,45 @@ Here is my implementation of this process.
 \begin{code}
 def rewire(G, p):
     nodes = set(G)
-    for edge in G.edges():
+    for u, v in G.edges():
         if flip(p):
-            u, v = edge
             choices = nodes - {u} - set(G[u])
-            new_v = choice(tuple(choices))
+            new_v = np.random.choice(list(choices))
             G.remove_edge(u, v)
             G.add_edge(u, new_v)
 \end{code}
 
 The parameter \py{p} is the probability of rewiring an edge.  The
-\py{for} loop enumerates the edges and uses \py{flip}, which returns
-\py{True} with probability \py{p}, to choose which ones get rewired.
+\py{for} loop enumerates the edges and uses \py{flip} (defined in Section~\ref{flip}) to choose which ones get rewired.
 
 If we are rewiring an edge from node \py{u} to node \py{v}, we
 have to choose a replacement for \py{v}, called \py{new_v}.
-To compute the possible choices,
+
+\begin{enumerate}
+
+\item To compute the possible choices,
 we start with \py{nodes}, which is a set,
 and subtract off \py{u} and its neighbors, which avoids self
 loops and multiple edges.
 
-Then we choose \py{new_v} from \py{choices}, remove the existing
-edge from \py{u} to \py{v}, and add a new edge from \py{u} to
-\py{new_v}.
+\item To choose \py{new_v}, we use the NumPy
+function \py{choice}, which is in the module \py{random}.
 
-As an aside, the expression \py{G[u]} returns a dictionary that contains the neighbors of \py{u} as keys.  It is usually faster than using \py{G.neighbors}.
+\index{NumPy}
+\index{random}
+\index{choice}
+
+\item Then we remove the existing edge from \py{u} to \py{v}, and 
+
+\item Add a new edge from \py{u} to \py{new_v}.
+
+\end{enumerate}
+
+As an aside, the expression \py{G[u]} returns a dictionary that contains the neighbors of \py{u} as keys.  It is usually faster than using \py{G.neighbors}
+(see \url{https://greenteapress.com/tc/neigh}).
 
 This function does not consider the edges in the order specified
-by Watts and Strogatz, but it doesn't seem to affect
+by Watts and Strogatz, but that doesn't seem to affect
 the results.
 
 Figure~\ref{chap03-2} shows WS graphs with $n=20$, $k=4$, and
@@ -2173,6 +2202,8 @@ neighbors are connected to each other, there would be $k(k-1)/2$
 edges among them.  The fraction of those edges that actually exist
 is the local clustering coefficient for $u$, denoted $C_u$.
 
+%TODO: These subscripts don't look good in the O'Reilly version.
+
 If we compute the average of $C_u$ over all nodes, we get the
 ``network average clustering coefficient'', denoted $\bar{C}$.
 
@@ -2183,24 +2214,24 @@ def node_clustering(G, u):
     neighbors = G[u]
     k = len(neighbors)
     if k < 2:
-        return 0
+        return np.nan
 
-    total = k * (k-1) / 2
+    possible = k * (k-1) / 2
     exist = 0
     for v, w in all_pairs(neighbors):
         if G.has_edge(v, w):
             exist +=1
-    return exist / total
+    return exist / possible
 \end{code}
 
-Again I use \py{G[u]}, which returns a dictionary
-with the neighbors of \py{node} as keys.  If a node has fewer than 2
-neighbors, the clustering coefficient is undefined, but for simplicity
-\py{node_clustering} returns 0.
+Again I use \py{G[u]}, which returns a dictionary with the neighbors of \py{u} as keys.  
 
-Otherwise we compute the number of possible edges among the neighbors,
-\py{total}, and then count the number of those edges that actually
-exist.  The result is the fraction of all edges that exist.
+If a node has fewer than 2 neighbors, the clustering coefficient is undefined, so we return \py{np.nan}, which is a special value that indicates ``Not a Number''.
+
+\index{NaN}
+\index{Not a Number}
+
+Otherwise we compute the number of possible edges among the neighbors, count the number of those edges that actually exist, and return the fraction that exist.
 
 We can test the function like this:
 
@@ -2218,14 +2249,16 @@ Now we can compute the network average clustering coefficient like this:
 
 \begin{code}
 def clustering_coefficient(G):
-    cc = np.mean([node_clustering(G, node) for node in G])
-    return cc
+    cu = [node_clustering(G, node) for node in G]
+    return np.nanmean(cu)
 \end{code}
 
-\py{np.mean} is a NumPy function that computes the mean of the numbers
-in a list or array.
+The NumPy function \py{nanmean} computes the mean of the local clustering coefficients, ignoring any values that are \py{NaN}.
 
-And we can test it like this:
+\index{NumPy}
+\index{nanmean}
+
+We can test \py{clustering_coefficient} like this:
 
 \begin{code}
 >>> clustering_coefficient(lattice)
@@ -2300,7 +2333,7 @@ regular graph and short path lengths like a random graph.
 
 I'll start with \py{run_one_graph}, which takes \py{n}, \py{k}, and \py{p}; it
 generates a WS graph with the given parameters and computes the
-mean path length, \py{mpl}, and clustering coefficient \py{cc}:
+mean path length, \py{mpl}, and clustering coefficient, \py{cc}:
 
 \begin{code}
 def run_one_graph(n, k, p):
@@ -2374,7 +2407,7 @@ Figure~\ref{chap03-3} shows the results.  As $p$ increases, the mean
 path length drops quickly, because even a small number of randomly
 rewired edges provide shortcuts between regions of the graph that
 are far apart in the lattice.  On the other hand, removing local links
-decreases the clustering coefficient, but much more slowly.
+decreases the clustering coefficient much more slowly.
 
 As a result, there is a wide range of $p$ where a WS graph has the
 properties of a small world graph, high clustering and low path
@@ -2423,13 +2456,14 @@ orbital period, and other quantities.
 \index{equation-based model}
 
 Finally, I think this kind of explanation is appealing because
-it has the form of a mathematical proof.  It starts from a
-set of axioms and derives the result by logic and analysis.
-But it is important to remember that the proof pertains to the
-model and not the real world.  That is, we can prove that
-an idealized model of a planet yields an elliptic orbit, but
-we can't prove that the model pertains to actual planets (in
-fact, it does not).
+it has the form of a mathematical proof.
+It is important to remember that the proof pertains to the
+model and not the real world.
+That is, we can prove that
+an idealized model yields elliptical orbits, but
+we can't prove that real orbits are ellipses (in
+fact, they are not).
+Nevertheless, the resemblance to a proof is appealing.
 
 \index{mathematical proof}
 \index{proof}
@@ -2515,14 +2549,12 @@ a depth-first search.
 But if you wanted to be more systematic, you might go back and explore
 A and B before D, E, and F.  That would be a breadth-first search.
 
-In \py{reachable_nodes}, we use \py{list.pop} to choose the next node to
-``explore''.  By default, \py{pop} returns the last element of the list,
-which is the last one we added.  In the example, that would be door F.
+In \py{reachable_nodes}, we use the list method \py{pop} to choose the next node to ``explore''.  By default, \py{pop} returns the last element of the list, which is the last one we added.  In the example, that would be door F.
 
 \index{pop}
 
 If we want to perform a BFS instead, the simplest solution is to
-pop the first element off the stack:
+pop the first element of the list:
 
 \begin{code}
         node = stack.pop(0)
@@ -2574,7 +2606,7 @@ The differences are:
 \item I replaced the list called \py{stack} with a deque called \py{queue}.
 
 \item I replaced \py{pop} with \py{popleft}, which removes and returns
-leftmost element of the queue, which was the first to be added.
+the leftmost element of the queue.
 
 \end{itemize}
 
@@ -2596,7 +2628,7 @@ communicate with each other (see
 
 Dijkstra is famous (and notorious) as the author of a series
 of essays on computer science.
-Some, like ``A Case against the GO TO Statement'', have
+Some, like ``A Case against the GO TO Statement'',
 had a profound effect on programming practice.
 Others, like
 ``On the Cruelty of Really Teaching Computing Science'', are
@@ -2611,19 +2643,19 @@ connected node).
 \index{single source shortest path}
 \index{Dijkstra's algorithm}
 
-We start with a simplified version of the algorithm that
+I'll present a simplified version of the algorithm that
 considers all edges the same length.  The more general version
 works with any non-negative edge lengths.
 
 The simplified version is similar to the breadth-first search
-in Section~\ref{bfs} except that we replace the set called
+in the previous section except that we replace the set called
 \py{seen} with a dictionary called \py{dist}, which maps from each
 node to its distance from the source:
 
 \begin{code}
-def shortest_path_dijkstra(G, start):
-    dist = {start: 0}
-    queue = deque([start])
+def shortest_path_dijkstra(G, source):
+    dist = {source: 0}
+    queue = deque([source])
     while queue:
         node = queue.popleft()
         new_dist = dist[node] + 1
@@ -2640,15 +2672,14 @@ Here's how it works:
 
 \begin{itemize}
 
-\item Initially, \py{queue} contains a single element, \py{start}, and \py{dist} maps from \py{start} to distance 0 (which is the distance from \py{start} to itself).
+\item Initially, \py{queue} contains a single element, \py{source}, and \py{dist} maps from \py{source} to distance 0 (which is the distance from \py{source} to itself).
 
-\item Each time through the loop, we use \py{popleft} to select nodes
-in the order they were added to the queue.
+\item Each time through the loop, we use \py{popleft} to select the next node in the queue.
 
 \item Next we find all neighbors of \py{node} that are not already in
 \py{dist}.
 
-\item Since the distance from \py{start} to \py{node} is \py{dist[node]}, the
+\item Since the distance from \py{source} to \py{node} is \py{dist[node]}, the
 distance to any of the undiscovered neighbors is \py{dist[node]+1}.
 
 \item For each neighbor, we add an entry to \py{dist}, then we add
@@ -2656,24 +2687,28 @@ the neighbors to the queue.
 
 \end{itemize}
 
-This algorithm only works if we use BFS, not DFS.  Why?
+This algorithm only works if we use BFS, not DFS.  To see why, consider this:
 
 \index{BFS}
 \index{DFS}
 
-The first time through the loop \py{node} is \py{start}, and \py{new_dist}
-is 1.  So the neighbors of \py{start} get distance 1 and they
+\begin{enumerate}
+
+\item The first time through the loop \py{node} is \py{source}, and \py{new_dist}
+is 1.  So the neighbors of \py{source} get distance 1 and they
 go in the queue.
 
-When we process the neighbors of \py{start}, all of {\em their}
+\item When we process the neighbors of \py{source}, all of {\em their}
 neighbors get distance 2.  We know that none of them can have
 distance 1, because if they did, we would have discovered
 them during the first iteration.
 
-Similarly, when we process the nodes with distance 2, we give
+\item Similarly, when we process the nodes with distance 2, we give
 their neighbors distance 3.  We know that none of them can
 have distance 1 or 2, because if they did, we would have
 discovered them during a previous iteration.
+
+\end{enumerate}
 
 And so on.  If you are familiar with proof by induction, you
 can see where this is going.
@@ -2724,9 +2759,9 @@ GitHub at \url{https://greenteapress.com/tc/connx}.
 Here is a version I modified to return a set of nodes:
 
 \begin{code}
-def _plain_bfs(G, source):
+def plain_bfs(G, start):
     seen = set()
-    nextlevel = {source}
+    nextlevel = {start}
     while nextlevel:
         thislevel = nextlevel
         nextlevel = set()
@@ -2746,7 +2781,7 @@ faster version of \py{shortest_path_dijkstra}.
 
 \begin{exercise}
 
-The following implementation of a BFS
+The following implementation of BFS
 contains two performance errors.  What are
 they?  What is the actual order of growth for this algorithm?
 
@@ -2755,18 +2790,17 @@ they?  What is the actual order of growth for this algorithm?
 \index{performance error}
 
 \begin{code}
-def bfs(top_node, visit):
-    """Breadth-first search on a graph, starting at top_node."""
+def bfs(G, start):
     visited = set()
-    queue = [top_node]
+    queue = [start]
     while len(queue):
         curr_node = queue.pop(0)    # Dequeue
-        visit(curr_node)            # Visit the node
         visited.add(curr_node)
 
         # Enqueue non-visited and non-enqueued children
-        queue.extend(c for c in curr_node.children
+        queue.extend(c for c in G[curr_node]
                      if c not in visited and c not in queue)
+    return visited
 \end{code}
 
 \end{exercise}
@@ -2911,9 +2945,14 @@ def read_graph(filename):
 
 NumPy provides a function called \py{loadtext} that reads the
 given file and returns the contents as a NumPy array.  The
-parameter \py{dtype} specifies the type of the elements of the array.
+parameter \py{dtype} indicates that the ``data type'' of the array
+is \py{int}.
 
-Then we can use \py{add_edges_from} to iterate the rows of the array
+\index{NumPy}
+\index{loadtext}
+\index{dtype}
+
+Then we use \py{add_edges_from} to iterate the rows of the array
 and make edges.  Here are the results:
 
 \begin{code}
@@ -2924,7 +2963,7 @@ and make edges.  Here are the results:
 (4039, 88234)
 \end{code}
 
-The number of nodes and edges are consistent with the documentation
+The node and edge counts are consistent with the documentation
 of the dataset.
 
 Now we can check whether this dataset has the characteristics of
@@ -2954,7 +2993,7 @@ this:
 The following function does something similar for path lengths.
 
 \begin{code}
-def random_path_lengths(G, nodes=None, trials=1000):
+def sample_path_lengths(G, nodes=None, trials=1000):
     if nodes is None:
         nodes = list(G)
     else:
@@ -2966,11 +3005,13 @@ def random_path_lengths(G, nodes=None, trials=1000):
     return lengths
 \end{code}
 
-\py{G} is a graph, \py{nodes} is the list of nodes we should sample
+\py{G} is a graph, \py{nodes} is the list of nodes to sample
 from, and \py{trials} is the number of random paths to sample.
 If \py{nodes} is \py{None}, we sample from the entire graph.
 
 \index{NumPy}
+\index{random}
+\index{choice}
 
 \py{pairs} is a NumPy array of randomly chosen nodes with
 one row for each trial and two columns.
@@ -2986,7 +3027,7 @@ returns their mean:
 
 \begin{code}
 def estimate_path_length(G, nodes=None, trials=1000):
-    return np.mean(random_path_lengths(G, nodes, trials))
+    return np.mean(sample_path_lengths(G, nodes, trials))
 \end{code}
 
 I'll use \py{average_clustering} to compute $C$:
@@ -3070,10 +3111,9 @@ So far, so good.
 \label{chap04-1}
 \end{figure}
 
-Recall that the degree of a node is the number of neighbors it is
-connected to.  If the WS graph is a good model for the Facebook network,
-it should have the same total (or average) degree, and ideally the
-same variance in degree, across nodes.
+If the WS graph is a good model for the Facebook network,
+it should have the same average degree across nodes, and ideally the
+same variance in degree.
 
 \index{degree}
 
@@ -3084,13 +3124,11 @@ def degrees(G):
     return [G.degree(u) for u in G]
 \end{code}
 
-The mean degree in the dataset is 43.7; the mean degree in
-the WS model is 44.  So far, so good.
+The mean degree in model is 44, which is close to the mean degree in the dataset, 43.7.
 
-However, the standard deviation of degrees in the WS model is 1.5;
-the standard deviation in the data is 52.4.  Oops.
+However, the standard deviation of degree in the model is 1.5, which is not close to the standard deviation in the dataset, 52.4.  Oops.
 
-What's going on here?  To get a better view, we have to look at the
+What's the problem?  To get a better view, we have to look at the
 {\bf distribution} of degrees, not just the mean and standard deviation.
 
 \index{degree distribution}
@@ -3203,25 +3241,25 @@ is, the probabilities of large values.
 \index{log-log axis}
 \index{power law}
 
-Under this transformation, the data fall approximately on a
-straight line, which suggests that there is a ``power law''
-relationship between the largest values in the distribution and their
-probabilities.  Mathematically,
-
 \newcommand{\PMF}{\mathrm{PMF}}
 \newcommand{\CDF}{\mathrm{CDF}}
 \newcommand{\CCDF}{\mathrm{CCDF}}
 
+Under this transformation, the data fall approximately on a
+straight line, which suggests that there is a {\bf power law}
+relationship between the largest values in the distribution and their
+probabilities.  Mathematically, a distribution obeys a power law if
+%
 \[ \PMF(k) \sim k^{-\alpha} \]
-
+%
 where $\PMF(k)$ is the fraction of nodes with degree $k$, $\alpha$
 is a parameter, and the symbol $\sim$ indicates that the PMF is
 asymptotic to $k^{-\alpha}$ as $k$ increases.
 
 If we take the log of both sides, we get
-
+%
 \[ \log \PMF(k) \sim -\alpha \log k \]
-
+%
 So if a distribution follows a power law and we plot $\PMF(k)$ versus
 $k$ on a log-log scale, we expect a straight line with slope
 $-\alpha$, at least for large values of $k$.
@@ -3255,7 +3293,7 @@ in the western United States.  You can download the paper from
 They measure the degree of each node and compute $\PMF(k)$, the
 probability that a vertex has degree $k$.  Then they plot $\PMF(k)$
 versus $k$ on a log-log scale.  The plots fit a
-straight line, at least for large values of $k$;
+straight line, at least for large values of $k$,
 so \Barabasi~and Albert conclude that these
 distributions are heavy-tailed.
 
@@ -3282,7 +3320,7 @@ the growth patterns of some real-world networks.
 \end{description}
 
 Finally, they show that graphs generated by the \Barabasi-Albert (BA)
-model have a distribution of degrees that obeys a power law.
+model have a degree distribution that obeys a power law.
 
 \index{BA graph}
 
@@ -3322,7 +3360,7 @@ less than in the dataset, 52.4, but it is much better
 than what we got from the WS graph, 1.5.
 
 Figure~\ref{chap04-3} shows the degree distributions for the
-Facebook network and the BA model on a log-log scale.  The model
+Facebook dataset and the BA model on a log-log scale.  The model
 is not perfect; in particular, it deviates from the data when
 \py{k} is less than 10.  But the tail looks like a straight line,
 which suggests that this process generates degree distributions
@@ -3366,7 +3404,7 @@ std degree  & 52.4              & 1.5               & 40.1              \\
 power law?  & maybe             & no                & yes               \\
 \hline
 \end{tabular}
-\caption{Characteristics of the Facebook network compared to two models.}
+\caption{Characteristics of the Facebook dataset compared to two models.}
 \label{table04-1}
 \end{table}
 
@@ -3386,7 +3424,6 @@ def barabasi_albert_graph(n, k):
     repeated_nodes = []
 
     for source in range(k, n):
-
         G.add_edges_from(zip([source]*k, targets))
 
         repeated_nodes.extend(targets)
@@ -3399,7 +3436,7 @@ def barabasi_albert_graph(n, k):
 
 The parameters are \py{n}, the number of nodes we want, and \py{k}, the
 number of edges each new node gets (which will turn out to be
-approximately the number of edges per node).
+the average number of edges per node).
 
 \index{NetworkX}
 \index{zip}
@@ -3470,7 +3507,7 @@ is to add up the probabilities for values up to and including $x$:
 \begin{code}
 def cumulative_prob(pmf, x):
     ps = [pmf[value] for value in pmf if value<=x]
-    return sum(ps)
+    return np.sum(ps)
 \end{code}
 
 For example, given the degree distribution in the dataset,
@@ -3508,7 +3545,7 @@ cumulative distribution functions.
 thinkplot.Cdf(cdf_fb)
 \end{code}
 
-Figure~\ref{chap04-5} shows the degree CDF for the Facebook dataset
+Figure~\ref{chap04-4} shows the degree CDF for the Facebook dataset
 along with the WS model (left) and the BA model (right).  The x-axis
 is on a log scale.
 
@@ -3531,21 +3568,21 @@ hard to see.  We can get a clearer view with one other view of the
 data: plotting the complementary CDF on a log-log scale.
 
 The {\bf complementary CDF} (CCDF) is defined
-
-\[ \CCDF(x) = 1 - \CDF(x) \]
-
-If is useful because if the PMF follows a power law, the CCDF
+%
+\[ \CCDF(x) \equiv 1 - \CDF(x) \]
+%
+This definition is useful because if the PMF follows a power law, the CCDF
 also follows a power law:
-
-\[ \CCDF(x) = \left( \frac{x}{x_m} \right)^{-\alpha} \]
-
+%
+\[ \CCDF(x) \sim \left( \frac{x}{x_m} \right)^{-\alpha} \]
+%
 where $x_m$ is the minimum possible value and $\alpha$ is a parameter
 that determines the shape of the distribution.
 
 Taking the log of both sides yields:
-
-\[ \log \CCDF(x) = -\alpha (\log x - \log x_m) \]
-
+%
+\[ \log \CCDF(x) \sim -\alpha (\log x - \log x_m) \]
+%
 So if the distribution obeys a power law, we expect the CCDF on
 a log-log scale to be a straight line with slope $-\alpha$.
 
@@ -3559,15 +3596,14 @@ With this way of looking at the data, we can see that the BA model
 matches the tail of the distribution (values above 20) reasonably well.
 The WS model does not.
 
-\begin{figure}
-\centerline{\includegraphics[height=2in]{figs/model.pdf}}
-\caption{The logical structure of an explanatory model.\label{fig.model}}
-\end{figure}
-
 
 \section{Explanatory models}
 \label{model1}
 
+\begin{figure}
+\centerline{\includegraphics[height=2in]{figs/model.pdf}}
+\caption{The logical structure of an explanatory model.\label{fig.model}}
+\end{figure}
 
 We started the discussion of networks with Milgram's Small World
 Experiment, which shows that path lengths in social
@@ -3617,11 +3653,10 @@ sense of the word.
 \index{proof}
 \index{mathematical proof}
 
-Remember that all models leave out, or ``abstract away''
+Remember that all models leave out, or ``abstract away'',
 details that we think are unimportant.  For any system there
 are many possible models that include or ignore different features.
-And there might be models that exhibit different behaviors,
-B, B' and B'', that are similar to O in different ways.
+And there might be models that exhibit different behaviors that are similar to O in different ways.
 In that case, which model explains O?
 
 \index{abstract model}
@@ -4428,8 +4463,12 @@ is 0 if the number is even and 1 if it is odd.
 
 \index{parity}
 
-First I create an array of zeros with a single 1 in the middle of
+I use the NumPy function \py{zeros} to
+create an array of zeros, then put a 1 in the middle of
 the first row.
+
+\index{NumPy}
+\index{zeros}
 
 \begin{code}
 >>> rows = 5
@@ -4510,6 +4549,11 @@ For example, the following window contains three 1s followed by 0s:
 >>> print(window)
 [1 1 1 0 0 0 0 0 0 0 0]
 \end{code}
+
+The data type \py{np.int8} indicates that the elements of \py{window}
+are 8-bit integers.
+
+\index{dtype}
 
 If we multiply the window by the last row of \py{array}, it selects the first
 three elements:
@@ -4604,6 +4648,12 @@ def make_table(rule):
     table = np.unpackbits(rule)[::-1]
     return table
 \end{code}
+
+The data type \py{np.uint8} indicates that the elements of \py{rule}
+are unsigned, 8-bit integers.
+
+\index{dtype}
+\index{uint8}
 
 The parameter, \py{rule}, is an integer between 0 and 255.
 The first line puts \index{rule} into an array with a single element
@@ -5188,14 +5238,20 @@ you can use as a starting place for your experiments.
 \index{cellular automaton}
 \index{NumPy}
 
-To represent the state of the cells, I use a NumPy array with type {\tt
-  uint8}, which is an 8-bit unsigned integer.  As an example, the
+To represent the state of the cells, I use a NumPy array of 8-bit unsigned integers.  As an example, the
 following line creates a 10 by 10 array initialized with random
 values of 0 and 1.
+
+\index{dtype}
+\index{uint8}
 
 \begin{code}
 a = np.random.randint(2, size=(10, 10), dtype=np.uint8)
 \end{code}
+
+\index{NumPy}
+\index{random}
+\index{randint}
 
 There are a few ways we can compute the GoL rules.  The simplest
 is to use \py{for} loops to iterate through the rows and columns of
@@ -5553,7 +5609,11 @@ class ReactionDiffusion(Cell2D):
 \py{params} is a tuple of parameters, which I explain below.
 
 \py{array} represents the concentration of the first chemical, \py{A},
-which is initially 1 everywhere.
+which is initially 1 everywhere.  The data type \py{float} indicates that
+the elements of \py{A} are floating-point values.
+
+\index{dtype}
+\index{float}
 
 \py{array2} represents the concentration of \py{B}, which is initially
 0 everywhere except an island in the middle, which is initialized
@@ -5566,6 +5626,9 @@ def island(a, val, noise):
     a[n//2-r:n//2+r, m//2-r:m//2+r] = val
     a += noise * np.random.random((n, m))
 \end{code}
+
+\index{NumPy}
+\index{random}
 
 The radius of the island, \py{r}, is one twentieth of \py{n} or \py{m},
 whichever is smaller.  The height of the island is \py{val}, which is 0.1
@@ -5742,6 +5805,10 @@ class Percolation(Cell2D):
         self.array = np.random.choice([0, 1], (n, m), p=[1-p, p])
         self.array[0] = 5
 \end{code}
+
+\index{NumPy}
+\index{random}
+\index{choice}
 
 \py{n} and \py{m} are the number of rows and columns in the CA.  \py{p}
 is the probability that a cell is porous.
@@ -6286,7 +6353,13 @@ topples them:
         return num_toppled
 \end{code}
 
-To explain how that works, I'll start with
+The data type \py{np.int} indicates that the elements of \py{kernel}
+are 32-bit integers.
+
+\index{dtype}
+\index{int32}
+
+To show how \py{step} works, I'll start with
 a small pile with just two cells ready to topple:
 
 \begin{code}
@@ -6311,7 +6384,7 @@ Now we can select the cells that are above the toppling threshold:
 toppling = pile.array > K
 \end{code}
 
-The result is an array of booleans, but we can use it as if it were
+The result is a boolean array, but we can use it as if it were
 an array of integers like this:
 
 \begin{code}
@@ -6393,6 +6466,10 @@ grain of sand:
         index = np.random.randint(n), np.random.randint(m)
         a[index] += 1
 \end{code}
+
+\index{NumPy}
+\index{random}
+\index{randint}
 
 Let's look at a bigger example, with \py{n=20}:
 
@@ -6743,14 +6820,14 @@ frequencies.
 Other kinds of noise have different relationships between frequency
 and power.  In ``red noise'', the power at frequency $f$ is
 $1/f^2$, which we can write like this:
-
+%
 \[ P(f) = 1/f^2 \]
-
+%
 We can generalize that by replacing the exponent $2$ with
 a parameter $\beta$:
-
+%
 \[ P(f) = 1/f^\beta \]
-
+%
 When $\beta=0$, this equation describes white noise; when $\beta=2$ it
 describes red noise.  When the parameter is near 1, we call the result
 $1/f$ noise.  More generally, noise with any value between 0 and 2
@@ -6815,13 +6892,13 @@ the frequencies of the components and their corresponding powers.
 \index{logarithm}
 
 If the signal is pink noise, we expect
-
+%
 \[ P(f) = 1/f^\beta \]
-
+%
 Taking the log of both sides yields
-
+%
 \[ \log P(f) = -\beta \log f \]
-
+%
 So if we plot \py{powers} versus \py{freqs} on a log-log scale, we
 expect a straight line with slope $-\beta$.
 
@@ -7298,6 +7375,8 @@ For example, if \py{p=0.5}, an agent will be unhappy if fewer
 than 50\% of their neighbors are the same color.
 
 \index{NumPy}
+\index{random}
+\index{choice}
 
 \py{array} is a NumPy array where each cell is 0 if empty, 1 if
 occupied by a red agent, and 2 if occupied by a blue agent.
@@ -7359,7 +7438,7 @@ the second or third parameter.
 In this case, wherever \py{red} is \py{True}, \py{frac_same} gets
 the corresponding element of \py{frac_red}.  Where \py{red} is
 \py{False}, \py{frac_same} gets the corresponding element of \py{frac_blue}.
-Finally, where \py{empty} indicates that a cell is empty, \py{frac_same} is set to \py{np.nan}, which is a floating-point value that indicates ``Not a Number''.
+Finally, where \py{empty} indicates that a cell is empty, \py{frac_same} is set to \py{np.nan}, which is a special value that indicates ``Not a Number''.
 
 \index{NaN}
 \index{Not a Number}
@@ -7405,6 +7484,10 @@ unhappy agents and move them:
         a[source] = 0
         empty_locs[i] = source
 \end{code}
+
+\index{NumPy}
+\index{random}
+\index{randint}
 
 \py{i} is the index of a random empty cell;
 \py{dest} is a tuple containing the coordinates of the empty cell.
@@ -7454,6 +7537,9 @@ across cells:
 \begin{code}
     np.nanmean(frac_same)
 \end{code}
+
+\index{NumPy}
+\index{nanmean}
 
 In Figure~\ref{chap09-1}, the degree average fraction of similar
 neighbors is 50\% in the initial configuration, 65\% after two
@@ -7743,6 +7829,10 @@ class Sugarscape(Cell2D):
         return len(self.agents)
 \end{code}
 
+\index{NumPy}
+\index{random}
+\index{permutation}
+
 \py{Sugarscape} inherits from \py{Cell2D}, so it is similar to the
 other grid-based models we've seen.
 
@@ -7766,6 +7856,10 @@ If you want to learn more about NumPy, take a look at these functions:
 an agent can see, depending on its vision.  The locations are sorted by distance, with locations at the same distance
 appearing in random order.  This function uses \py{np.random.shuffle}
 and \py{np.vstack}.
+
+\index{NumPy}
+\index{random}
+\index{shuffle}
 
 \item \py{Sugarscape.make_capacity}, which
 initializes the capacity of the cells using NumPy functions
@@ -8106,6 +8200,10 @@ And here's the \py{move} method:
         driver.speed = speed
         driver.loc += speed
 \end{code}
+
+\index{NumPy}
+\index{random}
+\index{uniform}
 
 \py{dist} is the distance between \py{driver} and the next driver ahead.
 This distance is passed to \py{choose_acceleration}, which
@@ -8694,6 +8792,7 @@ The genotype of an agent, which corresponds to its location in the fitness lands
 The fitness of a given genotype is the mean of \py{N} {\bf fitness contributions}, one for each element of \py{loc}.
 
 \index{NumPy}
+\index{random}
 
 To compute the fitness of a genotype, \py{FitnessLandscape} uses two arrays:
 \py{one_values}, which contains the fitness contributions of having a \py{1} in each element of \py{loc}, and \py{zero_values}, which contains the fitness contributions of having a \py{0}.
@@ -8821,6 +8920,10 @@ Before we run the simulation, we have to specify the behavior of \py{choose_dead
         return replacements
 \end{code}
 
+\index{NumPy}
+\index{random}
+\index{choice}
+
 In \py{choose_dead}, \py{n} is the number of agents and \py{is_dead} is a boolean array that contains \py{True} for the agents who die during this time step.  In this version, every agent has the same probability of dying: $0.1$.
 \py{choose_dead} uses \py{np.nonzero} to find the indices of the non-zero elements of \py{is_dead} (\py{True} is considered non-zero).
 
@@ -8857,6 +8960,7 @@ class MeanFitness(Instrument):
         self.metrics.append(mean)
 \end{code}
 
+\index{NumPy}
 \index{nanmean}
 
 Now we're ready to run the simulation.  To minimize the effect of random changes in the starting population, we start every simulation with the same set of agents.  And to make sure we explore the entire fitness landscape, we start with one agent at every location.  Here's the code that creates the \py{Simulation}:
@@ -8926,6 +9030,9 @@ class SimWithDiffSurvival(Simulation):
         return index_dead
 \end{code}
 
+\index{NumPy}
+\index{random}
+
 Now the probability of survival depends on fitness; in fact, in this version, the probability that an agent survives each time step {\em is} its fitness.
 
 \index{differential survival}
@@ -8977,6 +9084,9 @@ class Mutant(Agent):
             loc = self.mutate(direction)
         return Mutant(loc, self.fit_land)
 \end{code}
+
+\index{NumPy}
+\index{random}
 
 In this model of mutation, every time we call \py{copy}, there is a 5\% chance of mutation.  In case of mutation, we choose a random direction from the current location -- that is, a random bit in the genotype -- and flip it.  Here's \py{mutate}:
 
@@ -9323,6 +9433,10 @@ The \py{Agent} class provides \py{copy}, which makes another agent with the same
             values = self.mutate()
         return Agent(values, self.fitness)
 \end{code}
+
+\index{NumPy}
+\index{random}
+\index{choice}
 
 Mutation works by choosing a random value in the genotype and flipping from \py{'C'} to \py{'D'}, or vice versa:
 
@@ -9675,6 +9789,8 @@ Copernicus (Springer) 1996.
 \item Albert-L\'{a}szl\'{o} \Barabasi, {\it  Linked}
 Perseus Books Group 2002.
 
+\item Sharon Bertsch McGrayne, {\it The Theory That Would Not Die}, Yale University Press, 2011.
+
 \item Mark Buchanan, {\it  Nexus},
 W W Norton \& Co Inc 2002.
 
@@ -9688,6 +9804,8 @@ Basic Books 2009.
 
 %TODO: Tune this up.
 
+\item Rebecca Goldstein, {\it Incompleteness}, W.~W.~Norton \& Company, 2005.
+
 \item Goodwin, {\it  How the Leopard Changed Its Spots}.
 
 \item Holland, {\it  Hidden Order}.
@@ -9695,6 +9813,8 @@ Basic Books 2009.
 \item Johnson, {\it  Emergence}.
 
 \item Kelly, {\it  Out of Control}.
+
+\item Bart Kosko, {\it Fuzzy Thinking}, Hyperion, 1993.
 
 \item Kluger, {\it  Simplexity}.
 
@@ -9749,9 +9869,9 @@ and meteorites, forest fires and earthquakes.
 
 The Pareto distribution is characterized by a CDF with the following
 form:
-
+%
 \[ CDF(x) = 1 - \left( \frac{x}{x_m} \right) ^{-\alpha} \]
-
+%
 The parameters $x_m$ and $\alpha$ determine the location and shape of
 the distribution.  $x_m$ is the minimum possible quantity.
 \index{parameter}
@@ -9803,13 +9923,13 @@ log-log scale, the CCDF looks like a straight line.  The derivation is
 similar to what we saw in the previous section.
 
 The equation for the CCDF is:
-
+%
 \[ y = 1 - CDF(x) \sim \left( \frac{x}{x_m} \right) ^{-\alpha} \]
-
+%
 Taking the log of both sides yields:
-
+%
 \[ \log y \sim -\alpha (\log x - \log x_m ) \]
-
+%
 So if you plot $\log y$ versus $\log x$, it should look like a
 straight line with slope $-\alpha$ and intercept $\alpha \log x_m$.
 \index{log-log plot}
@@ -9832,9 +9952,9 @@ What happens to the curve as you increase the number of values?
 \section{Pareto and the power law}
 
 Starting with a power-law distribution, we have:
-
+%
 \[ P(k) \sim k^{- \gamma} \]
-
+%
 If we choose a random node in a scale free network,
 $P(k)$ is the probability that its degree equals $k$.
 \index{degree}
@@ -9842,21 +9962,21 @@ $P(k)$ is the probability that its degree equals $k$.
 The cumulative distribution function, $CDF(k)$, is the probability
 that the degree is less than or equal to $k$, so we can
 get that by summation:
-
+%
 \[ CDF(k) = \sum_{i=0}^k P(i) \]
-
+%
 For large values of $k$ we can approximate the summation with
 an integral:
-
+%
 \[ \sum_{i=0}^k i^{- \gamma} \sim \int_{i=0}^k i^{- \gamma} =
 \frac{1}{\gamma -1} (1 - k^{-\gamma + 1}) \]
-
+%
 To make this a proper CDF we could normalize it so that it
 goes to 1 as $k$ goes to infinity, but that's not necessary,
 because all we need to know is:
-
+%
 \[ CDF(k) \sim 1 - k^{-\gamma + 1} \]
-
+%
 Which shows that the distribution of $k$ is asymptotic to a
 Pareto distribution with $\alpha = \gamma - 1$.
 
@@ -9907,9 +10027,9 @@ like:
 \[ y = 1 - CDF(x) \sim e^{-\lambda x} \]
 
 If you take the log of both sides of this equation, you get:
-
+%
 \[ \log y \sim -\lambda x \]
-
+%
 So on a log-$y$ scale the CCDF should look like a straight line
 with slope $-\lambda$.
 
