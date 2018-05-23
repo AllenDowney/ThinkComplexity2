@@ -22,7 +22,7 @@
 \newcommand{\thetitle}{Think Complexity}
 \newcommand{\thesubtitle}{Exploring Complexity Science in Python}
 \newcommand{\theauthors}{Allen B. Downey}
-\newcommand{\theversion}{2.5.5}
+\newcommand{\theversion}{2.5.7}
 
 %%%% Both LATEX and PLASTEX
 
@@ -114,7 +114,7 @@
 
 \begin{latexonly}
 
-%-half title --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  -- --
+%-half title ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  --- --
 \thispagestyle{empty}
 
 \begin{flushright}
@@ -132,7 +132,7 @@ Version \theversion
 
 \end{flushright}
 
-%--verso --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  -- 
+%--verso ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  --- 
 
 \afterpage{\blankpage}
 
@@ -141,7 +141,7 @@ Version \theversion
 %\thispagestyle{empty}
 %\vspace*{6in}
 
-%--title page --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  -- --
+%--title page ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  --- --
 \pagebreak
 \thispagestyle{empty}
 
@@ -176,7 +176,7 @@ Version \theversion
 \end{flushright}
 
 
-%--copyright --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  -- --
+%--copyright ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  --- --
 \pagebreak
 \thispagestyle{empty}
 
@@ -206,7 +206,7 @@ The \LaTeX\ source for this book is available from
       https://github.com/AllenDowney/ThinkComplexity2
 \end{code}
 
-%--table of contents --  --  --  --  --  --  --  --  --  --  --  --  --  -- 
+%--table of contents ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  --- 
 
 \cleardoublepage
 \setcounter{tocdepth}{1}
@@ -215,7 +215,7 @@ The \LaTeX\ source for this book is available from
 \end{latexonly}
 
 
-% HTML title page --  --  --  --  --  --  --  --  --  --  --  --  --  -- 
+% HTML title page ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  --- 
 
 \begin{htmlonly}
 
@@ -249,8 +249,8 @@ available at \url{https://greenteapress.com/tc/license}.
 \label{preface}
 
 Complexity science is an interdisciplinary
-field -- at the intersection of mathematics, computer science and
-natural science -- that focuses on {\bf complex systems},
+field --- at the intersection of mathematics, computer science and
+natural science --- that focuses on {\bf complex systems},
 which are systems with many interacting components.
 
 One of the core tools of complexity science is discrete models,
@@ -555,7 +555,7 @@ show that the solution is an ellipse.  QED!
 \index{planetary motion}
 
 Most people find this kind of explanation satisfying.  It includes a
-mathematical derivation -- so it has some of the rigor of a proof -- and
+mathematical derivation --- so it has some of the rigor of a proof --- and
 it explains a specific observation, elliptical orbits, by appealing to
 a general principle, gravitation.
 
@@ -1093,7 +1093,7 @@ chapter is about.
 
 In this chapter, a {\bf graph} is a representation of
 a system that contains discrete, interconnected elements.  The
-elements are represented by {\bf nodes} -- also called {\bf vertices} --
+elements are represented by {\bf nodes} --- also called {\bf vertices} --
 and the interconnections are represented by {\bf edges}.
 
 \index{node}
@@ -1910,8 +1910,8 @@ likely to know the target person.
 \index{Sharon, Massachusetts}
 
 Many of the letters were never delivered, but for the ones that
-were the average path length -- the number of
-times the letters were forwarded -- was about six.  This result
+were the average path length --- the number of
+times the letters were forwarded --- was about six.  This result
 was taken to confirm previous observations (and speculations) that
 the typical distance between any two people in a social network
 is about ``six degrees of separation.''
@@ -1919,8 +1919,8 @@ is about ``six degrees of separation.''
 \index{six degrees}
 
 This conclusion is surprising because most people expect social
-networks to be localized -- people tend to live near their
-friends -- and in a graph with local connections, path lengths tend to
+networks to be localized --- people tend to live near their
+friends --- and in a graph with local connections, path lengths tend to
 increase in proportion to geographical distance.  For example, most of
 my friends live nearby, so I would guess that the average distance
 between nodes in a social network is about 50 miles.  Wichita is about
@@ -1933,6 +1933,7 @@ links in the social network, they should have taken 32 hops, not six.
 
 
 \section{Watts and Strogatz}
+\label{watts}
 
 In 1998 Duncan Watts and Steven Strogatz published a paper in {\em
   Nature}, ``Collective dynamics of `small-world' networks'', that
@@ -3771,7 +3772,7 @@ nodes.
 A {\bf cellular automaton} (CA) is a model of a world with very simple
 physics.  ``Cellular'' means that the world is divided into discrete
 chunks, called cells.  An ``automaton'' is a machine that performs
-computations -- it could be a real machine, but more often the
+computations --- it could be a real machine, but more often the
 ``machine'' is a mathematical abstraction or a computer simulation.
 \index{cellular automaton}
 
@@ -3793,92 +3794,70 @@ in Section~\ref{code}.
 \section{A simple CA}
 
 Cellular automatons\footnote{You might also see the plural
-  ``automata''.} are governed by rules that determine how the system
-evolves in time.  Time is divided into discrete steps, and the rules
-specify how to compute the state of the world during the next time
-step based on the current state.
+  ``automata''.} are governed by rules that determine how the state of
+the cells changes over time.
 
 \index{time step}
 
 As a trivial example, consider a cellular automaton (CA) with
-a single cell.  The state of the cell is an integer represented
-with the variable $x_i$, where the subscript $i$ indicates
-that $x_i$ is the state of the system during time step $i$.
-As an initial condition, $x_0 = 0$.
+a single cell.  The state of the cell during time step $i$ is an integer, $x_i$.  As an initial condition, suppose $x_0 = 0$.
+
 \index{state}
 
-Now all we need is a rule.  Arbitrarily, I'll pick $x_i = x_{i-1} + 1$,
-which says that after each time step, the state of the CA gets
-incremented by 1.  So far, we have a simple CA that performs
-a simple calculation: it counts.
+Now all we need is a rule.  Arbitrarily, I'll pick $x_{i+1} = x_{i} + 1$,
+which says that during each time step, the state of the CA gets
+incremented by 1.  So this CA performs a simple calculation: it counts.
+
 \index{rule}
 
 But this CA is atypical; normally the number of
-possible states is finite.  To bring it into line, I'll choose the
-smallest interesting number of states, 2, and another simple rule,
-$x_i = (x_{i-1} + 1) \% 2$, where $\%$ is the remainder (or
+possible states is finite.  As an example, suppose a cell can only have one of two states, 0 or 1.  For a 2-state CA, we could write a rule like
+$x_{i+1} = (x_{i} + 1) \% 2$, where $\%$ is the remainder (or
 modulus) operator.
 
 The behavior of this CA is simple: it blinks.  That is,
-the state of the cell switches between 0 and 1 after every time step.
+the state of the cell switches between 0 and 1 during each time step.
 
 Most CAs are {\bf deterministic}, which means that rules do not
 have any random elements; given the same initial state, they
-always produce the same result.  There are also nondeterministic
-CAs, but I will not address them here.
+always produce the same result.  But some CAs are nondeterministic;
+we will see examples later.
 
 \index{deterministic}
 \index{nondeterministic}
+
+The CA in this section has only one cell, so we can think of
+it as zero-dimensional.  In the rest
+of this chapter, we explore one-dimensional (1-D) CAs; in the next chapter
+we explore two-dimensional CAs.
+
+\index{1-D cellular automaton}
 
 
 \section{Wolfram's experiment}
 \label{onedim}
 
-The CA in the previous section had only one cell, so we can think of
-it as zero-dimensional, and it wasn't very interesting.  In the rest
-of this chapter, we explore one-dimensional (1-D) CAs, which turn out to
-be surprisingly interesting.
+In the early 1980s Stephen Wolfram published a series of papers
+presenting a systematic study of 1-D CAs.  He identified
+four categories of behavior, each more interesting than
+the last.  You can read one of these papers, ``Statistical mechanics
+of cellular automata", at \url{https://greenteapress.com/tc/ca}.
 
-\index{1-D cellular automaton}
-
-To say that a CA has dimensions is to say that the cells are
-arranged in a contiguous space so that some of them are
-considered ``neighbors''.  In one dimension, there are three
-natural configurations:
-\index{neighbor}
-
-\begin{description}
-
-\item[Finite sequence:] A finite number of cells arranged
-in a row.  All cells except the first and last have two neighbors.
-
-\item[Ring:] A finite number of cells arranged
-in a ring.  All cells have two neighbors.
-
-\item[Infinite sequence:] An infinite number of cells arranged
-in a row.
-
-\end{description}
+In Wolfram's experiments, the cells are arranged in a lattice (which you
+might remember from Section~\ref{watts}) where each cell is connected to two neighbors.  The lattice can be finite, infinite, or arranged in a ring.
 
 The rules that determine how the system evolves in time are
 based on the notion of a ``neighborhood'', which is the set
 of cells that determines the next state of a given cell.
+Wolfram's experiments use a 3-cell neighborhood: the cell itself
+and its two neighbors.
 
 \index{neighborhood}
 
-In the early 1980s Stephen Wolfram published a series of papers
-presenting a systematic study of 1-D CAs.  He identified
-four general categories of behavior, each more interesting than
-the last.
-
-Wolfram's experiments use a 3-cell neighborhood: the cell itself
-and its left and right neighbors.
-
 In these experiments, the cells have two states, denoted 0 and 1,
-so the rules can be summarized by a table that maps from the
+so a rule can be summarized by a table that maps from the
 state of the neighborhood (a tuple of 3 states) to the next state
-for the center cell.
-The following table shows an example:
+of the center cell.  The following table shows an example:
 
 \index{rule table}
 \index{state}
@@ -3896,7 +3875,7 @@ The first row shows the eight states a
 neighborhood can be in.  The second row shows the state of
 the center cell during the next time step.  As a concise encoding
 of this table, Wolfram suggested reading the bottom row
-as a binary number.  Because 00110010 in binary is 50 in
+as a binary number; because 00110010 in binary is 50 in
 decimal, Wolfram calls this CA ``Rule 50''.
 
 \index{Rule 50}
@@ -3931,7 +3910,7 @@ that includes all of the cells that can be affected by it.
 \label{chap05-3}
 \end{figure}
 
-How many different CAs are there?
+How many of these CAs are there?
 
 Since each cell is either on or off, we can specify the state
 of a cell with a single bit.  In a neighborhood with three cells,
@@ -3940,8 +3919,8 @@ in the rule tables.  And since each entry contains a single bit,
 we can specify a table using 8 bits.  With 8 bits, we can
 specify 256 different rules.
 
-One of Wolfram's first experiments with CA was to test all 256
-possibilities and try to classify them.
+One of Wolfram's first experiments with CAs was to test all 256
+possibilities and classify them.
 
 Examining the results visually, he proposed that the behavior of CAs
 can be grouped into four classes.  Class 1 contains the simplest (and
@@ -3952,8 +3931,8 @@ always generates an empty pattern after one time step.
 \index{classifying cellular automatons}
 
 Rule 50 is an example of Class 2.  It generates a simple pattern with
-nested structure; that is, the pattern contains many smaller versions
-of itself.  Rule 18 makes the nested structure even clearer;
+nested structure, that is, a pattern that contains many smaller versions
+of itself.  For Rule 18 makes the nested structure is even clearer;
 Figure~\ref{chap05-3} shows what it looks like after 64 steps.
 
 \index{Rule 18}
@@ -4117,16 +4096,16 @@ precision in the measurement of initial conditions.
 Most of these systems are continuous in space (if not time) and
 nonlinear, so the complexity of their behavior is not entirely
 surprising.  Wolfram's demonstration of complex behavior in simple
-cellular automatons is more surprising -- and disturbing, at least to a
+cellular automatons is more surprising --- and disturbing, at least to a
 deterministic world view.
 
 \index{complex behavior}
 \index{simple rules}
 
 So far I have focused on scientific challenges to determinism, but the
-longest-standing objection is the conflict between
+longest-standing objection is the apparent conflict between
 determinism and human free will.  Complexity science provides
-a possible resolution of this apparent conflict; I'll come
+a possible resolution of this conflict; I'll come
 back to this topic in Section~\ref{freewill}.
 
 \index{free will}
@@ -4185,7 +4164,7 @@ leave one ship unchanged; still others yield one or more ships of
 different types.
 
 These collisions are the basis of computation in a Rule 110 CA.  If
-you think of spaceships as signals that propagate on wires, and
+you think of spaceships as signals that propagate through space, and
 collisions as gates that compute logical operations like AND and OR,
 you can see what it means for a CA to perform a computation.
 
@@ -4226,18 +4205,18 @@ Turing machine that performs an equivalent computation.
 The Turing machine is useful because it is possible to characterize
 the set of functions that can be computed by a Turing machine,
 which is what Turing did.  Functions in this set are
-called Turing computable.
+called ``Turing computable".
 
 \index{computable function}
 
 To say that a Turing machine can compute any Turing-computable
-function is a {\bf tautology}: it is true by definition.  But
+function is a tautology: it is true by definition.  But
 Turing-computability is more interesting than that.
 
 \index{tautology}
 
 It turns out that just about every reasonable model of computation
-anyone has come up with is Turing complete; that is, it can compute
+anyone has come up with is ``Turing complete"; that is, it can compute
 exactly the same set of functions as the Turing machine.
 Some of these models, like lamdba calculus, are very different
 from a Turing machine, so their equivalence is surprising.
@@ -4245,14 +4224,10 @@ from a Turing machine, so their equivalence is surprising.
 \index{lambda calculus}
 \index{Church-Turing thesis}
 
-This observation led to the Church-Turing Thesis, which is essentially
-a definition of what it means to be computable.  The ``thesis'' is
-that Turing-computability is the right, or at least natural,
-definition of computability, because it describes the power of such a
-diverse collection of models of computation.
+This observation led to the Church-Turing Thesis, which is the claim that these definitions of computability capture something essential that is independent of any particular model of computation.
 
 The Rule 110 CA is yet another model of computation, and remarkable
-for its simplicity.  That it, too, turns out to be universal lends
+for its simplicity.  That it, too, turns out to be Turing complete lends
 support to the Church-Turing Thesis.
 
 In {\em A New Kind of Science}, Wolfram states a variation of this
@@ -4278,7 +4253,7 @@ Applying these definitions to CAs, Classes 1 and 2 are ``obviously
 simple''.  It may be less obvious that Class 3 is simple, but in a way
 perfect randomness is as simple as perfect order; complexity happens
 in between.  So Wolfram's claim is that Class 4 behavior is common in
-the natural world, and that almost all of the systems that manifest it
+the natural world, and that almost all systems that manifest it
 are computationally equivalent.
 
 \index{Class 4 cellular automaton}
@@ -4328,8 +4303,8 @@ they are impossible to refute.  If your goal is never to be
 proved wrong, you should choose hypotheses that are as
 unfalsifiable as possible.
 
-But if your goal is to make reliable predictions about the world -- and
-this is at least one of the goals of science -- unfalsifiable
+But if your goal is to make reliable predictions about the world --- and
+this is at least one of the goals of science --- unfalsifiable
 hypotheses are useless.  The problem is that they have
 no consequences (if they had consequences, they would be
 falsifiable).
@@ -4415,7 +4390,7 @@ the set of features sufficient to produce B.''
 
 For this kind of argument, adding more features doesn't help.  Making
 the model more realistic doesn't make the model more reliable; it only
-obscures the difference between the essential features that cause O
+obscures the difference between the essential features that cause B
 and the incidental features that are particular to S.
 
 Figure~\ref{fig.model3} shows the logical structure of this kind of
@@ -4428,54 +4403,36 @@ the model more realistic, but that realism adds no explanatory power.
 
 \begin{figure}
 \centerline{\includegraphics[height=1.75in]{figs/array.pdf}}
-\caption{A list of lists (left) and a Numpy array (right).\label{fig.array}}
+\caption{A list of lists (left) and a NumPy array (right).\label{fig.array}}
 \end{figure}
 
 To generate the figures in this chapter, I wrote a Python class called
-\py{CA}, which represents a cellular automaton, and classes for plotting
-the results.  In the next few sections I explain how they work.
+\py{Cell1D} that represents a 1-D cellular automaton, and a class called
+\py{Cell1DViewer} that plots the results.
 
-\index{cellular automaton}
+\index{Cell1D}
+\index{Cell1DViewer}
 
-To store the state of the CA, I use a NumPy array, which is a
-multi-dimensional data structure whose elements are all the same type.
-It is similar to a nested list, but usually smaller and faster.
-Figure~\ref{fig.array} shows why.
-The diagram on the left shows a list of lists of integers; each
-dot represents a reference, which takes up 4--8 bytes.  To access
-one of the integers, you have to follow two references.
+To store the state of the CA, I use a NumPy array with one column for
+each cell and one row for each time step.
 
-\index{NumPy}
-\index{array}
-\index{nested list}
-\index{reference}
-
-The diagram on the right shows an array of the same integers.  Because
-the elements are all the same size, they can be stored contiguously in
-memory.  This arrangement saves space because it doesn't use
-references, and it saves time because the location of an element can
-be computed directly from the indices; there is no need to follow a
-series of references.
-
-To explain how my code works, I'll start with a CA that computes the
-``parity'' of the cells in each neighborhood.  The parity of a number
+To explain how my implementation works, I'll start with a CA that computes the
+parity of the cells in each neighborhood.  The ``parity'' of a number
 is 0 if the number is even and 1 if it is odd.
 
 \index{parity}
 
 I use the NumPy function \py{zeros} to
 create an array of zeros, then put a 1 in the middle of
-the first row.
-
-\index{NumPy}
-\index{zeros}
+the first row.  
 
 \begin{code}
->>> rows = 5
->>> cols = 11
->>> ca = np.zeros((rows, cols))
->>> ca[0, 5] = 1
-print(ca)
+rows = 5
+cols = 11
+array = np.zeros((rows, cols), dtype=np.uint8)
+array[0, 5] = 1
+print(array)
+
 [[ 0.  0.  0.  0.  0.  1.  0.  0.  0.  0.  0.]
  [ 0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.]
  [ 0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.]
@@ -4483,164 +4440,189 @@ print(ca)
  [ 0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.]]
 \end{code}
 
-\py{plot_ca} displays the results graphically:
+The data type \py{uint8} indicates that the elements
+of \py{array} are unsigned 8-bit integers.
+
+\index{NumPy}
+\index{zeros}
+\index{dtype}
+\index{uint8}
+
+\py{plot_ca} displays the elements of an \py{array} graphically:
 
 \begin{code}
 import matplotlib.pyplot as plt
 
-def plot_ca(ca, rows, cols):
+def plot_ca(array, rows, cols):
     cmap = plt.get_cmap('Blues')
-    plt.imshow(array, interpolation='none', cmap=cmap)
+    plt.imshow(array, cmap=cmap, interpolation='none')
 \end{code}
 
 Following convention, I import \py{pyplot} with the abbreviated name
-\py{plt}.  \py{imshow} treats the array as an ``image'' and displays
-it.  Using the colormap \py{'Blues'} draws the on cells in dark blue and
-the off cells in light blue.
+\py{plt}.  \py{get_cmap} turns a colormap, which maps from the values
+in the array to colors.  The colormap \py{'Blues'} draws the on cells in dark blue and the off cells in light blue.
 
+\index{imshow}
+\index{get_cmap}
 \index{colormap}
 \index{pyplot module}
 
-Now, to compute the state of the CA during the next time step,
-we can use \py{step}:
+\py{imshow} displays the array as an ``image''; that is, it draws a colored square for each element of the array.  Setting \py{interpolation} to
+\py{none} indicates that \py{imshow} should not interpolate between on and off cells. 
+
+To compute the state of the CA during time step \py{i}, we have to add up consecutive elements of \py{array} and compute the parity of the sum.  We can due that using a slice operator to select the elements and the modulus operator to compute parity:
+
+\index{slice operator}
+\index{modulus operator}
 
 \begin{code}
 def step(array, i):
     rows, cols = array.shape
+    row = array[i-1]
     for j in range(1, cols):
-        array[i, j] = sum(array[i-1, j-1:j+2]) % 2
+        elts = row[j-1:j+2]
+        array[i, j] = sum(elts) % 2
 \end{code}
 
-The parameter \py{ca} is the NumPy array that represents the state of
-the CA.  \py{rows} and \py{cols} are the dimensions of the array, and
-\py{i} is the index of the timestep we should compute.  I use \py{i} to
-indicate rows of the array, which correspond to time, and \py{j} to
-indicate columns, which correspond to space.
+\py{rows} and \py{cols} are the dimensions of the array.  \py{row} is the
+previous row of the array.
 
-Inside \py{step} we loop through the elements of row \py{i}.  Each
-element is the sum of three elements from the previous row, mod 2.
+Each time through the loop, we select three elements from \py{row}, add them up, compute the parity, and store the result in row \py{i}.
+
+In this example, the lattice is finite, so the first and last cells have only one neighbor.  To handle this special case, I don't update the first and last column; they are always 0.
 
 
 \section{Cross-correlation}
 \label{cross-correlation}
 
-The \py{step} function in the previous section is simple, but it is
-not very fast.  In general, we can speed up operations like this
-if we replace \py{for} loops with NumPy operations, because
-\py{for} loops incur a lot of overhead in the Python interpreter.
-In this section I'll show how we can speed up \py{step} using the
-NumPy function \py{correlate}.
+The operation in the previous section --- selecting elements
+from an array and adding them up --- is an example of an operation that is so useful, in so many domains, that it has a name: {\bf cross-correlation}.
+And NumPy provides a function, called \py{correlate}, that computes it.
+In this section I'll show how we can use NumPy to write a simpler, faster version of \py{step}.
 
 \index{NumPy}
 \index{correlate}
 \index{cross-correlation}
-
-First, instead of using a slice operator to select a neighborhood,
-we can use array multiplication.  Specifically,
-we multiply \py{array} by a {\bf window}
-that contains ones for the cells we want to select and zeros for
-the rest.
-
-For example, the following window contains three 1s followed by 0s:
-
-\begin{code}
->>> window = np.zeros(cols, dtype=np.int8)
->>> window[:3] = 1
->>> print(window)
-[1 1 1 0 0 0 0 0 0 0 0]
-\end{code}
-
-The data type \py{np.int8} indicates that the elements of \py{window}
-are 8-bit integers.
-
-\index{dtype}
-
-If we multiply the window by the last row of \py{array}, it selects the first
-three elements:
-
-\begin{code}
->>> print(array[4])
->>> print(window * array[4])
-[0 1 0 0 0 1 0 0 0 1 0]
-[0 1 0 0 0 0 0 0 0 0 0]
-\end{code}
-
-Now we can use \py{np.sum} and the modulus operator to compute the first element of the next row:
-
-\begin{code}
->>> np.sum(window * array[4]) % 2
-1
-\end{code}
-
-If we shift the window to the right, it selects the next three
-elements, and so on.  So we can rewrite \py{step} like this:
-
-\begin{code}
-def step2(array, i):
-    rows, cols = array.shape
-    window = np.zeros(cols)
-    window[:3] = 1
-    for j in range(1, cols):
-        array[i, j] = sum(window * array[i-1]) % 2
-        window = np.roll(window, 1)
-\end{code}
-
-\py{roll} shifts the window to the right; it also wraps it around to the
-beginning, so the last two elements of the new row depend on the first two elements of the old row.
-
-\index{roll}
 \index{window}
 
-\py{step2} yields the same results as \py{step}.  It is still not
-very fast, but it is a step in the right direction because the
-operation we just performed -- multiplying by a window, summing
-the result, shifting the window, and repeating -- is used for a
-variety of applications.  It is called {\bf cross-correlation},
-and NumPy provides a function called \py{correlate} that computes it.
-
-We can use it to write faster, simpler version of \py{step}:
+The NumPy \py{correlate} function takes an array, $a$, and a ``window", $w$, with length $N$ and computes a new array, $c$, where element \py{k} is the following summation:
+%
+\[ c_k = \sum_{n=0}^{N-1} a_{n+k} \cdot w_n \]
+%
+We can write this operation in Python like this:
 
 \begin{code}
-def step3(array, i):
-    window = np.array([1, 1, 1])
-    array[i] = np.correlate(array[i-1], window, mode='same') % 2
+def c_k(a, w, k):
+    N = len(w)
+    return sum(a[k:k+N] * w)
 \end{code}
 
-When we use \py{np.correlate}, the window does not have to be the same size as
-\py{array}, so making the window is a little simpler.
+This function computes element \py{k} of the correlation between \py{a} and \py{w}.  To show how it works, I'll create an array of integers:
 
-The \py{mode} parameter determines the size of the result.  With
-\py{mode='same'}, the result is the same size as the input.
+\begin{code}
+N = 10
+row = np.arange(N, dtype=np.uint8)
+print(row)
+
+[0 1 2 3 4 5 6 7 8 9]
+\end{code}
+
+And a window:
+
+\begin{code}
+window = [1, 1, 1]
+
+print(window)
+\end{code}
+
+With this window, each element, \py{c_k}, is the sum of consecutive elements from \py{a}:
+
+\begin{code}
+c_k(row, window, 0)
+3
+
+c_k(row, window, 1)
+6
+\end{code}
+
+We can use \py{c_k} to write \py{correlate}, which computes the elements of \py{c} for all values of \py{k} where the window and the array overlap.
+
+\begin{code}
+def correlate(row, window):
+    cols = len(row)
+    N = len(window)
+    c = [c_k(row, window, k) for k in range(cols-N+1)]
+    return np.array(c)
+\end{code}
+
+Here's the result:
+
+\begin{code}
+c = correlate(row, window)
+print(c)
+
+[ 3  6  9 12 15 18 21 24]
+\end{code}
+
+The NumPy function \py{correlate} does the same thing:
+
+\begin{code}
+c = np.correlate(row, window, mode='valid')
+print(c)
+
+[ 3  6  9 12 15 18 21 24]
+\end{code}
+
+The argument \py{mode='valid'} means that the result contains only the elements where the window and array overlap, which are considered valid.
+
+The drawback of this mode is that the result is not the same size as \py{array}.  We can fix that with \py{mode='same'}, which adds zeros to the beginning and end of \py{array}:
+
+\begin{code}
+c = np.correlate(row, window, mode='same')
+print(c)
+
+[ 1  3  6  9 12 15 18 21 24 17]
+\end{code}
+
+Now the result is the same size as \py{array}.  As an exercise at the end of this chapter, you'll have a chance to write a version of `correlate` that does the same thing.
+
+We can use NumPy's implementation of \py{correlate} to write a simple, faster version of \py{step}:
+
+\begin{code}
+def step2(array, i, window=[1,1,1]):
+    row = array[i-1]
+    c = np.correlate(row, window, mode='same')
+    array[i] = c % 2
+\end{code}
+
+In the notebook for this chapter, you'll see that \py{step2} yields the same results as \py{step}.
 
 
 \section{CA tables}
 \label{tables}
 
-Now there's just one more step.  The function we have so far
-works if the CA rule only depends on the sum of the neighbors, but
-most rules also depend on which neighbors are on and off.  For
-example, \py{100} and \py{001} might yield different results.
+The function we have so far works if the CA is ``totalitic", which means that the rules only depend on the sum of the neighbors.  But most rules also depend on which neighbors are on and off.  For example, \py{100} and \py{001} have the same sum, but for many CAs, they would yield different results.
 
-We can make \py{step} more general using a window with elements
+We can make \py{step2} more general using a window with elements
 \py{[4, 2, 1]}, which interprets the neighborhood as a binary number.
 For example, the neighborhood \py{100} yields 4; \py{010} yields 2,
 and \py{001} yields 1.  Then we can take these results and look them
 up in the rule table.
 
-Here's the more general version of \py{step}:
+Here's the more general version of \py{step2}:
 
 \begin{code}
-def step4(array, i):
-    window = np.array([4, 2, 1])
-    corr = np.correlate(array[i-1], window, mode='same')
-    array[i] = table[corr]
+def step3(array, i, window=[4,2,1]):
+    row = array[i-1]
+    c = np.correlate(row, window, mode='same')
+    array[i] = table[c]
 \end{code}
 
-The first two lines are almost the same.  The last line looks
-up each element from \py{corr} in \py{table} and assigns the
-results to \py{array[i]}.
+The first two lines are the same.  Then the last line looks
+up each element from \py{c} in \py{table} and assigns the
+result to \py{array[i]}.
 
-Finally, here's the function that computes the table:
+Here's the function that computes the table:
 
 \begin{code}
 def make_table(rule):
@@ -4649,17 +4631,14 @@ def make_table(rule):
     return table
 \end{code}
 
-The data type \py{np.uint8} indicates that the elements of \py{rule}
-are unsigned, 8-bit integers.
-
-\index{dtype}
-\index{uint8}
-
 The parameter, \py{rule}, is an integer between 0 and 255.
-The first line puts \index{rule} into an array with a single element
+The first line puts \py{rule} into an array with a single element
 so we can use \py{unpackbits}, which converts the rule number
 to its binary representation.  For
 example, here's the table for Rule 150:
+
+\index{NumPy}
+\index{unpackbits}
 
 \begin{code}
 >>> table = make_table(150)
@@ -4667,21 +4646,24 @@ example, here's the table for Rule 150:
 [0 1 1 0 1 0 0 1]
 \end{code}
 
-You can see how this code works in the notebook for this chapter.
+The code in this section is encapsulated in the \py{Cell1D} class, defined in \py{Cell1D.py} in the repository for this book.
 
 
 \section{Exercises}
-
-\begin{exercise}
 
 The code for this chapter is in the Jupyter notebook {\tt chap05.ipynb}
 in the repository for this book.  Open this notebook, read the code,
 and run the cells.  You can use this notebook to work on the
 exercises in this chapter.  My solutions are in {\tt chap05soln.ipynb}.
 
+
+\begin{exercise}
+Write a version of correlate that returns the same result as np.correlate with mode='same'.  Hint: use the NumPy function \py{pad}.
 \end{exercise}
 
-
+\index{NumPy}
+\index{pad}
+\index{correlate}
 
 \begin{exercise}
 
@@ -4690,6 +4672,7 @@ some of its spaceships.
 
 \index{Rule 110}
 \index{spaceship}
+\index{background pattern}
 
 \begin{enumerate}
 
@@ -4858,7 +4841,7 @@ Usually the grid is considered to be infinite, but in practice it is often ``wra
 
 \index{grid}
 
-Each cell in the grid has two states -- live and dead -- and 8 neighbors -- north, south, east, west, and the four diagonals.  This set of neighbors
+Each cell in the grid has two states --- live and dead --- and 8 neighbors --- north, south, east, west, and the four diagonals.  This set of neighbors
 is sometimes called a ``Moore neighborhood''.
 
 \index{Moore neighborhood}
@@ -4908,8 +4891,8 @@ spaceships in Wolfram's Rule 110 CA.
 \index{Turing complete}
 \index{universal}
 
-\item Another factor that generated interest was Conway's conjecture -- that there is no initial condition that yields unbounded growth in the number
-of live cells -- and the \$50 bounty he offered to anyone who could prove
+\item Another factor that generated interest was Conway's conjecture --- that there is no initial condition that yields unbounded growth in the number
+of live cells --- and the \$50 bounty he offered to anyone who could prove
 or disprove it.
 
 \index{unbounded}
@@ -5029,7 +5012,7 @@ The existence of long-lived patterns prompted Conway to wonder if
 there are initial patterns that never stabilize.  He
 conjectured that there were not, but he described two kinds of pattern
 that would prove him wrong, a ``gun'' and a ``puffer train''.  A gun
-is a stable pattern that periodically produces a spaceship -- as the
+is a stable pattern that periodically produces a spaceship --- as the
 stream of spaceships moves out from the source, the number of live
 cells grows indefinitely.  A puffer train is a translating pattern
 that leaves live cells in its wake.
@@ -5088,8 +5071,8 @@ same person.
 
 \index{hurricane}
 
-This is not a new observation -- about 2500 years ago Heraclitus
-pointed out that you can't step in the same river twice -- but the
+This is not a new observation --- about 2500 years ago Heraclitus
+pointed out that you can't step in the same river twice --- but the
 entities that appear in the Game of Life are a useful test case for
 thinking about {\bf philosophical realism}.
 
@@ -5478,7 +5461,7 @@ forward.
 \index{simple rules}
 
 Given a simple world, a simple set of rules, and only one moving part,
-you might expect to see simple behavior -- but you should know
+you might expect to see simple behavior --- but you should know
 better by now.  Starting with all white cells, Langton's ant
 moves in a seemingly random pattern for more than 10 000 steps
 before it enters a cycle with a period of 104 steps.  After
@@ -6982,8 +6965,8 @@ systems.
 
 For example, in {\em The Selfish Gene}, Richard Dawkins suggests that
 genetic evolution is just one example of an evolutionary system.  He
-identifies the essential elements of the category -- discrete
-replicators, variability, and differential reproduction -- and proposes
+identifies the essential elements of the category --- discrete
+replicators, variability, and differential reproduction --- and proposes
 that any system with these elements displays similar
 behavior, including complexity without design.
 
@@ -7925,8 +7908,8 @@ Game of Life.
 An interesting property of these waves is that they
 move diagonally, which might be surprising, because the agents
 themselves only move north or east, never northeast.  Outcomes
-like this -- groups or ``aggregates'' with properties and behaviors
-that the agents don't have -- are common in agent-based models.
+like this --- groups or ``aggregates'' with properties and behaviors
+that the agents don't have --- are common in agent-based models.
 We will see more examples in the next chapter.
 
 
@@ -7960,8 +7943,8 @@ The distribution of wealth in Sugarscape might be an emergent
 property, but it is a weak example because we could
 reasonably predict it based on the distributions of vision, metabolism,
 and lifespan.  The wave behavior we saw in the last example might
-be a stronger example, since the wave displays a capability -- diagonal
-movement -- that the agents clearly do not have.
+be a stronger example, since the wave displays a capability --- diagonal
+movement --- that the agents clearly do not have.
 
 Emergent properties are surprising: it is hard to predict the behavior
 of the system even if we know all the rules.  That difficulty is not
@@ -9060,7 +9043,7 @@ In the notebook for this chapter, you will see the effect of differential reprod
 
 \section{Mutation}
 
-In the simulations so far, we start with the maximum possible diversity -- one agent at every location in the landscape -- and end with the minimum possible diversity, all agents at one location.
+In the simulations so far, we start with the maximum possible diversity --- one agent at every location in the landscape --- and end with the minimum possible diversity, all agents at one location.
 
 \index{mutation}
 \index{diversity}
@@ -9088,7 +9071,7 @@ class Mutant(Agent):
 \index{NumPy}
 \index{random}
 
-In this model of mutation, every time we call \py{copy}, there is a 5\% chance of mutation.  In case of mutation, we choose a random direction from the current location -- that is, a random bit in the genotype -- and flip it.  Here's \py{mutate}:
+In this model of mutation, every time we call \py{copy}, there is a 5\% chance of mutation.  In case of mutation, we choose a random direction from the current location --- that is, a random bit in the genotype --- and flip it.  Here's \py{mutate}:
 
 \begin{code}
     def mutate(self, direction):
@@ -9210,7 +9193,7 @@ We have seen that mutation, along with differential survival and reproduction, i
 
 Logically, this ``theorem" doesn't prove that evolution in nature is caused by these mechanisms alone.  But since these mechanisms do appear, in many forms, in biological systems, it is reasonable to think that they at least contribute to natural evolution.
 
-Likewise, the model does not prove that these mechanisms always cause evolution.  But the results we see here turn out to be robust: in almost any model that includes these features -- imperfect replicators, variability, and differential reproduction -- evolution happens.
+Likewise, the model does not prove that these mechanisms always cause evolution.  But the results we see here turn out to be robust: in almost any model that includes these features --- imperfect replicators, variability, and differential reproduction --- evolution happens.
 
 \index{replicator}
 \index{variability}
@@ -9218,7 +9201,7 @@ Likewise, the model does not prove that these mechanisms always cause evolution.
 
 I hope this observation helps to demystify evolution.  When we look at natural systems, evolution seems complicated.  And because we primarily see the results of evolution, with only glimpses of the process, it can be hard to imagine and hard to believe.
 
-But in simulation, we see the whole process, not just the results.  And by including the minimal set of features to produce evolution -- temporarily ignoring the vast complexity of biological life -- we can see evolution as the surprisingly simple, inevitable idea that it is.
+But in simulation, we see the whole process, not just the results.  And by including the minimal set of features to produce evolution --- temporarily ignoring the vast complexity of biological life --- we can see evolution as the surprisingly simple, inevitable idea that it is.
 
 %TODO: A reviewer suggests that I have made the case for "simple" but
 % not "inevitable".
@@ -9914,7 +9897,7 @@ very different from ours.
 
 But if you generate 6 billion values from this distribution
 distribution, the tallest person might
-be 100 km -- that's what it means to
+be 100 km --- that's what it means to
 be scale-free!
 
 There is a simple visual test that indicates whether an empirical
@@ -10058,3 +10041,20 @@ Implement percolation on a network.
 \begin{exercise}
 Check whether the clusters in Schelling's model are connected.
 \end{exercise}
+
+Figure~\ref{fig.array} shows why.
+The diagram on the left shows a list of lists of integers; each
+dot represents a reference, which takes up 4--8 bytes.  To access
+one of the integers, you have to follow two references.
+
+\index{NumPy}
+\index{array}
+\index{nested list}
+\index{reference}
+
+The diagram on the right shows an array of the same integers.  Because
+the elements are all the same size, they can be stored contiguously in
+memory.  This arrangement saves space because it doesn't use
+references, and it saves time because the location of an element can
+be computed directly from the indices; there is no need to follow a
+series of references.
