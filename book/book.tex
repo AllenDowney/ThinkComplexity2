@@ -10,7 +10,7 @@
 % work, please contact Allen Downey.
 
 % The LaTeX source for this book is available from
-% https://greenteapress.com/complexity
+% https://github.com/AllenDowney/ThinkComplexity2
 
 % TODO: Fix PDFLATEX options.
 
@@ -114,7 +114,8 @@
 
 \begin{latexonly}
 
-%-half title ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  --- --
+% half title ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---
+
 \thispagestyle{empty}
 
 \begin{flushright}
@@ -132,7 +133,7 @@ Version \theversion
 
 \end{flushright}
 
-%--verso ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  --- 
+% verso ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  --- 
 
 \afterpage{\blankpage}
 
@@ -141,7 +142,8 @@ Version \theversion
 %\thispagestyle{empty}
 %\vspace*{6in}
 
-%--title page ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  --- --
+% title page ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  --- 
+
 \pagebreak
 \thispagestyle{empty}
 
@@ -176,7 +178,8 @@ Version \theversion
 \end{flushright}
 
 
-%--copyright ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  --- --
+% copyright ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---
+
 \pagebreak
 \thispagestyle{empty}
 
@@ -195,7 +198,7 @@ Needham MA 02492
 Permission is granted to copy, distribute, transmit and adapt
 this work under a Creative Commons
 Attribution-NonCommercial-ShareAlike 4.0 International License:
-\url{https://greenteapress.com/tc/license}.
+\url{https://thinkcomplex.com/license}.
 
 If you are interested in distributing a commercial version of this
 work, please contact the author.
@@ -206,7 +209,7 @@ The \LaTeX\ source for this book is available from
       https://github.com/AllenDowney/ThinkComplexity2
 \end{code}
 
-%--table of contents ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  --- 
+% table of contents ---  ---  ---  ---  ---  ---  ---  ---  ---
 
 \cleardoublepage
 \setcounter{tocdepth}{1}
@@ -215,7 +218,7 @@ The \LaTeX\ source for this book is available from
 \end{latexonly}
 
 
-% HTML title page ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  --- 
+% HTML title page ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---
 
 \begin{htmlonly}
 
@@ -234,7 +237,7 @@ Copyright \copyright ~2016 \theauthors.
 Permission is granted to copy, distribute, and/or modify this work
 under the terms of the Creative Commons
 Attribution-NonCommercial-ShareAlike 4.0 International License, which is
-available at \url{https://greenteapress.com/tc/license}.
+available at \url{https://thinkcomplex.com/license}.
 
 \vspace{1em}
 
@@ -259,7 +262,7 @@ simulations.  These tools are useful in the natural and social sciences,
 and sometimes in arts and humanities.
 
 For an overview of complexity science, see
-\url{https://greenteapress.com/tc/complex}.
+\url{https://thinkcomplex.com/complex}.
 
 \index{complexity science}
 \index{complex systems}
@@ -345,7 +348,7 @@ Finally, all supporting software has been updated to Python 3 (but most of it ru
 
 
 All code used in this book is available from a Git repository on GitHub:
-\url{https://greenteapress.com/tc/repo}.  
+\url{https://thinkcomplex.com/repo}.  
 If you are not familiar with Git, it is a 
 version control system that allows you to keep track of the files that
 make up a project.  A collection of files under Git's control is
@@ -429,7 +432,7 @@ and run the notebooks.
 \item[Run Jupyter on Binder]
 
 Binder is a service that runs Jupyter in a virtual machine.  If you
-follow this link, \url{https://greenteapress.com/tc/binder},
+follow this link, \url{https://thinkcomplex.com/binder},
 you should get a Jupyter home page with the notebooks for this book
 and the supporting data and scripts.
 
@@ -769,7 +772,7 @@ until you have seen the examples later in the book.
 
 \item[Abstract \myrightarrow~detailed] In classical models, planets are
   point masses, planes are frictionless, and cows are
-  spherical (see \url{https://greenteapress.com/tc/cow}).
+  spherical (see \url{https://thinkcomplex.com/cow}).
   Simplifications like these are often necessary for analysis,
   but computational models can be more realistic.
 
@@ -1174,7 +1177,7 @@ of a graph is arbitrary.
 
 To represent graphs, we'll use a package called NetworkX,
 which is the most commonly used network library in Python.
-You can read more about it at \url{https://greenteapress.com/tc/netx},
+You can read more about it at \url{https://thinkcomplex.com/netx},
 but I'll explain it as we go along.
 
 \index{NetworkX}
@@ -1330,7 +1333,7 @@ by Paul \Erdos~and Alfr\'{e}d \Renyi~in the 1960s.
 An \Erdos-\Renyi~graph (ER graph) is characterized by two parameters:
 $n$ is the number of nodes and $p$ is the probability that there
 is an edge between any two nodes.
-See \url{https://greenteapress.com/tc/er}.
+See \url{https://thinkcomplex.com/er}.
 
 \index{Erdos-Renyi model@\Erdos-\Renyi~model}
 
@@ -1382,7 +1385,7 @@ where every node is connected to every other.
 
 Here's a generator function that takes a list of nodes and enumerates
 all distinct pairs.  If you are not familiar with generator functions,
-you can read about them at \url{https://greenteapress.com/tc/gen}.
+you can read about them at \url{https://thinkcomplex.com/gen}.
 
 \begin{code}
 def all_pairs(nodes):
@@ -1426,7 +1429,7 @@ we'll develop functions to check whether a graph is connected.
 \label{connected}
 
 A graph is {\bf connected} if there is a path from every node to every
-other node (see \url{https://greenteapress.com/tc/conn}).
+other node (see \url{https://thinkcomplex.com/conn}).
 \index{connected graph}
 \index{path}
 
@@ -1648,7 +1651,7 @@ def prob_connected(n, p, iters=100):
 The parameters \py{n} and \py{p} are passed along to \py{make_random_graph};
 \py{iters} is the number of random graphs we generate.
 
-This function uses a list comprehension; if you are not familiar with this feature, you can read about it at \url{https://greenteapress.com/tc/comp}.
+This function uses a list comprehension; if you are not familiar with this feature, you can read about it at \url{https://thinkcomplex.com/comp}.
 
 \index{list comprehension}
 
@@ -1716,7 +1719,7 @@ grow as the size of the graphs increases.
 
 If you are not already familiar with analysis of algorithms,
 you might want to read Appendix B of {\it Think Python, 2nd Edition},
-at \url{https://greenteapress.com/tc/tp2}. 
+at \url{https://thinkcomplex.com/tp2}. 
 
 \newcommand{\V}{n}
 \newcommand{\E}{m}
@@ -1886,10 +1889,10 @@ in Section~\ref{code}.
 Stanley Milgram was an American social psychologist who conducted
 two of the most famous experiments in social science, the
 Milgram experiment, which studied people's obedience to authority
-(\url{https://greenteapress.com/tc/milgram})
+(\url{https://thinkcomplex.com/milgram})
 and the Small World Experiment, which studied
 the structure of social networks
-(\url{https://greenteapress.com/tc/small}).
+(\url{https://thinkcomplex.com/small}).
 
 \index{Milgram, Stanley}
 \index{small world experiment}
@@ -1939,7 +1942,7 @@ In 1998 Duncan Watts and Steven Strogatz published a paper in {\em
   Nature}, ``Collective dynamics of `small-world' networks'', that
 proposed an explanation for the small world phenomenon.  You can
 download it from
-\url{https://greenteapress.com/tc/watts}.
+\url{https://thinkcomplex.com/watts}.
 
 \index{Watts, Duncan} 
 \index{Strogatz, Steven}
@@ -2175,7 +2178,7 @@ function \py{choice}, which is in the module \py{random}.
 \end{enumerate}
 
 As an aside, the expression \py{G[u]} returns a dictionary that contains the neighbors of \py{u} as keys.  It is usually faster than using \py{G.neighbors}
-(see \url{https://greenteapress.com/tc/neigh}).
+(see \url{https://thinkcomplex.com/neigh}).
 
 This function does not consider the edges in the order specified
 by Watts and Strogatz, but that doesn't seem to affect
@@ -2423,10 +2426,10 @@ model for real-world networks that exhibit the small world phenomenon.
 If you ask me why planetary orbits are elliptical,
 I might start by modeling a planet and a star as point masses; I
 would look up the law of universal gravitation at
-\url{https://greenteapress.com/tc/grav}
+\url{https://thinkcomplex.com/grav}
 and use it to write a differential equation for the motion of
 the planet.  Then I would either derive the orbit equation or,
-more likely, look it up at \url{https://greenteapress.com/tc/orbit}.
+more likely, look it up at \url{https://thinkcomplex.com/orbit}.
 With a little algebra, I could derive the conditions that
 yield an elliptical orbit.  Then I would argue that the objects
 we consider planets satisfy these conditions.
@@ -2575,7 +2578,7 @@ which is much worse than what it should be, $O(\V + \E)$.
 We can solve this problem with a double-ended queue, also known
 as a {\bf deque}.  The important feature of a deque is that you
 can add and remove elements from the beginning or end in constant time.
-To see how it is implemented, see \url{https://greenteapress.com/tc/deque}.
+To see how it is implemented, see \url{https://thinkcomplex.com/deque}.
 
 \index{collections module}
 
@@ -2620,9 +2623,9 @@ find shortest paths.
 
 Edsger W. Dijkstra was a Dutch computer scientist who invented an
 efficient shortest-path algorithm (see
-\url{https://greenteapress.com/tc/dijk}).  He also invented the semaphore, which is a data structure used to coordinate programs that
+\url{https://thinkcomplex.com/dijk}).  He also invented the semaphore, which is a data structure used to coordinate programs that
 communicate with each other (see
-\url{https://greenteapress.com/tc/sem} and Downey, {\em The Little Book of Semaphores}).
+\url{https://thinkcomplex.com/sem} and Downey, {\em The Little Book of Semaphores}).
 
 \index{Dijkstra, Edsger}
 \index{Little Book of Semaphores@{\em The Little Book of Semaphores}}
@@ -2755,7 +2758,7 @@ My implementation of \py{reachable_nodes_bfs} is efficient in the sense
 that it is in $O(\V + \E)$, but it incurs a lot of overhead adding nodes
 to the queue and removing them.  NetworkX provides a simple, fast
 implementation of BFS, available from the NetworkX repository on
-GitHub at \url{https://greenteapress.com/tc/connx}.
+GitHub at \url{https://thinkcomplex.com/connx}.
 
 Here is a version I modified to return a set of nodes:
 
@@ -2864,7 +2867,7 @@ probably good enough.  But there are are more efficient alternatives.
 
 Find an algorithm for the all-pairs shortest path problem and
 implement it.  See
-\url{https://greenteapress.com/tc/short}.
+\url{https://thinkcomplex.com/short}.
 
 Compare the run time of your implementation with running
 Dijkstra's algorithm $n$ times.  Which algorithm is better in
@@ -2931,7 +2934,7 @@ Specifically, I'll use their Facebook data\footnote{J. McAuley and
   Networks. NIPS, 2012.}, which includes 4039 users and 88,234
 friend relationships among them.  This dataset is in the repository
 for this book, but it is also available from the SNAP web site at
-\url{https://greenteapress.com/tc/snap}
+\url{https://thinkcomplex.com/snap}
 
 The data file contains one line per edge, with users identified by
 integers from 0 to 4038.  Here's the code that reads the file:
@@ -3105,6 +3108,7 @@ So far, so good.
 
 
 \section{Degree}
+\label{degree}
 
 \begin{figure}
 \centerline{\includegraphics[width=5.5in]{figs/chap04-1.pdf}}
@@ -3141,7 +3145,7 @@ which is defined in the \py{thinkstats2} module.
 \py{Pmf} stands for ``probability mass function'';
 if you are not familiar with this concept,
 you might want to read Chapter 3 of {\it Think Stats, 2nd edition}
-at \url{https://greenteapress.com/tc/ts2}.
+at \url{https://thinkcomplex.com/ts2}.
 
 Briefly, a \py{Pmf} maps from values to their probabilities.
 A \py{Pmf} of degrees is a mapping from each possible degree, $d$, to the
@@ -3284,7 +3288,7 @@ structure of several real-world networks,
 including graphs that represent the interconnectivity of movie actors,
 world-wide web (WWW) pages, and elements in the electrical power grid
 in the western United States.  You can download the paper from
-\url{https://greenteapress.com/tc/barabasi}.
+\url{https://thinkcomplex.com/barabasi}.
 
 \index{Barabasi-Albert graph@\Barabasi-Albert graph}
 \index{movie actor data}
@@ -3327,7 +3331,7 @@ model have a degree distribution that obeys a power law.
 
 Graphs with this property are sometimes called {\bf scale-free networks},
 for reasons I won't explain; if you are curious, you can read more
-at \url{https://greenteapress.com/tc/scale}.
+at \url{https://thinkcomplex.com/scale}.
 
 \index{scale-free network}
 \index{NetworkX}
@@ -3670,7 +3674,7 @@ small world behavior, but they offer different explanations:
 
 \item The WS model suggests that social networks are ``small'' because
   they include both strongly-connected clusters and ``weak ties'' that
-  connect clusters (see \url{https://greenteapress.com/tc/weak}).
+  connect clusters (see \url{https://thinkcomplex.com/weak}).
 
 \index{weak ties}
 
@@ -3703,7 +3707,7 @@ that would provide evidence in favor of one model over the other?
 
 Choosing among competing models is the topic of Thomas Kuhn's
 essay, ``Objectivity, Value Judgment, and Theory Choice'', which
-you can read at \url{https://greenteapress.com/tc/kuhn}.
+you can read at \url{https://thinkcomplex.com/kuhn}.
 
 \index{Kuhn, Thomas}
 \index{theory choice}
@@ -3736,7 +3740,7 @@ distribution?
 \begin{exercise}
 
 Data files from the \Barabasi~and Albert paper are available from
-\url{https://greenteapress.com/tc/netdata}.  Their actor collaboration data is included in the repository for this book in a
+\url{https://thinkcomplex.com/netdata}.  Their actor collaboration data is included in the repository for this book in a
 file named \py{actor.dat.gz}.  The following function reads the file and
 builds the graph.
 
@@ -3841,7 +3845,7 @@ In the early 1980s Stephen Wolfram published a series of papers
 presenting a systematic study of 1-D CAs.  He identified
 four categories of behavior, each more interesting than
 the last.  You can read one of these papers, ``Statistical mechanics
-of cellular automata", at \url{https://greenteapress.com/tc/ca}.
+of cellular automata", at \url{https://thinkcomplex.com/ca}.
 
 In Wolfram's experiments, the cells are arranged in a lattice (which you
 might remember from Section~\ref{watts}) where each cell is connected to two neighbors.  The lattice can be finite, infinite, or arranged in a ring.
@@ -3940,7 +3944,7 @@ Figure~\ref{chap05-3} shows what it looks like after 64 steps.
 \newcommand{\Sierpinski}{Sierpi\'{n}ski}
 
 This pattern resembles the \Sierpinski~triangle, which
-you can read about at \url{https://greenteapress.com/tc/sier}.
+you can read about at \url{https://thinkcomplex.com/sier}.
 
 \index{Sierpi\'{n}ski triangle}
 
@@ -4018,7 +4022,7 @@ and a sequence generated by a ``truly'' random process.  In {\em A New
 
 The existence of Class 3 CAs is surprising.  To explain how
 surprising, let me start with philosophical
-{\bf determinism} (see \url{https://greenteapress.com/tc/deter}).
+{\bf determinism} (see \url{https://thinkcomplex.com/deter}).
 Many philosophical stances are hard to define precisely because
 they come in a variety of flavors.  I often find it useful
 to define them with a list of statements ordered from weak
@@ -4072,7 +4076,7 @@ present before its eyes.
 \end{quote}
 
 This ``intellect'' came to be called ``Laplace's Demon''.
-See \url{https://greenteapress.com/tc/demon}.  The word
+See \url{https://thinkcomplex.com/demon}.  The word
 ``demon'' in this context has the sense of ``spirit'', with no
 implication of evil.
 
@@ -4124,7 +4128,7 @@ The behavior of Class 4 CAs is even more surprising.  Several 1-D CAs,
 most notably Rule 110, are {\bf Turing complete}, which means that
 they can compute any computable function.  This property, also called
 {\bf universality}, was proved by Matthew Cook in 1998.  See
-\url{https://greenteapress.com/tc/r110}.
+\url{https://thinkcomplex.com/r110}.
 
 \index{Turing complete}
 \index{universality}
@@ -4246,7 +4250,7 @@ a maximal (``universal'') level of computational power, and that most
 systems do in fact attain this maximal level of computational
 power. Consequently, most systems are computationally
 equivalent (see
-  \url{https://greenteapress.com/tc/equiv}).
+  \url{https://thinkcomplex.com/equiv}).
 \end{quote}
 
 Applying these definitions to CAs, Classes 1 and 2 are ``obviously
@@ -4347,7 +4351,7 @@ not very detailed or realistic.
 
 For example, some species of cone snail produce a pattern on their
 shells that resembles the patterns generated by cellular automatons
-(see \url{https://greenteapress.com/tc/cone}).  So it is natural to
+(see \url{https://thinkcomplex.com/cone}).  So it is natural to
 suppose that a CA is a model of the mechanism that produces patterns
 on shells as they grow.  But, at least initially, it is not clear how
 the elements of the model (so-called cells, communication between
@@ -4408,7 +4412,7 @@ the model more realistic, but that realism adds no explanatory power.
 
 To generate the figures in this chapter, I wrote a Python class called
 \py{Cell1D} that represents a 1-D cellular automaton, and a class called
-\py{Cell1DViewer} that plots the results.
+\py{Cell1DViewer} that plots the results.  Both are defined in \py{Cell1D.py} in the repository for this book.
 
 \index{Cell1D}
 \index{Cell1DViewer}
@@ -4463,7 +4467,6 @@ Following convention, I import \py{pyplot} with the abbreviated name
 in the array to colors.  The colormap \py{'Blues'} draws the on cells in dark blue and the off cells in light blue.
 
 \index{imshow}
-\index{get_cmap}
 \index{colormap}
 \index{pyplot module}
 
@@ -4678,12 +4681,12 @@ some of its spaceships.
 
 \item Read the Wikipedia page about Rule 110, which describes its
   background pattern and spaceships:
-  \url{https://greenteapress.com/tc/r110}.
+  \url{https://thinkcomplex.com/r110}.
 
 \item Create a Rule 110 CA with an initial condition that yields the
   stable background pattern.
 
-Note that the CA class provides
+Note that the \py{Cell1D} class provides
 \py{start_string}, which allow you to initialize the state of
 the array using a string of \py{1}s and \py{0}s.
 
@@ -4708,7 +4711,7 @@ The goal of this exercise is to implement a Turing machine.
 
 \begin{enumerate}
 
-\item Read about Turing machines at \url{https://greenteapress.com/tc/tm}.
+\item Read about Turing machines at \url{https://thinkcomplex.com/tm}.
 
 \item Write a class called \py{Turing} that implements a Turing machine.
 For the action table, use the rules for a 3-state busy beaver.
@@ -4719,7 +4722,7 @@ For the action table, use the rules for a 3-state busy beaver.
 \item Write a class named \py{TuringViewer} that generates an
 image that represents the state of the tape and the position and
 state of the head.  For one example of what that might look like,
-see \url{https://greenteapress.com/tc/turing}.
+see \url{https://thinkcomplex.com/turing}.
 
 \end{enumerate}
 
@@ -4731,7 +4734,7 @@ see \url{https://greenteapress.com/tc/turing}.
 This exercise asks you to implement and test several PRNGs.
 For testing, you will need to install
 \py{DieHarder}, which you can download from
-\url{https://greenteapress.com/tc/dh}, or it
+\url{https://thinkcomplex.com/dh}, or it
 might be available as a package for your operating system.
 
 \index{DieHarder}
@@ -4740,7 +4743,7 @@ might be available as a package for your operating system.
 
 \item Write a program that implements one of the linear congruential
 generators described at
-\url{https://greenteapress.com/tc/lcg}).
+\url{https://thinkcomplex.com/lcg}).
 Test it using \py{DieHarder}.
 
 \item Read the documentation of Python's \py{random} module.
@@ -4764,7 +4767,7 @@ Test it.
 
 Falsifiability is an appealing and useful idea, but among philosophers of science it is not generally accepted as a solution to the demarcation problem, as Popper claimed.
 
-Read \url{https://greenteapress.com/tc/false} and answer the
+Read \url{https://thinkcomplex.com/false} and answer the
 following questions.
 
 \begin{enumerate}
@@ -4829,17 +4832,14 @@ One of the first cellular automatons to be studied, and probably the
 most popular of all time, is a 2-D CA called ``The Game of Life'', or GoL
 for short.  It was developed by John H. Conway and popularized in 1970
 in Martin Gardner's column in {\em Scientific American}.
-See \url{https://greenteapress.com/tc/gol}.
+See \url{https://thinkcomplex.com/gol}.
 
 \index{Game of Life}
 \index{Conway, John H.}
 \index{Gardner, Martin}
 \index{grid}
 
-The cells in GoL are arranged in rows and columns in a 2-D {\bf grid}.
-Usually the grid is considered to be infinite, but in practice it is often ``wrapped''; that is, the right edge is connected to the left and the top edge to the bottom.
-
-\index{grid}
+The cells in GoL are arranged a 2-D {\bf grid}, that is, an array of rows and columns.  Usually the grid is considered to be infinite, but in practice it is often ``wrapped''; that is, the right edge is connected to the left, and the top edge to the bottom.
 
 Each cell in the grid has two states --- live and dead --- and 8 neighbors --- north, south, east, west, and the four diagonals.  This set of neighbors
 is sometimes called a ``Moore neighborhood''.
@@ -4847,27 +4847,12 @@ is sometimes called a ``Moore neighborhood''.
 \index{Moore neighborhood}
 \index{neighborhood}
 
-Like the 1-D CAs in the previous chapters, GoL evolves
-over time according to rules, which are like simple laws of physics.
+Like the 1-D CAs in the previous chapters, GoL evolves over time according to rules, which are like simple laws of physics.
 
 In GoL, the next state of each cell depends on its current state and
-its number of live neighbors.  If a cell is alive, it survives if it
-has 2 or 3 neighbors and dies otherwise.  If a cell is
+its number of live neighbors.  If a cell is alive, it stays alive if it
+has 2 or 3 neighbors, and dies otherwise.  If a cell is
 dead, it stays dead unless it has exactly 3 neighbors.
-
-The following table summarizes the rules:
-
-\begin{tabular}{|l|c|c|}
-\hline
-Current    &    Number of     & Next \\
-state      &    neighbors     & state \\
-\hline
-live       &  2--3          & live         \\
-live       &  0--1, 4--8    & dead         \\
-dead       &  3             & live         \\
-dead       &  0--2, 4--8    & dead         \\
-\hline
-\end{tabular}
 
 This behavior is loosely analogous to real cell growth: cells
 that are isolated or overcrowded die; at moderate densities they
@@ -4980,16 +4965,15 @@ state where the number of live cells is nearly constant
 \label{chap06-4}
 \end{figure}
 
-But there are a some simple starting conditions that take a
-long time to settle down and yield a surprising
-number of live cells.  These patterns are called ``Methuselahs''
-because they are so long-lived.
+But there are a some simple starting conditions that 
+yield a surprising number of live cells, and take a
+long time to settle down.  Because these patterns are cso long-lived, they
+are called ``Methuselahs''.
 
 \index{Methuselah}
 \index{Conway's conjecture}
-\index{Methuselah}
 
-One of the simplest is the
+One of the simplest Methuselahs is the
 r-pentomino, which has only five cells, roughly in the shape of the
 letter ``r''.  Figure~\ref{chap06-4} shows the initial configuration
 of the r-pentomino and the final configuration after 1103 steps.
@@ -5066,30 +5050,16 @@ Well, not so fast.  Many entities that we consider ``real'' are also
 persistent patterns of entities at a smaller scale.  Hurricanes are
 just patterns of air flow, but we give them personal names.  And
 people, like gliders, are not made up of the same cells over time.
-But even if you replace every cell in your body, we consider you the
-same person.
 
 \index{hurricane}
 
 This is not a new observation --- about 2500 years ago Heraclitus
 pointed out that you can't step in the same river twice --- but the
 entities that appear in the Game of Life are a useful test case for
-thinking about {\bf philosophical realism}.
+thinking about scientific realism.
 
 \index{Heraclitus}
-\index{philosophical realism}
-
-In the context of philosophy, realism is the view that entities
-in the world exist independent of human perception and conception.
-By ``perception'' I mean the information that we get from
-our senses, and by ``conception'' I mean the mental model
-we form of the world.  For example, our vision systems perceive
-something like a 2-D projection of a scene, and our brains
-use that image to construct a 3-D model of the objects in the
-scene.
-
-\index{perception}
-\index{conception}
+\index{scientific realism}
 
 {\bf Scientific realism} pertains to scientific theories and the
 entities they postulate.
@@ -5173,7 +5143,7 @@ To see whether you are comfortable with instrumentalism, I made up the following
 
 \begin{quote}
 ``Electric and magnetic fields are postulated entities in our best
-  theories of electromagnetism, but they aren't real.  We could
+  theory of electromagnetism, but they aren't real.  We could
   construct other theories, without postulating fields, that would be
   just as useful.''
 \end{quote}
@@ -5207,11 +5177,12 @@ scenarios that influence your reaction?  Can you make
 a principled distinction between them?
 
 For more on instrumentalism, see
-\url{https://greenteapress.com/tc/instr}.
+\url{https://thinkcomplex.com/instr}.
 
 
 
 \section{Implementing Life}
+\label{implife}
 
 The exercises at the end of this chapter ask you to experiment
 with and modify the Game of Life, and implement other 2-D cellular
@@ -5360,14 +5331,10 @@ detritus in its wake.
 
 \section{Exercises}
 
-\begin{exercise}
-
 The code for this chapter is in the Jupyter notebook {\tt chap06.ipynb}
 in the repository for this book.  Open this notebook, read the code,
 and run the cells.  You can use this notebook to work on the
-exercises in this chapter.  My solutions are in {\tt chap06soln.ipynb}.
-
-\end{exercise}
+following exercises.  My solutions are in {\tt chap06soln.ipynb}.
 
 
 \begin{exercise}
@@ -5391,9 +5358,9 @@ the grid.
 \begin{exercise}
 
 One of the longest-lived small patterns is ``rabbits'', which starts with
-9 live cells and takes 17 331 steps to stabilize.  You can get the
+9 live cells and takes 17,331 steps to stabilize.  You can get the
 initial configuration in various formats from
-\url{https://greenteapress.com/tc/rabbits}.  Load this configuration
+\url{https://thinkcomplex.com/rabbits}.  Load this configuration
 and run it.
 
 \end{exercise}
@@ -5402,12 +5369,12 @@ and run it.
 \begin{exercise}
 
 In my implementation, the \py{Life} class is based on a parent class
-called \py{Cell2D}, and \py{LifeViewer} is based on \py{Cell2DViewer}.  You can
-use these base classes to implement other 2-D cellular automatons.
+called \py{Cell2D}, and the \py{LifeViewer} class is based on \py{Cell2DViewer}.  You can use these base classes to implement other 2-D cellular automatons.
 
-\index{Cell2D}
-\index{Cell2DViewer}
-\index{LifeViewer}
+\index{Cell2D class}
+\index{Cell2DViewer class}
+\index{LifeViewer class}
+\index{Life class}
 
 For example, one variation of GoL, called ``Highlife'', has the
 same rules as GoL, plus one additional rule: a dead cell with 6
@@ -5421,7 +5388,7 @@ that inherits from \py{Cell2DViewer} and try different ways
 to visualize the results.  As a simple example, use a different
 color map.
 
-One of the more interesting patterns in Highlife is the replicator.
+One of the more interesting patterns in Highlife is the replicator (see \url{https://thinkcomplex.com/repl}).
 Use \py{add_cells} to initialize Highlife with a replicator and see what it
 does.
 
@@ -5441,7 +5408,7 @@ spelled wrong as an homage to Alan Turing.
 \index{Turing machine}
 
 The most famous Turmite is Langton's Ant, discovered by Chris Langton
-in 1986.  See \url{https://greenteapress.com/tc/langton}.
+in 1986.  See \url{https://thinkcomplex.com/langton}.
 
 \index{Langton's Ant}
 \index{Langton, Chris}
@@ -5463,7 +5430,7 @@ forward.
 Given a simple world, a simple set of rules, and only one moving part,
 you might expect to see simple behavior --- but you should know
 better by now.  Starting with all white cells, Langton's ant
-moves in a seemingly random pattern for more than 10 000 steps
+moves in a seemingly random pattern for more than 10,000 steps
 before it enters a cycle with a period of 104 steps.  After
 each cycle, the ant is translated diagonally, so it leaves
 a trail called the ``highway''.
@@ -5515,10 +5482,10 @@ particularly the development of animal coloration patterns.
 \index{Turing, Alan}
 \index{morphogenesis}
 
-Turing's model is based on differential equations, but it can also
+Turing's model is based on differential equations, but it can
 be implemented using a cellular automaton.
 
-But before we get to Turing's model, we'll start with something simpler:
+Before we get to Turing's model, we'll start with something simpler:
 a diffusion system with just one chemical.  We'll use a 2-D CA where the
 state of each cell is a continuous quantity (usually between 0 and 1)
 that represents the concentration of the chemical.
@@ -5563,8 +5530,7 @@ in concentration to the rate of flow:
 \label{chap07-1}
 \end{figure}
 
-Figure~\ref{chap07-1} shows results for a CA with \py{n=9}, \py{r=0.1}
-and initial concentration 0 everywhere except for an ``island'' in the
+Figure~\ref{chap07-1} shows results for a CA with size \py{n=9}, diffusion constant \py{r=0.1}, and initial concentration 0 everywhere except for an ``island'' in the
 middle.  The figure shows the starting configuration and the state of
 the CA after 5 and 10 steps.  The chemical spreads from the center
 outward, continuing until the concentration is the same everywhere.
@@ -5581,50 +5547,49 @@ chemical:
 \begin{code}
 class ReactionDiffusion(Cell2D):
 
-   def __init__(self, n, m, params):
+   def __init__(self, n, m, params, noise=0.1):
         self.params = params
         self.array = np.ones((n, m), dtype=float)
-        self.array2 = np.zeros((n, m), dtype=float)
-        island(self.array2, val=0.1, noise=0.1)
+        self.array2 = noise * np.random.random((n, m))
+        add_island(self.array2)
 \end{code}
 
 \py{n} and \py{m} are the number of rows and columns in the array.
 \py{params} is a tuple of parameters, which I explain below.
 
-\py{array} represents the concentration of the first chemical, \py{A},
-which is initially 1 everywhere.  The data type \py{float} indicates that
-the elements of \py{A} are floating-point values.
+\index{NumPy}
+\index{ones}
+\index{random}
+
+\py{array} represents the concentration of the first chemical, \py{A};
+the NumPy function \py{ones} initializes it to 1 everywhere.  The data type \py{float} indicates that the elements of \py{A} are floating-point values.
 
 \index{dtype}
 \index{float}
 
-\py{array2} represents the concentration of \py{B}, which is initially
-0 everywhere except an island in the middle, which is initialized
-by \py{island}:
+\py{array2} represents the concentration of \py{B}, which is initialized with random values between 0 and \py{noise}, which is 0.1 by default.  Then \py{add_island} adds an island of higher concentration in the middle: 
 
 \begin{code}
-def island(a, val, noise):
+def add_island(a, height=0.1):
     n, m = a.shape
-    r = min(n, m) // 20
-    a[n//2-r:n//2+r, m//2-r:m//2+r] = val
-    a += noise * np.random.random((n, m))
+    radius = min(n, m) // 20
+    i = n//2
+    j = m//2
+    a[i-radius:i+radius, j-radius:j+radius] += height
 \end{code}
 
 \index{NumPy}
-\index{random}
+\index{slice}
 
-The radius of the island, \py{r}, is one twentieth of \py{n} or \py{m},
-whichever is smaller.  The height of the island is \py{val}, which is 0.1
-in the example.  Also, random uniform noise, with values from 0 to
-\py{noise}, is added to the entire array.
+The radius of the island is one twentieth of \py{n} or \py{m},
+whichever is smaller.  The height of the island is \py{height}, with the default value 0.1.
 
 \index{island}
 
-And here is the \py{step} function that updates the arrays:
+Here is the \py{step} function that updates the arrays:
 
 \begin{code}
     def step(self):
-        """Executes one time step."""
         A = self.array
         B = self.array2
         ra, rb, f, k = self.params
@@ -5740,7 +5705,7 @@ material.  Examples include oil in rock formations, water in paper,
 and hydrogen gas in micropores.  Percolation models are also used to
 study systems that are not literally percolation, including epidemics
 and networks of electrical resistors.  See
-\url{https://greenteapress.com/tc/perc}.
+\url{https://thinkcomplex.com/perc}.
 
 \index{percolation}
 
@@ -5753,9 +5718,10 @@ In this model:
 
 \begin{itemize}
 
-\item Initially, each cell is either ``porous'' with probability \py{p} or
-``non-porous'', and all cells are considered ``dry'' except the top
-row, which is ``wet''.
+\item Initially, each cell is either ``porous'' with probability \py{q} or
+``non-porous'' with probability \py{1-q}
+
+\item When the simulation begins, all cells are considered ``dry'' except the top row, which is ``wet''.
 
 \item During each time step, if a porous cell has at least one wet neighbor,
 it becomes wet.  Non-porous cells stay dry.
@@ -5771,21 +5737,16 @@ that the CA has a ``percolating cluster''.
 \index{cluster}
 \index{percolating cluster}
 
-One of the primary questions of interest regarding percolation is the
-probability of finding a percolating cluster and how it depends on
-\py{p}.  This question might remind you of Section~\ref{randomgraphs},
-where we computed the probability that a random \Erdos-\Renyi~graph is
-connected.  We will see several connections between that model and
-this one.
+Two questions of interest regarding percolation are (1) the probability that a random array contains a percolating cluster, and (2) how that probability depends on \py{q}.  These question might remind you of Section~\ref{randomgraphs}, where we considered the probability that a random \Erdos-\Renyi~graph is connected.  We will see several connections between that model and this one.
 
 I define a new class to represent a percolation model:
 
 \begin{code}
 class Percolation(Cell2D):
 
-    def __init__(self, n, m, p):
-        self.p = p
-        self.array = np.random.choice([0, 1], (n, m), p=[1-p, p])
+    def __init__(self, n, q):
+        self.q = q
+        self.array = np.random.choice([1, 0], (n, n), p=[q, 1-q])
         self.array[0] = 5
 \end{code}
 
@@ -5793,20 +5754,13 @@ class Percolation(Cell2D):
 \index{random}
 \index{choice}
 
-\py{n} and \py{m} are the number of rows and columns in the CA.  \py{p}
-is the probability that a cell is porous.
+\py{n} and \py{m} are the number of rows and columns in the CA.
 
 The state of the CA is stored in \py{array}, which is initialized
 using \py{np.random.choice} to choose 1 (porous) with probability
-\py{p}, and 0 (non-porous) with probability \py{1-p}.
-The state of the top row is set to 5, which represents a wet cell.
+\py{q}, and 0 (non-porous) with probability \py{1-q}.
 
-\index{neighborhood}
-\index{kernel}
-
-During each time step, we check whether any porous cell has a wet
-neighbor, using a 4-cell neighborhood (not including the diagonals).
-Here is the kernel:
+The state of the top row is set to 5, which represents a wet cell.  Using 5, rather than the more obvious 2, makes it possible to use \py{correlate2d} to check whether any porous cell has a wet neighbor.  Here is the kernel:
 
 \begin{code}
     kernel = np.array([[0, 1, 0],
@@ -5814,8 +5768,14 @@ Here is the kernel:
                        [0, 1, 0]])
 \end{code}
 
-And here is the \py{step} function:
+This kernel defines a 4-cell ``von Neumann'' neighborhood; unlike the Moore neighborhood we saw in Section~\ref{life}, it does not including the diagonals.
 
+\index{neighborhood}
+\index{kernel}
+
+This kernel adds up the states of the neighbors.  If any of them are wet, the result will exceed 5.  Otherwise the maximum result is 4 (if all neighbors happen to be porous).
+
+We can use this logic to write a simple, fast \py{step} function:
 
 \begin{code}
     def step(self):
@@ -5824,20 +5784,17 @@ And here is the \py{step} function:
         self.array[(a==1) & (c>=5)] = 5
 \end{code}
 
-\py{correlate2d} adds up the state of the neighbors, which can only
-exceed 5 if at least one neighbor is wet.  The last line finds cells
-that are porous, \py{a==1}, with at least one wet neighbor, \py{c>=5},
-and sets their state to 5, which is wet.
+This function identifies porous cells, where \py{a==1}, that have at least one wet neighbor, where \py{c>=5}, and sets their state to 5, which indicates that they are wet.
 
 \begin{figure}
 \centerline{\includegraphics[height=2in]{figs/chap07-5.pdf}}
 \caption{The first three steps of a percolation model with \py{n=10} and
-\py{p=0.5}.}
+\py{p=0.7}.}
 \label{chap07-5}
 \end{figure}
 
 Figure~\ref{chap07-5} shows the first few steps of a percolation model
-with \py{n=10} and \py{p=0.5}.  Non-porous cells are white, porous cells
+with \py{n=10} and \py{p=0.7}.  Non-porous cells are white, porous cells
 are lightly shaded, and wet cells are dark.
 
 
@@ -5849,17 +5806,15 @@ Now let's test whether a random array contains a percolating cluster:
 def test_perc(perc):
     num_wet = perc.num_wet()
 
-    num_steps = 0
     while True:
         perc.step()
-        num_steps += 1
 
         if perc.bottom_row_wet():
-            return True, num_steps
-
+            return True
+        
         new_num_wet = perc.num_wet()
         if new_num_wet == num_wet:
-            return False, num_steps
+            return False
 
         num_wet = new_num_wet
 \end{code}
@@ -5867,80 +5822,64 @@ def test_perc(perc):
 \py{test_perc} takes a \py{Percolation} object as a parameter.  Each
 time through the loop, it advances the CA one time step.  It
 checks the bottom row to see if any cells are wet; if so,
-it returns \py{True}, to indicate that there is a percolating cluster,
-and \py{num_steps}, which is the number of time steps it took to
-get to the bottom.
+it returns \py{True}, to indicate that there is a percolating cluster.
 
 During each time step, it also computes the number of wet cells and
 checks whether the number increased since the last step.  If not, we
 have reached a fixed point without finding a percolating cluster, so
-we return \py{False}.
+\py{test_perc} returns \py{False}.
 
 To estimate the probability of a percolating cluster, we generate
-many random initial configurations and test them:
+many random arrays and test them:
 
 \begin{code}
-def estimate_prob_percolating(p=0.5, n=100, iters=100):
-    count = 0
-    for i in range(iters):
-        perc = Percolation(n=n, p=p)
-        flag, _ = test_perc(perc)
-        if flag:
-            count += 1
-
-    return count / iters
+def estimate_prob_percolating(n=100, q=0.5, iters=100):
+    t = [test_perc(Percolation(n, q)) for i in range(iters)]
+    return np.mean(t)
 \end{code}
 
-\py{estimate_prob_percolating} makes 100 \index{Percolation} objects with the given values of \py{p} and \py{n} and calls \py{test_perc} to see how many of them have a percolating cluster.  The return value is the fraction that do.
+\py{estimate_prob_percolating} makes 100 \py{Percolation} objects with the given values of \py{n} and \py{q} and calls \py{test_perc} to see how many of them have a percolating cluster.  The return value is the fraction that do.
+
+\index{NumPy}
+\index{mean}
+\index{list comprehension}
 
 When \py{p=0.55}, the probability of a percolating cluster is near 0.
 At \py{p=0.60}, it is about 70\%, and at \py{p=0.65} it is near 1.
-This rapid transition indicates that there is a critical value of
+This rapid transition suggests that there is a critical value of
 \py{p} near 0.6.
 
 \index{random walk}
 \index{critical value}
 
-We can estimate the critical value more precisely using a random
-walk.  Starting from an initial value of \py{p}, we construct a
-\py{Percolation} object and check whether it has a percolating cluster.
-If so, \py{p} is probably too high, so we decrease it.  If not,
-\py{p} is probably too low, so we increase it.
+We can estimate the critical value more precisely using a {\bf random walk}.  Starting from an initial value of \py{q}, we construct a \py{Percolation} object and check whether it has a percolating cluster. If so, \py{q} is probably too high, so we decrease it.  If not, \py{q} is probably too low, so we increase it.
 
 Here's the code:
 
 \begin{code}
-def find_critical(p=0.6, n=100, iters=100):
-    ps = [p]
+def find_critical(n=100, q=0.6, iters=100):
+    qs = [q]
     for i in range(iters):
-        perc = Percolation(n=n, p=p)
-        flag, _ = test_perc(perc)
-        if flag:
-            p -= 0.005
+        perc = Percolation(n, q)
+        if test_perc(perc):
+            q -= 0.005
         else:
-            p += 0.005
-        ps.append(p)
-    return ps
+            q += 0.005
+        qs.append(q)
+    return qs
 \end{code}
 
-\py{find_critical} starts with the given value of \py{p} and adjusts
-up and down, returning the list of values.  With \py{n=100} the
-average of \py{ps} is about 0.59, and this critical value seems to
-be the same for values of \py{n} from 50 to 400.
+The result is a list of values for \py{q}.  We can estimate the critical value, \py{q_crit}, by computing the mean of this list.  With \py{n=100} the
+mean of \py{qs} is about 0.59; this value does not seem to depend on \py{n}.
 
 \index{phase change}
 
-The rapid change in behavior near the critical value is
-called a {\bf phase change} by analogy with phase changes
-in physical systems, like the way water changes from liquid to
-solid at its freezing point.
+The rapid change in behavior near the critical value is called a {\bf phase change} by analogy with phase changes in physical systems, like the way water changes from liquid to solid at its freezing point.
 
 \index{critical phenomena}
+\index{criticality}
 
-A wide variety of systems display a common set of behaviors and
-characteristics when they are at or near a critical point.
-These behaviors are known collectively as {\bf critical phenomena}.
-In the next section, we explore one of them: fractal geometry.
+A wide variety of systems display a common set of behaviors and characteristics when they are at or near a critical point. These behaviors are known collectively as {\bf critical phenomena}. In the next section, we explore one of them: fractal geometry.
 
 
 \section{Fractals}
@@ -5957,8 +5896,10 @@ area is $l^2$.  The exponent, 2, indicates that a square is
 2-dimensional.  Similarly, if the side of a cube has length $l$, its
 volume is $l^3$, which indicates that a cube is 3-dimensional.
 
+%TODO: These exponents don't look good in the O'Reilly edition.
+
 More generally, we can estimate the dimension of an object by
-measuring some like of size (like area or volume) as a function of some kind of linear measure (like the length of a side).
+measuring some kind of size (like area or volume) as a function of some kind of linear measure (like the length of a side).
 
 As an example, I'll estimate the dimension of a 1-D cellular
 automaton by measuring its area (total number of ``on'' cells)
@@ -6015,6 +5956,8 @@ figure is on a log-log scale, the slope of this line is 2.
 Similarly, the bottom dashed line shows $y = i$.  On a log-log
 scale, the slope of this line is 1.
 
+%TODO: The math in the following paragraph looks bad.
+
 Rule 20 (left) produces 3 cells every 2 time steps, so the total number
 of cells after $i$ steps is $y = 1.5 i$.  Taking the log of both
 sides, we have $\log y = \log 1.5 + \log i$, so on a log-log
@@ -6037,13 +5980,17 @@ is clearly not 1, 2, or any other integer.  This suggests that the
 pattern generated by Rule 18 has a ``fractional dimension''; that is,
 it is a fractal.
 
+This way of estimating a fractal dimension is called {\bf box-counting}.  For more about it, see \url{https://thinkcomplex.com/box}.
+
 
 \section{Fractals and Percolation Models}
 \label{fracperc}
 
+%TODO: The typesetting in this caption is broken.
+
 \begin{figure}
 \centerline{\includegraphics[height=2in]{figs/chap07-6.pdf}}
-\caption{Percolation models with \py{p=0.6} and \py{n=100},
+\caption{Percolation models with \py{q=0.6} and \py{n=100},
 \py{200}, and \py{300}.}
 \label{chap07-6}
 \end{figure}
@@ -6063,16 +6010,16 @@ size of the array.
 The following loop runs the simulations:
 
 \begin{code}
+    res = []
     for size in sizes:
-        perc = Percolation(size, p=p)
-        flag, _ = test_perc(perc)
-        if flag:
+        perc = Percolation(size, q)
+        if test_perc(perc):
             num_filled = perc.num_wet() - size
             res.append((size, size**2, num_filled))
 \end{code}
 
-The result is a list of tuples where each tuple contains \py{size}
-and \py{size**2}, for comparison, and the number of cells in the
+The result is a list of tuples where each tuple contains \py{size},
+\py{size**2}, and the number of cells in the
 percolating cluster (not including the initial wet cells in the top
 row).
 
@@ -6084,20 +6031,21 @@ row).
 
 Figure~\ref{chap07-9} shows the results for a range of sizes from 10
 to 100.  The dots show the number of cells in each percolating
-cluster.  The slope of a line fitted to these dots is about 1.85,
-which indicates that the percolating cluster is, in fact, fractal when
-\py{p} is near the critical value.
+cluster.  The slope of a line fitted to these dots is often near 1.85,
+which suggests that the percolating cluster is, in fact, fractal when
+\py{q} is near the critical value.
 
 \index{critical value}
 
-When \py{p} is larger than the critical value, nearly every porous
-cell gets filled, so the number of wet cells is just \py{p * size^2},
+When \py{q} is larger than the critical value, nearly every porous
+cell gets filled, so the number of wet cells is close to \py{q * size^2},
 which has dimension 2.
 
-When \py{p} is substantially smaller than the critical value, the number
+When \py{q} is substantially smaller than the critical value, the number
 of wet cells is proportional to the linear size of the array, so it has
 dimension 1.
 
+% TODO: Check this chapter for leftover p's that should be q's
 
 \section{Exercises}
 
@@ -6109,11 +6057,11 @@ Can you find other 1-D CAs that produce fractals?
 
 \index{Cell1D}
 
-Note: the \py{Cell1D} object in \py{Cell1D.py} does not wrap around
+Note: the \py{Cell1D} object does not wrap around
 from the left edge to the right, which creates artifacts at the
 boundaries for some rules.  You might want to use \py{Wrap1D}, which
-is a child class of \py{Cell1D} that wraps around.  It is also defined
-in \py{Cell1D.py}.
+is a child class of \py{Cell1D} that wraps around.  It is defined
+in \py{Cell1D.py} in the repository for this book.
 
 \end{exercise}
 
@@ -6173,6 +6121,9 @@ systems, fractal geometry.
 \index{heavy-tailed distribution}
 \index{pink noise}
 
+%TODO: Check whether we really want to use Section titles, rather than
+% numbers, in cross references.
+
 In this chapter, we explore two other properties of critical systems:
 heavy-tailed distributions, which we saw in Chapter~\ref{heavytail}
 and pink noise, which I'll explain in this chapter.
@@ -6184,12 +6135,12 @@ fractal-like geometry, heavy-tailed distributions, and pink noise.
 This observation raises a natural question: why do so many natural
 systems have properties of critical systems?  A possible answer is
 {\bf self-organized criticality} (SOC), which is the tendency of some
-systems to evolve toward and stay in a critical state.
+systems to evolve toward, and stay in, a critical state.
 
 \index{self-organized criticality}
 \index{SOC}
 
-In this chapter I'll present a {\bf sand pile model}, which was the
+In this chapter I'll present a {\bf sand pile model} that was the
 first system shown to exhibit SOC.
 
 The code for this chapter is in {\tt chap08.ipynb} in the repository
@@ -6250,8 +6201,8 @@ external control.
 
 The sand pile model was proposed by Bak, Tang and Wiesenfeld in 1987.
 It is not meant to be a realistic model of a sand pile, but rather an
-abstraction that models physical systems with (1) a large number of
-elements that (2) interact with their neighbors.
+abstraction that models physical systems with a large number of
+elements that interact with their neighbors.
 
 \index{sand pile model}
 \index{abstract model}
@@ -6271,16 +6222,16 @@ excess spills over the edge.
 
 Bak, Tang and Wiesenfeld initialize all cells at a
 level greater than \py{K} and run the model until it stabilizes.
-Then they observe the effect of small perturbations; they choose a
-cell at random, increment its value by 1, and run the model,
-again, until it stabilizes.
-
-\index{grid}
+Then they observe the effect of small perturbations: they choose a
+cell at random, increment its value by 1, and run the model
+again until it stabilizes.
 
 For each perturbation, they measure \py{T}, the number of time steps
 the pile takes to stabilize, and \py{S}, the total number of cells
 that topple\footnote{The original paper uses a different definition
 of \py{S}, but most later work uses this definition.}.
+
+%TODO: The typesetting of this footnote is broken.
 
 \index{perturbation}
 
@@ -6293,8 +6244,7 @@ supports the claim that the system is in a critical state.
 \index{avalanche}
 
 They conclude that the sand pile model exhibits ``self-organized
-criticality'', which means that from the initial condition it evolves
-toward a critical state without the need for external control or
+criticality'', which means that it evolves toward a critical state without the need for external control or
 what they call ``fine tuning'' of any parameters.  And the model
 stays in a critical state as more grains are added.
 
@@ -6305,7 +6255,8 @@ interpret the results.
 \section{Implementing the Sand Pile}
 
 To implement the sand pile model, I define a class called \py{SandPile}
-that inherits from \py{Cell2D}, which is defined in \py{Cell2D.py}.
+that inherits from \py{Cell2D}, which is defined in \py{Cell2D.py} in
+the repository for this book.
 
 \begin{code}
 class SandPile(Cell2D):
@@ -6326,7 +6277,7 @@ topples them:
 \begin{code}
     kernel = np.array([[0, 1, 0],
                        [1,-4, 1],
-                       [0, 1, 0]], dtype=np.int32)
+                       [0, 1, 0]])
 
     def step(self, K=3):
         toppling = self.array > K
@@ -6336,14 +6287,7 @@ topples them:
         return num_toppled
 \end{code}
 
-The data type \py{np.int} indicates that the elements of \py{kernel}
-are 32-bit integers.
-
-\index{dtype}
-\index{int32}
-
-To show how \py{step} works, I'll start with
-a small pile with just two cells ready to topple:
+To show how \py{step} works, I'll start with a small pile that has two cells ready to topple:
 
 \begin{code}
 pile = SandPile(n=3, m=5, level=0)
@@ -6412,7 +6356,7 @@ And here's the result.
 
 So that's how \py{step} works.
 
-By default, \py{correlate2d} considers the boundary of the array
+With \py{mode='same'}, \py{correlate2d} considers the boundary of the array
 to be fixed at zero, so any grains of sand that go over the edge
 disappear.
 
@@ -6437,7 +6381,7 @@ steps and the total number of cells that toppled.
 If you are not familiar with \py{itertools.count}, it is an
 infinite generator that counts up from the given initial value,
 so the \py{for} loop runs until \py{step} returns 0.
-You can read about the \py{itertools} module at \url{https://greenteapress.com/tc/iter}.
+You can read about the \py{itertools} module at \url{https://thinkcomplex.com/iter}.
 
 Finally, the \py{drop} method chooses a random cell and adds a
 grain of sand:
@@ -6514,17 +6458,16 @@ returns the duration of the avalanche and total number of cells
 that toppled.
 
 \index{NumPy}
+\index{transpose}
 
 So \py{res} is a list of \py{(T, S)} tuples, where \py{T} is duration,
-in time steps, and \py{S} is cells toppled.  We can use
-\py{np.transpose} to unpack \py{res} into two NumPy arrays:
+in time steps, and \py{S} is cells toppled.  We can use \py{np.transpose} to unpack \py{res} into two NumPy arrays:
 
 \begin{code}
 T, S = np.transpose(res)
 \end{code}
 
-A large majority of drops have duration 1 and no toppled cells, so
-we'll filter those out.
+A large majority of drops have duration 1 and no toppled cells; if we filter them out before plotting, we get a clearer view of the rest of the distribution.
 
 \begin{code}
 T = T[T>1]
@@ -6532,18 +6475,16 @@ S = S[S>0]
 \end{code}
 
 The distributions of \py{T} and \py{S} have many small values and a few
-very large ones.  I'll use the \py{Hist} class from \py{thinkstats2} to
-make a histogram of the values; that is, a map from each value to
-the number of times it occurs.
+very large ones.  I'll use the \py{Pmf} class from \py{thinkstats2} to
+make a PMF of the values; that is, a map from each value to
+its probability of occurring (see Section~\ref{degree}).
 
 \index{thinkstats2 module}
-\index{Hist}
+\index{Pmf}
 
 \begin{code}
-from thinkstats2 import Hist
-
-histT = Hist(T)
-histS = Hist(S)
+pmfT = Pmf(T)
+pmfS = Pmf(S)
 \end{code}
 
 \begin{figure}
@@ -6559,28 +6500,28 @@ histS = Hist(S)
 \end{figure}
 
 Figure~\ref{chap08-2} shows the results for values less than 50.
-But as we saw in Section~\ref{heavytail}, we can get a clearer picture of
+
+As we saw in Section~\ref{heavytail}, we can get a clearer picture of
 these distributions by plotting them on a log-log scale, as shown
 in Figure~\ref{chap08-3}.
 
 For values between 1 and 100, the distributions are nearly straight
-on a log-log scale, which is indicative of a heavy tail.  The
-gray lines in the figure have slope -1, which suggests that these
-distributions follow a power law with parameter $\alpha=1$.
+on a log-log scale, which is characteristic of a heavy tail.  The
+gray lines in the figure have slopes near -1, which suggests that these
+distributions follow a power law with parameters near $\alpha=1$.
 
 \index{power law}
 
 For values greater than 100, the distributions fall away more quickly
 than the power law model, which means there are fewer very large
-values than the model predicts.  One explanation is that this
-effect is due to the finite size of the sand pile, so we might
+values than the model predicts.  One possibility is that this
+effect is due to the finite size of the sand pile; if so, we might
 expect larger piles to fit the power law better.
 
-Another possibility,
-which you can explore in one of the exercises at the end of this
-chapter, is that these distributions do not strictly obey a power
-law.  But even if they are not power-law distributions, they are
-still heavy-tailed as we expect for a system in a critical state.
+Another possibility, which you can explore in one of the exercises at the end of this chapter, is that these distributions do not strictly obey a power
+law.  But even if they are not power-law distributions, they might still be heavy-tailed.
+
+%TODO: Explain more?
 
 
 \section{Fractals}
@@ -6603,46 +6544,40 @@ pile3 = SandPile(n=131, level=22)
 pile3.run()
 \end{code}
 
-By the way, it takes 28,379 steps for this pile to reach equilibrium,
+It takes 28,379 steps for this pile to reach equilibrium,
 with more than 200 million cells toppled.
 
 To see the resulting pattern more clearly, I select cells with
 levels 0, 1, 2, and 3, and plot them separately:
 
 \begin{code}
-def draw_four(viewer, vals=range(4)):
+def draw_four(viewer, levels=range(4)):
     thinkplot.preplot(rows=2, cols=2)
     a = viewer.viewee.array
 
-    for i, val in enumerate(vals):
+    for i, level in enumerate(levels):
         thinkplot.subplot(i+1)
-        viewer.draw_array(a==vals[i], vmax=1)
+        viewer.draw_array(a==level, vmax=1)
 \end{code}
 
 \py{draw_four} takes a \py{SandPileViewer} object, which is defined
-in \py{Sand.py}.  The parameter \py{vals} is the list of values
-we want to plot; the default values are 0, 1, 2, and 3.
+in \py{Sand.py} in the repository for this book.  The parameter \py{levels} is the list of levels we want to plot; the default is the range 0 through 3.  If the sand pile has run until equilibrium, these are the only levels that should exist.
 
-Here's how it's used:
-
-\begin{code}
-viewer3 = SandPileViewer(pile3)
-draw_four(viewer3)
-\end{code}
+Inside the loop, it uses \py{a==level} to make a boolean array that's \py{True} where the array is \py{level} and \py{False} otherwise.  \py{draw_array} treats these booleans as 1s and 0s.
 
 \begin{figure}
 \centerline{\includegraphics[height=3in]{figs/chap08-4.pdf}}
-\caption{Sand pile model initial state, selecting cells with levels 0, 1, 2, and 3, top to bottom, left to right. }
+\caption{Sand pile model in equilibrium, selecting cells with levels 0, 1, 2, and 3, left to right, top to bottom. }
 \label{chap08-4}
 \end{figure}
 
 \index{box-counting algorithm}
 
-Figure~\ref{chap08-4} shows the results.  Now for each of
-these patterns we can estimate the fractal dimension using
-a {\bf box-counting algorithm}: we'll count the number of
-cells in a small box at the center of the pile, and then see
-how the number of cell increases as the box gets bigger.
+Figure~\ref{chap08-4} shows the results for \py{pile3}.  Visually, these patterns resemble fractals, but looks can be deceiving.  To be more confident, we can estimate the fractal dimension for each pattern using {\bf box-counting}, as we saw in Section~\ref{fractals}.
+
+We'll count the number of
+cells in a small box at the center of the pile, then see
+how the number of cells increases as the box gets bigger.
 Here's my implementation:
 
 \begin{code}
@@ -6661,7 +6596,7 @@ def count_cells(a):
     return np.transpose(res)
 \end{code}
 
-The parameter, \py{a}, is a NumPy array of booleans or 0s and 1s.
+The parameter, \py{a}, is a boolean array.
 The size of the box is initially 1.  Each time through the
 loop, it increases by 2 until it reaches \py{end}, which is the
 smaller of \py{n} and \py{m}.
@@ -6672,24 +6607,31 @@ Each time through the loop, \py{box} is a set of cells with width
 and height \py{i}, centered in the array.  \py{total} is the number
 of ``on'' cells in the box.
 
-The result is a list of tuples, where each tuple contains
-\py{i} and \py{i**2}, for purposes of comparison, and the number of
-cells in the box.
-
+\index{NumPy}
 \index{transpose}
 
-Finally, we use \py{np.transpose} to make a NumPy array with 3
-rows containing \py{i}, \py{i**2}, and \py{total}.
+The result is a list of tuples, where each tuple contains
+\py{i}, \py{i**2}, and the number of cells in the box.
+When we pass this result to \py{transpose}, NumPy converts it to
+an array with three columns, and then {\bf transposes} it; that is,
+it makes the columns into rows and the rows into columns.  The result
+is an array with 3 rows: \py{i}, \py{i**2}, and \py{total}.
 
 \index{fractal dimension}
 
-To estimate the fractal dimension, we extract the rows:
+Here's how we use \py{count_cells}:
 
 \begin{code}
+res = count_cells(pile.array==level)
 steps, steps2, cells = res
 \end{code}
 
-Then we can plot the results:
+The first line creates a boolean array that contains \py{True}
+where where the array equals \py{level}, calls
+\py{count_cells}, and gets an array with three rows.
+
+The second line unpacks the rows and assigns them to \py{steps},
+\py{steps2}, and \py{cells}, which we can plot like this:
 
 \begin{code}
     thinkplot.plot(steps, steps2, linestyle='dashed')
@@ -6697,9 +6639,24 @@ Then we can plot the results:
     thinkplot.plot(steps, steps, linestyle='dashed')
 \end{code}
 
-And use \py{linregress} to fit a line on a log-log scale.
+\begin{figure}
+\centerline{\includegraphics[height=4in]{figs/chap08-5.pdf}}
+\caption{Box counts for cells with levels 0, 1, 2, and 3, compared to dashed lines with slopes 1 and 2.}
+\label{chap08-5}
+\end{figure}
 
-\index{scipy}
+Figure~\ref{chap08-5} shows the results.
+On a log-log scale, the cell counts form nearly straight lines,
+which indicates that we are measuring fractal dimension over
+a valid range of box sizes.
+
+\index{log-log scale}
+
+To estimate the slopes of these lines, we can use the SciPy function
+\py{linregress}, which fits a line to the data by linear regression 
+(see \url{https://thinkcomplex.com/regress}).
+
+\index{SciPy}
 \index{linregress}
 
 \begin{code}
@@ -6709,24 +6666,7 @@ params = linregress(np.log(steps), np.log(cells))
 slope = params[0]
 \end{code}
 
-\begin{figure}
-\centerline{\includegraphics[height=4in]{figs/chap08-5.pdf}}
-\caption{Box counts for cells with levels 0, 1, 2, and 3, compared to dashed lines with slopes 1 and 2.}
-\label{chap08-5}
-\end{figure}
-
-Figure~\ref{chap08-5} shows the results.  Notice that only
-\py{val=2} (lower left) starts from box size 1 because the center
-cell has value 2; the other lines start at the first box size
-that contains a nonzero cell count.
-
-\index{log-log scale}
-
-On a log-log scale, the cell counts form nearly straight lines,
-which indicates that we are measuring fractal dimension over
-a valid range of box sizes.
-
-And the estimated fractal dimensions are:
+The estimated fractal dimensions are:
 
 \begin{code}
 0  1.871
@@ -6735,56 +6675,50 @@ And the estimated fractal dimensions are:
 3  2.084
 \end{code}
 
-The fractal dimension for values 0, 1, and 2 seems to be clearly
+The fractal dimension for levels 0, 1, and 2 seems to be clearly
 non-integer, which indicates that the image is fractal.
 
-Strictly, the fractal dimension for value 3 is indistinguishable from
+The estimate for level 3 is indistinguishable from
 2, but given the results for the other values, the apparent curvature
 of the line, and the appearance of the pattern, it seems likely that
 it is also fractal.
 
 \index{fractal dimension}
 
-One of the exercises at the end of this chapter asks you to run
-this analysis again with different values of \py{n} and \py{level} to
-see if the estimated dimensions are consistent.
+One of the exercises in the notebook for this chapter asks you to run
+this analysis again with different values of \py{n} and the initial \py{level} to see if the estimated dimensions are consistent.
 
 
-\section{Spectral Density}
+\section{Pink noise}
 
 The title of the original paper that presented the sand pile model
 is ``Self-Organized Criticality: An Explanation of $1/f$ Noise''.
+You can read it at \url{https://thinkcomplex.com/bak}.
+
 As the subtitle suggests, Bak, Tang and Wiesenfeld were trying to
 explain why many natural and engineered systems exhibit $1/f$
 noise, which is also known as ``flicker noise'' and ``pink noise''.
 
-\index{spectral density}
 \index{pink noise}
 \index{flicker noise}
 \index{$1/f$ noise}
+\index{signal}
+\index{power spectrum}
+\index{noise}
 
 To understand pink noise, we have to take a detour to understand
-signals, spectral analysis, and noise.
+signals, power spectrums, and noise.
 
 \begin{description}
 
 \item[Signal:] A {\bf signal} is any quantity that varies in time.
-  One example is sound, which is variation in air density.  In this
-  section we'll explore how avalanche durations and sizes vary over
-  time steps.
+  One example is sound, which is variation in air density.  In the sand pile model, the signals we'll consider are avalanche durations and sizes as they vary over time.
 
-\item[Spectral analysis:] Any signal can be decomposed into a set of
-  frequency components with different volume or power.  For example,
-  the sound of a violin playing the A above middle C contains a
-  dominant component at frequency 440 Hz, but it also contains less
-  powerful components at 880 Hz, 1320 Hz, and other integer multiples
-  of the fundamental.  {\bf Spectral analysis} is the process of
-  finding the components that make up a signal and their powers,
-  which is called its {\bf spectrum}.
+\item[Power spectrum:] Any signal can be decomposed into a set of frequency components with different levels of {\bf power}, which is related to amplitude or volume.  The {\bf power spectrum} of a signal is a function that shows the power of each frequency component.
 
-\item[Noise:] In common use, ``noise'' is usually an unwanted sound,
-  but in the context of signal processing, it is a signal that
-  contains many frequency components.
+\item[Noise:] In common use, {\bf noise} is usually an unwanted sound,
+but in the context of signal processing, it is a signal that
+contains many frequency components.
 
 \end{description}
 
@@ -6792,9 +6726,6 @@ There are many kinds of noise.  For example, ``white noise'' is a
 signal that has components with equal power over a wide range of
 frequencies.
 
-\index{signal}
-\index{spectral analysis}
-\index{noise}
 \index{white noise}
 \index{frequency}
 \index{power}
@@ -6806,48 +6737,44 @@ $1/f^2$, which we can write like this:
 %
 \[ P(f) = 1/f^2 \]
 %
-We can generalize that by replacing the exponent $2$ with
+We can generalize this equation by replacing the exponent $2$ with
 a parameter $\beta$:
 %
 \[ P(f) = 1/f^\beta \]
 %
 When $\beta=0$, this equation describes white noise; when $\beta=2$ it
-describes red noise.  When the parameter is near 1, we call the result
+describes red noise.  When the parameter is near 1, the result is called
 $1/f$ noise.  More generally, noise with any value between 0 and 2
 is called ``pink'', because it's between white and red.
 
-So how does this apply to the sand pile model?  Suppose that every time
-a cell topples, it makes a sound.  If we recorded a sand pile model
-while its running, what would it sound like?
+\index{logarithm}
+
+We can use this relationship to derive a test for pink noise.
+Taking the log of both sides yields
+%
+\[ \log P(f) = -\beta \log f \]
+%
+So if we plot $P(f)$ versus $f$ on a log-log scale, we
+expect a straight line with slope $-\beta$.
+
+What does this have to do with the sand pile model?  Suppose that every time
+a cell topples, it makes a sound.  If we record a sand pile model
+while its running, what would it sound like?  In the next section, we'll simulate the sound of the sand pile model and see if it is pink noise.
 
 \index{sand pile model}
 
+\section{The sound of sand}
+
 As my implementation of \py{SandPile} runs, it records the number of
-cells that topple during each time step, recording the results in
-a list called \py{toppled_seq}.  For example, after running the model
+cells that topple during each time step, accumulating the results in
+a list called \py{toppled_seq}.  After running the model
 in Section~\ref{heavysand}, we can extract the resulting signal:
 
 \begin{code}
 signal = pile2.toppled_seq
 \end{code}
 
-To compute the spectrum of a signal (again, that's the frequencies it
-contains and their powers) we can use the Fast Fourier Transform
-(FFT).
-
-\index{FFT}
-\index{Fast Fourier Transform}
-
-The only problem is that the spectrum of a noise signal tends to
-be noisy.  However, we can smooth it out by breaking a long signal
-into segments, computing the FFT of each segment, and then computing
-the {\em average} power at each frequency.
-
-\index{SciPy}
-\index{Welch's method}
-
-One version of this algorithm is called ``Welch's method'' and
-SciPy provides an implementation.  We can use it like this:
+To compute the power spectrum of this signal we can use the SciPy function \py{welch}:
 
 \begin{code}
 from scipy.signal import welch
@@ -6856,34 +6783,22 @@ nperseg = 2048
 freqs, spectrum = welch(signal, nperseg=nperseg, fs=nperseg)
 \end{code}
 
-\py{nperseg} is the length of the segments the signal is broken into.
-With longer segments we get more frequency components,
-but since there are fewer segments to average, the results are
-noisier.
+\index{SciPy}
+\index{Welch's method}
+
+This function uses Welch's method, which splits the signal into segments and computes the power spectrum of each segment.  The result is typically noisy, so Welch's method averages across segments to estimate the average power at each frequency.  For more about Welch's method, see \url{https://thinkcomplex.com/welch}.
+
+The parameter \py{nperseg} specifies the number of time steps per segment.  With longer segments, we can estimate the power for more frequencies.  With shorter segments, we get better estimates for each frequency.  The value I chose, 2048, balances these tradeoffs.
 
 \index{sampling frequency}
 
-\py{fs} is the ``sampling frequency'', which is the number of data
-points in the signal per unit of time.  By setting \py{fs=nperseg},
-we get a range of frequencies from 0 to \py{nperseg/2}, but the
-units of time in the model are arbitrary, so the frequencies
-don't mean very much.
+The parameter \py{fs} is the ``sampling frequency'', which is the number of data points in the signal per unit of time.  By setting \py{fs=nperseg},
+we get a range of frequencies from 0 to \py{nperseg/2}.  This range is convenient, but because the units of time in the model are arbitrary,
+it doesn't mean much.
 
 The return values, \py{freqs} and \py{powers}, are NumPy arrays containing
-the frequencies of the components and their corresponding powers.
-
-\index{logarithm}
-
-If the signal is pink noise, we expect
-%
-\[ P(f) = 1/f^\beta \]
-%
-Taking the log of both sides yields
-%
-\[ \log P(f) = -\beta \log f \]
-%
-So if we plot \py{powers} versus \py{freqs} on a log-log scale, we
-expect a straight line with slope $-\beta$.
+the frequencies of the components and their corresponding powers, which we can
+plot.  Figure~\ref{chap08-6} shows the result.
 
 \begin{figure}
 \centerline{\includegraphics[height=3in]{figs/chap08-6.pdf}}
@@ -6891,13 +6806,16 @@ expect a straight line with slope $-\beta$.
 \label{chap08-6}
 \end{figure}
 
-Figure~\ref{chap08-6} shows the result.  For frequencies between
+For frequencies between
 10 and 1000 (in arbitrary units), the spectrum falls on a straight
-line.  The gray line has slope $-1.58$, which
-corresponds to the parameter, $\beta=1.58$ reported by Bak,
-Tang, and Wiesenfeld.
+line, which is what we expect for pink or red noise.
 
-This result confirms that the sand pile model generates pink noise.
+The gray line in the figure has slope $-1.58$, which indicates that
+%
+\[ \log P(f) \sim -\beta \log f \]
+%
+with parameter $\beta=1.58$, which is the same parameter reported by Bak,
+Tang, and Wiesenfeld.  This result confirms that the sand pile model generates pink noise.
 
 
 \section{Reductionism and Holism}
@@ -6905,13 +6823,13 @@ This result confirms that the sand pile model generates pink noise.
 
 The original paper by Bak, Tang and Wiesenfeld is one of
 the most frequently-cited papers in the last few decades.
-Other systems have been shown to be self-organized critical,
-and the sand-pile model, in particular, has been studied
-in detail.
+Some subsequent papers have reported other systems that are apparently
+self-organized critical (SOC).  Others have studied the sand pile model in
+more detail.
 
 \index{sand pile model}
 
-As it turns out, the sand pile model is not a very good model of a
+As it turns out, the sand pile model is not a good model of a
 sand pile.  Sand is dense and not very sticky, so momentum has a
 non-negligible effect on the behavior of avalanches.  As a result,
 there are fewer very large and very small avalanches than the model
@@ -6919,8 +6837,8 @@ predicts, and the distribution might not be heavy-tailed.
 
 Bak has suggested that this observation misses the point.
 The sand pile model is not meant to be a realistic model of a sand
-pile; it is meant to be a simple model for a broad category of
-systems.
+pile; it is meant to be a simple example of a broad category of
+models.
 
 To understand this point, it is useful to think about two
 kinds of models, {\bf reductionist} and {\bf holistic}.  A
@@ -6950,16 +6868,18 @@ system and the parts of the model.
 
 Holistic models are more focused on similarities between systems and
 less interested in analogous parts.  A holistic approach to modeling
-often consists of two steps, not necessarily in this order:
+consists of these steps:
 
 \index{holistic model}
 
 \begin{itemize}
 
-\item Identify a kind of behavior that appears in a variety of
-systems.
+\item Observe a behavior that appears in a variety of systems.
 
 \item Find a simple model that demonstrates that behavior.
+
+\item Identify the elements of the model that are necessary and
+sufficient to produce the behavior.
 
 \end{itemize}
 
@@ -6967,8 +6887,7 @@ For example, in {\em The Selfish Gene}, Richard Dawkins suggests that
 genetic evolution is just one example of an evolutionary system.  He
 identifies the essential elements of the category --- discrete
 replicators, variability, and differential reproduction --- and proposes
-that any system with these elements displays similar
-behavior, including complexity without design.
+that any system with these elements will show evidence of evolution.
 
 \index{Selfish Gene@{\em The Selfish Gene}}
 \index{Dawkins, Richard}
@@ -6986,8 +6905,8 @@ evolution.
 \index{replicator}
 
 Critics of the meme model have pointed out that
-memes are a poor analogy for genes.  Memes differ from genes in many
-obvious ways.  But Dawkins has argued that these differences are
+memes are a poor analogy for genes; they differ from genes in many
+obvious ways.  Dawkins has argued that these differences are
 beside the point because memes are not {\em supposed} to be analogous
 to genes.  Rather, memes and genes are examples of the same
 category: evolutionary systems.  The differences between them
@@ -7024,9 +6943,7 @@ those models have in common.
 \index{SOC}
 
 The first approach, which I characterize as reductionist, can explain
-the behavior of a particular system.  The second, holistic, approach,
-explains the prevalence of criticality in natural systems.  They are
-different models with different purposes.
+the behavior of a particular system.  The second approach, which I am calling holistic, can explain the prevalence of criticality in natural systems.  They are different models with different purposes.
 
 \index{prevalence}
 
@@ -7034,7 +6951,7 @@ For reductionist models, realism is the primary virtue, and simplicity
 is secondary.  For holistic models, it is the other way around.
 
 
-\section{SOC, causation and prediction}
+\section{SOC, causation, and prediction}
 
 If a stock market index drops by a fraction of a percent in a
 day, there is no need for an explanation.  But if it drops 10\%,
@@ -7054,9 +6971,8 @@ behavior of the market.
 The distribution of earthquake sizes is also heavy-tailed,
 and there are simple models of the dynamics of geological faults
 that might explain this behavior.  If these models are right,
-they imply that large earthquakes are unexceptional; that is,
-they do not require explanation any more than
-small earthquakes do.
+they imply that large earthquakes are not exceptional; that is,
+they do not require explanation any more than small earthquakes do.
 
 \index{earthquake}
 \index{prediction}
@@ -7064,7 +6980,7 @@ small earthquakes do.
 
 Similarly, Charles Perrow has suggested that failures in large
 engineered systems, like nuclear power plants, are like avalanches
-in the sand pile model.  Most failures are small, isolated and
+in the sand pile model.  Most failures are small, isolated, and
 harmless, but occasionally a coincidence of bad fortune yields a
 catastrophe.  When big accidents occur, investigators go looking for
 the cause, but if Perrow's ``normal accident theory'' is correct,
@@ -7083,8 +6999,7 @@ next grain of sand.
 
 In a sand pile model, what is the cause of a large avalanche?
 Philosophers sometimes distinguish the {\bf proximate} cause, which is
-most immediately responsible, from the {\bf ultimate} cause, which is,
-for whatever reason, considered the true cause (see \url{https://greenteapress.com/tc/cause}).
+most immediately responsible, from the {\bf ultimate} cause, which considered some deeper kind of explanation (see \url{https://thinkcomplex.com/cause}).
 
 \index{proximate cause}
 \index{ultimate cause}
@@ -7099,32 +7014,23 @@ they are a property of the system.
 \index{avalanche}
 
 Many social phenomena, including wars, revolutions, epidemics,
-inventions and terrorist attacks, are characterized by heavy-tailed
-distributions.  If the reason for these distributions is that
-social systems are critical, that suggests that major historical
-events may be fundamentally unpredictable and unexplainable.
+inventions, and terrorist attacks, are characterized by heavy-tailed
+distributions.  If these distributions are prevalent because social systems are SOC, major historical events may be fundamentally unpredictable and unexplainable.
 
 \index{heavy-tailed distributions}
 
 
 \section{Exercises}
 
-
-\begin{exercise}
-
-
 The code for this chapter is in the Jupyter notebook {\tt chap08.ipynb}
 in the repository for this book.  Open this notebook, read the code,
 and run the cells.  You can use this notebook to work on the
-exercises in this chapter.  My solutions are in {\tt chap08soln.ipynb}.
-
-\end{exercise}
-
+following exercises.  My solutions are in {\tt chap08soln.ipynb}.
 
 \begin{exercise}
 
 To test whether the distributions of \py{T} and \py{S} are
-heavy-tailed, we plotted their histograms on a log-log scale, which is
+heavy-tailed, we plotted their PMFs on a log-log scale, which is
 what Bak, Tang and Wiesenfeld show in their paper.  But as we saw in
 Section~\ref{cdf}, this visualization can obscure the shape of the
 distribution.  Using the same data, make a plot that shows the
@@ -7132,6 +7038,8 @@ cumulative distributions (CDFs) of \py{S} and \py{T}.  What can you
 say about their shape?  Do they follow a power law?  Are they heavy
 tailed?
 
+\index{CDF}
+\index{cumulative distribution function}
 \index{log-log scale}
 
 You might find it helpful to plot the CDFs on a log-x scale and on a
@@ -7166,29 +7074,25 @@ fractal?
 \index{single source sand pile}
 
 You can read more about this version of the sand pile model at
-\url{https://greenteapress.com/tc/sand}.
+\url{https://thinkcomplex.com/sand}.
 
 \end{exercise}
 
 
 \begin{exercise}
 
-In a 1989 paper, Bak, Chen and Creutz suggest that the Game of Life is
-an SOC system.\footnote{``Self-organized criticality in the Game of
-  Life'', available from
-  \url{https://greenteapress.com/tc/bak}.}
+In their 1989 paper, Bak, Chen and Creutz suggest that the Game of Life is
+a self-organized critical system.
 
 \index{Game of Life}
 \index{self-organized criticality}
+\index{SOC}
 
-To replicate their tests, run the GoL CA until it stabilizes,
-then choose a random cell and flip it.  Run the CA until
+To replicate their tests, start with a random configuration and run the GoL CA until it stabilizes.  Then choose a random cell and flip it.  Run the CA until
 it stabilizes again, keeping track of \py{T}, the number
 of time steps it takes, and \py{S}, the number of cells affected.
 Repeat for a large number of trials and plot the distributions
-of \py{T} and \py{S}.  Also, record the number of cells that change
-state during each time step and see if the resulting time series
-resembles pink noise.
+of \py{T} and \py{S}.  Also, estimate the power spectrums of \py{T} and \py{S} as signals in time, and see if the are consistent with pink noise.
 
 %TODO: Do this exercise (project idea).
 
@@ -7201,8 +7105,7 @@ In {\it The Fractal Geometry of Nature}, Benoit Mandelbrot proposes
 what he calls a ``heretical'' explanation for the prevalence of
 heavy-tailed distributions in natural systems.  It may not
 be, as Bak suggests, that many systems can generate this behavior in
-isolation.  Instead there may be only a few, but there may be
-interactions between systems that cause the behavior to propagate.
+isolation.  Instead there may be only a few, but interactions between systems might cause the behavior to propagate.
 
 \index{Mandelbrot, Benoit}
 \index{Fractal Geometry of Nature@{\it The Fractal Geometry of Nature}}
@@ -7234,7 +7137,7 @@ it as reductionist or holist?
 \begin{exercise}
 
 Read about the ``Great Man'' theory of history at
-\url{https://greenteapress.com/tc/great}.  What implication
+\url{https://thinkcomplex.com/great}.  What implication
 does self-organized criticality have for this theory?
 
 \index{Great Man theory}
@@ -7256,7 +7159,7 @@ intended to model people and other entities that gather
 information about the world, make decisions, and take actions.
 
 The agents are usually situated in space or in a network, and
-interact with each other locally.  They usually have imperfect,
+interact with each other locally.  They usually have imperfect or
 incomplete information about the world.
 
 Often there are differences among agents, unlike previous models where
@@ -7264,7 +7167,7 @@ all components are identical.  And agent-based models often include
 randomness, either among the agents or in the world.
 
 Since the 1970s, agent-based modeling has become an important tool in
-economics and other social sciences, and in some natural sciences.
+economics, other social sciences, and some natural sciences.
 
 Agent-based models are useful for modeling the dynamics of systems
 that are not in equilibrium (although they are also used to study
@@ -7278,10 +7181,11 @@ about working with this code, see Section~\ref{code}.
 
 \section{Schelling's Model}
 
-In 1971 Thomas Schelling published ``Dynamic Models of Segregation'',
-which proposes a simple model of racial segregation.  The Schelling
-model of the world is a grid; each cell represents a house.  The
-houses are occupied by two kinds of agents,
+In 1969 Thomas Schelling published ``Models of Segregation'',
+which proposed a simple model of racial segregation.  You can read it
+at \url{https://thinkcomplex.com/schell}.
+
+The Schelling model of the world is a grid where each cell represents a house.  The houses are occupied by two kinds of agents,
 labeled red and blue, in roughly equal numbers.  About 10\% of the
 houses are empty.
 
@@ -7301,9 +7205,8 @@ The simulation proceeds by choosing an agent at random and checking
 to see whether they are happy.  If so, nothing happens; if not,
 the agent chooses one of the unoccupied cells at random and moves.
 
-You might not be surprised to hear that this model leads to some
-segregation, but you might be surprised by the degree.  Fairly
-quickly, clusters of similar agents appear.  The clusters
+You will not be surprised to hear that this model leads to some
+segregation, but you might be surprised by the degree.  From a random starting point, clusters of similar agents form almost immediately.  The clusters
 grow and coalesce over time until there are a small number
 of large clusters and most agents live in homogeneous
 neighborhoods.
@@ -7314,10 +7217,7 @@ neighborhoods.
 If you did not know the process and only saw the result, you might
 assume that the agents were racist, but in fact all of them
 would be perfectly happy in a mixed neighborhood.  Since they prefer
-not to be greatly outnumbered, they might be considered xenophobic at
-worst.  Of course, these agents are a wild simplification of real
-people, so it may not be appropriate to apply these descriptions at
-all.
+not to be greatly outnumbered, they might be considered mildly xenophobic.  Of course, these agents are a wild simplification of real people, so it may not be appropriate to apply these descriptions at all.
 
 \index{racism}
 \index{xenophobia}
@@ -7344,18 +7244,17 @@ inherits from \py{Cell2D}:
 \begin{code}
 class Schelling(Cell2D):
 
-    def __init__(self, n, m=None, p=0.5):
+    def __init__(self, n, p):
         self.p = p
-        m = n if m is None else m
         choices = [0, 1, 2]
         probs = [0.1, 0.45, 0.45]
-        self.array = np.random.choice(choices, (n, m), p=probs)
+        self.array = np.random.choice(choices, (n, n), p=probs)
 \end{code}
 
-The parameters \py{n} and \py{m} are the dimensions of the grid,
+\py{n} is the size of the grid,
 and \py{p} is the threshold on the fraction of similar neighbors.
-For example, if \py{p=0.5}, an agent will be unhappy if fewer
-than 50\% of their neighbors are the same color.
+For example, if \py{p=0.3}, an agent will be unhappy if fewer
+than 30\% of their neighbors are the same color.
 
 \index{NumPy}
 \index{random}
@@ -7366,13 +7265,13 @@ occupied by a red agent, and 2 if occupied by a blue agent.
 Initially 10\% of the cells are empty, 45\% red, and 45\% blue.
 
 The \py{step} function for Schelling's model is substantially more
-complicated than previous step functions.  If you are not
+complicated than previous examples.  If you are not
 interested in the details, you can skip to the next section.
 But if you stick around, you might pick up some NumPy tips.
 
 \index{boolean array}
 
-First, I'll make boolean arrays indicating which cells are red, blue, and empty:
+First, I make boolean arrays that indicate which cells are red, blue, and empty:
 
 \begin{code}
         a = self.array
@@ -7381,8 +7280,9 @@ First, I'll make boolean arrays indicating which cells are red, blue, and empty:
         empty = a==0
 \end{code}
 
-I'll use \py{np.correlate2d} to count, for each location,
+Then I use \py{correlate2d} to count, for each location,
 the number of neighboring cells that are red, blue, and non-empty.
+We saw \py{correlate2d} in Section~\ref{implife}.
 
 \index{SciPy}
 \index{correlate2d}
@@ -7399,15 +7299,18 @@ the number of neighboring cells that are red, blue, and non-empty.
     num_neighbors = num_red + num_blue
 \end{code}
 
-Now for each location we can compute the fraction of neighbors
-that are red and blue.
+\py{options} is a dictionary that contains the options we pass to \py{correlate2d}.  With \py{mode='same'}, the result is the same size as the input.  With \py{boundary='wrap'}, the top edge is wrapped to meet the bottom, and the left edge is wrapped to meet the right.
+
+\py{kernel} indicates that we want to consider the eight neighbors that surround each cell.
+
+After computing \py{num_red} and \py{num_blue}, we can compute the fraction of neighbors, for each location, that are red and blue.
 
 \begin{code}
     frac_red = num_red / num_neighbors
     frac_blue = num_blue / num_neighbors
 \end{code}
 
-To compute the fraction of neighbors that are the same as the center cell, I use \py{np.where}, which is like an element-wise \py{if} expression.  The first parameter is a condition that selects elements from
+Then, we can compute the fraction of neighbors, for each agent, that are the same color as the agent.  I use \py{np.where}, which is like an element-wise \py{if} expression.  The first parameter is a condition that selects elements from
 the second or third parameter.
 
 \index{NumPy}
@@ -7441,8 +7344,8 @@ def locs_where(condition):
 \end{code}
 
 \py{np.nonzero} takes an array and returns the coordinates of
-all non-zero cells, but the result is a tuple of arrays, one for
-each dimension.  \py{locs_where} converts this result to a list of coordinate pairs.
+all non-zero cells; the result is a tuple of arrays, one for
+each dimension.  Then \py{locs_where} uses \py{list} and \py{zip} to convert this result to a list of coordinate pairs.
 
 \index{nonzero}
 \index{zip}
@@ -7451,7 +7354,6 @@ Similarly, \py{empty_locs} is an array that contains the coordinates
 of the empty cells:
 
 \begin{code}
-    num_empty = np.sum(empty)
     empty_locs = locs_where(empty)
 \end{code}
 
@@ -7459,6 +7361,7 @@ Now we get to the core of the simulation.  We loop through the
 unhappy agents and move them:
 
 \begin{code}
+    num_empty = np.sum(empty)
     for source in unhappy_locs:
         i = np.random.randint(num_empty)
         dest = empty_locs[i]
@@ -7477,7 +7380,7 @@ unhappy agents and move them:
 
 \index{tuple}
 
-In order to move an agent, we copy the value from \py{source} to
+In order to move an agent, we copy its value (1 or 2) from \py{source} to
 \py{dest}, and then set the value of \py{source} to 0 (since it is now
 empty).
 
@@ -7493,6 +7396,8 @@ cell that just became empty can be chosen by the next agent.
 condition (left), after 2 steps (middle) and after 10 steps (right).}
 \label{chap09-1}
 \end{figure}
+
+%TODO: Another caption with \py in it.
 
 Now let's see what happens when we run the model.  I'll start
 with \py{n=100} and \py{p=0.3}, and run for 10 steps.
@@ -7510,12 +7415,10 @@ steps (right).
 \index{segregation}
 \index{cluster}
 
-Clusters form quickly, with red and blue agents moving into
-segregated clusters separated by boundaries of empty cells.
+Clusters form almost immediately and grow quickly, until most agents live in highly-segregated neighborhoods.
 
-For each configuration, we can compute the degree of segregation,
-which is the fraction of neighbors who are the same color, averaged
-across cells:
+As the simulation runs, we can compute the degree of segregation,
+which is the average, across agents, of the fraction of neighbors who are the same color as the agent:
 
 \begin{code}
     np.nanmean(frac_same)
@@ -7593,8 +7496,8 @@ configuration (left), after 2 steps (middle) and 100 steps (right).}
 \label{chap09-3}
 \end{figure}
 
-Figure~\ref{chap09-3} (left) shows the initial configuration, with the darkest
-areas indicating cells with the highest capacity, and small circles
+Figure~\ref{chap09-3} (left) shows the initial configuration, with the darker
+areas indicating cells with higher capacity, and small dots
 representing the agents.
 
 \index{agent}
@@ -7612,7 +7515,7 @@ consume per time step, chosen uniformly between 1 and 4.
 
 \item[Vision:] Each agent can ``see'' the amount
 of sugar in nearby cells and move to the cell with the most, but
-some agents can see farther than others.  The distance agents
+some agents can see and move farther than others.  The distance agents
 see is chosen uniformly between 1 and 6.
 
 \end{description}
@@ -7650,7 +7553,7 @@ tend to get stuck on the plateaus, wandering randomly until they get
 close enough to see the next level.
 
 Agents born in the areas with the least sugar are likely to starve
-unless they also have high vision and a high initial endowment.
+unless they have a high initial endowment and high vision.
 
 Within the high-sugar areas, agents compete with each other to
 find and harvest sugar as it grows back.  Agents with high metabolism
@@ -7687,7 +7590,7 @@ does not reach a steady state.
 \index{stationary}
 
 However, if we give the agents finite lifespans, the model produces
-a stationary distribution of wealth.  And then we can run experiments to
+a stationary distribution of wealth.  Then we can run experiments to
 see what effect the parameters and rules have on this distribution.
 
 \index{distribution}
@@ -7707,10 +7610,12 @@ and log-x scale (right). }
 \label{chap09-4}
 \end{figure}
 
-Starting with 250 agents, which is close to carrying capacity, I run
-the model for 500 steps.  After each 100 steps, I plot the distribution
-of sugar accumulated by the agents.  Figure~\ref{chap09-4} shows the
+Starting with 250 agents (which is close to carrying capacity) I run
+the model for 500 steps.  After each 100 steps, I plot the cumulative distribution function (CDF) of sugar accumulated by the agents.  We saw CDFs in Section~\ref{cdf}.  Figure~\ref{chap09-4} shows the
 results on a linear scale (left) and a log-x scale (right).
+
+\index{CDF}
+\index{cumulative distribution function}
 
 After about 200 steps (which is twice the longest lifespan) the
 distribution doesn't change much.  And it is skewed to the right.
@@ -7750,29 +7655,27 @@ for this chapter, {\tt chap09.ipynb}, which is in the repository
 for this book.  If you are not interested in the details, you
 can skip this section.
 
-Here is the \py{Agent} class with the \py{step} method:
+During each step, the agent moves, harvests sugar, and ages.
+Here is the \py{Agent} class and its \py{step} method:
 
 \begin{code}
 class Agent:
 
     def step(self, env):
-        self.loc = env.look_around(self.loc, self.vision)
+        self.loc = env.look_and_move(self.loc, self.vision)
         self.sugar += env.harvest(self.loc) - self.metabolism
         self.age += 1
 \end{code}
 
-During each step, the agent moves, harvests sugar, and increments
-\py{age}.
-
 \index{Sugarscape}
 
 The parameter \py{env} is a reference to the environment, which
-is a \py{Sugarscape} object.  It provides methods \py{look_around} and
+is a \py{Sugarscape} object.  It provides methods \py{look_and_move} and
 \py{harvest}:
 
 \begin{itemize}
 
-\item \py{look_around} takes the location of the agent, which is a
+\item \py{look_and_move} takes the location of the agent, which is a
 tuple of coordinates, and the range of the agent's vision, which is
 an integer.  It returns the agent's new location, which is the
 visible cell with the most sugar.
@@ -7782,8 +7685,17 @@ returns the sugar at that location.
 
 \end{itemize}
 
-And here's the \py{Sugarscape} class and its \py{step} method
-(without replacement):
+\py{Sugarscape} inherits from \py{Cell2D}, so it is similar to the
+other grid-based models we've seen.
+
+
+The attributes include \py{agents}, which is a list of \py{Agent}
+objects, and \py{occupied}, which is a set of tuples, where each
+tuples contains the coordinates of a cell occupied by an agent.
+
+\index{Cell2D}
+
+Here is the \py{Sugarscape} class and its \py{step} method:
 
 \begin{code}
 class Sugarscape(Cell2D):
@@ -7816,24 +7728,16 @@ class Sugarscape(Cell2D):
 \index{random}
 \index{permutation}
 
-\py{Sugarscape} inherits from \py{Cell2D}, so it is similar to the
-other grid-based models we've seen.
-
-\index{Cell2D}
-
-The attributes include \py{agents}, which is a list of \py{Agent}
-objects, and \py{occupied}, which is a set of tuples, where each
-tuples contains the coordinates of a cell occupied by an agent.
-
-During each step, the \py{Sugarscape} loops through the agents in
+During each step, the \py{Sugarscape} uses the NumPy function \py{permutation} so it loops through the agents in
 random order.  It invokes \py{step} on each agent and then checks whether
 it is dead.  After all agents have moved, some of the sugar grows back.
+The return value is the number of agents still alive.
 
-\index{NumPy}
-
-If you want to learn more about NumPy, take a look at these functions:
+I won't show more details here; you can see them in the notebook for this chapter.  If you want to learn more about NumPy, you might want to look at these functions in particular:
 
 \begin{itemize}
+
+%TODO: Any more
 
 \item \py{make_visible_locs}, which builds the array of locations
 an agent can see, depending on its vision.  The locations are sorted by distance, with locations at the same distance
@@ -7844,9 +7748,11 @@ and \py{np.vstack}.
 \index{random}
 \index{shuffle}
 
-\item \py{Sugarscape.make_capacity}, which
+\item \py{make_capacity}, which
 initializes the capacity of the cells using NumPy functions
-\py{indices}, \index{hypot}, and \index{digitize}.
+\py{indices}, \py{hypot}, \py{minimum}, and \py{digitize}.
+
+\item \py{look_and_move}, which uses \py{argmax}.
 
 \end{itemize}
 
@@ -7855,6 +7761,8 @@ initializes the capacity of the cells using NumPy functions
 \index{indices}
 \index{hypot}
 \index{digitize}
+\index{minimum}
+\index{argmax}
 
 
 \section{Migration and Wave Behavior}
@@ -7877,8 +7785,8 @@ toward the closest ``peak'' of high-capacity cells.  But if there
 are more agents than a single peak can support, they quickly exhaust
 the sugar and agents are forced to move into lower-capacity areas.
 
-The ones with the longest vision range cross the valley between the
-peaks first and propagate toward the northeast in a pattern that
+The ones with the longest vision cross the valley between the
+peaks and propagate toward the northeast in a pattern that
 resembles a wave front.  Because they leave a stripe of empty cells
 behind them, other agents don't follow until the sugar grows back.
 
@@ -7894,19 +7802,12 @@ Section~\ref{lifepatterns}).
 Figure~\ref{chap09-5} shows the initial condition (left) and the
 state of the model after 6 steps (middle) and 12 steps (right).
 You can see the first two waves reaching and moving through the
-second peak, leaving a stripe of empty cells behind.  You can also
+second peak, leaving a stripe of empty cells behind.  You can
 see an animated version of this model, where the wave patterns are
-more clearly visible.
+more clearly visible, in the notebook for this chapter.
 
-Although these waves are made up of agents, we can think of them
-as entities of their own, in the same way we think of gliders in
-Game of Life.
-
-\index{glider}
-\index{Game of Life}
-
-An interesting property of these waves is that they
-move diagonally, which might be surprising, because the agents
+These waves
+move diagonally, which is surprising because the agents
 themselves only move north or east, never northeast.  Outcomes
 like this --- groups or ``aggregates'' with properties and behaviors
 that the agents don't have --- are common in agent-based models.
@@ -7944,7 +7845,7 @@ property, but it is a weak example because we could
 reasonably predict it based on the distributions of vision, metabolism,
 and lifespan.  The wave behavior we saw in the last example might
 be a stronger example, since the wave displays a capability --- diagonal
-movement --- that the agents clearly do not have.
+movement --- that the agents do not have.
 
 Emergent properties are surprising: it is hard to predict the behavior
 of the system even if we know all the rules.  That difficulty is not
@@ -8001,19 +7902,17 @@ properties can never be ``explained'' by a classical reductionist
 model.
 
 You can read more about emergence at
-\url{https://greenteapress.com/tc/emer}.
+\url{https://thinkcomplex.com/emerge}.
 
 
 \section{Exercises}
 
-\begin{exercise}
 
 The code for this chapter is in the Jupyter notebook {\tt chap09.ipynb}
 in the repository for this book.  Open this notebook, read the code,
-and run the cells.  You can use this notebook to work on the
-exercises in this chapter.  My solutions are in {\tt chap09soln.ipynb}.
+and run the cells.  You can use this notebook to work on the following
+exercises.  My solutions are in {\tt chap09soln.ipynb}.
 
-\end{exercise}
 
 \begin{exercise}
 
@@ -8067,7 +7966,7 @@ You should be able to implement this model by inheriting from
 
 \begin{exercise}
 
-In the philosophy of mind, {\em Strong AI} is the theory that an
+Among people who study philosophy of mind, ``Strong AI" is the theory that an
 appropriately-programmed computer could have a mind in the same sense
 that humans have minds.
 
@@ -8077,8 +7976,8 @@ that humans have minds.
 \index{system reply}
 
 John Searle presented a thought experiment called ``The Chinese Room'',
-intended to show that {\em Strong AI} is false.  You can read about
-it at \url{https://greenteapress.com/tc/searle}.
+intended to show that Strong AI is false.  You can read about
+it at \url{https://thinkcomplex.com/searle}.
 
 What is the {\bf system reply} to the Chinese Room argument?
 How does what you have learned about emergence influence
@@ -8313,7 +8212,7 @@ find driver behaviors that improve average speed.
 In 1987 Craig Reynolds published ``Flocks, herds and
 schools: A distributed behavioral model'', which describes an
 agent-based model of herd behavior.  You can download his
-paper from \url{https://greenteapress.com/tc/boid}.
+paper from \url{https://thinkcomplex.com/boid}.
 
 \index{Reynolds, Craig}
 
@@ -8355,7 +8254,7 @@ To run this program you will need VPython, which is a library that provides 3D g
 conda install -c vpython vpython
 \end{code}
 
-VPython provides a \py{Vector} object we'll use to represent the position and velocity of Boids in a 3-dimensional space.  You can read about them at \url{https://greenteapress.com/tc/vector}.
+VPython provides a \py{Vector} object we'll use to represent the position and velocity of Boids in a 3-dimensional space.  You can read about them at \url{https://thinkcomplex.com/vector}.
 
 \index{Vector}
 
@@ -8637,7 +8536,7 @@ behavior of the flock?  Implement it and see.
 \begin{exercise}
 
 Read more about free will at
-\url{https://greenteapress.com/tc/will}.  The view that free will
+\url{https://thinkcomplex.com/will}.  The view that free will
 is compatible with determinism is called {\bf compatibilism}.  One of
 the strongest challenges to compatibilism is the ``consequence
 argument''.  What is the consequence argument?  What response can you
@@ -8677,7 +8576,7 @@ Nevertheless, many people do not believe in evolution.  In a survey run by the P
 
 \end{enumerate}
 
-About 34\% of Americans chose the second (see \url{https://greenteapress.com/tc/arda}).
+About 34\% of Americans chose the second (see \url{https://thinkcomplex.com/arda}).
 
 Even among the ones who believe that living things have evolved, barely more than half believe that the cause of evolution is natural selection.  In other words, only a third of Americans believe that the theory of evolution is true.
 
@@ -8707,6 +8606,9 @@ about working with this code, see Section~\ref{code}.
 
 \section{Simulating evolution}
 
+% manifests
+% shows evidence of
+
 I will start with a simple model that demonstrates a basic form of evolution.  According to the theory, the following features are sufficient to produce evolution:
 
 \begin{itemize}
@@ -8729,7 +8631,7 @@ that represent individual organisms.  Each agent has genetic
 information, called its {\bf genotype}, which is the information that
 gets copied when the agent replicates.  In our model\footnote{This
   model is a variant of the NK model developed primarily by Stuart
-  Kauffman (see \url{https://greenteapress.com/tc/nk})}, a
+  Kauffman (see \url{https://thinkcomplex.com/nk})}, a
 genotype is represented by a sequence of \py{N} binary digits (zeros
 and ones), where \py{N} is a parameter we choose.
 
@@ -8746,7 +8648,7 @@ Finally, to generate differential survival and reproduction, we define a functio
 
 \section{Fitness landscape}
 
-The function that maps from genotype to fitness is called a {\bf fitness landscape}.  In the landscape metaphor, each genotype corresponds to a location in an \py{N}-dimensional space, and fitness corresponds to the ``height" of the landscape at that location.  For visualizations that might clarify this metaphor, see \url{https://greenteapress.com/tc/fit}.
+The function that maps from genotype to fitness is called a {\bf fitness landscape}.  In the landscape metaphor, each genotype corresponds to a location in an \py{N}-dimensional space, and fitness corresponds to the ``height" of the landscape at that location.  For visualizations that might clarify this metaphor, see \url{https://thinkcomplex.com/fit}.
 
 \index{fitness landscape}
 \index{phenotype}
@@ -9048,7 +8950,7 @@ In the simulations so far, we start with the maximum possible diversity --- one 
 \index{mutation}
 \index{diversity}
 
-That's almost the opposite of what happened in the natural world, which apparently began with a single species that branched, over time, into the millions, or possibly billions, of species on Earth today (see \url{https://greenteapress.com/tc/bio}).
+That's almost the opposite of what happened in the natural world, which apparently began with a single species that branched, over time, into the millions, or possibly billions, of species on Earth today (see \url{https://thinkcomplex.com/bio}).
 
 With perfect copying in our model, we never see increasing diversity.  But if we add mutation, along with differential survival and reproduction, we get a step closer to understanding evolution in nature.
 
@@ -9082,7 +8984,7 @@ In this model of mutation, every time we call \py{copy}, there is a 5\% chance o
 
 The operator \py{^=} computes ``exclusive OR"; with the operand 1, it
 has the effect of flipping a bit (see
-\url{https://greenteapress.com/tc/xor}).
+\url{https://thinkcomplex.com/xor}).
 
 \index{exclusive OR}
 \index{XOR}
@@ -9187,7 +9089,7 @@ Now if we compute the distance between the agents' locations before and after th
 
 \section{Summary}
 
-We have seen that mutation, along with differential survival and reproduction, is sufficient to cause increasing fitness, increasing diversity, and a simple form of speciation.  This model is not meant to be realistic; evolution in natural systems is much more complicated than this.  Rather, it is meant to be a ``sufficiency theorem"; that is, a demonstration that the features of the model are sufficient to produce the behavior we are trying to explain (see \url{https://greenteapress.com/tc/suff}).
+We have seen that mutation, along with differential survival and reproduction, is sufficient to cause increasing fitness, increasing diversity, and a simple form of speciation.  This model is not meant to be realistic; evolution in natural systems is much more complicated than this.  Rather, it is meant to be a ``sufficiency theorem"; that is, a demonstration that the features of the model are sufficient to produce the behavior we are trying to explain (see \url{https://thinkcomplex.com/suff}).
 
 \index{sufficiency theorem}
 
@@ -9222,9 +9124,9 @@ In this final chapter, we take on two questions, one from biology and one from p
 
 \begin{itemize}
 
-\item In biology, the ``problem of altruism" is the apparent conflict between natural selection, which suggests that animals live in a state of constant competition to survive and reproduce, and altruism, which is the tendency of many animals to help other animals, even to their apparent detriment.  See \url{https://greenteapress.com/tc/altruism}.
+\item In biology, the ``problem of altruism" is the apparent conflict between natural selection, which suggests that animals live in a state of constant competition to survive and reproduce, and altruism, which is the tendency of many animals to help other animals, even to their apparent detriment.  See \url{https://thinkcomplex.com/altruism}.
 
-\item In moral philosophy, the question of human nature asks whether humans are fundamentally good, or evil, or blank states shaped by their environment.  See \url{https://greenteapress.com/tc/nature}.
+\item In moral philosophy, the question of human nature asks whether humans are fundamentally good, or evil, or blank states shaped by their environment.  See \url{https://thinkcomplex.com/nature}.
 
 \end{itemize}
 
@@ -9241,7 +9143,7 @@ about working with this code, see Section~\ref{code}.
 \section{Prisoner's Dilemma}
 \label{prisoners}
 
-The Prisoner's Dilemma is a topic in game theory, but it's not the fun kind of game.  Instead, it is the kind of game that sheds light on human motivation and behavior.  Here is the presentation of the dilemma from Wikipedia (\url{https://greenteapress.com/tc/pd}):
+The Prisoner's Dilemma is a topic in game theory, but it's not the fun kind of game.  Instead, it is the kind of game that sheds light on human motivation and behavior.  Here is the presentation of the dilemma from Wikipedia (\url{https://thinkcomplex.com/pd}):
 
 \index{Prisoner's Dilemma}
 \index{game theory}
@@ -9293,11 +9195,11 @@ Studying these scenarios, and ways to escape from the dilemma, is the focus of p
 Since the Prisoner's Dilemma was first discussed in the 1950s, it has been a popular topic of study in social psychology.  Based on the analysis in the previous section, we can say what a perfectly rational agent {\em should} do; it is harder to predict what real people actually do.  Fortunately, the experiment has been done\footnote{Here's a recent report with references to previous experiments:
 Barreda-Tarrazona, Jaramillo-Guti\'{e}rrez, Pavan, and Sabater-Grande,
 ``Individual Characteristics vs. Experience: An Experimental Study on Cooperation in Prisoner's Dilemma", Frontiers in Psychology, 2017; 8: 596.
-\url{https://greenteapress.com/tc/pdexp}.}.
+\url{https://thinkcomplex.com/pdexp}.}.
 
 \index{social psychology}
 
-If we assume that people are smart enough to do the analysis (or understand it when explained), and that they generally act in their own interest, we would expect them to defect pretty much all the time.  But they don't.  In most experiments, subjects cooperate much more than the rational agent model predicts\footnote{For an excellent video summarizing what we have discussed so far, see \url{https://greenteapress.com/tc/pdvid1}.}.
+If we assume that people are smart enough to do the analysis (or understand it when explained), and that they generally act in their own interest, we would expect them to defect pretty much all the time.  But they don't.  In most experiments, subjects cooperate much more than the rational agent model predicts\footnote{For an excellent video summarizing what we have discussed so far, see \url{https://thinkcomplex.com/pdvid1}.}.
 
 \index{rational agent model}
 
@@ -9342,7 +9244,7 @@ In Axelrod's tournaments, a simple strategy that did surprisingly well was calle
 \index{TFT}
 \index{tit for tat}
 
-For more information about these tournaments, and an explanation of why TFT does so well, see this video: \url{https://greenteapress.com/tc/pdvid2}.
+For more information about these tournaments, and an explanation of why TFT does so well, see this video: \url{https://thinkcomplex.com/pdvid2}.
 
 Looking at the strategies that did well in these tournaments, Alexrod identified the characteristics they tended to share:
 
@@ -9686,7 +9588,7 @@ The simulations in this chapter suggest:
 \item TFT, which was a successful strategy in Alexrod's tournaments, does not seem to be a specially optimal strategy in an evolving population.  In fact, there is probably no stable optimal strategy.
 
 \item Some degree of retaliation may be adaptive, but it might not be
-necessary for all agents to retaliate.  If there is enough retaliation in the population as a whole, that might be enough to prevent invasion by defectors\footnote{And that introduces a whole new topic in game theory, the free-rider problem (see \url{https://greenteapress.com/tc/rider})}.
+necessary for all agents to retaliate.  If there is enough retaliation in the population as a whole, that might be enough to prevent invasion by defectors\footnote{And that introduces a whole new topic in game theory, the free-rider problem (see \url{https://thinkcomplex.com/rider})}.
 
 \end{itemize}
 
@@ -9758,6 +9660,8 @@ The following are selected books that provide an introduction to
 complexity science, and a pleasant way to get a big picture
 of the field.
 
+%TODO: Decide on first name last name order.
+
 \begin{itemize}
 
 \item Robert Axelrod, {\it  Complexity of Cooperation},
@@ -9772,10 +9676,10 @@ Copernicus (Springer) 1996.
 \item Albert-L\'{a}szl\'{o} \Barabasi, {\it  Linked}
 Perseus Books Group 2002.
 
-\item Sharon Bertsch McGrayne, {\it The Theory That Would Not Die}, Yale University Press, 2011.
-
 \item Mark Buchanan, {\it  Nexus},
 W W Norton \& Co Inc 2002.
+
+\item Dawkins, Richard, {\it The Selfish Gene}, Oxford University Press, 2016.
 
 \item Joshua Epstein and Robert Axtell, {\it  Growing Artificial Societies},
 Brookings Institution Press \& MIT Press 1996.
@@ -9805,11 +9709,15 @@ Basic Books 2009.
 
 \item Lewin, {\it  Complexity: Life at the Edge of Chaos}.
 
+\item Mandelbrot, Benoit, {\it Fractal Geometry of Nature}, Times Books, 1982.
+
+\item  McGrayne, Sharon Bertsch, {\it The Theory That Would Not Die}, Yale University Press, 2011.
+
 \item Mitchell, {\it  Complexity: A Guided Tour}.
 
 \item Waldrop, {\it Complexity: The emerging science at the edge of order and chaos}.
 
-\item Resnick, {\it  Turtles, Termites, and Traffic Jams}.
+\item Resnick, Mitchell, {\it  Turtles, Termites, and Traffic Jams}.
 
 \item Rucker, {\it  The Lifebox, The Seashell, and the Soul}.
 
@@ -9842,7 +9750,7 @@ Basic Books 2009.
 
 The Pareto distribution is named after the economist Vilfredo
 Pareto, who used it to describe the distribution of wealth;
-see \url{https://greenteapress.com/tc/pareto}.  Since then,
+see \url{https://thinkcomplex.com/pareto}.  Since then,
 people have used it to describe
 phenomena in the natural and social sciences
 including sizes of cities and towns, sand particles
