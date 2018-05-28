@@ -23,7 +23,7 @@ import numpy as np
 
 # radiuses for sensing different rules
 r_avoid = 0.3
-r_center = 1.0
+
 r_align = 0.5
 
 # viewing angle for different rules, in radians
@@ -91,10 +91,10 @@ class Boid(cone):
 
         return neighbors
 
-    def center(self, boids):
+    def center(self, boids, radius=1, angle=1):
         """Find the center of mass of other boids in range and
         return a vector pointing toward it."""
-        close = self.get_neighbors(boids, r_center, a_center)
+        close = self.get_neighbors(boids, radius, angle)
         vecs = [boid.pos for boid in close]
         return self.vector_toward_center(vecs)
 
@@ -112,21 +112,21 @@ class Boid(cone):
         else:
             return null_vector
 
-    def avoid(self, boids, carrot):
+    def avoid(self, boids, carrot, radius=0.3, angle=np.pi):
         """Find the center of mass of all objects in range and
         return a vector in the opposite direction, with magnitude
         proportional to the inverse of the distance (up to a limit)."""
         objects = boids + [carrot]
-        close = self.get_neighbors(objects, r_avoid, a_avoid)
+        close = self.get_neighbors(objects, radius, angle)
         vecs = [boid.pos for boid in close]
         return -self.vector_toward_center(vecs)
 
-    def align(self, boids):
+    def align(self, boids, radius=0.5, angle=1):
         """Return the average heading of other boids in range.
 
         boids: list of Boids
         """
-        close = self.get_neighbors(boids, r_align, a_align)
+        close = self.get_neighbors(boids, radius, angle)
         vecs = [boid.vel for boid in close]
         return self.vector_toward_center(vecs)
 
