@@ -137,8 +137,8 @@ class Boid(cone):
 
     def set_goal(self, boids, carrot):
         """Sets the goal to be the weighted sum of the goal vectors."""
-        self.goal = (w_avoid * self.avoid(boids, carrot) +
-                     w_center * self.center(boids) +
+        self.goal = (w_center * self.center(boids) +
+                     w_avoid * self.avoid(boids, carrot) +
                      w_align * self.align(boids) +
                      w_love * self.love(carrot))
         self.goal.mag = 1
@@ -152,9 +152,8 @@ class Boid(cone):
 
         self.vel = (1-mu) * self.vel + mu * self.goal
         self.vel.mag = 1
-
-        self.pos += dt * self.vel
         self.axis = self.length * self.vel
+        self.pos += dt * self.vel
 
 
 class World(object):
