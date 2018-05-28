@@ -21,21 +21,6 @@ except:
 import numpy as np
 
 
-# radiuses for sensing different rules
-r_avoid = 0.3
-
-r_align = 0.5
-
-# viewing angle for different rules, in radians
-a_avoid = 2*np.pi
-a_center = 1
-a_align = 1
-
-# weights for various rules
-w_avoid = 10
-w_center = 3
-w_align = 1
-w_love = 10
 
 null_vector = vector(0,0,0)
 
@@ -137,6 +122,13 @@ class Boid(cone):
 
     def set_goal(self, boids, carrot):
         """Sets the goal to be the weighted sum of the goal vectors."""
+
+        # weights for various rules
+        w_avoid = 10
+        w_center = 3
+        w_align = 1
+        w_love = 10
+
         self.goal = (w_center * self.center(boids) +
                      w_avoid * self.avoid(boids, carrot) +
                      w_align * self.align(boids) +
