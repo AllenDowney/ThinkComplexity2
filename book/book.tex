@@ -22,7 +22,7 @@
 \newcommand{\thetitle}{Think Complexity}
 \newcommand{\thesubtitle}{Exploring Complexity Science in Python}
 \newcommand{\theauthors}{Allen B. Downey}
-\newcommand{\theversion}{2.5.9}
+\newcommand{\theversion}{2.6}
 
 %%%% Both LATEX and PLASTEX
 
@@ -309,18 +309,22 @@ Features of this book include:
 
 \end{description}
 
+For most of the links in this book I use URL redirection.  This mechanism has the drawback of hiding the link destination, but it makes the URLs shorter and less obtrusive.  Also, and more importantly, it allows me to update the links without updating the book.  If you find a broken link, please let me know and I will change the redirection.
+
 
 \section{Who is this book for?}
 
 The examples and supporting code for this book are in Python.  You
 should know core Python and be familiar with its object-oriented features,
 specifically using and defining classes.
+
 \index{Python}
 
 If you are not already familiar with Python, you might want to start
 with {\it Think Python}, which is appropriate for people who have never programmed before.  If you have programming experience in another language, there are many good Python books to chose from, as well as online resources.
 
 I use NumPy, SciPy, and NetworkX throughout the book.  If you are familiar with these libraries already, that's great, but I will also explain them when they appear.
+
 \index{NumPy}
 \index{SciPy}
 \index{NetworkX}
@@ -8559,14 +8563,14 @@ book?
 
 \chapter{Evolution}
 
-The most important idea in biology, and possibly all of science, is the {\bf theory of evolution by natural selection}, which claims that new species are created and existing species change due to natural selection.  Natural selection is a process in which heritable differences between individuals cause differences in survival and reproduction.
+The most important idea in biology, and possibly all of science, is the {\bf theory of evolution by natural selection}, which claims that {\em new species are created and existing species change due to natural selection}.  Natural selection is a process in which inherited variations between individuals cause differences in survival and reproduction.
 
 \index{evolution}
 \index{survival}
 \index{reproduction}
 \index{theory of evolution}
 
-Among people who know something about biology, the theory of evolution is widely regarded as a fact, which is to say that it close enough to the truth that if it is corrected in the future, the amendments will leave the central ideas substantially intact.
+Among people who know something about biology, the theory of evolution is widely regarded as a fact, which is to say that it is consistent with all current observations; it is highly unlikely to be contradicted by future observations; and, if it is revised in the future, the changes will almost certainly leave the central ideas substantially intact.
 
 \index{Pew Research Center}
 
@@ -8590,7 +8594,7 @@ How is this possible?  In my opinion, contributing factors include:
 
 \item Some people think that there is a conflict between evolution and their religious beliefs.  Feeling like they have to reject one, they reject evolution.
 
-\item Others have been actively misinformed, often by members of the first group, so that much of what they know about evolution is false.
+\item Others have been actively misinformed, often by members of the first group, so that much of what they know about evolution is misleading or false.  For example, many people think that evolution means humans evolved from monkeys.  It doesn't, and we didn't.
 
 \item And many people simply don't know anything about evolution.
 
@@ -8610,10 +8614,13 @@ about working with this code, see Section~\ref{code}.
 
 \section{Simulating evolution}
 
-% manifests
-% shows evidence of
+% manifest
+% show evidence of
+% evoke
+% instantiate
+% induce
 
-I will start with a simple model that demonstrates a basic form of evolution.  According to the theory, the following features are sufficient to produce evolution:
+I start with a simple model that demonstrates a basic form of evolution.  According to the theory, the following features are sufficient to produce evolution:
 
 \begin{itemize}
 
@@ -8622,7 +8629,7 @@ I will start with a simple model that demonstrates a basic form of evolution.  A
   of themselves.  Later we'll add imperfect copying, that is,
   mutation.
 
-\item Variation: We also need some variability in the population, that
+\item Variation: We need variability in the population, that
   is, differences between individuals.
 
 \item Differential survival or reproduction: The differences between
@@ -8682,6 +8689,7 @@ The fitness of a given genotype is the mean of \py{N} {\bf fitness contributions
 
 \index{NumPy}
 \index{random}
+\index{where}
 
 To compute the fitness of a genotype, \py{FitnessLandscape} uses two arrays:
 \py{one_values}, which contains the fitness contributions of having a \py{1} in each element of \py{loc}, and \py{zero_values}, which contains the fitness contributions of having a \py{0}.
@@ -8726,7 +8734,7 @@ The attributes of an \py{Agent} are:
 
 \end{itemize}
 
-This definition of \py{Agent} provides a simple \py{copy} method that copies the genotype exactly; later, we will see a version that copies with mutation, but mutation is not necessary for evolution.
+\py{Agent} provides \py{copy}, which copies the genotype exactly.  Later, we will see a version that copies with mutation, but mutation is not necessary for evolution.
 
 
 \section{Simulation}
@@ -8774,12 +8782,11 @@ The most important function in \py{Simulation} is \py{step}, which simulates one
         self.agents[index_dead] = replacements
 \end{code}
 
-During each time step, some agents die and some reproduce.
 \py{step} uses three other methods:
 
 \begin{itemize}
 
-\item \py{get_fitnesses} returns an array containing the fitness of each agent in the order they appear in the agent array.
+\item \py{get_fitnesses} returns an array containing the fitness of each agent.
 
 \item \py{choose_dead} decides which agents die during this timestep, and returns an array that contains the indices of the dead agents.
 
@@ -8802,6 +8809,19 @@ Before we run the simulation, we have to specify the behavior of \py{choose_dead
         is_dead = np.random.random(n) < 0.1
         index_dead = np.nonzero(is_dead)[0]
         return index_dead
+\end{code}
+
+\index{NumPy}
+\index{random}
+\index{choice}
+\index{nonzero}
+\index{boolean array}
+
+In \py{choose_dead}, \py{n} is the number of agents and \py{is_dead} is a boolean array that contains \py{True} for the agents who die during this time step.  In this version, every agent has the same probability of dying: 0.1.
+\py{choose_dead} uses \py{np.nonzero} to find the indices of the non-zero elements of \py{is_dead} (\py{True} is considered non-zero).
+
+\begin{code}
+# class Simulation
 
     def choose_replacements(self, n, fits):
         agents = np.random.choice(self.agents, size=n, replace=True)
@@ -8809,16 +8829,7 @@ Before we run the simulation, we have to specify the behavior of \py{choose_dead
         return replacements
 \end{code}
 
-\index{NumPy}
-\index{random}
-\index{choice}
-
-In \py{choose_dead}, \py{n} is the number of agents and \py{is_dead} is a boolean array that contains \py{True} for the agents who die during this time step.  In this version, every agent has the same probability of dying: $0.1$.
-\py{choose_dead} uses \py{np.nonzero} to find the indices of the non-zero elements of \py{is_dead} (\py{True} is considered non-zero).
-
-\index{boolean array}
-
-In \py{choose_replacements}, \py{n} is the number of agents who reproduce during this time step.  It uses \py{np.random.choice} to choose \py{n} agents, with replacement.  Then it invokes \py{copy} on each one and returns a list of new \py{Agent} objects.
+In \py{choose_replacements}, \py{n} is the number of agents who reproduce during this time step.  It uses \py{np.random.choice} to choose \py{n} agents with replacement.  Then it invokes \py{copy} on each one and returns a list of new \py{Agent} objects.
 
 These methods don't depend on fitness, so this simulation does not have differential survival or reproduction.  As a result, we should not expect to see evolution.  But how can we tell?
 
@@ -8828,9 +8839,9 @@ These methods don't depend on fitness, so this simulation does not have differen
 
 The most inclusive definition of evolution is a change in the distribution of genotypes in a population.  Evolution is an aggregate effect: in other words, individuals don't evolve; populations do.
 
-In this simulation, genotypes are locations in a high-dimensional space, so it is hard to visualize changes in their distribution.  However, if the genotypes change, we expect their fitness to change as well.  So we will use changes in the distribution of fitness as evidence of evolution.  In particular, we'll look at the mean and standard deviation of fitness across the population.
+In this simulation, genotypes are locations in a high-dimensional space, so it is hard to visualize changes in their distribution.  However, if the genotypes change, we expect their fitness to change as well.  So we will use {\em changes in the distribution of fitness} as evidence of evolution.  In particular, we'll look at the mean and standard deviation of fitness over time.
 
-Before we run the simulation, we have to add an \py{Instrument}, which is an object that gets updated after each time step, computes a statistic of interest, and stores the result in a sequence we can plot later.
+Before we run the simulation, we have to add an \py{Instrument}, which is an object that gets updated after each time step, computes a statistic of interest, or ``metric", and stores the result in a sequence we can plot later.
 
 Here is the parent class for all instruments:
 
@@ -8852,7 +8863,7 @@ class MeanFitness(Instrument):
 \index{NumPy}
 \index{nanmean}
 
-Now we're ready to run the simulation.  To minimize the effect of random changes in the starting population, we start every simulation with the same set of agents.  And to make sure we explore the entire fitness landscape, we start with one agent at every location.  Here's the code that creates the \py{Simulation}:
+Now we're ready to run the simulation.  To avoid the effect of random changes in the starting population, we start every simulation with the same set of agents.  And to make sure we explore the entire fitness landscape, we start with one agent at every location.  Here's the code that creates the \py{Simulation}:
 
 \begin{code}
 N = 8
@@ -8869,14 +8880,11 @@ Now we can create and add a \py{MeanFitness} instrument, run the simulation, and
 instrument = MeanFitness()
 sim.add_instrument(instrument)
 sim.run()
-sim.plot(0)
 \end{code}
 
-The \py{Simulation} keeps a list of \py{Instrument} objects.  After each timestep it invokes \py{update} on each \py{Instrument} in the list.
+\py{Simulation} keeps a list of \py{Instrument} objects.  After each timestep it invokes \py{update} on each \py{Instrument} in the list.
 
 \index{Instrument}
-
-After the simulation runs, we plot the results using \py{Simulation.plot}, which takes an index as a parameter, uses the index to select an \py{Instrument} from the list, and plots the results.  In this example, there is only one \py{Instrument}, with index 0.
 
 \begin{figure}
 \centerline{\includegraphics[height=3in]{figs/chap11-1.pdf}}
@@ -8884,7 +8892,7 @@ After the simulation runs, we plot the results using \py{Simulation.plot}, which
 \label{chap11-1}
 \end{figure}
 
-Figure~\ref{chap11-1} shows the results of running this simulation 10 times.  The mean fitness of the population drifts up or down at random.  Since the distribution of fitness changes over time, we infer that the distribution of phenotypes is also changing.  By the most inclusive definition, this {\bf random walk} is a kind of evolution.  But it is not a particularly interesting kind.
+Figure~\ref{chap11-1} shows the result of running this simulation 10 times.  The mean fitness of the population drifts up or down at random.  Since the distribution of fitness changes over time, we infer that the distribution of phenotypes is also changing.  By the most inclusive definition, this {\bf random walk} is a kind of evolution.  But it is not a particularly interesting kind.
 
 \index{adaptation}
 \index{diversity}
@@ -8907,7 +8915,7 @@ These are the phenomena we want to explain.  So far, our model doesn't do the jo
 \section{Differential survival}
 \label{diffsurv}
 
-Let's add one more ingredient, differential survival.  Here's the definition for a class that extends \py{Simulation} and overrides \py{choose_dead}:
+Let's add one more ingredient, differential survival.  Here's a class that extends \py{Simulation} and overrides \py{choose_dead}:
 
 \begin{code}
 class SimWithDiffSurvival(Simulation):
@@ -8963,10 +8971,8 @@ Here is a class definition that extends \py{Agent} and overrides \py{copy}:
 \begin{code}
 class Mutant(Agent):
 
-    prob_mutate = 0.05
-
-    def copy(self):
-        if np.random.random() > self.prob_mutate:
+    def copy(self, prob_mutate=0.05)::
+        if np.random.random() > prob_mutate:
             loc = self.loc.copy()
         else:
             direction = np.random.randint(self.fit_land.N)
@@ -9017,7 +9023,7 @@ When an agent discovers a high-fitness location, it is more likely to survive an
 
 At that point, the system reaches an equilibrium where mutation occupies new locations at the same rate that differential survival causes lower-fitness locations to be left empty.
 
-The number of occupied locations in equilibrium depends on the mutation rate and the degree of differential survival.  In these simulations the number of unique occupied locations at any point is typically 10--20.
+The number of occupied locations in equilibrium depends on the mutation rate and the degree of differential survival.  In these simulations the number of unique occupied locations at any point is typically 5--15.
 
 It is important to remember that the agents in this model don't move, just as the genotype of an organism doesn't change.  When an agent dies, it can leave a location unoccupied.  And when a mutation occurs, it can occupy a new location.  As agents disappear from some locations and appear in others, the population migrates across the landscape, like a glider in Game of Life.  But organisms don't evolve; populations do.
 
@@ -9025,6 +9031,7 @@ It is important to remember that the agents in this model don't move, just as th
 \index{Game of Life}
 
 \section{Speciation}
+\label{speciation}
 
 The theory of evolution says that natural selection changes existing species and creates new ones.  In our model, we have seen changes, but we have not seen a new species.  It's not even clear, in the model, what a new species would look like.
 
@@ -9034,7 +9041,7 @@ Among species that reproduce sexually, two organisms are considered the same spe
 
 Among organisms that reproduce asexually, like bacteria, the definition of species is not as clear-cut.  Generally, a population is considered a species if their genotypes form a cluster, that is, if the genetic differences within the population are small compared to the differences between populations.
 
-Before we can model new species, we need the ability to identify clusters of agents in the landscape, which means we need a definition of {\bf distance} between locations.  Since locations are represented with strings of binary digits, we'll define distance as the number of bits in the genotype that differ.  \py{FitnessLandscape} provides a \py{distance} method:
+Before we can model new species, we need the ability to identify clusters of agents in the landscape, which means we need a definition of {\bf distance} between locations.  Since locations are represented with arrays of bits, we'll define distance as the number of bits that differ between locations.  \py{FitnessLandscape} provides a \py{distance} method:
 
 % Q: Why didn't I use the ^ operator in distance()?
 % A: Because ^ is bitwise XOR.  In this case the result would be
@@ -9053,18 +9060,18 @@ Before we can model new species, we need the ability to identify clusters of age
 \label{chap11-5}
 \end{figure}
 
-The \py{logical_xor} function computes ``exclusive OR", which is \py{True} for the elements of the locations that differ, and \py{False} for the elements that are the same.
+The \py{logical_xor} function computes ``exclusive OR", which is \py{True} for bits that differ, and \py{False} for the bits that are the same.
 
-\index{logical xor}
+\index{exclusive OR}
 \index{XOR}
 
-To quantify the dispersion of a population, we can compute the mean of the distances between every pair of agents.  In the notebook for this chapter, you'll see the \py{MeanDistance} instrument, which computes this metric after each time step.
+To quantify the dispersion of a population, we can compute the mean of the distances between pairs of agents.  In the notebook for this chapter, you'll see the \py{MeanDistance} instrument, which computes this metric after each time step.
 
 \index{distance}
 
 Figure~\ref{chap11-5} shows mean distance between agents over time.  Because we start with identical mutants, the initial distances are 0.  As mutations occur, mean distance increases, reaching a maximum while the population migrates across the landscape.
 
-Once the agents discover the optimal location, mean distance decreases until the population reaches an equilibrium where increasing distance due to mutation is balanced by decreasing distance as agents far from the optimal location are more likely to die.  In these simulations, the mean distance in equilibrium is near 1.5; that is, most agents are only 1--2 mutations away from optimal.
+Once the agents discover the optimal location, mean distance decreases until the population reaches an equilibrium where increasing distance due to mutation is balanced by decreasing distance as agents far from the optimal location disappear.  In these simulations, the mean distance in equilibrium is near 1; that is, most agents are only one mutation away from optimal.
 
 Now we are ready to look for new species.  To model a simple kind of speciation, suppose a population evolves in an unchanging environment until it reaches steady state (like some species we find in nature that seem to have changed very little over long periods of time).
 
@@ -9080,11 +9087,11 @@ We can model these scenarios by running a simulation until the population reache
 \label{chap11-6}
 \end{figure}
 
-Figure~\ref{chap11-6} shows results from a simulation like that.  Again, we start with 100 identical mutants at a random location, and run the simulation for 500 timesteps.  At that point, many agents are at the optimal location, which has fitness near 0.65 in this example.  The genotypes of the agents form a cluster, with the mean distance between agents near 1.
+Figure~\ref{chap11-6} shows results from a simulation like that.  We start with 100 identical mutants at a random location, and run the simulation for 500 timesteps.  At that point, many agents are at the optimal location, which has fitness near 0.65 in this example.  The genotypes of the agents form a cluster, with the mean distance between agents near 1.
 
-After 500 steps, we run \py{FitnessLandscape.set_values}, which changes the fitness landscape; then we resume the simulation.  Mean fitness drops immediately, because the optimal location in the old landscape is no better than a random location in the new landscape.
+After 500 steps, we run \py{FitnessLandscape.set_values}, which changes the fitness landscape; then we resume the simulation.  Mean fitness is lower, as we expect because the optimal location in the old landscape is no better than a random location in the new landscape.
 
-However, mean fitness increases quickly as the population migrates across the new landscape, eventually finding the new optimum, which has fitness near 0.75 (which happens to be higher in this example, but needn't be).
+After the change, mean fitness increases again as the population migrates across the new landscape, eventually finding the new optimum, which has fitness near 0.75 (which happens to be higher in this example, but needn't be).
 
 Once the population reaches steady state, it forms a new cluster, with mean distance between agents near 1 again.
 
@@ -9117,24 +9124,40 @@ But in simulation, we see the whole process, not just the results.  And by inclu
 
 The code for this chapter is in the Jupyter notebook {\tt chap11.ipynb}
 in the repository for this book.  Open the notebook, read the code,
-and run the cells.  The notebook includes
-exercises for this chapter.  My solutions are in {\tt chap11soln.ipynb}.
+and run the cells.  You can use the notebook to work on the following
+exercises.  My solutions are in {\tt chap11soln.ipynb}.
+
+\begin{exercise}
+
+The notebook shows the effects of differential reproductions and survival separately.  What if you have both?  Write a class called \py{SimWithBoth} that uses the version of \py{choose_dead} from \py{SimWithDiffSurvival}
+and the version of \py{choose_replacements} from \py{SimWithDiffReproduction}.  Does mean fitness increase more quickly?
+
+As a Python challenge, can you write this class without copying code?  
+
+\end{exercise}
+
+
+\begin{exercise}
+
+When we change the landscape as in Section~\ref{speciation}, the number of occupied locations and the mean distance usually increase, but the effect is not always big enough to be obvious. Try out some different random seeds to see how general the effect is.
+
+\end{exercise}
 
 
 
 \chapter{Evolution of cooperation}
 
-In this final chapter, we take on two questions, one from biology and one from philosophy:
+In this final chapter, I take on two questions, one from biology and one from philosophy:
 
 \begin{itemize}
 
-\item In biology, the ``problem of altruism" is the apparent conflict between natural selection, which suggests that animals live in a state of constant competition to survive and reproduce, and altruism, which is the tendency of many animals to help other animals, even to their apparent detriment.  See \url{https://thinkcomplex.com/altruism}.
+\item In biology, the ``problem of altruism" is the apparent conflict between natural selection, which suggests that animals live in a state of constant competition, and altruism, which is the tendency of many animals to help other animals, even to their own detriment.  See \url{https://thinkcomplex.com/altruism}.
 
 \item In moral philosophy, the question of human nature asks whether humans are fundamentally good, or evil, or blank states shaped by their environment.  See \url{https://thinkcomplex.com/nature}.
 
 \end{itemize}
 
-The tools we will use to address these questions are agent based simulation (again) and game theory, which is a set of abstract models meant to describe various ways agents interact.  Specifically, the game we will consider is the Prisoner's Dilemma.
+The tools I use to address these questions are agent based simulation (again) and game theory, which is a set of abstract models meant to describe ways agents interact.  Specifically, the game we will consider is the Prisoner's Dilemma.
 
 \index{altruism}
 \index{human nature}
@@ -9153,7 +9176,7 @@ The Prisoner's Dilemma is a topic in game theory, but it's not the fun kind of g
 \index{game theory}
 
 \begin{quote}
-Two members of a criminal gang are arrested and imprisoned. Each prisoner is in solitary confinement with no means of communicating with the other. The prosecutors lack sufficient evidence to convict the pair on the principal charge. They hope to get both sentenced to a year in prison on a lesser charge. Simultaneously, the prosecutors offer each prisoner a bargain. Each prisoner is given the opportunity to either: (1) betray the other by testifying that the other committed the crime, or (2) cooperate with the other by remaining silent. The offer is:
+Two members of a criminal gang are arrested and imprisoned. Each prisoner is in solitary confinement with no means of communicating with the other. The prosecutors lack sufficient evidence to convict the pair on the principal charge, but they have enough to convict both on a lesser charge. Simultaneously, the prosecutors offer each prisoner a bargain. Each prisoner is given the opportunity to either: (1) betray the other by testifying that the other committed the crime, or (2) cooperate with the other by remaining silent. The offer is:
 
 \begin{itemize}
 
@@ -9217,21 +9240,21 @@ Based on experimental results, it seems that at least part of the explanation is
 
 \item Why do people help other people, even at a cost to themselves?  At least part of the reason is that they want to; it makes them feel good about themselves and the world.
 
-\item And why does being nice make people feel good?  It might be tempting to say that they were raised right, or more generally trained by society to want to do good things.  But there is little doubt\footnote{I hope you'll forgive my use of ``little doubt" here in place of references to relevant experiments.  I am trying to cover some ground in this chapter without getting too bogged down.} that at least a substantial part of altruism is innate; to varying degrees, a proclivity for altruism is a result of normal brain development.
+\item And why does being nice make people feel good?  It might be tempting to say that they were raised right, or more generally trained by society to want to do good things.  But there is little doubt that some part of altruism is innate; a proclivity for altruism is the result of normal brain development.
 
-\item Well, why is that?  The innate parts of brain development, and the personal characteristics that follow, are the result of genetic information.  Of course, the relationship between genes and altruism is complicated; there are probably many genes that interact with each other and with environmental factors to cause people to be more or less altruistic in different circumstances.  Nevertheless, there are almost certainly genes that cause people to be altruistic.
+\item Well, why is that?  The innate parts of brain development, and the personal characteristics that follow, are the result of genetic information.  Of course, the relationship between genes and altruism is complicated; there are probably many genes that interact with each other and with environmental factors to cause people to be more or less altruistic in different circumstances.  Nevertheless, there are almost certainly genes that tend to make people altruistic.
 
 \item Finally, why is that?  If, under natural selection, animals are in constant competition with each other to survive and reproduce, it seems obvious that altruism would be counterproductive.  In a population where some people help others, even to their own detriment, and others are purely selfish, it seems like the selfish ones would benefit, the altruistic ones would suffer, and the genes for altruism would be driven to extinction.
 
 \end{itemize}
 
-This apparent contradiction is the ``problem of altruism": why haven't the genes for altruism died out?
+This apparent contradiction is the ``problem of altruism": {\em why haven't the genes for altruism died out}?
 
 \index{problem of altruism}
 
-Among biologists, there are many possible explanations, including reciprocal altruism, sexual selection, kin selection, and group selection.  And among non-scientists, there are even more explanations.  I leave it to you to explore the alternatives; for now I want to focus on just one explanation, arguably the simplest one: maybe altruism is adaptive.  In other words, maybe genes for altruism make people more likely to survive and reproduce.
+Among biologists, there are many possible explanations, including reciprocal altruism, sexual selection, kin selection, and group selection.  Among non-scientists, there are even more explanations.  I leave it to you to explore the alternatives; for now I want to focus on just one explanation, arguably the simplest one: maybe altruism is adaptive.  In other words, maybe genes for altruism make people more likely to survive and reproduce.
 
-And it turns out that the Prisoner's Dilemma, which raises the problem of altruism, might also help resolve it.
+It turns out that the Prisoner's Dilemma, which raises the problem of altruism, might also help resolve it.
 
 
 \section{Prisoner's dilemma tournaments}
@@ -9260,7 +9283,7 @@ Looking at the strategies that did well in these tournaments, Alexrod identified
 
 \item Forgiving: But strategies that were too vindictive tended to punish themselves as well as their opponents.
 
-\item Non-envious: Some the most successful strategies seldom outscore their opponents; they are successful because they do well enough against a wide variety of opponents.
+\item Non-envious: Some the most successful strategies seldom outscore their opponents; they are successful because they do {\em well enough} against a wide variety of opponents.
 
 \end{itemize}
 
@@ -9313,10 +9336,8 @@ In this implementation, the genotype of an agent who always defects is \py{'DDDD
 The \py{Agent} class provides \py{copy}, which makes another agent with the same genotype, but with some probability of mutation:
 
 \begin{code}
-    prob_mutate = 0.05
-
-    def copy(self):
-        if np.random.random() > self.prob_mutate:
+    def copy(self, prob_mutate=0.05):
+        if np.random.random() > prob_mutate:
             values = self.values
         else:
             values = self.mutate()
@@ -9350,13 +9371,11 @@ The \py{Tournament} class encapsulates the details of the PD competition:
                ('D', 'C'): (5, 0),
                ('D', 'D'): (1, 1)}
 
-    num_rounds = 6
-
-    def play(self, agent1, agent2):
+    def play(self, agent1, agent2, num_rounds=6):
         agent1.reset()
         agent2.reset()
 
-        for i in range(self.num_rounds):
+        for i in range(num_rounds):
             resp1 = agent1.respond(agent2)
             resp2 = agent2.respond(agent1)
 
@@ -9372,7 +9391,7 @@ The \py{Tournament} class encapsulates the details of the PD competition:
 
 \index{tournament}
 
-\py{play} runs several rounds of the PD game.  It uses the following methods from the \py{Agent} class:
+The \py{play} method runs several rounds of the PD game.  It uses the following methods from the \py{Agent} class:
 
 \begin{itemize}
 
@@ -9413,7 +9432,8 @@ After the given number of rounds, \py{play} returns the total score for each age
 
 \py{melee} takes a list of agents and a boolean, \py{randomize}, that determines whether each agent fights the same neighbors every time, or whether the pairings are randomized.
 
-\index{zip}
+\index{NumPy}
+\index{arange}
 
 \py{i_row} and \py{j_row} contain the indices of the pairings.  \py{totals} contains the total score of each agent.
 
@@ -9447,7 +9467,7 @@ Here's the \py{step} method:
         Simulation.step(self)
 \end{code}
 
-This version of \py{step} uses \py{Tournament.melee}, which sets the \py{fitness} attribute for each agent; then it calls the \py{step} method from the parent class, from Section~\ref{evosim}:
+This version of \py{step} uses \py{Tournament.melee}, which sets the \py{fitness} attribute for each agent; then it calls the \py{step} method from the \py{Simulation} class, reproduced here:
 
 \begin{code}
 # class Simulation
@@ -9468,7 +9488,7 @@ This version of \py{step} uses \py{Tournament.melee}, which sets the \py{fitness
         self.update_instruments()
 \end{code}
 
-\py{Simulation.step} collects the agents' fitnesses in an array; then it calls \py{choose_dead} to decide which agents die and \py{choose_replacements} to decide which agents reproduce.
+\py{Simulation.step} collects the agents' fitnesses in an array; then it calls \py{choose_dead} to decide which agents die, and \py{choose_replacements} to decide which agents reproduce.
 
 \index{differential survival}
 
@@ -9526,6 +9546,10 @@ class Niceness(Instrument):
         self.metrics.append(metric)
 \end{code}
 
+\py{responses} is an array with one row for each agent and one column for each element of the genome.  \py{metric} is the fraction of elements that are \py{'C'}, averaged across agents.
+
+\index{NumPy}
+\index{mean}
 
 \begin{figure}
 \centerline{\includegraphics[height=3in,width=7in]{figs/chap12-2.pdf}}
@@ -9565,12 +9589,12 @@ class Retaliating(Instrument):
 
 \py{Retaliating} compares the number of elements in all genomes where an agent defects after the opponent defects (elements 2, 4, and 6) with the number of places where an agents defects after the opponent cooperates.  As you might expect by now, the results vary substantially (you can see the graph in the notebook).  On average the difference between these fractions is less than 0.1, so if agents defect 30\% of the time after the opponent cooperates, they might defect 40\% of the time after a defection.
 
-This result provides weak support for the claim that successful strategies retaliate.  Maybe it's not necessary for all agents, or even many, to be retaliatory; if there is at least some tendency toward retaliation in the population as a whole, that might be enough to prevent high-defection strategies from gaining ground.
+This result provides weak support for the claim that successful strategies retaliate.  But maybe it's not necessary for all agents, or even many, to be retaliatory; if there is at least some tendency toward retaliation in the population as a whole, that might be enough to prevent high-defection strategies from gaining ground.
 
 \index{retaliation}
 \index{forgiveness}
 
-To measure forgiveness, I defined one more instrument to see whether agent's might be more likely to cooperate after D-C in the previous two rounds, compared to C-D.  In my simulations, there is no evidence for this particular kind of forgiveness.  On the other hand, the strategies in these simulations are necessarily forgiving, in some sense, because they consider only the previous two rounds of history.
+To measure forgiveness, I define one more instrument to see whether agents might be more likely to cooperate after D-C in the previous two rounds, compared to C-D.  In my simulations, there is no evidence for this particular kind of forgiveness.  On the other hand, the strategies in these simulations are necessarily forgiving because they consider only the previous two rounds of history.  In this context, forgetting is a kind of forgiving.
 
 
 \section{Conclusions}
@@ -9587,7 +9611,7 @@ The simulations in this chapter suggest:
 
 \item Populations that are too nice are vulnerable to invasion by defectors.
 
-\item As a result, the average level of niceness oscillates, but the average amount of niceness is generally high, and the average level of fitness is generally closer to the cooperative utopia than to the dystopia of defection.
+\item As a result, the average level of niceness oscillates, but the average amount of niceness is generally high, and the average level of fitness is generally closer to a utopia of cooperation than to a dystopia of defection.
 
 \item TFT, which was a successful strategy in Alexrod's tournaments, does not seem to be a specially optimal strategy in an evolving population.  In fact, there is probably no stable optimal strategy.
 
@@ -9600,7 +9624,7 @@ Obviously, the agents in these simulations are simple, and the Prisoner's Dilemm
 
 \index{altruism}
 
-So maybe that's why selfish genes build altruistic brains.
+Maybe that's why selfish genes build altruistic brains.
 
 
 \section{Exercises}
@@ -9608,7 +9632,7 @@ So maybe that's why selfish genes build altruistic brains.
 The code for this chapter is in the Jupyter notebook {\tt chap12.ipynb}
 in the repository for this book.  Open the notebook, read the code,
 and run the cells.  You can use this notebook to work on the
-exercises in this chapter.  My solutions are in {\tt chap12soln.ipynb}.
+following exercises.  My solutions are in {\tt chap12soln.ipynb}.
 
 
 \begin{exercise}
@@ -9619,15 +9643,15 @@ The simulations in this chapter depend on conditions and parameters I chose arbi
 
 \item Vary the initial conditions: instead of starting with all defectors, see what happens if you start with all cooperators, all TFT, or random agents.
 
-\item In \py{Tournament.melee}, I shuffle the agents at the beginning of each time step, so each agent plays against two randomly-chosen agents. What happens if you don't shuffle? In that case, each agent would play against the same neighbors repeatedly. That might make it easier for a minority strategy to invade a majority, by taking advantage of locality.
+\item In \py{Tournament.melee}, I shuffle the agents at the beginning of each time step, so each agent plays against two randomly-chosen agents. What happens if you don't shuffle? In that case, each agent plays against the same neighbors repeatedly. That might make it easier for a minority strategy to invade a majority, by taking advantage of locality.
 
 \item Since each agent only plays against two other agents, the outcome of each round is highly variable: an agent that would do well against most other agents might get unlucky during any given round, or the other way around. What happens if you increase the number of opponents each agent plays against during each round? Or what if an agent's fitness at the end of each step is the average of its current score and its fitness at the end of the previous round?
 
-\item The function I chose for \py{prob_survival} varies from 0.7 to 0.9, so the least fit agent, with \py{p=0.7}, lives for 3.33 timesteps, on average, and the most fit agent lives for 10 timesteps. What happens if you make \py{prob_survival} more or less ``aggressive".
+\item The function I chose for \py{prob_survival} varies from 0.7 to 0.9, so the least fit agent, with \py{p=0.7}, lives for 3.33 timesteps on average, and the most fit agent lives for 10 timesteps. What happens if you make the degree of differential survival more or less ``aggressive".
 
 \item I chose \py{num_rounds=6} so that each element of the genome has roughly the same impact on the outcome of a match. But that is substantially shorter than what Alexrod used in his tournaments. What happens if you increase \py{num_rounds}?  Note: if you explore the effect of this parameter, you might want to modify \py{Niceness} to measure the niceness of the last 4 elements of the genome, which will be under more selective pressure as \py{num_rounds} increases.
 
-\item My implementation has differential survival and random reproduction. What happens if you add differential reproduction?
+\item My implementation has differential survival but not differential reproduction.  What happens if you add differential reproduction?
 
 \end{enumerate}
 
@@ -9635,7 +9659,9 @@ The simulations in this chapter depend on conditions and parameters I chose arbi
 
 \begin{exercise}
 
-In my simulations, the population never converges to a state where a majority share the same, presumably optimal, genotype. There are two possible explanations for this outcome: one is that there is no optimal strategy, because whenever the population is dominated by a majority genotype, that condition creates an opportunity for a minority to invade; the other possibility is that the mutation rate is high enough to maintain a diversity of genotypes even if the majority is non-optimal. To distinguish between these explanations, try lowering the mutation rate to see what happens. Alternatively, start with a random population and run without mutation until only one genotype survives. Or run with mutation until the system reaches something like a steady state; then turn off mutation and run until there is only one surviving genotype. What are the characteristics of the genotypes that prevail in these conditions?
+In my simulations, the population never converges to a state where a majority share the same, presumably optimal, genotype. There are two possible explanations for this outcome: one is that there is no optimal strategy, because whenever the population is dominated by a majority genotype, that condition creates an opportunity for a minority to invade; the other possibility is that the mutation rate is high enough to maintain a diversity of genotypes.
+
+To distinguish between these explanations, try lowering the mutation rate to see what happens. Alternatively, start with a random population and run without mutation until only one genotype survives. Or run with mutation until the system reaches something like a steady state; then turn off mutation and run until there is only one surviving genotype. What are the characteristics of the genotypes that prevail in these conditions?
 
 \end{exercise}
 
@@ -9644,8 +9670,8 @@ In my simulations, the population never converges to a state where a majority sh
 
 The agents in my experiment are ``reactive'' in the sense that their
 choice during each round depends only on what the opponent did during
-previous rounds.  Consider exploring strategies that also take into
-account the agent's past choices.  Such a strategy would be able to
+previous rounds.  Explore strategies that also take into
+account the agent's past choices.  These strategies can
 distinguish an opponent who retaliates from an opponent who defects
 without provocation.
 
@@ -9660,82 +9686,83 @@ without provocation.
 \chapter{Reading list}
 \label{reading}
 
-The following are selected books that provide an introduction to
-complexity science, and a pleasant way to get a big picture
-of the field.
+The following are selected books related to topics in this book.  Most are written for a non-technical audience.
 
-%TODO: Decide on first name last name order.
 
 \begin{itemize}
 
-\item Robert Axelrod, {\it  Complexity of Cooperation},
+\item Axelrod, Robert,  {\it  Complexity of Cooperation},
 Princeton University Press 1997.
 
-\item Robert Axelrod, {\it  The Evolution of Cooperation},
+\item Axelrod, Robert{\it  The Evolution of Cooperation},
 Basic Books, 2006.
 
-\item Per Bak, {\it  How Nature Works},
+\item Bak, Per {\it  How Nature Works},
 Copernicus (Springer) 1996.
 
-\item Albert-L\'{a}szl\'{o} \Barabasi, {\it  Linked}
+\item \Barabasi, Albert-L\'{a}szl\'{o}, {\it  Linked}
 Perseus Books Group 2002.
 
-\item Mark Buchanan, {\it  Nexus},
-W W Norton \& Co Inc 2002.
+\item Buchanan, Mark, {\it  Nexus},
+W.~W.~Norton \& Company, 2002.
 
 \item Dawkins, Richard, {\it The Selfish Gene}, Oxford University Press, 2016.
 
-\item Joshua Epstein and Robert Axtell, {\it  Growing Artificial Societies},
+\item Epstein and Axtell, {\it  Growing Artificial Societies},
 Brookings Institution Press \& MIT Press 1996.
 
-\item Len Fisher, {\it  The Perfect Swarm},
+\item Fisher, Len, {\it  The Perfect Swarm},
 Basic Books 2009.
 
-\item Gary William Flake, {\it  The Computational Beauty of Nature}, MIT Press 2000.
+\item Flake, Gary William, {\it  The Computational Beauty of Nature}, MIT Press 2000.
 
-%TODO: Tune this up.
+\item Goldstein, Rebecca, {\it Incompleteness}, W.~W.~Norton \& Company, 2005.
 
-\item Rebecca Goldstein, {\it Incompleteness}, W.~W.~Norton \& Company, 2005.
+\item Goodwin, Brian {\it  How the Leopard Changed Its Spots}, Princeton University Press, 2001.
 
-\item Goodwin, {\it  How the Leopard Changed Its Spots}.
+\item Holland, John, {\it  Hidden Order}.
+Basic Books, 1995.
 
-\item Holland, {\it  Hidden Order}.
+\item Johnson, Steven, {\it  Emergence}.
+Scribner, 2001.
 
-\item Johnson, {\it  Emergence}.
+\item Kelly, Kevin, {\it  Out of Control}.
+Basic Books, 2002.
 
-\item Kelly, {\it  Out of Control}.
+\item Kosko, Bart, {\it Fuzzy Thinking}, Hyperion, 1993.
 
-\item Bart Kosko, {\it Fuzzy Thinking}, Hyperion, 1993.
-
-\item Kluger, {\it  Simplexity}.
-
-\item Levy, {\it  Artificial Life}.
-
-\item Lewin, {\it  Complexity: Life at the Edge of Chaos}.
+\item Levy, Steven {\it  Artificial Life}, Pantheon, 1992.
 
 \item Mandelbrot, Benoit, {\it Fractal Geometry of Nature}, Times Books, 1982.
 
 \item  McGrayne, Sharon Bertsch, {\it The Theory That Would Not Die}, Yale University Press, 2011.
 
-\item Mitchell, {\it  Complexity: A Guided Tour}.
+\item Mitchell, Melanie, {\it  Complexity: A Guided Tour}.
+Oxford University Press, 2009.
 
-\item Waldrop, {\it Complexity: The emerging science at the edge of order and chaos}.
+\item Waldrop, M. Mitchell {\it Complexity: The emerging science at the edge of order and chaos},
+Simon \& Schuster, 1992.
 
-\item Resnick, Mitchell, {\it  Turtles, Termites, and Traffic Jams}.
+\item Resnick, Mitchell, {\it  Turtles, Termites, and Traffic Jams},
+Bradford, 1997.
 
-\item Rucker, {\it  The Lifebox, The Seashell, and the Soul}.
+\item Rucker, Rudy, {\it  The Lifebox, The Seashell, and the Soul},
+Thunder's Mouth Press, 2005.
 
-\item Sawyer, {\it  Social Emergence: Societies As Complex Systems}.
+\item Sawyer, R. Keith, {\it  Social Emergence: Societies As Complex Systems}.
+Cambridge University Press, 2005.
 
-\item Schelling, {\it  Micromotives and Macrobehaviors}.
+\item Schelling, Thomas, {\it  Micromotives and Macrobehaviors}.
+W.~W.~Norton \& Company, 2006.
 
-\item Schiff, {\it  Cellular Automata: A Discrete View of the World}.
+\item Strogatz, Steven, {\it  Sync},
+Hachette Books, 2003.
 
-\item Strogatz, {\it  Sync}.
+\item Watts, Duncan, {\it  Six Degrees}.
+W.~W.~Norton \& Company, 2003.
 
-\item Watts, {\it  Six Degrees}.
-
-\item Wolfram, {\it  A New Kind Of Science}.
+\item Wolfram, Stephen, {\it  A New Kind Of Science}.
+Wolfram Media, 2002.
 
 \end{itemize}
 
