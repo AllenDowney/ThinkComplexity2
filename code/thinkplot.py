@@ -724,6 +724,9 @@ def set_font_size(title_size=16, label_size=16, ticklabel_size=14, legend_size=1
 
     ax = plt.gca()
 
+    # TODO: Make this function more robust if any of these elements
+    # is missing.
+
     # title
     ax.title.set_size(title_size)
 
@@ -736,8 +739,9 @@ def set_font_size(title_size=16, label_size=16, ticklabel_size=14, legend_size=1
     set_text_size(ax.yaxis.get_ticklabels(), ticklabel_size)
 
     # legend
-    # TODO: This doesn't seem to work on the last axis in a subplot
-    set_text_size(ax.legend().texts, legend_size)
+    legend = ax.get_legend()
+    if legend is not None:
+        set_text_size(legend.texts, legend_size)
 
 
 def bigger_text():

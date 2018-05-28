@@ -53,9 +53,10 @@ class Cell1D:
         self.array[0] = np.random.random(self.m).round()
         self.next += 1
 
-    def start_string(self, init):
+    def start_string(self, s):
         """Start with values from a string of 1s and 0s."""
-        self.array[0] = np.array([int(x) for x in init])
+        # TODO: Check string length
+        self.array[0] = np.array([int(x) for x in s])
         self.next += 1
 
     def loop(self, steps=1):
@@ -68,8 +69,8 @@ class Cell1D:
         a = self.array
         i = self.next
         window = [4, 2, 1]
-        corr = np.correlate(a[i-1], window, mode='same')
-        a[i] = self.table[corr]
+        c = np.correlate(a[i-1], window, mode='same')
+        a[i] = self.table[c]
         self.next += 1
 
     def get_array(self, start=0, end=None):
@@ -80,6 +81,8 @@ class Cell1D:
         start: index of first column
         end: index of the last column plus one
         """
+        # TODO: Not sure it makes sense to make selecting the
+        # whole array into a special case.
         if start==0 and end==None:
             return self.array
         else:
@@ -103,7 +106,7 @@ class Cell1DViewer:
     """Draws a CA object using matplotlib."""
 
     cmap = plt.get_cmap('Blues')
-    options = dict(alpha=0.7, interpolation='nearest')
+    options = dict(alpha=0.7, interpolation='none')
 
     def __init__(self, ca):
         self.ca = ca
