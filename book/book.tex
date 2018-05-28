@@ -22,7 +22,7 @@
 \newcommand{\thetitle}{Think Complexity}
 \newcommand{\thesubtitle}{Exploring Complexity Science in Python}
 \newcommand{\theauthors}{Allen B. Downey}
-\newcommand{\theversion}{2.5.7}
+\newcommand{\theversion}{2.5.9}
 
 %%%% Both LATEX and PLASTEX
 
@@ -7989,7 +7989,7 @@ your reaction to the system response?
 
 \chapter{Herds, Flocks, and Traffic Jams}
 
-The agent-based models in the previous chapter are based on grids: the agents occupy discrete locations in 2-dimensional space.  In this chapter we consider agents that move is continuous space, including simulated cards on a 1-dimensional highway and simulated birds in a 3-dimensional space.
+The agent-based models in the previous chapter are based on grids: the agents occupy discrete locations in 2-dimensional space.  In this chapter we consider agents that move is continuous space, including simulated cars on a 1-dimensional highway and simulated birds in 3-dimensional space.
 
 \index{grid}
 \index{space}
@@ -8002,7 +8002,7 @@ about working with this code, see Section~\ref{code}.
 
 \section{Traffic jams}
 
-What causes traffic jams?  In some cases there is an obvious cause,
+What causes traffic jams?  Sometimes there is an obvious cause,
 like an accident, a speed trap, or something else that disturbs
 the flow of traffic.  But other times traffic jams appear for no
 apparent reason.
@@ -8010,7 +8010,7 @@ apparent reason.
 \index{traffic jam}
 
 Agent-based models can help explain spontaneous traffic jams.
-As an example, I implement a simple highway simulation based on
+As an example, I implement a highway simulation based on
 a model in Mitchell Resnick's book, {\em Turtles, Termites and Traffic Jams}.
 
 \index{Turtles, Termites and Traffic Jams@{\em Turtles, Termites and Traffic Jams}}
@@ -8037,27 +8037,33 @@ class Highway:
 \end{code}
 
 \py{n} is the number of cars; \py{length} is the length of the
-highway, which is 1000 by default (in arbitrary units); \py{eps} is the amount of random noise we'll add to the system.
+highway; \py{eps} is the amount of random noise we'll add to the system.
 
-\index{car}
-\index{driver}
+\index{Highway}
+\index{Driver}
 
-\py{locs} contains the locations of the drivers; initially they are equally spaced along the highway.
+\index{NumPy}
+\index{linspace}
 
-Drivers are represented by \py{Driver} objects.  Each \py{Driver} contains a reference to the next driver in front.  The highway is circular, so the
-last driver contains a reference to the first.
+\py{locs} contains the locations of the drivers; the NumPy function \py{linspace} creates an array of \py{n} locations equally spaced between \py{0} and \py{length}.
 
-The \py{step} method is simple; it just moves each of the drivers:
+The \py{drivers} attribute is a list of \py{Driver} objects.  The \py{for} loop links them so each \py{Driver} contains a reference to the next.  The highway is circular, so the last \py{Driver} contains a reference to the first.
+
+During each time step, the \py{Highway} moves each of the drivers:
 
 \begin{code}
+# Highway
+
     def step(self):
         for driver in self.drivers:
             self.move(driver)
 \end{code}
 
-And here's the \py{move} method:
+The \py{move} method lets the \py{Driver} choose its acceleration.  Then \py{move} computes the updated speed and position.  Here's the implementation:
 
 \begin{code}
+# Highway
+
     def move(self, driver):
         dist = self.distance(driver)
 
@@ -8095,15 +8101,15 @@ of the simulation.
 
 \begin{itemize}
 
-\item \py{acc} is acceleration, which limited by \py{min_acc} and
+\item \py{acc} is acceleration, which bounded by \py{min_acc} and
   \py{max_acc}.  In my implementation, cars can accelerate with
   \py{max_acc=1} and brake with \py{min_acc=-10}.
 
 \item \py{speed} is the old speed plus the requested acceleration, but
 then we make some adjustments.  First, we add random noise to
-\py{speed}, because the world is not perfect.  \py{eps} determines the magnitude of the noise, which is a percentage applied to \py{speed}; for example, if \py{eps} is 0.02, \py{speed} is multiplied by a random number between 98\% and 102\%.
+\py{speed}, because the world is not perfect.  \py{eps} determines the magnitude of the relative error; for example, if \py{eps} is 0.02, \py{speed} is multiplied by a random factor between 0.98 and 1.02.
 
-\item Then speed is bounded between 0 and \py{speed_limit}, which is
+\item Speed is bounded between 0 and \py{speed_limit}, which is
 40 in my implementation, so cars are not allowed to go backward or speed.
 
 \item If the requested speed would cause a collision with the next car,
@@ -8141,7 +8147,7 @@ exceeds the space between them.  At that point, at least one
 
 \begin{figure}
 \centerline{\includegraphics[height=3in]{figs/chap10-1.pdf}}
-\caption{Simulation of drivers on a circular highway at three points in time.  Dots indicate the position of the drivers; crosses indicate places where one driver has to brake to avoid another.}
+\caption{Simulation of drivers on a circular highway at three points in time.  Squares indicate the position of the drivers; triangles indicate places where one driver has to brake to avoid another.}
 \label{chap10-1}
 \end{figure}
 
@@ -8151,7 +8157,7 @@ Figure~\ref{chap10-1} shows a few steps in this process, starting with
 Because of random noise, some cars are going faster
 than others, and the spacing has become uneven.
 
-During the next time step there are two collisions, indicated
+During the next time step (middle) there are two collisions, indicated
 by the triangles.
 
 During the next time step (right) two cars collide with the stopped
@@ -8196,7 +8202,7 @@ randomness, things get much worse.
 Figure~\ref{chap10-2} also shows results with \py{eps=0.001} and
 \py{eps=0.01}, which correspond to errors in speed of 0.1\% and 1\%.
 
-With even a small amount of noise, the capacity of the highway
+With 0.1\% errors, the capacity of the highway
 drops from 25 to 20 (by ``capacity'' I mean the maximum number
 of cars that can reach and sustain the speed limit).  And
 with 1\% errors, the capacity drops to 10.  Ugh.
@@ -8228,15 +8234,15 @@ Each agent simulates three behaviors:
 
 \item[Flock centering:] Move toward the center of the flock.
 
-\item[Collision avoidance:] Avoid obstacles, including other birds.
+\item[Collision avoidance:] Avoid obstacles, including other Boids.
 
-\item[Velocity matching:] Align velocity (speed and direction) with neighboring birds.
+\item[Velocity matching:] Align velocity (speed and direction) with neighboring Boids.
 
 \end{description}
 
 Boids make decisions based on local information only; each Boid
 only sees (or pays attention to) other Boids in its field of
-vision and range.
+vision.
 
 \index{local information}
 
@@ -8248,20 +8254,15 @@ on the description in Flake, {\it The Computational Beauty of Nature}.
 \index{VPython}
 \index{Anaconda}
 
-To run this program you will need VPython, which is a library that provides 3D graphics.  If you are using Anaconda, you can install VPython by running the following in a terminal or Command Window:
-
-\begin{code}
-conda install -c vpython vpython
-\end{code}
-
-VPython provides a \py{Vector} object we'll use to represent the position and velocity of Boids in a 3-dimensional space.  You can read about them at \url{https://thinkcomplex.com/vector}.
+My implementation uses VPython, which is a library that provides 3D graphics.
+VPython provides a \py{Vector} object, which I use to represent the position and velocity of Boids in three dimensions.  You can read about them at \url{https://thinkcomplex.com/vector}.
 
 \index{Vector}
 
 \section{The Boid algorithm}
 
 \py{Boids7.py} defines two classes: \py{Boid}, which implements the Boid
-algorithm, and \py{World}, which contains a list of Boids and a
+behaviors, and \py{World}, which contains a list of Boids and a
 ``carrot'' the Boids are attracted to.
 
 \index{carrot}
@@ -8271,10 +8272,12 @@ The \py{Boid} class defines the following methods:
 \begin{itemize}
 
 \item \py{center}: Finds other Boids within range and computes a vector
-toward their center of mass.
+toward their centroid.
+
+\index{centroid}
 
 \item \py{avoid}: Finds objects, including other Boids, within a given range,
-and computes a vector that points away from their center of mass.
+and computes a vector that points away from their centroid.
 
 \item \py{align}: Finds other Boids within range and computes the average of their headings.
 
@@ -8285,16 +8288,20 @@ and computes a vector that points away from their center of mass.
 Here's the implementation of \py{center}:
 
 \begin{code}
-    def center(self, boids):
-        close = self.get_neighbors(boids, r_center, a_center)
-        vecs = [other.pos for other in close]
+    def center(self, boids, radius=1, angle=1):
+        neighbors = self.get_neighbors(boids, radius, angle)
+        vecs = [boid.pos for boid in neighbors]
         return self.vector_toward_center(vecs)
 \end{code}
 
-The parameters \py{r_center} and \py{a_center} are the radius and angle of
-the field of view, which determines which other Boids are taken into consideration.
+The parameters \py{radius} and \py{angle} are the radius and angle of
+the field of view, which determines which other Boids are taken into consideration.  \py{radius} is in arbitrary units of length; \py{angle} is in radians.
 
-\index{field of view}
+\py{center} uses \py{get_neighbors} to get a list of \py{Boid} objects that are in the field of view.  \py{vecs} is a list of \py{Vector} objects that represent their positions.
+
+Finally, \py{vector_toward_center} computes a \py{Vector} that points from \py{self} to the centroid of \py{neighbors}.
+
+\index{centroid}
 
 Here's how \py{get_neighbors} works:
 
@@ -8320,13 +8327,18 @@ Here's how \py{get_neighbors} works:
         return neighbors
 \end{code}
 
-\py{get_neighbors} uses vector subtraction to compute the
-vector from \py{self} to \py{other}.  The magnitude of
-this vector is the distance to the other Boid.
+For each other Boid, \py{get_neighbors} uses vector subtraction to compute the
+vector from \py{self} to \py{boid}.  The magnitude of this vector is the distance between them; if this magnitude exceeds \py{radius}, we ignore \py{boid}.
 
-\py{diff_angle} computes the angle between the velocity of \py{self}, which points in the direction the Boid is heading, and the position of the other Boid.
+\index{magnitude}
+\index{angle}
 
-Finally, \py{center} uses \py{vector_toward_center} to compute a vector that points from the Boid's position to the center of mass of its neighbors.
+\py{diff_angle} computes the angle between the velocity of \py{self}, which points in the direction the Boid is heading, and the position of \py{boid}.
+If this angle exceeds \py{angle}, we ignore \py{boid}.
+
+Otherwise \py{boid} is in view, so we add it to \py{neighbors}.
+
+Now here's the implementation of \py{vector_toward_center}, which computes a vector from \py{self} to the centroid of its neighbors.
 
 \begin{code}
     def vector_toward_center(self, vecs):
@@ -8338,33 +8350,34 @@ Finally, \py{center} uses \py{vector_toward_center} to compute a vector that poi
             return null_vector
 \end{code}
 
-VPython vectors work with NumPy, so \py{np.mean} computes the mean of a sequences of vectors.  \py{limit_vector} limits the magnitude of the result to 1; and \py{null_vector} has magnitude 0.
+VPython vectors work with NumPy, so \py{np.mean} computes the mean of \py{vecs}, which is a sequence of vectors.  \py{limit_vector} limits the magnitude of the result to 1; \py{null_vector} has magnitude 0.
 
 \index{NumPy}
+\index{mean}
 \index{magnitude}
 
 We use the same helper methods to implement \py{avoid}:
 
 \begin{code}
-    def avoid(self, boids, carrot):
+    def avoid(self, boids, carrot, radius=0.3, angle=np.pi):
         objects = boids + [carrot]
-        close = self.get_neighbors(objects, r_avoid, a_avoid)
-        vecs = [boid.pos for boid in close]
+        neighbors = self.get_neighbors(objects, radius, angle)
+        vecs = [boid.pos for boid in neighbors]
         return -self.vector_toward_center(vecs)
 \end{code}
 
-\py{avoid} is similar to \py{center}, but it takes into account the carrot as well as the other Boids.  Also, the parameters are different: usually \py{r_avoid} is smaller, so Boids only avoid objects that are too close, and \py{a_avoid} is wider, so Boids avoid objects from all directions.  Finally, the result from \py{vector_toward_center} is negated, so it points {\em away} from the center of any objects that are too close.
+\py{avoid} is similar to \py{center}, but it takes into account the carrot as well as the other Boids.  Also, the parameters are different: \py{radius} is smaller, so Boids only avoid objects that are too close, and \py{angle} is wider, so Boids avoid objects from all directions.  Finally, the result from \py{vector_toward_center} is negated, so it points {\em away} from the centroid of any objects that are too close.
 
 Here's the implementation of \py{align}:
 
 \begin{code}
-    def align(self, boids):
-        close = self.get_neighbors(boids, r_align, a_align)
-        vecs = [boid.vel for boid in close]
+    def align(self, boids, radius=0.5, angle=1):
+        neighbors = self.get_neighbors(boids, radius, angle)
+        vecs = [boid.vel for boid in neighbors]
         return self.vector_toward_center(vecs)
 \end{code}
 
-\py{align} is also similar to \py{center}; the big difference is that is computes the average of the neighbors' velocities, rather than their positions.  If the neighbors are pointing in a particular direction, the Boid tends to steer toward that direction.
+\py{align} is also similar to \py{center}; the big difference is that is computes the average of the neighbors' velocities, rather than their positions.  If the neighbors point in a particular direction, the Boid tends to steer toward that direction.
 
 \index{velocity}
 
@@ -8389,6 +8402,11 @@ To arbitrate among these possibly conflicting goals, we compute a weighted sum o
 
 \begin{code}
     def set_goal(self, boids, carrot):
+        w_avoid = 10
+        w_center = 3
+        w_align = 1
+        w_love = 10
+        
         self.goal = (w_center * self.center(boids) +
                      w_avoid * self.avoid(boids, carrot) +
                      w_align * self.align(boids) +
@@ -8396,7 +8414,7 @@ To arbitrate among these possibly conflicting goals, we compute a weighted sum o
         self.goal.mag = 1
 \end{code}
 
-\py{w_center}, \py{w_avoid}, and the other weights determine the importance of the acceleration requests.  Usually \py{w_avoid} is relatively high and \py{w_align} is relatively low.  As an exercise, you will have a chance to experiment with these parameters and see what effect they have.
+\py{w_center}, \py{w_avoid}, and the other weights determine the importance of the acceleration requests.  Usually \py{w_avoid} is relatively high and \py{w_align} is relatively low.
 
 After computing a goal for each Boid, we update their velocity and position:
 
@@ -8404,26 +8422,28 @@ After computing a goal for each Boid, we update their velocity and position:
     def move(self, mu=0.1, dt=0.1):
         self.vel = (1-mu) * self.vel + mu * self.goal
         self.vel.mag = 1
-        self.axis = self.length * self.vel
         self.pos += dt * self.vel
+        self.axis = self.length * self.vel
 \end{code}
 
 The new velocity is the weighted sum of the old velocity
 and the goal.  The parameter \py{mu} determines how quickly
 the birds can change speed and direction.  Then we normalize velocity so its magnitude is 1, and orient the axis of the Boid to point in the direction it is moving.
 
-To update position, we multiply velocity by the time step, \py{dt}, to get the change in position.
-
-Many parameters influence flock behavior, including the range, angle
-and weight for each behavior, and the maneuverability, \py{mu}.
-
-\index{flock behavior}
 \index{maneuverability}
 
+To update position, we multiply velocity by the time step, \py{dt}, to get the change in position.  Finally, we update \py{axis} so the orientation of the Boid when it is drawn is aligned with its velocity.
+
+\index{flock behavior}
+
+Many parameters influence flock behavior, including the radius, angle
+and weight for each behavior, as well as maneuverability, \py{mu}.
 These parameters determine the ability of the Boids to form and
-maintain a flock and the patterns of motion and organization in the
+maintain a flock, and the patterns of motion and organization within the
 flock.  For some settings, the Boids resemble a flock of birds; other
-settings resemble a school of fish or a cloud flying insects.
+settings resemble a school of fish or a cloud of flying insects.
+
+As one of the exercises at the end of this chapter, you can modify these parameters and see how they affect Boid behavior.
 
 
 \section{Emergence and free will}
@@ -8439,7 +8459,7 @@ Many complex systems have properties, as a whole, that their components do not:
   random.
 
 \item The agents in Schelling's model are not racist, but the outcome
-  of their interactions is as if they were.
+  of their interactions is a high degree of segregation.
 
 \item Agents in Sugarscape form waves that move diagonally even
   though the agents cannot.
@@ -8460,9 +8480,9 @@ These examples suggest an approach to several old and challenging questions, inc
 \index{Hume, David}
 
 Free will is the ability to make choices, but if our bodies and brains
-are governed by deterministic physical laws, our choices would be
-determined.  Arguments about free will are innumerable; I will
-only mention two:
+are governed by deterministic physical laws, our choices are completely determined.  
+
+Philosopher and scientists have proposed many possible resolutions to this apparent conflict; for example:
 
 \begin{itemize}
 
@@ -8478,28 +8498,19 @@ only mention two:
 
 \end{itemize}
 
-These arguments reconcile the conflict in opposite ways, but they
-agree that there is a conflict: the system cannot have free will if
-the parts are deterministic.
+These arguments reconcile the conflict in opposite ways, but they agree that there is a conflict: the system cannot have free will if the parts are deterministic.
 
-The complex systems in this book suggest the alternative
-that free will, at the level of options and decisions, is compatible
-with determinism at the level of neurons (or some lower level).  In
-the same way that a traffic jam moves backward while the cars move
-forward, a person can have free will even though neurons don't.
+The complex systems in this book suggest the alternative that free will, at the level of options and decisions, is compatible with determinism at the level of neurons (or some lower level).  In the same way that a traffic jam moves backward while the cars move forward, a person can have free will even though neurons don't.
 
 
 \section{Exercises}
 
-%TODO: Add intro
+The code for the traffic jam simulation is in the Jupyter notebook {\tt chap09.ipynb} in the repository for this book.  Open this notebook, read the code, and run the cells.  You can use this notebook to work on the following
+exercise.  My solutions are in {\tt chap09soln.ipynb}.
 
 \begin{exercise}
 
-In the traffic jam simulation, define a class, \py{BetterDriver},
-that inherits from \py{Driver} and overrides \py{choose_acceleration}.
-See if you can define driving rules that do better than the basic
-implementation in \py{Driver}.  You might try to achieve higher
-average speed, or a lower number of collisions.
+In the traffic jam simulation, define a class, \py{BetterDriver}, that inherits from \py{Driver} and overrides \py{choose_acceleration}. See if you can define driving rules that do better than the basic implementation in \py{Driver}.  You might try to achieve higher average speed, or a lower number of collisions.
 
 % TODO: Add a crash counter.  Maybe pass the Highway object to
 % choose_acceleration
@@ -8510,38 +8521,31 @@ average speed, or a lower number of collisions.
 
 \begin{exercise}
 
-Note: To do this exercise, you will have to install VPython, a library for 3D displays and animation.  If you use Anaconda (as I recommend in Section~\ref{code}), you can run the following in a terminal or Command Window:
+The code for my Boid implementation is in {\tt Boids7.py} in the repository for this book.  To run it, you will need VPython, a library for 3D graphics and animation.  If you use Anaconda (as I recommend in Section~\ref{code}), you can run the following in a terminal or Command Window:
 
 \begin{code}
-conda install -c vpython vpython
+    conda install -c vpython vpython
 \end{code}
 
-Then run \py{Boids7.py}, which is in the repository for this book.  It should either launch a browser or create a window in a running browser, and then create an animated display showing Boids, as white cones, circling a red sphere, which is the carrot.  If you click and move the mouse, you can move the carrot and see how the Boids react.
+Then run \py{Boids7.py}.  It should either launch a browser or create a window in a running browser, and create an animated display showing Boids, as white cones, circling a red sphere, which is the carrot.  If you click and move the mouse, you can move the carrot and see how the Boids react.
 
-Read the code to see how the parameters defined at the beginning of the program control Boid behaviors.  Experiment with
-different parameters.  What happens if you ``turn off'' one
+Read the code to see how the parameters control Boid behaviors.  Experiment with different parameters.  What happens if you ``turn off'' one
 of the behaviors by setting its weight to 0?
 
 \index{parameter}
 
-To generate more bird-like behavior, Flake suggests adding a fourth
-behavior to maintain a clear line of sight; in other words, if there
-is another bird directly ahead, the Boid should move away
-laterally.  What effect do you expect this rule to have on the
-behavior of the flock?  Implement it and see.
+To generate more bird-like behavior, Flake suggests adding a behavior to maintain a clear line of sight; in other words, if there is another bird directly ahead, the Boid should move away laterally.  What effect do you expect this rule to have on the behavior of the flock?  Implement it and see.
 
 \end{exercise}
 
 
 \begin{exercise}
 
-Read more about free will at
-\url{https://thinkcomplex.com/will}.  The view that free will
-is compatible with determinism is called {\bf compatibilism}.  One of
-the strongest challenges to compatibilism is the ``consequence
+Read more about free will at \url{https://thinkcomplex.com/will}.  The view that free will is compatible with determinism is called {\bf compatibilism}.  One of the strongest challenges to compatibilism is the ``consequence
 argument''.  What is the consequence argument?  What response can you
 give to the consequence argument based on what you have read in this
 book?
+
 \index{free will}
 \index{determinism}
 \index{compatibilism}
