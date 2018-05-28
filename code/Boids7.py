@@ -44,7 +44,7 @@ class Boid(cone):
         pos = random_vector(0, 1)
         self.vel = random_vector(0, 1).norm()
         cone.__init__(self, pos=pos, radius=radius, length=length)
-        self.axis = length * self.vel.norm()
+        self.axis = length * self.vel
 
     def get_neighbors(self, boids, radius, angle):
         """Return a list of neighbors within a field of view.
@@ -143,8 +143,8 @@ class Boid(cone):
 
         self.vel = (1-mu) * self.vel + mu * self.goal
         self.vel.mag = 1
-        self.axis = self.length * self.vel
         self.pos += dt * self.vel
+        self.axis = self.length * self.vel
 
 
 class World(object):
