@@ -11,7 +11,7 @@ import math
 import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
-import pandas
+import pandas as pd
 
 import warnings
 
@@ -232,7 +232,7 @@ def Plot(obj, ys=None, style='', **options):
     if ys is None:
         if hasattr(obj, 'Render'):
             xs, ys = obj.Render()
-        if isinstance(obj, pandas.Series):
+        if isinstance(obj, pd.Series):
             ys = obj.values
             xs = obj.index
 
@@ -343,7 +343,7 @@ def Scatter(xs, ys=None, **options):
     options = _Underride(options, color='blue', alpha=0.2,
                          s=30, edgecolors='none')
 
-    if ys is None and isinstance(xs, pandas.Series):
+    if ys is None and isinstance(xs, pd.Series):
         ys = xs.values
         xs = xs.index
 
