@@ -1,9 +1,9 @@
-name: complexity
+name: ThinkComplexity2
 channels:
 - defaults
 - conda-forge
 dependencies:
-- python=3.*
+- python>=3.6
 - matplotlib
 - networkx=2.*
 - numpy
