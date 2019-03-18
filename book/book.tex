@@ -22,7 +22,7 @@
 \newcommand{\thetitle}{Think Complexity}
 \newcommand{\thesubtitle}{Exploring Complexity Science in Python}
 \newcommand{\theauthors}{Allen B. Downey}
-\newcommand{\theversion}{2.6}
+\newcommand{\theversion}{2.6.2}
 
 %%%% Both LATEX and PLASTEX
 
@@ -257,7 +257,7 @@ natural science --- that focuses on {\bf complex systems},
 which are systems with many interacting components.
 
 One of the core tools of complexity science is discrete models,
-include networks and graphs, cellular automatons, and agent-based
+including networks and graphs, cellular automatons, and agent-based
 simulations.  These tools are useful in the natural and social sciences,
 and sometimes in arts and humanities.
 
@@ -289,7 +289,7 @@ Features of this book include:
 
 \begin{description}
 
-\item[Technical details] Most books about Complexity science
+\item[Technical details] Most books about complexity science
   are written for a popular audience.  They leave out
   technical details, which is frustrating for people who can handle
   them.  This book presents the code, the math, and the explanations
@@ -321,7 +321,7 @@ specifically using and defining classes.
 \index{Python}
 
 If you are not already familiar with Python, you might want to start
-with {\it Think Python}, which is appropriate for people who have never programmed before.  If you have programming experience in another language, there are many good Python books to chose from, as well as online resources.
+with {\it Think Python}, which is appropriate for people who have never programmed before.  If you have programming experience in another language, there are many good Python books to choose from, as well as online resources.
 
 I use NumPy, SciPy, and NetworkX throughout the book.  If you are familiar with these libraries already, that's great, but I will also explain them when they appear.
 
@@ -523,7 +523,7 @@ found typos and made helpful suggestions.
 
 \end{itemize}
 
-I would especially like to thank the technical reviewers for this book, who made many helpful suggestions: Vincent Knight and Eric Ma.
+I would especially like to thank the technical reviewers, Vincent Knight and Eric Ma, who made many helpful suggestions, and the copy editor, Charles Roumeliotis, who caught many errors and inconsistencies.
 
 Other people who reported errors include
 Richard Hollands,
@@ -575,7 +575,6 @@ want to know why it's like that.  If you do some research, you might
 find a paper by Thomas Schelling called ``Dynamic Models of
 Segregation'', which proposes a simple model of racial segregation:
 
-\index{Schelling}
 \index{segregation}
 \index{Detroit}
 
@@ -759,12 +758,12 @@ until you have seen the examples later in the book.
 \index{continuous}
 \index{discrete}
 
-\item[Linear \myrightarrow~non-linear] Classical models are often
-  linear, or use linear approximations to non-linear systems;
-  complexity science is more friendly to non-linear models.
+\item[Linear \myrightarrow~nonlinear] Classical models are often
+  linear, or use linear approximations to nonlinear systems;
+  complexity science is more friendly to nonlinear models.
 
 \index{linear}
-\index{non-linear}
+\index{nonlinear}
 
 \item[Deterministic \myrightarrow~stochastic] Classical models are
   usually deterministic, which may reflect underlying philosophical
@@ -962,7 +961,7 @@ and the design of social systems:
 \section{Complexity thinking}
 
 We are getting farther afield now, but the shifts I am postulating
-in the criteria of scientific modeling are related to 20th Century
+in the criteria of scientific modeling are related to 20th century
 developments in logic and epistemology.
 
 \index{logic}
@@ -999,7 +998,7 @@ developments in logic and epistemology.
 \item[Objective \myrightarrow~subjective] The Enlightenment, and
   philosophic modernism, are based on belief in objective truth, that
   is, truths that are independent of the people that hold them.  20th
-  Century developments including quantum mechanics, G\"{o}del's
+  century developments including quantum mechanics, G\"{o}del's
   Incompleteness Theorem, and Kuhn's study of the history of science
   called attention to seemingly unavoidable subjectivity in
   even ``hard sciences'' and mathematics.  Rebecca Goldstein presents
@@ -1047,7 +1046,7 @@ developments in logic and epistemology.
 These trends are not universal or complete, but the center of
 opinion is shifting along these axes.  As evidence, consider the
 reaction to Thomas Kuhn's {\em The Structure of Scientific
-  Revolutions}, which was reviled when it was published and
+  Revolutions}, which was reviled when it was published and is
 now considered almost uncontroversial.
 
 \index{Kuhn, Thomas}
@@ -1071,7 +1070,7 @@ chapter again.
 \newcommand{\Erdos}{Erd\H{o}s}
 \newcommand{\Renyi}{R\'{e}nyi}
 
-The next three chapters of are about systems made up of components and connections between components.  For example, in a social network, the components are people and connections represent friendships, business relationships, etc.  In an ecological food web, the components are species and the connections represent predator-prey relationships.
+The next three chapters are about systems made up of components and connections between components.  For example, in a social network, the components are people and connections represent friendships, business relationships, etc.  In an ecological food web, the components are species and the connections represent predator-prey relationships.
 
 In this chapter, I introduce NetworkX, a Python package for building
 models of these systems.  We start with the \Erdos-\Renyi~model,
@@ -1162,7 +1161,7 @@ Chuck, and Chuck follows no one.
 \index{representing graphs}
 
 The undirected graph in Figure~\ref{chap02-2} shows four cities
-in the north-east United States; the labels on the edges
+in the northeast United States; the labels on the edges
 indicate driving time in hours.
 In this example the placement of the nodes corresponds
 roughly to the geography of the cities, but in general the layout
@@ -1414,7 +1413,7 @@ def make_complete_graph(n):
 returns a new \py{Graph} with \py{n} nodes and edges between all
 pairs of nodes.
 
-The following code makes a complete graph with 10 nodes and draws it.
+The following code makes a complete graph with 10 nodes and draws it:
 
 \begin{code}
 complete = make_complete_graph(10)
@@ -1594,11 +1593,11 @@ import \py{numpy} as \py{np}.  NumPy provides a module named \py{random}, which 
 
 So \py{flip} returns \py{True} with the
 given probability, \py{p}, and \py{False} with the complementary
-probability, \py{1-p}:
+probability, \py{1-p}.
 
 \index{NumPy}  
 
-Finally, \py{make_random_graph} generates and returns the ER graph $G(n, p)$.
+Finally, \py{make_random_graph} generates and returns the ER graph $G(n, p)$:
 
 \begin{code}
 def make_random_graph(n, p):
@@ -1694,6 +1693,7 @@ on a logarithmic scale.
 
 \index{NumPy}
 \index{logarithm}
+\index{logspace}
 
 For each value of \py{p} in the array, we compute the probability that a graph with parameter \py{p} is connected and store the results in \py{ys}.
 
@@ -1785,7 +1785,9 @@ doubled because we consider every edge twice.
 Therefore, the order of growth for this function is $O(\V + \E)$,
 which is a convenient way to say that the run time grows in proportion
 to either $\V$ or $\E$, whichever is bigger.
-\index{breadth first search} \index{BFS}
+
+\index{breadth-first search}
+\index{BFS}
 
 If we know the relationship between $\V$ and $\E$, we can simplify
 this expression.  For example, in a complete graph the number of edges
@@ -1795,8 +1797,6 @@ is $n(n-1)/2$, which is in $O(\V^2)$.  So for a complete graph,
 
 
 \section{Exercises}
-
-%TODO: get rid of the blank exercises in the DocBook version
 
 The code for this chapter is in \py{chap02.ipynb}, which is a
 Jupyter notebook in the repository for this book.  For more information
@@ -1921,7 +1921,7 @@ were the average path length --- the number of
 times the letters were forwarded --- was about six.  This result
 was taken to confirm previous observations (and speculations) that
 the typical distance between any two people in a social network
-is about ``six degrees of separation.''
+is about ``six degrees of separation''.
 
 \index{six degrees}
 
@@ -1932,7 +1932,7 @@ increase in proportion to geographical distance.  For example, most of
 my friends live nearby, so I would guess that the average distance
 between nodes in a social network is about 50 miles.  Wichita is about
 1600 miles from Boston, so if Milgram's letters traversed typical
-links in the social network, they should have taken 32 hops, not six.
+links in the social network, they should have taken 32 hops, not 6.
 
 \index{hop}
 \index{social network}
@@ -2210,8 +2210,6 @@ neighbors are connected to each other, there would be $k(k-1)/2$
 edges among them.  The fraction of those edges that actually exist
 is the local clustering coefficient for $u$, denoted $C_u$.
 
-%TODO: These subscripts don't look good in the O'Reilly version.
-
 If we compute the average of $C_u$ over all nodes, we get the
 ``network average clustering coefficient'', denoted $\bar{C}$.
 
@@ -2348,16 +2346,15 @@ def run_one_graph(n, k, p):
     ws = make_ws_graph(n, k, p)
     mpl = characteristic_path_length(ws)
     cc = clustering_coefficient(ws)
-    print(mpl, cc)
     return mpl, cc
 \end{code}
 
 Watts and Strogatz ran their experiment with \py{n=1000} and \py{k=10}.
-With these parameters, \py{run_one_graph} takes about one second on
-my computer; most of that time is spent computing the
-mean path length.
+With these parameters, \py{run_one_graph} takes a few seconds on
+my computer; most of that time is spent computing the mean path length.
 
 \index{NumPy}
+\index{logspace}
 
 Now we need to compute these values for a range of \py{p}.  I'll use
 the NumPy function \py{logspace} again to compute \py{ps}:
@@ -2366,49 +2363,38 @@ the NumPy function \py{logspace} again to compute \py{ps}:
 ps = np.logspace(-4, 0, 9)
 \end{code}
 
-For each value of \py{p}, I generate 3 random graphs and we'll average the
-results.  Here's the function that runs the experiment:
+Here's the function that runs the experiment:
 
 \begin{code}
-def run_experiment(ps, n=1000, k=10, iters=3):
-    res = {}
+def run_experiment(ps, n=1000, k=10, iters=20):
+    res = []
     for p in ps:
-        print(p)
-        res[p] = []
-        for _ in range(iters):
-            res[p].append(run_one_graph(n, k, p))
-    return res
+        t = [run_one_graph(n, k, p) for _ in range(iters)]
+        means = np.array(t).mean(axis=0)
+        res.append(means)
+    return np.array(res)
 \end{code}
 
-The result is a dictionary that maps from each value of \py{p} to
-a list of \py{(mpl, cc)} pairs.
+For each value of \py{p}, we generate 20 random graphs and average the
+results.  Since the return value from \py{run_one_graph} is a pair, \py{t} is a list of pairs.  When we convert it to an array, we get one row for each iteration and columns for \py{L} and \py{C}.  Calling \py{mean} with the option \py{axis=0} computes the mean of each column; the result is an array with one row and two columns.
 
-The last step is to aggregate the results:
+\index{NumPy}
+\index{mean}
+
+When the loop exits, \py{means} is a list of pairs, which we convert to a NumPy array with one row for each value of \py{p} and columns for \py{L} and \py{C}.
+
+We can extract the columns like this:
 
 \begin{code}
-L = []
-C = []
-for p, t in sorted(res.items()):
-    mpls, ccs = zip(*t)
-    mpl = np.mean(mpls)
-    cc = np.mean(ccs)
-    L.append(mpl)
-    C.append(cc)
+L, C = np.transpose(res)
 \end{code}
-
-Each time through the loop, we get a value of \py{p} and a list of
-\py{(mpl, cc)} pairs.  We use \py{zip} to extracts two lists, \py{mpls} and
-\py{ccs}, then compute their means and append them to \py{L} and \py{C}, which
-are lists of path lengths and clustering coefficients.
-
-\index{zip}
 
 In order to plot \py{L} and \py{C} on the same axes, we standardize them
 by dividing through by the first element:
 
 \begin{code}
-L = np.array(L) / L[0]
-C = np.array(C) / C[0]
+L /= L[0]
+C /= C[0]
 \end{code}
 
 Figure~\ref{chap03-3} shows the results.  As $p$ increases, the mean
@@ -2449,7 +2435,7 @@ is that the assumptions and approximations in the model seem
 reasonable.  Planets and stars are not really point masses,
 but the distances between them are so big that their actual
 sizes are negligible.  Planets in the same solar system can
-affect each others' orbits, but the effect is usually small.
+affect each other's orbits, but the effect is usually small.
 And we ignore relativistic effects, again on the assumption that
 they are small.
 
@@ -2488,7 +2474,7 @@ more like an example.
 Many of the models in this book are like the Watts and Strogatz model:
 abstract, simulation-based and (at least superficially) less formal
 than conventional mathematical models.  One of the goals of this book
-it to consider the questions these models raise:
+is to consider the questions these models raise:
 
 \index{simulation-based model}
 
@@ -2937,8 +2923,8 @@ Specifically, I'll use their Facebook data\footnote{J. McAuley and
   J. Leskovec. Learning to Discover Social Circles in Ego
   Networks. NIPS, 2012.}, which includes 4039 users and 88,234
 friend relationships among them.  This dataset is in the repository
-for this book, but it is also available from the SNAP web site at
-\url{https://thinkcomplex.com/snap}
+for this book, but it is also available from the SNAP website at
+\url{https://thinkcomplex.com/snap}.
 
 The data file contains one line per edge, with users identified by
 integers from 0 to 4038.  Here's the code that reads the file:
@@ -3290,7 +3276,7 @@ In 1999 \Barabasi~and Albert published a paper,
 ``Emergence of Scaling in Random Networks'', that characterizes the
 structure of several real-world networks,
 including graphs that represent the interconnectivity of movie actors,
-world-wide web (WWW) pages, and elements in the electrical power grid
+web pages, and elements in the electrical power grid
 in the western United States.  You can download the paper from
 \url{https://thinkcomplex.com/barabasi}.
 
@@ -3408,9 +3394,9 @@ models intended to capture all of these characteristics.
 \hline
 C           & 0.61             & 0.63             & 0.037             \\
 L           & 3.69              & 3.23              & 2.51              \\
-mean degree & 43.7              & 44                & 43.7              \\
-std degree  & 52.4              & 1.5               & 40.1              \\
-power law?  & maybe             & no                & yes               \\
+Mean degree & 43.7              & 44                & 43.7              \\
+Std degree  & 52.4              & 1.5               & 40.1              \\
+Power law?  & maybe             & no                & yes               \\
 \hline
 \end{tabular}
 \caption{Characteristics of the Facebook dataset compared to two models.}
@@ -3680,7 +3666,7 @@ small world behavior, but they offer different explanations:
   they include both strongly-connected clusters and ``weak ties'' that
   connect clusters (see \url{https://thinkcomplex.com/weak}).
 
-\index{weak ties}
+\index{weak tie}
 
 \item The BA model suggests that social networks are small because
   they include nodes with high degree that act as hubs, and that
@@ -3729,7 +3715,7 @@ Are there other criteria you think should be considered?
 NetworkX provides a function called \py{powerlaw_cluster_graph} that
 implements the "Holme and Kim algorithm for growing graphs with
 powerlaw degree distribution and approximate average clustering".
-Read the documentation of this function and see if you can use it to
+Read the documentation of this function (\url{https://thinkcomplex.com/hk}) and see if you can use it to
 generate a graph that has the same number of nodes as the Facebook
 dataset, the same average degree, and the same clustering coefficient.
 How does the degree distribution in the model compare to the actual
@@ -3782,14 +3768,15 @@ physics.  ``Cellular'' means that the world is divided into discrete
 chunks, called cells.  An ``automaton'' is a machine that performs
 computations --- it could be a real machine, but more often the
 ``machine'' is a mathematical abstraction or a computer simulation.
+
 \index{cellular automaton}
 
-This chapter presents experiments Steven Wolfram performed
+This chapter presents experiments Stephen Wolfram performed
 in the 1980s, showing that some cellular automatons display
 surprisingly complicated behavior, including the ability to
 perform arbitrary computations.
 
-\index{Wolfram, Steven}
+\index{Wolfram, Stephen}
 
 I discuss implications of these results, and at the end of the
 chapter I suggest methods for implementing CAs efficiently in Python.
@@ -3849,7 +3836,7 @@ In the early 1980s Stephen Wolfram published a series of papers
 presenting a systematic study of 1-D CAs.  He identified
 four categories of behavior, each more interesting than
 the last.  You can read one of these papers, ``Statistical mechanics
-of cellular automata", at \url{https://thinkcomplex.com/ca}.
+of cellular automata," at \url{https://thinkcomplex.com/ca}.
 
 In Wolfram's experiments, the cells are arranged in a lattice (which you
 might remember from Section~\ref{watts}) where each cell is connected to two neighbors.  The lattice can be finite, infinite, or arranged in a ring.
@@ -3862,9 +3849,8 @@ and its two neighbors.
 
 \index{neighborhood}
 
-In these experiments, the cells have two states, denoted 0 and 1,
-so a rule can be summarized by a table that maps from the
-state of the neighborhood (a tuple of 3 states) to the next state
+In these experiments, the cells have two states, denoted 0 and 1 or ``off" and ``on".  A rule can be summarized by a table that maps from the
+state of the neighborhood (a tuple of three states) to the next state
 of the center cell.  The following table shows an example:
 
 \index{rule table}
@@ -3940,7 +3926,7 @@ always generates an empty pattern after one time step.
 
 Rule 50 is an example of Class 2.  It generates a simple pattern with
 nested structure, that is, a pattern that contains many smaller versions
-of itself.  For Rule 18 makes the nested structure is even clearer;
+of itself.  Rule 18 makes the nested structure is even clearer;
 Figure~\ref{chap05-3} shows what it looks like after 64 steps.
 
 \index{Rule 18}
@@ -4011,7 +3997,7 @@ truly random because:
 \end{itemize}
 
 Modern PRNGs produce sequences that are statistically
-indistinguishable from random, and they can be implemented with with
+indistinguishable from random, and they can be implemented with
 periods so long that the universe will collapse before they repeat.
 The existence of these generators raises the question of whether there
 is any real difference between a good quality pseudo-random sequence
@@ -4062,7 +4048,7 @@ to the scientific revolution, many people regarded the working of the
 universe as fundamentally unpredictable or controlled by supernatural
 forces.  After the triumphs of Newtonian mechanics, some optimists
 came to believe something like D4; for example, in 1814 Pierre-Simon
-Laplace wrote
+Laplace wrote:
 
 \index{Newtonian mechanics}
 \index{Laplace, Pierre-Simon}
@@ -4079,7 +4065,7 @@ nothing would be uncertain and the future just like the past would be
 present before its eyes.
 \end{quote}
 
-This ``intellect'' came to be called ``Laplace's Demon''.
+This ``intellect'' is now called ``Laplace's Demon''.
 See \url{https://thinkcomplex.com/demon}.  The word
 ``demon'' in this context has the sense of ``spirit'', with no
 implication of evil.
@@ -4202,7 +4188,7 @@ the head is over and moving one cell to the left or right.
 
 \index{register}
 \index{tape}
-\index{read/write head}
+\index{read-write head}
 \index{cell}
 
 A Turing machine is not a practical design for a computer, but it
@@ -4239,7 +4225,8 @@ for its simplicity.  That it, too, turns out to be Turing complete lends
 support to the Church-Turing Thesis.
 
 In {\em A New Kind of Science}, Wolfram states a variation of this
-thesis, which he calls the ``principle of computational equivalence:''
+thesis, which he calls the ``principle of computational equivalence'' (see
+\url{https://thinkcomplex.com/equiv}):
 
 \index{principle of computational equivalence}
 \index{New Kind of Science@{\it A New Kind of Science}}
@@ -4253,8 +4240,7 @@ that systems found in the natural world can perform computations up to
 a maximal (``universal'') level of computational power, and that most
 systems do in fact attain this maximal level of computational
 power. Consequently, most systems are computationally
-equivalent (see
-  \url{https://thinkcomplex.com/equiv}).
+equivalent.
 \end{quote}
 
 Applying these definitions to CAs, Classes 1 and 2 are ``obviously
@@ -4270,7 +4256,7 @@ are computationally equivalent.
 \section{Falsifiability}
 
 Wolfram holds that his principle is a stronger claim than the
-Church-Turing Thesis because it is about the natural world rather
+Church-Turing thesis because it is about the natural world rather
 than abstract models of computation.  But saying that natural processes
 ``can be viewed as computations'' strikes me as a statement about
 theory choice more than a hypothesis about the natural world.
@@ -4409,10 +4395,7 @@ the model more realistic, but that realism adds no explanatory power.
 
 \section{Implementing CAs}
 
-\begin{figure}
-\centerline{\includegraphics[height=1.75in]{figs/array.pdf}}
-\caption{A list of lists (left) and a NumPy array (right).\label{fig.array}}
-\end{figure}
+
 
 To generate the figures in this chapter, I wrote a Python class called
 \py{Cell1D} that represents a 1-D cellular automaton, and a class called
@@ -4430,9 +4413,7 @@ is 0 if the number is even and 1 if it is odd.
 
 \index{parity}
 
-I use the NumPy function \py{zeros} to
-create an array of zeros, then put a 1 in the middle of
-the first row.  
+I use the NumPy function \py{zeros} to create an array of zeros, then put a 1 in the middle of the first row.  
 
 \begin{code}
 rows = 5
@@ -4448,8 +4429,7 @@ print(array)
  [ 0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.]]
 \end{code}
 
-The data type \py{uint8} indicates that the elements
-of \py{array} are unsigned 8-bit integers.
+The data type \py{uint8} indicates that the elements of \py{array} are unsigned 8-bit integers.
 
 \index{NumPy}
 \index{zeros}
@@ -4466,9 +4446,8 @@ def plot_ca(array, rows, cols):
     plt.imshow(array, cmap=cmap, interpolation='none')
 \end{code}
 
-Following convention, I import \py{pyplot} with the abbreviated name
-\py{plt}.  \py{get_cmap} turns a colormap, which maps from the values
-in the array to colors.  The colormap \py{'Blues'} draws the on cells in dark blue and the off cells in light blue.
+I import \py{pyplot} with the abbreviated name
+\py{plt}, which is conventional.  The function \py{get_cmap} returns a colormap, which maps from the values in the array to colors.  The colormap \py{'Blues'} draws the ``on" cells in dark blue and the ``off" cells in light blue.
 
 \index{imshow}
 \index{colormap}
@@ -4591,7 +4570,7 @@ print(c)
 [ 1  3  6  9 12 15 18 21 24 17]
 \end{code}
 
-Now the result is the same size as \py{array}.  As an exercise at the end of this chapter, you'll have a chance to write a version of `correlate` that does the same thing.
+Now the result is the same size as \py{array}.  As an exercise at the end of this chapter, you'll have a chance to write a version of \py{correlate} that does the same thing.
 
 We can use NumPy's implementation of \py{correlate} to write a simple, faster version of \py{step}:
 
@@ -4665,7 +4644,7 @@ exercises in this chapter.  My solutions are in {\tt chap05soln.ipynb}.
 
 
 \begin{exercise}
-Write a version of correlate that returns the same result as np.correlate with mode='same'.  Hint: use the NumPy function \py{pad}.
+Write a version of \py{correlate} that returns the same result as \py{np.correlate} with \py{mode='same'}.  Hint: use the NumPy function \py{pad}.
 \end{exercise}
 
 \index{NumPy}
@@ -4691,7 +4670,7 @@ some of its spaceships.
   stable background pattern.
 
 Note that the \py{Cell1D} class provides
-\py{start_string}, which allow you to initialize the state of
+\py{start_string}, which allows you to initialize the state of
 the array using a string of \py{1}s and \py{0}s.
 
 \item Modify the initial condition by adding different patterns in the
@@ -4747,7 +4726,7 @@ might be available as a package for your operating system.
 
 \item Write a program that implements one of the linear congruential
 generators described at
-\url{https://thinkcomplex.com/lcg}).
+\url{https://thinkcomplex.com/lcg}.
 Test it using \py{DieHarder}.
 
 \item Read the documentation of Python's \py{random} module.
@@ -4843,7 +4822,7 @@ See \url{https://thinkcomplex.com/gol}.
 \index{Gardner, Martin}
 \index{grid}
 
-The cells in GoL are arranged a 2-D {\bf grid}, that is, an array of rows and columns.  Usually the grid is considered to be infinite, but in practice it is often ``wrapped''; that is, the right edge is connected to the left, and the top edge to the bottom.
+The cells in GoL are arranged in a 2-D {\bf grid}, that is, an array of rows and columns.  Usually the grid is considered to be infinite, but in practice it is often ``wrapped''; that is, the right edge is connected to the left, and the top edge to the bottom.
 
 Each cell in the grid has two states --- live and dead --- and 8 neighbors --- north, south, east, west, and the four diagonals.  This set of neighbors
 is sometimes called a ``Moore neighborhood''.
@@ -5390,7 +5369,7 @@ Write a class named \py{Highlife} that inherits from \py{Cell2D} and implements
 this version of the rules.  Also write a class named \py{HighlifeViewer}
 that inherits from \py{Cell2DViewer} and try different ways
 to visualize the results.  As a simple example, use a different
-color map.
+colormap.
 
 One of the more interesting patterns in Highlife is the replicator (see \url{https://thinkcomplex.com/repl}).
 Use \py{add_cells} to initialize Highlife with a replicator and see what it
@@ -5681,7 +5660,7 @@ with light spots of \py{A} on a dark background of \py{B}.
 \end{figure}
 
 Figure~\ref{chap07-3} shows results with \py{f=0.055} and
-\py{k=0.062} which yields a coral-like pattern of \py{B} on a background
+\py{k=0.062}, which yields a coral-like pattern of \py{B} on a background
 of \py{A}.
 
 \begin{figure}
@@ -5723,7 +5702,7 @@ In this model:
 \begin{itemize}
 
 \item Initially, each cell is either ``porous'' with probability \py{q} or
-``non-porous'' with probability \py{1-q}
+``non-porous'' with probability \py{1-q}.
 
 \item When the simulation begins, all cells are considered ``dry'' except the top row, which is ``wet''.
 
@@ -5741,7 +5720,7 @@ that the CA has a ``percolating cluster''.
 \index{cluster}
 \index{percolating cluster}
 
-Two questions of interest regarding percolation are (1) the probability that a random array contains a percolating cluster, and (2) how that probability depends on \py{q}.  These question might remind you of Section~\ref{randomgraphs}, where we considered the probability that a random \Erdos-\Renyi~graph is connected.  We will see several connections between that model and this one.
+Two questions of interest regarding percolation are (1) the probability that a random array contains a percolating cluster, and (2) how that probability depends on \py{q}.  These questions might remind you of Section~\ref{randomgraphs}, where we considered the probability that a random \Erdos-\Renyi~graph is connected.  We will see several connections between that model and this one.
 
 I define a new class to represent a percolation model:
 
@@ -5772,7 +5751,7 @@ The state of the top row is set to 5, which represents a wet cell.  Using 5, rat
                        [0, 1, 0]])
 \end{code}
 
-This kernel defines a 4-cell ``von Neumann'' neighborhood; unlike the Moore neighborhood we saw in Section~\ref{life}, it does not including the diagonals.
+This kernel defines a 4-cell ``von Neumann'' neighborhood; unlike the Moore neighborhood we saw in Section~\ref{life}, it does not include the diagonals.
 
 \index{neighborhood}
 \index{kernel}
@@ -5897,8 +5876,8 @@ To understand fractals, we have to start with dimensions.
 For simple geometric objects, dimension is defined in terms of scaling
 behavior.  For example, if the side of a square has length $l$, its
 area is $l^2$.  The exponent, 2, indicates that a square is
-2-dimensional.  Similarly, if the side of a cube has length $l$, its
-volume is $l^3$, which indicates that a cube is 3-dimensional.
+two-dimensional.  Similarly, if the side of a cube has length $l$, its
+volume is $l^3$, which indicates that a cube is three-dimensional.
 
 %TODO: These exponents don't look good in the O'Reilly edition.
 
@@ -6173,7 +6152,7 @@ Many critical systems demonstrate common behaviors:
 \index{long tail}
 \index{power law}
 
-\item Variations in time that exhibit {\bf pink noise}.  Complex
+\item Variations in time that exhibit {\bf pink noise}:  Complex
   signals can be decomposed into their frequency components.  In pink
   noise, low-frequency components have more power than high-frequency
   components.  Specifically, the power at frequency $f$ is
@@ -6364,7 +6343,7 @@ With \py{mode='same'}, \py{correlate2d} considers the boundary of the array
 to be fixed at zero, so any grains of sand that go over the edge
 disappear.
 
-\py{SandPile} also provides \py{run}, which calls step until
+\py{SandPile} also provides \py{run}, which calls \py{step} until
 no more cells topple:
 
 \begin{code}
@@ -6417,7 +6396,7 @@ pile.run()
 
 With an initial level of \py{10}, this sand pile takes 332 time steps to
 reach equilibrium, with a total of 53,336 topplings.
-Figure~\ref{chap08-1} (left) show the configuration after this initial
+Figure~\ref{chap08-1} (left) shows the configuration after this initial
 run.  Notice that it has the repeating elements that
 are characteristic of fractals.  We'll come back to that soon.
 
@@ -6442,7 +6421,7 @@ of avalanches.  So let's take a look.
 
 \index{heavy-tailed distribution}
 
-I'll make a larger sand pile, with \py{n=50}, an initial level of
+I'll make a larger sand pile, with \py{n=50} and an initial level of
 \py{30}, and run until equilibrium:
 
 \begin{code}
@@ -6480,7 +6459,7 @@ S = S[S>0]
 
 The distributions of \py{T} and \py{S} have many small values and a few
 very large ones.  I'll use the \py{Pmf} class from \py{thinkstats2} to
-make a PMF of the values; that is, a map from each value to
+make a PMF of the values, that is, a map from each value to
 its probability of occurring (see Section~\ref{degree}).
 
 \index{thinkstats2 module}
@@ -6631,7 +6610,7 @@ steps, steps2, cells = res
 \end{code}
 
 The first line creates a boolean array that contains \py{True}
-where where the array equals \py{level}, calls
+where the array equals \py{level}, calls
 \py{count_cells}, and gets an array with three rows.
 
 The second line unpacks the rows and assigns them to \py{steps},
@@ -6923,7 +6902,7 @@ structure of this argument is shown in Figure~\ref{fig.model2}.
 \index{self-organized criticality}
 
 Bak has made a similar argument that self-organized criticality is a
-general model for a broad category of system:
+general model for a broad category of systems:
 
 \begin{quote}
 Since these phenomena appear everywhere, they cannot depend on any
@@ -7003,7 +6982,7 @@ next grain of sand.
 
 In a sand pile model, what is the cause of a large avalanche?
 Philosophers sometimes distinguish the {\bf proximate} cause, which is
-most immediately responsible, from the {\bf ultimate} cause, which considered some deeper kind of explanation (see \url{https://thinkcomplex.com/cause}).
+most immediately responsible, from the {\bf ultimate} cause, which is considered some deeper kind of explanation (see \url{https://thinkcomplex.com/cause}).
 
 \index{proximate cause}
 \index{ultimate cause}
@@ -7021,7 +7000,7 @@ Many social phenomena, including wars, revolutions, epidemics,
 inventions, and terrorist attacks, are characterized by heavy-tailed
 distributions.  If these distributions are prevalent because social systems are SOC, major historical events may be fundamentally unpredictable and unexplainable.
 
-\index{heavy-tailed distributions}
+\index{heavy-tailed distribution}
 
 
 \section{Exercises}
@@ -7039,8 +7018,7 @@ what Bak, Tang and Wiesenfeld show in their paper.  But as we saw in
 Section~\ref{cdf}, this visualization can obscure the shape of the
 distribution.  Using the same data, make a plot that shows the
 cumulative distributions (CDFs) of \py{S} and \py{T}.  What can you
-say about their shape?  Do they follow a power law?  Are they heavy
-tailed?
+say about their shape?  Do they follow a power law?  Are they heavy-tailed?
 
 \index{CDF}
 \index{cumulative distribution function}
@@ -7086,7 +7064,7 @@ You can read more about this version of the sand pile model at
 \begin{exercise}
 
 In their 1989 paper, Bak, Chen and Creutz suggest that the Game of Life is
-a self-organized critical system.
+a self-organized critical system (see \url{https://thinkcomplex.com/bak89}).
 
 \index{Game of Life}
 \index{self-organized criticality}
@@ -7096,7 +7074,7 @@ To replicate their tests, start with a random configuration and run the GoL CA u
 it stabilizes again, keeping track of \py{T}, the number
 of time steps it takes, and \py{S}, the number of cells affected.
 Repeat for a large number of trials and plot the distributions
-of \py{T} and \py{S}.  Also, estimate the power spectrums of \py{T} and \py{S} as signals in time, and see if the are consistent with pink noise.
+of \py{T} and \py{S}.  Also, estimate the power spectrums of \py{T} and \py{S} as signals in time, and see if they are consistent with pink noise.
 
 %TODO: Do this exercise (project idea).
 
@@ -7121,11 +7099,11 @@ To support this argument, Mandelbrot points out:
 
 \item The distribution of observed data is often ``the joint
   effect of a fixed underlying {\em true distribution} and a highly
-  variable {\em filter}.''
+  variable {\em filter}''.
 
 \item Heavy-tailed distributions are robust to filtering; that is,
   ``a wide variety of filters leave their asymptotic behavior
-  unchanged.''
+  unchanged''.
 
 \end{itemize}
 
@@ -7397,7 +7375,7 @@ cell that just became empty can be chosen by the next agent.
 \begin{figure}
 \centerline{\includegraphics[height=3in]{figs/chap09-1.pdf}}
 \caption{Schelling's segregation model with \py{n=100}, initial
-condition (left), after 2 steps (middle) and after 10 steps (right).}
+condition (left), after 2 steps (middle), and after 10 steps (right).}
 \label{chap09-1}
 \end{figure}
 
@@ -7413,7 +7391,7 @@ for i in range(10):
 \end{code}
 
 Figure~\ref{chap09-1} shows the initial configuration (left),
-the state of the simulation after 2 steps (middle) and after 10
+the state of the simulation after 2 steps (middle), and the state after 10
 steps (right).
 
 \index{segregation}
@@ -7431,7 +7409,7 @@ which is the average, across agents, of the fraction of neighbors who are the sa
 \index{NumPy}
 \index{nanmean}
 
-In Figure~\ref{chap09-1}, the degree average fraction of similar
+In Figure~\ref{chap09-1}, the average fraction of similar
 neighbors is 50\% in the initial configuration, 65\% after two
 steps, and 76\% after 10 steps!
 
@@ -7477,7 +7455,7 @@ Artificial Societies}.
 \index{grid}
 
 In its simplest form, Sugarscape is a model of a simple economy where
-agents move around on a 2D grid, harvesting and accumulating ``sugar'',
+agents move around on a 2-D grid, harvesting and accumulating ``sugar'',
 which represents economic wealth.  Some parts of the grid produce more
 sugar than others, and some agents are better at finding it than
 others.
@@ -7490,13 +7468,13 @@ distribution of wealth, in particular the tendency toward inequality.
 
 In the Sugarscape grid, each cell has a capacity, which is the maximum
 amount of sugar it can hold.  In the original configuration, there
-are two high-sugar regions, with capacity 4, surrounding by concentric
+are two high-sugar regions, with capacity 4, surrounded by concentric
 rings with capacities 3, 2, and 1.
 
 \begin{figure}
 \centerline{\includegraphics[height=3in]{figs/chap09-3.pdf}}
 \caption{Replication of the original Sugarscape model: initial
-configuration (left), after 2 steps (middle) and 100 steps (right).}
+configuration (left), after 2 steps (middle) and after 100 steps (right).}
 \label{chap09-3}
 \end{figure}
 
@@ -7693,9 +7671,7 @@ returns the sugar at that location.
 other grid-based models we've seen.
 
 
-The attributes include \py{agents}, which is a list of \py{Agent}
-objects, and \py{occupied}, which is a set of tuples, where each
-tuples contains the coordinates of a cell occupied by an agent.
+The attributes include \py{agents}, which is a list of \py{Agent} objects, and \py{occupied}, which is a set of tuples, where each tuple contains the coordinates of a cell occupied by an agent.
 
 \index{Cell2D}
 
@@ -7740,8 +7716,6 @@ The return value is the number of agents still alive.
 I won't show more details here; you can see them in the notebook for this chapter.  If you want to learn more about NumPy, you might want to look at these functions in particular:
 
 \begin{itemize}
-
-%TODO: Any more
 
 \item \py{make_visible_locs}, which builds the array of locations
 an agent can see, depending on its vision.  The locations are sorted by distance, with locations at the same distance
@@ -7993,7 +7967,7 @@ your reaction to the system response?
 
 \chapter{Herds, Flocks, and Traffic Jams}
 
-The agent-based models in the previous chapter are based on grids: the agents occupy discrete locations in 2-dimensional space.  In this chapter we consider agents that move is continuous space, including simulated cars on a 1-dimensional highway and simulated birds in 3-dimensional space.
+The agent-based models in the previous chapter are based on grids: the agents occupy discrete locations in two-dimensional space.  In this chapter we consider agents that move is continuous space, including simulated cars on a one-dimensional highway and simulated birds in three-dimensional space.
 
 \index{grid}
 \index{space}
@@ -8040,8 +8014,8 @@ class Highway:
             self.drivers[i].next = self.drivers[j]
 \end{code}
 
-\py{n} is the number of cars; \py{length} is the length of the
-highway; \py{eps} is the amount of random noise we'll add to the system.
+\py{n} is the number of cars, \py{length} is the length of the
+highway, and \py{eps} is the amount of random noise we'll add to the system.
 
 \index{Highway}
 \index{Driver}
@@ -8105,7 +8079,7 @@ of the simulation.
 
 \begin{itemize}
 
-\item \py{acc} is acceleration, which bounded by \py{min_acc} and
+\item \py{acc} is acceleration, which is bounded by \py{min_acc} and
   \py{max_acc}.  In my implementation, cars can accelerate with
   \py{max_acc=1} and brake with \py{min_acc=-10}.
 
@@ -8167,7 +8141,7 @@ by the triangles.
 During the next time step (right) two cars collide with the stopped
 cars, and we can see the initial formation of a traffic jam.  Once
 a jam forms, it tends to persist, with additional cars approaching from
-behind and colliding, and with the cars in the front accelerating
+behind and colliding, and with cars in the front accelerating
 away.
 
 Under some conditions, the jam itself propagates backwards, as you
@@ -8188,7 +8162,7 @@ achieve, as a function of the number of cars.
 
 \index{noise}
 
-The top line shows results with \py{eps=0}; that is, with no random
+The top line shows results with \py{eps=0}, that is, with no random
 variation in speed.  With 25 or fewer cars, the spacing between
 cars is greater than 40, which allows cars to reach and maintain
 the maximum speed, which is 40.  With more than 25 cars, traffic
@@ -8251,14 +8225,14 @@ vision.
 \index{local information}
 
 In the repository for this book, you will find {\tt Boids7.py}, which contains my implementation of Boids, based in part
-on the description in Flake, {\it The Computational Beauty of Nature}.
+on the description in Gary William Flake's book, {\it The Computational Beauty of Nature}.
 
 \index{Flake, Gary William}
 \index{Computational Beauty of Nature@{\it The Computational Beauty of Nature}}
 \index{VPython}
 \index{Anaconda}
 
-My implementation uses VPython, which is a library that provides 3D graphics.
+My implementation uses VPython, which is a library that provides 3-D graphics.
 VPython provides a \py{Vector} object, which I use to represent the position and velocity of Boids in three dimensions.  You can read about them at \url{https://thinkcomplex.com/vector}.
 
 \index{Vector}
@@ -8381,7 +8355,7 @@ Here's the implementation of \py{align}:
         return self.vector_toward_center(vecs)
 \end{code}
 
-\py{align} is also similar to \py{center}; the big difference is that is computes the average of the neighbors' velocities, rather than their positions.  If the neighbors point in a particular direction, the Boid tends to steer toward that direction.
+\py{align} is also similar to \py{center}; the big difference is that it computes the average of the neighbors' velocities, rather than their positions.  If the neighbors point in a particular direction, the Boid tends to steer toward that direction.
 
 \index{velocity}
 
@@ -8486,7 +8460,7 @@ These examples suggest an approach to several old and challenging questions, inc
 Free will is the ability to make choices, but if our bodies and brains
 are governed by deterministic physical laws, our choices are completely determined.  
 
-Philosopher and scientists have proposed many possible resolutions to this apparent conflict; for example:
+Philosophers and scientists have proposed many possible resolutions to this apparent conflict; for example:
 
 \begin{itemize}
 
@@ -8525,7 +8499,7 @@ In the traffic jam simulation, define a class, \py{BetterDriver}, that inherits 
 
 \begin{exercise}
 
-The code for my Boid implementation is in {\tt Boids7.py} in the repository for this book.  To run it, you will need VPython, a library for 3D graphics and animation.  If you use Anaconda (as I recommend in Section~\ref{code}), you can run the following in a terminal or Command Window:
+The code for my Boid implementation is in {\tt Boids7.py} in the repository for this book.  To run it, you will need VPython, a library for 3-D graphics and animation.  If you use Anaconda (as I recommend in Section~\ref{code}), you can run the following in a terminal or Command Window:
 
 \begin{code}
     conda install -c vpython vpython
@@ -8642,7 +8616,7 @@ that represent individual organisms.  Each agent has genetic
 information, called its {\bf genotype}, which is the information that
 gets copied when the agent replicates.  In our model\footnote{This
   model is a variant of the NK model developed primarily by Stuart
-  Kauffman (see \url{https://thinkcomplex.com/nk})}, a
+  Kauffman (see \url{https://thinkcomplex.com/nk}).}, a
 genotype is represented by a sequence of \py{N} binary digits (zeros
 and ones), where \py{N} is a parameter we choose.
 
@@ -8788,13 +8762,13 @@ The most important function in \py{Simulation} is \py{step}, which simulates one
 
 \item \py{get_fitnesses} returns an array containing the fitness of each agent.
 
-\item \py{choose_dead} decides which agents die during this timestep, and returns an array that contains the indices of the dead agents.
+\item \py{choose_dead} decides which agents die during this time step, and returns an array that contains the indices of the dead agents.
 
-\item \py{choose_replacements} decides which agents reproduce during this timestep, invokes \py{copy} on each one, and returns an array of new \py{Agent} objects.
+\item \py{choose_replacements} decides which agents reproduce during this time step, invokes \py{copy} on each one, and returns an array of new \py{Agent} objects.
 
 \end{itemize}
 
-In this version of the simulation, the number of new agents during each timestep equals the number of dead agents, so the number of live agents is constant.
+In this version of the simulation, the number of new agents during each time step equals the number of dead agents, so the number of live agents is constant.
 
 
 \section{No differentiation}
@@ -8882,7 +8856,7 @@ sim.add_instrument(instrument)
 sim.run()
 \end{code}
 
-\py{Simulation} keeps a list of \py{Instrument} objects.  After each timestep it invokes \py{update} on each \py{Instrument} in the list.
+\py{Simulation} keeps a list of \py{Instrument} objects.  After each time step it invokes \py{update} on each \py{Instrument} in the list.
 
 \index{Instrument}
 
@@ -9015,7 +8989,7 @@ Figure~\ref{chap11-3} shows the results of 10 simulations with mutation and diff
 \label{chap11-4}
 \end{figure}
 
-To measure diversity in the population, we can plot the number of occupied locations after each timestep.  Figure~\ref{chap11-4} shows the results.  We start with 100 agents at the same location.  As mutations occur, the number of occupied locations increases quickly.
+To measure diversity in the population, we can plot the number of occupied locations after each time step.  Figure~\ref{chap11-4} shows the results.  We start with 100 agents at the same location.  As mutations occur, the number of occupied locations increases quickly.
 
 When an agent discovers a high-fitness location, it is more likely to survive and reproduce.  Agents at lower-fitness locations eventually die out.  Over time, the population migrates through the landscape until most agents are at the location with the highest fitness.
 
@@ -9083,11 +9057,11 @@ We can model these scenarios by running a simulation until the population reache
 
 \begin{figure}
 \centerline{\includegraphics[height=3in]{figs/chap11-6.pdf}}
-\caption{Mean fitness over time.  After 500 timesteps, we change the fitness landscape.}
+\caption{Mean fitness over time.  After 500 time steps, we change the fitness landscape.}
 \label{chap11-6}
 \end{figure}
 
-Figure~\ref{chap11-6} shows results from a simulation like that.  We start with 100 identical mutants at a random location, and run the simulation for 500 timesteps.  At that point, many agents are at the optimal location, which has fitness near 0.65 in this example.  The genotypes of the agents form a cluster, with the mean distance between agents near 1.
+Figure~\ref{chap11-6} shows results from a simulation like that.  We start with 100 identical mutants at a random location, and run the simulation for 500 time steps.  At that point, many agents are at the optimal location, which has fitness near 0.65 in this example.  The genotypes of the agents form a cluster, with the mean distance between agents near 1.
 
 After 500 steps, we run \py{FitnessLandscape.set_values}, which changes the fitness landscape; then we resume the simulation.  Mean fitness is lower, as we expect because the optimal location in the old landscape is no better than a random location in the new landscape.
 
@@ -9157,7 +9131,7 @@ In this final chapter, I take on two questions, one from biology and one from ph
 
 \end{itemize}
 
-The tools I use to address these questions are agent based simulation (again) and game theory, which is a set of abstract models meant to describe ways agents interact.  Specifically, the game we will consider is the Prisoner's Dilemma.
+The tools I use to address these questions are agent-based simulation (again) and game theory, which is a set of abstract models meant to describe ways agents interact.  Specifically, the game we will consider is the Prisoner's Dilemma.
 
 \index{altruism}
 \index{human nature}
@@ -9205,7 +9179,7 @@ With this set of punishments, it is tempting to say that the players should coop
 
 \end{itemize}
 
-No matter what B does, A is better of defecting.
+No matter what B does, A is better off defecting.
 And because the game is symmetric, this analysis is the same from B's point of view: no matter what A does, B is better off defecting.
 
 In the simplest version of this game, we assume that A and B have no other considerations to take into account.  They can't communicate with each other, so they can't negotiate, make promises, or threaten each other.  And they consider only the immediate goal of minimizing their sentences; they don't take into account any other factors.
@@ -9283,7 +9257,7 @@ Looking at the strategies that did well in these tournaments, Alexrod identified
 
 \item Forgiving: But strategies that were too vindictive tended to punish themselves as well as their opponents.
 
-\item Non-envious: Some the most successful strategies seldom outscore their opponents; they are successful because they do {\em well enough} against a wide variety of opponents.
+\item Non-envious: Some of the most successful strategies seldom outscore their opponents; they are successful because they do {\em well enough} against a wide variety of opponents.
 
 \end{itemize}
 
@@ -9371,11 +9345,13 @@ The \py{Tournament} class encapsulates the details of the PD competition:
                ('D', 'C'): (5, 0),
                ('D', 'D'): (1, 1)}
 
-    def play(self, agent1, agent2, num_rounds=6):
+    num_rounds = 6
+
+    def play(self, agent1, agent2):
         agent1.reset()
         agent2.reset()
 
-        for i in range(num_rounds):
+        for i in range(self.num_rounds):
             resp1 = agent1.respond(agent2)
             resp2 = agent2.respond(agent1)
 
@@ -9647,7 +9623,7 @@ The simulations in this chapter depend on conditions and parameters I chose arbi
 
 \item Since each agent only plays against two other agents, the outcome of each round is highly variable: an agent that would do well against most other agents might get unlucky during any given round, or the other way around. What happens if you increase the number of opponents each agent plays against during each round? Or what if an agent's fitness at the end of each step is the average of its current score and its fitness at the end of the previous round?
 
-\item The function I chose for \py{prob_survival} varies from 0.7 to 0.9, so the least fit agent, with \py{p=0.7}, lives for 3.33 timesteps on average, and the most fit agent lives for 10 timesteps. What happens if you make the degree of differential survival more or less ``aggressive".
+\item The function I chose for \py{prob_survival} varies from 0.7 to 0.9, so the least fit agent, with \py{p=0.7}, lives for 3.33 time steps on average, and the most fit agent lives for 10 time steps. What happens if you make the degree of differential survival more or less ``aggressive"?
 
 \item I chose \py{num_rounds=6} so that each element of the genome has roughly the same impact on the outcome of a match. But that is substantially shorter than what Alexrod used in his tournaments. What happens if you increase \py{num_rounds}?  Note: if you explore the effect of this parameter, you might want to modify \py{Niceness} to measure the niceness of the last 4 elements of the genome, which will be under more selective pressure as \py{num_rounds} increases.
 
@@ -9692,76 +9668,84 @@ The following are selected books related to topics in this book.  Most are writt
 \begin{itemize}
 
 \item Axelrod, Robert,  {\it  Complexity of Cooperation},
-Princeton University Press 1997.
+Princeton University Press, 1997.
 
 \item Axelrod, Robert{\it  The Evolution of Cooperation},
 Basic Books, 2006.
 
 \item Bak, Per {\it  How Nature Works},
-Copernicus (Springer) 1996.
+Copernicus (Springer), 1996.
 
-\item \Barabasi, Albert-L\'{a}szl\'{o}, {\it  Linked}
-Perseus Books Group 2002.
+\item \Barabasi, Albert-L\'{a}szl\'{o}, {\it  Linked},
+Perseus Books Group, 2002.
 
 \item Buchanan, Mark, {\it  Nexus},
 W.~W.~Norton \& Company, 2002.
 
-\item Dawkins, Richard, {\it The Selfish Gene}, Oxford University Press, 2016.
+\item Dawkins, Richard, {\it The Selfish Gene},
+Oxford University Press, 2016.
 
-\item Epstein and Axtell, {\it  Growing Artificial Societies},
-Brookings Institution Press \& MIT Press 1996.
+\item Epstein, Joshua and Axtell, Robert, {\it  Growing Artificial Societies},
+Brookings Institution Press \& MIT Press, 1996.
 
 \item Fisher, Len, {\it  The Perfect Swarm},
-Basic Books 2009.
+Basic Books, 2009.
 
-\item Flake, Gary William, {\it  The Computational Beauty of Nature}, MIT Press 2000.
+\item Flake, Gary William, {\it  The Computational Beauty of Nature},
+MIT Press 2000.
 
-\item Goldstein, Rebecca, {\it Incompleteness}, W.~W.~Norton \& Company, 2005.
+\item Goldstein, Rebecca, {\it Incompleteness},
+W.~W.~Norton \& Company, 2005.
 
-\item Goodwin, Brian {\it  How the Leopard Changed Its Spots}, Princeton University Press, 2001.
+\item Goodwin, Brian {\it  How the Leopard Changed Its Spots},
+Princeton University Press, 2001.
 
-\item Holland, John, {\it  Hidden Order}.
+\item Holland, John, {\it  Hidden Order},
 Basic Books, 1995.
 
-\item Johnson, Steven, {\it  Emergence}.
+\item Johnson, Steven, {\it  Emergence},
 Scribner, 2001.
 
-\item Kelly, Kevin, {\it  Out of Control}.
+\item Kelly, Kevin, {\it  Out of Control},
 Basic Books, 2002.
 
-\item Kosko, Bart, {\it Fuzzy Thinking}, Hyperion, 1993.
+\item Kosko, Bart, {\it Fuzzy Thinking}, 
+Hyperion, 1993.
 
-\item Levy, Steven {\it  Artificial Life}, Pantheon, 1992.
+\item Levy, Steven {\it  Artificial Life}, 
+Pantheon, 1992.
 
-\item Mandelbrot, Benoit, {\it Fractal Geometry of Nature}, Times Books, 1982.
+\item Mandelbrot, Benoit, {\it Fractal Geometry of Nature},
+Times Books, 1982.
 
-\item  McGrayne, Sharon Bertsch, {\it The Theory That Would Not Die}, Yale University Press, 2011.
+\item  McGrayne, Sharon Bertsch, {\it The Theory That Would Not Die},
+Yale University Press, 2011.
 
 \item Mitchell, Melanie, {\it  Complexity: A Guided Tour}.
 Oxford University Press, 2009.
 
-\item Waldrop, M. Mitchell {\it Complexity: The emerging science at the edge of order and chaos},
+\item Waldrop, M. Mitchell {\it Complexity: The Emerging Science at the Edge of Order and Chaos},
 Simon \& Schuster, 1992.
 
 \item Resnick, Mitchell, {\it  Turtles, Termites, and Traffic Jams},
 Bradford, 1997.
 
-\item Rucker, Rudy, {\it  The Lifebox, The Seashell, and the Soul},
+\item Rucker, Rudy, {\it  The Lifebox, the Seashell, and the Soul},
 Thunder's Mouth Press, 2005.
 
-\item Sawyer, R. Keith, {\it  Social Emergence: Societies As Complex Systems}.
+\item Sawyer, R. Keith, {\it  Social Emergence: Societies as Complex Systems},
 Cambridge University Press, 2005.
 
-\item Schelling, Thomas, {\it  Micromotives and Macrobehaviors}.
+\item Schelling, Thomas, {\it  Micromotives and Macrobehaviors},
 W.~W.~Norton \& Company, 2006.
 
 \item Strogatz, Steven, {\it  Sync},
 Hachette Books, 2003.
 
-\item Watts, Duncan, {\it  Six Degrees}.
+\item Watts, Duncan, {\it  Six Degrees},
 W.~W.~Norton \& Company, 2003.
 
-\item Wolfram, Stephen, {\it  A New Kind Of Science}.
+\item Wolfram, Stephen, {\it  A New Kind Of Science},
 Wolfram Media, 2002.
 
 \end{itemize}
@@ -9980,6 +9964,12 @@ Implement percolation on a network.
 \begin{exercise}
 Check whether the clusters in Schelling's model are connected.
 \end{exercise}
+
+
+%\begin{figure}
+%\centerline{\includegraphics[height=1.75in]{figs/array.pdf}}
+%\caption{A list of lists (left) and a NumPy array (right).\label{fig.array}}
+%\end{figure}
 
 Figure~\ref{fig.array} shows why.
 The diagram on the left shows a list of lists of integers; each
