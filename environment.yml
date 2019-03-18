@@ -1,14 +1,12 @@
-name: complexity
-channels:
-- defaults
-- conda-forge
+name: ThinkComplexity2
+
 dependencies:
-- python=3.*
-- matplotlib
-- networkx=2.*
-- numpy
-- jupyter
-- ipykernel
-- scipy
-- pandas
-- ffmpeg
+  - python=3.7
+  - jupyter
+  - numpy
+  - matplotlib
+  - seaborn
+  - pandas
+  - scipy
+  - networkx=2.*
+  - ffmpeg
