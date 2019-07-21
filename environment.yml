@@ -9,4 +9,7 @@ dependencies:
   - pandas
   - scipy
   - networkx=2.*
-  - ffmpeg
+  - pip
+  - pip:
+    - empiricaldist
+    
