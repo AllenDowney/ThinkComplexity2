@@ -1648,7 +1648,7 @@ Here's how:
 def prob_connected(n, p, iters=100):
     tf = [is_connected(make_random_graph(n, p))
           for i in range(iters)]
-    return np.mean(bool)
+    return np.mean(tf)
 \end{code}
 
 The parameters \py{n} and \py{p} are passed along to \py{make_random_graph};
