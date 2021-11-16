@@ -1,22 +1,22 @@
 _Think Complexity_ is an introduction to complexity science
-using Python.  The premise of this book (and the other books in the _Think X_ series) is that if 
+using Python.  The premise of this book (and the other books in the _Think X_ series) is that if
 you know how to program, you can use that skill to learn other things.  
 
-The first edition is published by [O'Reilly Media](http://shop.oreilly.com/product/0636920022480.do).
-You can also [order it from Amazon](http://amzn.to/2nwkoZS).
-
-The second edition is a work in progress, available in PDF from
-[Green Tea Press](http://greenteapress.com/wp/think-complexity-2e/).
-
-The book is under a Creative Commons license: 
-[Attribution-NonCommercial-ShareAlike 3.0 Unported](http://creativecommons.org/licenses/by-nc-sa/3.0).
-The code is under the [GNU GPLv3](http://www.gnu.org/licenses/gpl.html).
+The second edition is published by [O'Reilly Media](https://www.oreilly.com/library/view/think-complexity-2nd/9781492040194/).
+You can also [order it from Amazon](https://amzn.to/3wPN0SJ).
 
 Other Free Books by Allen Downey are available from [Green Tea Press](http://greenteapress.com/wp/).
-
 
 ### Tutorial
 
 I offer a half-day tutorial based on material from _Think Complexity_.
-[Information about the tutorial is here](http://allendowney.github.io/ThinkComplexity2/tutorial).
+[Information about the tutorial is here](https://allendowney.github.io/ComplexityScience/).
 
+
+
+### Notebooks
+
+For each chapter, there is a Jupyter notebook in this repository that contains the code from the chapter, exercises, and (optionally) exercise solutions. You can download the notebooks and run them in your own Python environment, or you can use the links below to run them on Colab.
+
+* [Run the Chapter 2 notebook](https://colab.research.google.com/github/AllenDowney/ThinkComplexity2/blob/master/notebooks/chap02.ipynb)
+[Run the Chapter 2 notebook with solutions](https://colab.research.google.com/github/AllenDowney/ThinkComplexity2/blob/master/soln/chap02.ipynb)
