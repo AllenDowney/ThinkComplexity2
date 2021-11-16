@@ -18,8 +18,20 @@ I offer a half-day tutorial based on material from _Think Complexity_.
 
 For each chapter, there is a Jupyter notebook in this repository that contains the code from the chapter, exercises, and (optionally) exercise solutions. You can download the notebooks and run them in your own Python environment, or you can use the links below to run them on Colab.
 
-* Chapter 2: [Run the notebook](https://colab.research.google.com/github/AllenDowney/ThinkComplexity2/blob/master/notebooks/chap02.ipynb)  [Run the notebook with solutions](https://colab.research.google.com/github/AllenDowney/ThinkComplexity2/blob/master/soln/chap02.ipynb)
+* Chapter 2: [Run the notebook](https://colab.research.google.com/github/AllenDowney/ThinkComplexity2/blob/master/notebooks/chap02.ipynb) OR  
+[Run the notebook with solutions](https://colab.research.google.com/github/AllenDowney/ThinkComplexity2/blob/master/soln/chap02.ipynb)
 
-* Chapter 3: [Run the notebook](https://colab.research.google.com/github/AllenDowney/ThinkComplexity2/blob/master/notebooks/chap03.ipynb)  [Run the notebook with solutions](https://colab.research.google.com/github/AllenDowney/ThinkComplexity2/blob/master/soln/chap03.ipynb)
+* Chapter 3: [Run the notebook](https://colab.research.google.com/github/AllenDowney/ThinkComplexity2/blob/master/notebooks/chap03.ipynb) OR  
+[Run the notebook with solutions](https://colab.research.google.com/github/AllenDowney/ThinkComplexity2/blob/master/soln/chap03.ipynb)
 
-* Chapter 4: [Run the notebook](https://colab.research.google.com/github/AllenDowney/ThinkComplexity2/blob/master/notebooks/chap04.ipynb)  [Run the notebook with solutions](https://colab.research.google.com/github/AllenDowney/ThinkComplexity2/blob/master/soln/chap04.ipynb)
+* Chapter 4: [Run the notebook](https://colab.research.google.com/github/AllenDowney/ThinkComplexity2/blob/master/notebooks/chap04.ipynb) OR  
+[Run the notebook with solutions](https://colab.research.google.com/github/AllenDowney/ThinkComplexity2/blob/master/soln/chap04.ipynb)
+
+* Chapter 5: [Run the notebook](https://colab.research.google.com/github/AllenDowney/ThinkComplexity2/blob/master/notebooks/chap05.ipynb) OR  
+[Run the notebook with solutions](https://colab.research.google.com/github/AllenDowney/ThinkComplexity2/blob/master/soln/chap05.ipynb)
+
+* Chapter 6: [Run the notebook](https://colab.research.google.com/github/AllenDowney/ThinkComplexity2/blob/master/notebooks/chap06.ipynb) OR  
+[Run the notebook with solutions](https://colab.research.google.com/github/AllenDowney/ThinkComplexity2/blob/master/soln/chap06.ipynb)
+
+* Chapter 7: [Run the notebook](https://colab.research.google.com/github/AllenDowney/ThinkComplexity2/blob/master/notebooks/chap07.ipynb) OR  
+[Run the notebook with solutions](https://colab.research.google.com/github/AllenDowney/ThinkComplexity2/blob/master/soln/chap07.ipynb)
