@@ -6,24 +6,13 @@ http://greenteapress.com/complexity
 Copyright 2016 Allen Downey
 MIT License: http://opensource.org/licenses/MIT
 """
-from __future__ import print_function, division
-
 import sys
 
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib import animation
 
-"""
-For animation to work in the notebook, you might have to install
-ffmpeg.  On Ubuntu and Linux Mint, the following should work.
-
-    sudo add-apt-repository ppa:mc3man/trusty-media
-    sudo apt-get update
-    sudo apt-get install ffmpeg
-"""
-
-from Cell2D import Cell2D, Cell2DViewer
+from Cell2D import Cell2D
+from animate import animate
 from scipy.signal import correlate2d
 
 
@@ -40,10 +29,6 @@ class Life(Cell2D):
         """Executes one time step."""
         c = correlate2d(self.array, self.kernel, mode='same')
         self.array = self.table[c]
-
-
-class LifeViewer(Cell2DViewer):
-    """Viewer for Game of Life."""
 
 
 def main(script, *args):
@@ -75,13 +60,10 @@ def main(script, *args):
     life.add_cells(n//2+12, col, *lwss)
     life.add_cells(n//2+26, col, *lwss)
     life.add_cells(n//2+19, col, *bhep)
-    viewer = LifeViewer(life)
-    anim = viewer.animate(frames=100, interval=1)
+    anim = animate(life)
     plt.subplots_adjust(left=0.01, right=0.99, bottom=0.01, top=0.99)
     plt.show()
 
 
 if __name__ == '__main__':
     main(*sys.argv)
-
-

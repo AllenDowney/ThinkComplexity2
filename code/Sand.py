@@ -3,7 +3,8 @@ import itertools
 import numpy as np
 import matplotlib.pyplot as plt
 
-from Cell2D import Cell2D, Cell2DViewer
+from Cell2D import Cell2D, draw_array
+from animate import animate
 from scipy.signal import correlate2d
 
 
@@ -71,26 +72,9 @@ class SandPile(Cell2D):
         duration, total_toppled = self.run()
         return duration, total_toppled
 
-
-class SandPileViewer(Cell2DViewer):
-    cmap = plt.get_cmap('YlOrRd')
-    options = dict(interpolation='nearest', alpha=0.8,
-                   vmin=0, vmax=5)
-    
-    def __init__(self, viewee, drop_flag=True):
-        """Initializes the attributes.
-
-        drop_flag: determines whether `step` drops a grain
-        """
-        Cell2DViewer.__init__(self, viewee)
-        self.drop_flag = drop_flag
-
-    def step(self):
-        """Advances the viewee one step."""
-        if self.drop_flag:
-            self.viewee.drop_and_run()
-        else:
-            self.viewee.step()
+    def draw(self):
+        """Draws the cells."""
+        draw_array(self.array, cmap='YlOrRd', vmax=5)
 
 
 def single_source(pile, height=1024):
@@ -108,8 +92,7 @@ def main():
     n = 101
     pile = SandPile(n)
     single_source(pile, height=2**14)
-    viewer = SandPileViewer(pile, drop_flag=False)
-    anim = viewer.animate(interval=0)
+    anim = animate(pile, interval=0)
     plt.subplots_adjust(left=0.01, right=0.99, bottom=0.01, top=0.99)
     plt.show()
 
