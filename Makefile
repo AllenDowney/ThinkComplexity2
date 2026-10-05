@@ -26,6 +26,7 @@ format:
 
 # Student notebooks are not tested: their exercise cells are blank, so they
 # stop at the first cell that calls a function the reader is meant to write.
+# One pytest run, so a failure in soln/ does not keep examples/ from running.
+# nbmake runs each notebook in its own directory.
 tests:
-	cd soln; pytest --nbmake --durations=10 *.ipynb
-	cd examples; pytest --nbmake --durations=10 *_soln.ipynb
+	pytest --nbmake --durations=10 soln/*.ipynb examples/*_soln.ipynb
