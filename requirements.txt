@@ -1,0 +1,10 @@
+empiricaldist
+jupyter
+networkx
+numpy
+matplotlib
+plotly
+seaborn
+scipy
+statsmodels
+tables
