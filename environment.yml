@@ -1,7 +1,7 @@
 name: ThinkComplexity2
 
 dependencies:
-  - python=3.7
+  - python
   - jupyter
   - numpy
   - matplotlib
@@ -12,4 +12,3 @@ dependencies:
   - pip
   - pip:
     - empiricaldist
-    
