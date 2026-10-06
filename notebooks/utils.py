@@ -113,3 +113,72 @@ def set_palette(*args, **kwds):
     return palette
 
 
+
+
+# Cell magic for adding a method to a class that was defined in an earlier
+# cell, so a class can be presented one method at a time.  From ThinkPython.
+#
+#     %%add_method_to ClassName
+#
+#         def method(self):
+#             ...
+
+import re
+
+
+def extract_function_name(text):
+    """Find a function definition and return its name.
+
+    text: String
+
+    returns: String or None
+    """
+    pattern = r"def\s+(\w+)\s*\("
+    match = re.search(pattern, text)
+    if match:
+        return match.group(1)
+    return None
+
+
+# the magic is only defined if we're running in Jupyter
+try:
+    from IPython.core.magic import register_cell_magic
+
+    @register_cell_magic
+    def add_method_to(args, cell):
+
+        # get the name of the function defined in this cell
+        func_name = extract_function_name(cell)
+        if func_name is None:
+            return "This cell doesn't define any new functions."
+
+        # get the class we're adding it to
+        namespace = get_ipython().user_ns
+        class_name = args.strip()
+        cls = namespace.get(class_name, None)
+        if cls is None:
+            return f"Class '{class_name}' not found."
+
+        # save the old version of the function if it was already defined
+        old_func = namespace.get(func_name, None)
+        if old_func is not None:
+            del namespace[func_name]
+
+        # execute the cell to define the function
+        get_ipython().run_cell(cell)
+
+        # get the newly defined function
+        new_func = namespace.get(func_name, None)
+        if new_func is None:
+            return f"This cell didn't define {func_name}."
+
+        # add the function to the class and remove it from the namespace
+        setattr(cls, func_name, new_func)
+        del namespace[func_name]
+
+        # restore the old function to the namespace
+        if old_func is not None:
+            namespace[func_name] = old_func
+
+except (ImportError, NameError):
+    pass
