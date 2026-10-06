@@ -26,20 +26,23 @@ format:
 
 # Student notebooks are not tested: their exercise cells are blank, so they
 # stop at the first cell that calls a function the reader is meant to write.
-# soln/utils.py is canonical; the others are copies.  notebooks/utils.py is
-# the one notebooks download from GitHub, so it has to be a real file, not a link.
-UTILS_COPIES = notebooks/utils.py code/utils.py examples/utils.py
+# soln/ holds the canonical copies of the shared modules; the others are copies.
+# notebooks/ copies are what notebooks download from GitHub, so they have to be
+# real files, not links.  examples/utils.py is a copy too, but not tracked.
+SHARED = utils.py Cell2D.py
+COPIES = $(foreach d,notebooks code,$(addprefix $(d)/,$(SHARED)))
 
-sync-utils:
-	for f in $(UTILS_COPIES); do cp soln/utils.py $$f; done
+sync-shared:
+	for f in $(COPIES); do cp soln/$$(basename $$f) $$f; done
+	cp soln/utils.py examples/utils.py
 
-# Fails if a tracked copy is out of date (examples/utils.py is not tracked).
-check-utils:
-	@for f in notebooks/utils.py code/utils.py; do \
-		cmp -s soln/utils.py $$f || { echo "$$f is out of date: run make sync-utils"; exit 1; }; \
+# Fails if a tracked copy is out of date.
+check-shared:
+	@for f in $(COPIES); do \
+		cmp -s soln/$$(basename $$f) $$f || { echo "$$f is out of date: run make sync-shared"; exit 1; }; \
 	done
 
 # One pytest run, so a failure in soln/ does not keep examples/ from running.
 # nbmake runs each notebook in its own directory.
-tests: check-utils
+tests: check-shared
 	pytest --nbmake --durations=10 soln/*.ipynb examples/*_soln.ipynb
