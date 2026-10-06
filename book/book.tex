@@ -40,7 +40,7 @@
 \usepackage{amsmath}
 \usepackage{amsthm}
 
-% format end of chapter excercises
+% format end of chapter exercises
 \newtheoremstyle{exercise}
   {12pt}        % space above
   {12pt}        % space below
@@ -785,7 +785,7 @@ until you have seen the examples later in the book.
 \item[One, two \myrightarrow~many] Classical models are often limited to
   small numbers of components.  For example, in celestial mechanics the
   two-body problem can be solved analytically; the three-body problem
-  cannot.  Complexity science often works with large numbers of components and larger number of interactions.
+  cannot.  Complexity science often works with large numbers of components and larger numbers of interactions.
 
 \index{one, two, many}
 
@@ -1206,7 +1206,7 @@ Now we can use the \py{nodes} method to get a list of nodes:
 
 \begin{code}
 >>> list(G.nodes())
-NodeView(('Alice', 'Bob', 'Chuck'))
+['Alice', 'Bob', 'Chuck']
 \end{code}
 
 The \py{nodes} method returns a \py{NodeView}, which can be used in a for loop or, as in this example, used to make a list.
@@ -2125,7 +2125,7 @@ Figure~\ref{chap03-1} shows the result.
 
 \begin{figure}
 \centerline{\includegraphics[width=3.5in]{figs/chap03-2.pdf}}
-\caption{WS graphs with $n=20$, $k=4$, and $p=0$ (left), $p=0.2$ (middle),
+\caption{WS graphs with $n=10$, $k=4$, and $p=0$ (left), $p=0.2$ (middle),
 and $p=1$ (right).}
 \label{chap03-2}
 \end{figure}
@@ -2135,7 +2135,7 @@ To make a Watts-Strogatz (WS) graph, we start with a ring lattice and
 consider the edges in a particular order and rewire each one with
 probability $p$.  If an edge is rewired, they leave the first node
 unchanged and choose the second node at random.  They don't allow self
-loops or multiple edges; that is, you can't have a edge from a node to
+loops or multiple edges; that is, you can't have an edge from a node to
 itself, and you can't have more than one edge between the same two
 nodes.
 
@@ -2188,7 +2188,7 @@ This function does not consider the edges in the order specified
 by Watts and Strogatz, but that doesn't seem to affect
 the results.
 
-Figure~\ref{chap03-2} shows WS graphs with $n=20$, $k=4$, and
+Figure~\ref{chap03-2} shows WS graphs with $n=10$, $k=4$, and
 a range of values of $p$.  When $p=0$, the graph is a ring lattice.
 When $p=1$, it is completely random.  As we'll see, the interesting
 things happen in between.
@@ -2294,7 +2294,7 @@ path lengths, one for each pair of nodes.
 
 \begin{code}
 def path_lengths(G):
-    length_map = nx.shortest_path_length(G)
+    length_map = dict(nx.shortest_path_length(G))
     lengths = [length_map[u][v] for u, v in all_pairs(G)]
     return lengths
 \end{code}
@@ -2853,7 +2853,7 @@ we actually want to solve the ``all pairs shortest path'' problem.
 
 Of course, one option is to run Dijkstra's algorithm $n$ times,
 once for each starting node.  And for some applications, that's
-probably good enough.  But there are are more efficient alternatives.
+probably good enough.  But there are more efficient alternatives.
 
 Find an algorithm for the all-pairs shortest path problem and
 implement it.  See
@@ -2890,7 +2890,7 @@ clustering of a small world network.
 The chapter ends with a discussion of WS and BA graphs as explanatory
 models for small world networks.
 
-The code for this chapter is in {\tt chap04.ipynb} in the respository
+The code for this chapter is in {\tt chap04.ipynb} in the repository
 for this book.  More information about working with the code is
 in Section~\ref{code}.
 
@@ -5197,10 +5197,10 @@ the array:
 \begin{code}
 b = np.zeros_like(a)
 rows, cols = a.shape
-for i in range(1, rows-1):
-    for j in range(1, cols-1):
+for i in range(rows):
+    for j in range(cols):
         state = a[i, j]
-        neighbors = a[i-1:i+2, j-1:j+2]
+        neighbors = a[max(i-1, 0):i+2, max(j-1, 0):j+2]
         k = np.sum(neighbors) - state
         if state:
             if k==2 or k==3:
@@ -5212,7 +5212,8 @@ for i in range(1, rows-1):
 
 Initially, \py{b} is an array of zeros with the same size as \py{a}.
 Each time through the loop, \py{state} is the condition of the center
-cell and \py{neighbors} is the 3x3 neighborhood.  \py{k} is the number
+cell and \py{neighbors} is the 3x3 neighborhood (smaller at the edges
+of the array, where some neighbors are missing).  \py{k} is the number
 of live neighbors (not including the center cell).  The nested \py{if}
 statements evaluate the GoL rules and turn on cells in \py{b}
 accordingly.
